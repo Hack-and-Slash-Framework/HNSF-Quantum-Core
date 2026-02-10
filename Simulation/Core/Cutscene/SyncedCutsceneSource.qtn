@@ -1,0 +1,13 @@
+component SyncedCutsceneSource
+{
+    entity_ref sourcePlayer;
+    asset_ref<Tag> cutsceneTag;
+    int frame;
+    int playrate;
+    bool autoPlay;
+    bool autoEnd;
+    int endFrame;
+    dictionary<asset_ref<Tag>, CutsceneEntityControlDefinition> cutsceneControls;
+    [AllocateOnComponentAdded, FreeOnComponentRemoved]
+    list<player_ref> onlyFor;
+}

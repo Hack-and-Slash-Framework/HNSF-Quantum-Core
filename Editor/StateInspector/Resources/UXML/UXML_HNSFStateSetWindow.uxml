@@ -1,0 +1,15 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <ui:VisualElement name="main" style="flex-grow: 1; flex-direction: row;">
+        <ui:VisualElement name="panel-left" style="flex-grow: 1; max-width: 250px; min-width: 250px;">
+            <ui:VisualElement name="toolbar" class="inspector-toolbar" style="flex-grow: 0; height: 36px; border-bottom-width: 1px; border-bottom-color: rgb(36, 36, 36); flex-direction: row;">
+                <uie:ToolbarSearchField style="width: auto; flex-shrink: 1; flex-grow: 1;" />
+                <ui:Button text="+" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Add" style="flex-shrink: 1; flex-grow: 1; height: 20px; justify-content: flex-start; width: 20px;" />
+                <ui:Button text="-" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Remove" style="flex-shrink: 1; flex-grow: 1; width: 20px; height: 20px;" />
+            </ui:VisualElement>
+            <ui:VisualElement name="container" style="flex-grow: 1;">
+                <ui:ScrollView horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="Auto" style="flex-grow: 1;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="panel-right" style="flex-grow: 1; border-left-width: 1px; border-left-color: rgb(36, 36, 36);" />
+    </ui:VisualElement>
+</ui:UXML>

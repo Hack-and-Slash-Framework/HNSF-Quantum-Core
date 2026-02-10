@@ -1,0 +1,8 @@
+enum StandardHitReactions
+{
+    Missed,
+    Hit,
+    Blocked,
+    Perfect_Guard,
+    Parried
+}

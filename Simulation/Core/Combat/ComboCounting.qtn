@@ -1,0 +1,7 @@
+component ComboCounting
+{
+    Int32 comboCounter;
+    Int32 realComboCounter;
+    Int32 comboDuration;
+    Int32 comboStartFrame;
+}

@@ -1,0 +1,6 @@
+﻿enum StateGroundedType
+{
+    NONE,
+    GROUNDED,
+    AERIAL
+}

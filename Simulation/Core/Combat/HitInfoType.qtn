@@ -1,0 +1,6 @@
+enum HitInfoType
+{
+    None,
+    Hit,
+    Throw
+}

@@ -1,0 +1,1 @@
+signal GamemodeTeamScoreChanged(int team, int oldValue, int newValue);

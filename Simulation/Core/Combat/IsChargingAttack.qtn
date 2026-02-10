@@ -1,0 +1,7 @@
+component IsChargingAttack
+{
+    int chargeLevel;
+    int currentCharge;
+    int maxCharge;
+    bool newChargeLevel;
+}

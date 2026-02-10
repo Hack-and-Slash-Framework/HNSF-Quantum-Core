@@ -1,0 +1,10 @@
+event CauseScreenShake
+{
+    int shakeType;
+    bool isGlobal;
+    FPVector3 origin;
+    FP distance;
+    FP shakeStrength;
+    int shakeFrames;
+    entity_ref onlyFor;
+}

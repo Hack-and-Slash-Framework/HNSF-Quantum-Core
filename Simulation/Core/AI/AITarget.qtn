@@ -1,0 +1,4 @@
+component AITarget
+{
+    entity_ref aiEntityRef;
+}

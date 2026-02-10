@@ -1,0 +1,4 @@
+synced event GamemodeParticipantEntityUpdated
+{
+    int participantId;
+}

@@ -1,0 +1,4 @@
+singleton component CombatTokenSource
+{
+    dictionary<entity_ref, CombatTokenActorInfo> tokenActorsDict;
+}

@@ -1,0 +1,27 @@
+﻿component BoxCombatant
+{
+    bool collisionboxesDisabled;
+    bool hitboxesDisabled;
+    bool hurtboxesDisabled;
+    bool throwboxesDisabled;
+
+    [AllocateOnComponentAdded, FreeOnComponentRemoved]
+    list<entity_ref> collisionboxList;
+    [AllocateOnComponentAdded, FreeOnComponentRemoved]
+    list<entity_ref> hitboxList;
+    [AllocateOnComponentAdded, FreeOnComponentRemoved]
+    list<entity_ref> hurtboxList;
+    [AllocateOnComponentAdded, FreeOnComponentRemoved]
+    list<entity_ref> throwboxList;
+    [AllocateOnComponentAdded, FreeOnComponentRemoved]
+    list<entity_ref> warningboxList;
+    
+    [AllocateOnComponentAdded, FreeOnComponentRemoved]
+    list<EntityHitDefinition> entitiesHit;
+    dictionary<int, int> hitReactionCounters;
+    
+    // When we are hit.
+    asset_ref<HnSF.core.state.functions.HNSFStateFunctionExternal> whenHitReactionFunction;
+    // When we hit someone and they return their reaction.
+    asset_ref<HnSF.core.state.actions.HNSFStateActionExternal> whenGotHitReactionAction;
+}

@@ -1,0 +1,8 @@
+component Warningbox
+{
+    int id;
+    bool active;
+    entity_ref owner;
+    asset_ref damageSourceInfoRef;
+    bool isThrow;
+}

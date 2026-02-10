@@ -1,0 +1,5 @@
+component StatusEffectActor
+{
+    [AllocateOnComponentAdded]
+    list<entity_ref> statusEffectors;
+}

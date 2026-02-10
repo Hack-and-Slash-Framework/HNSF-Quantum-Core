@@ -1,0 +1,15 @@
+component ComboProration
+{
+    Int32 comboDecay;
+    FP currentProration;
+    FP bonusProration;
+    [AllocateOnComponentAdded, FreeOnComponentRemoved]
+    list<UniqueComboAttackIdentifier> hitByAttacks;
+}
+
+struct UniqueComboAttackIdentifier
+{
+    entity_ref attackerRef;
+    asset_ref<HnSF.core.state.HNSFState> stateRef;
+    uint stateId;
+}

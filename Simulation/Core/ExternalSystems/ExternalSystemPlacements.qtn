@@ -1,0 +1,13 @@
+enum ExternalSystemPlacements
+{
+    PrePhysics,
+    PreLocalDeltaTime,
+    PreGamemodeState,
+    PreCharaInput,
+    PreStateMachineTick,
+    PreHitstop,
+    PreCombatHitDetection,
+    PostCombatHitDetection,
+    PreCombatHitResolving,
+    PostCombatHitResolving
+}

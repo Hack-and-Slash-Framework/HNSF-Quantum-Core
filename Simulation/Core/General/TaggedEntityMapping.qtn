@@ -1,0 +1,5 @@
+component TaggedEntityMapping
+{
+    [AllocateOnComponentAdded, FreeOnComponentRemoved]
+    dictionary<asset_ref<Tag>, entity_ref> tagToEntityMap;
+}

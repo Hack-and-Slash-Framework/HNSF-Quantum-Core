@@ -1,0 +1,4 @@
+singleton component ExternalSystemRegistry
+{
+    dictionary<int, ExternalSystemGroup> systemGroups;
+}

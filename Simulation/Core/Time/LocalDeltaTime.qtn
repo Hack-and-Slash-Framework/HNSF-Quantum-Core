@@ -1,0 +1,6 @@
+component LocalDeltaTime
+{
+    FP multiplier;
+    FP deltaTime;
+    int updatesThisTick;
+}

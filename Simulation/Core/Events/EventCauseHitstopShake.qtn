@@ -1,0 +1,5 @@
+﻿event CauseHitstopShake
+{
+    entity_ref fighterEntity;
+    int shakeFrames;
+}

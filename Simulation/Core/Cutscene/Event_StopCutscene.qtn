@@ -1,0 +1,5 @@
+event StopCutsceneEvent
+{
+    entity_ref cutsceneSource;
+    asset_ref<Tag> cutsceneTag;
+}

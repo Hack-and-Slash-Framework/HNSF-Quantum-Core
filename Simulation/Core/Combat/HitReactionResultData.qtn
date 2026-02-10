@@ -1,0 +1,4 @@
+struct HitReactionResultData
+{
+    StandardHitReactions hitReaction;
+}

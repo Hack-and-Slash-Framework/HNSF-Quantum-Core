@@ -1,0 +1,6 @@
+synced event BattleActorDied
+{
+	entity_ref WhoDied;
+	entity_ref WhoKilled;
+	FPVector3 Position;
+}

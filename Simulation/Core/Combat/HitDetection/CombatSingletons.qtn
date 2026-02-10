@@ -1,0 +1,45 @@
+﻿import enum HitboxResolveResult(byte);
+
+struct CombatPairKeyAB
+{
+    entity_ref entityA;
+    entity_ref entityB;
+}
+
+struct ThrowboxCombatPair
+{
+    entity_ref entityA;
+    entity_ref entityB;
+    entity_ref entityAThrowbox;
+    entity_ref entityBHurtbox;
+}
+
+struct HitboxCombatPair
+{
+    entity_ref attacker;
+    entity_ref attackerHitbox;
+    int attackerHitboxPriority;
+    int defenderHurtboxPriority;
+    HitboxResolveResult result;
+    entity_ref defenderHitboxOrHurtbox;
+    bool ignore;
+}
+
+struct ClashCombatPair
+{
+    entity_ref entityA;
+    entity_ref entityB;
+    entity_ref entityAHitbox;
+    entity_ref entityBHitbox;
+    int entityAClashLevel;
+    int entityBClashLevel;
+}
+
+struct CollisionCombatPair
+{
+    entity_ref entityA;
+    entity_ref entityB;
+    entity_ref entityACollbox;
+    entity_ref entityBCollbox;
+    FP distance;
+}

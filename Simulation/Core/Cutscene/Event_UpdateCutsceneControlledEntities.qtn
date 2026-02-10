@@ -1,0 +1,5 @@
+event UpdateCutsceneControlledEntities
+{
+    entity_ref cutscenePlayingEntity;
+    asset_ref<Tag> cutsceneTag;
+}

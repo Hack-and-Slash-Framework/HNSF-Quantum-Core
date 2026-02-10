@@ -1,0 +1,9 @@
+event StopVisualEffect
+{
+    entity_ref parent;
+    bool stopAllInstances;
+    bool destroyAllParticles;
+    bool unparent;
+    asset_ref<VisualEffectEntry> effectToStop;
+    int offset;
+}

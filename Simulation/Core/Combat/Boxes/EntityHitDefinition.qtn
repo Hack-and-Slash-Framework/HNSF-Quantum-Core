@@ -1,0 +1,5 @@
+struct EntityHitDefinition
+{
+    entity_ref ent;
+    int hitByHitboxIdentifier;
+}

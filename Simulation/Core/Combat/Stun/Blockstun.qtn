@@ -1,0 +1,4 @@
+component Blockstun
+{
+    Int32 value;
+}

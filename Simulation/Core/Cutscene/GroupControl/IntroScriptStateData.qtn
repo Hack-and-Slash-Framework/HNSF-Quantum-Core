@@ -1,0 +1,5 @@
+struct GroupControlStateData
+{
+    asset_ref<HnSF.core.GroupControl.BattleActorGroupControlScript> script;
+    int currentAction;
+}

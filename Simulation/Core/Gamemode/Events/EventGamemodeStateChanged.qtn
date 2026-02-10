@@ -1,0 +1,5 @@
+synced event GamemodeStateChanged
+{
+	GenericGamemodeStates NewState;
+	GenericGamemodeStates OldState;
+}

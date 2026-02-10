@@ -1,0 +1,6 @@
+component StatusEffector
+{
+    entity_ref actor;
+    asset_ref<HnSF.StatusEffects.StatusEffectAsset> statusEffetAssetRef;
+    int stacks;
+}

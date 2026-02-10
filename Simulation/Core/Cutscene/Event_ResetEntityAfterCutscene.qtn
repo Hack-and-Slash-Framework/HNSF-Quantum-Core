@@ -1,0 +1,4 @@
+event ResetEntityAfterCutsceneEvent
+{
+    entity_ref playingEntity;
+}

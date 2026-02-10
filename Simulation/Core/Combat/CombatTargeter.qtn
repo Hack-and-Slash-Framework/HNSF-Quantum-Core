@@ -1,0 +1,9 @@
+﻿component CombatTargeter
+{
+    bool hardLocked;
+    EntityRef softTarget;
+    EntityRef targetEntity;
+    FPVector3 lookForward;
+    FPVector3 lookRight;
+    FP targetDistance;
+}

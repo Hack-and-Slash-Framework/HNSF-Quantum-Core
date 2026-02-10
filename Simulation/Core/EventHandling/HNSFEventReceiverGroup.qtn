@@ -1,0 +1,4 @@
+struct HNSFEventReceiverGroup
+{
+    dictionary<long, EventReceiverActions> actions;
+}

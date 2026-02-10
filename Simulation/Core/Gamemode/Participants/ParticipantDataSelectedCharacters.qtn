@@ -1,0 +1,5 @@
+component ParticipantDataSelectedCharacters
+{
+    [AllocateOnComponentAdded, FreeOnComponentRemoved]
+    list<GamemodeParticipantBattleActorData> actorData;
+}

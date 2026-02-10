@@ -1,0 +1,16 @@
+event PlayVisualEffectAtLocation2D
+{
+    asset_ref<VisualEffectEntry> visualEffectRef;
+    entity_ref parent;
+    bool parented;
+    nothashed bool positionAsOffset;
+    nothashed FPVector2 position;
+    nothashed bool rotationAsOffset;
+    nothashed FP rotation;
+    nothashed bool flipped;
+    bool atClosestBodyPosition;
+    FPVector2 sourcePosition;
+    bool setRotationToForceDir;
+    asset_ref<Tag> parentBoneTag;
+    FP forwardOffset;
+}

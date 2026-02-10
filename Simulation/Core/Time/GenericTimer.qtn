@@ -1,0 +1,5 @@
+component GenericTimer
+{
+    TimerCountingType countingType;
+    int value;
+}

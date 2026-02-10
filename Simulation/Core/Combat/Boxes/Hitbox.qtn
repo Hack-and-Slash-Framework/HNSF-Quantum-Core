@@ -1,0 +1,9 @@
+﻿component Hitbox
+{
+    int id;
+    int priority;
+    bool active;
+    entity_ref owner;
+    asset_ref hitInfoRef;
+    bool isThrow;
+}

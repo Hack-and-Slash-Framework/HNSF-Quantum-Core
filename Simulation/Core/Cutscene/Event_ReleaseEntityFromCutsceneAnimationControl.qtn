@@ -1,0 +1,6 @@
+event ReleaseEntityFromCutsceneAnimationControl
+{
+    entity_ref cutscenePlayer;
+    asset_ref<Tag> cutsceneTag;
+    asset_ref<Tag> entityTag;
+}

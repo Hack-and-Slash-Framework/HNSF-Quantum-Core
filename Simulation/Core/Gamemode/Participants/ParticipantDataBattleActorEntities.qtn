@@ -1,0 +1,5 @@
+component ParticipantDataBattleActorEntities
+{
+    [AllocateOnComponentAdded, FreeOnComponentRemoved]
+    list<entity_ref> battleActorEntities;
+}

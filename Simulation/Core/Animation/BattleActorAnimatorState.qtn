@@ -1,0 +1,15 @@
+struct BattleActorAnimatorState
+{
+    array<BattleActorAnimatorLayer>[2] layers;
+}
+
+struct BattleActorAnimatorLayer
+{
+    asset_ref<AnimationEntry> animationEntry;
+    asset_ref<Tag> mask;
+    FP weight;
+    FPVector2 mixerParam;
+    int frame;
+    int autoPlayAdvanceAmount;
+    bool autoPlay;
+}

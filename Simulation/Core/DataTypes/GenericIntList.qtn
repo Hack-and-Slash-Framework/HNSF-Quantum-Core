@@ -1,0 +1,5 @@
+component GenericIntList
+{
+    [AllocateOnComponentAdded, FreeOnComponentRemoved]
+    list<int> values;
+}

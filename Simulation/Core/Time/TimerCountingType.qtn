@@ -1,0 +1,5 @@
+enum TimerCountingType : Byte
+{
+    CountDown,
+    CountUp
+}

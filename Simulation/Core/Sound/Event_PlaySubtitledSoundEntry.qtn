@@ -1,0 +1,6 @@
+synced event PlaySubtitledSoundEntry
+{
+    entity_ref owner;
+    asset_ref<SoundEntry> soundEntry;
+    FP volume;
+}

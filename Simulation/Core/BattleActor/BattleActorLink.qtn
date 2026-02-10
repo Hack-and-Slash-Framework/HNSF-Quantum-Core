@@ -1,0 +1,4 @@
+component BattleActorLink
+{
+    asset_ref<BattleActorDefinition> battleActorDefinition;
+}

@@ -1,0 +1,5 @@
+component ArticlesOwner
+{
+    [AllocateOnComponentAdded, FreeOnComponentRemoved]
+    list<entity_ref> articleRefs;
+}

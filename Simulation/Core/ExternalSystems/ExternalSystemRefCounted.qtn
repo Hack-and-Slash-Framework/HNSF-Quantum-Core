@@ -1,0 +1,5 @@
+struct ExternalSystemRefCounted
+{
+    asset_ref<ExternalSystem> externalSystem;
+    int refs;
+}

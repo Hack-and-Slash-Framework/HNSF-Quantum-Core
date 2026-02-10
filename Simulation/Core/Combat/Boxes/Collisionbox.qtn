@@ -1,0 +1,6 @@
+﻿component Collisionbox
+{
+    int id;
+    bool active;
+    EntityRef owner;
+}

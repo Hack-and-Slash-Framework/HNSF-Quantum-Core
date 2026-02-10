@@ -1,0 +1,13 @@
+﻿component Parented2D
+{
+    entity_ref parent;
+    FPVector2 localOffset;
+    FP localRotation;
+}
+
+component Parented3D
+{
+    entity_ref parent;
+    FPVector3 localOffset;
+    FPVector3 localEuler;
+}

@@ -1,0 +1,19 @@
+﻿event PlaySoundAtLocation3D
+{
+    entity_ref owner;
+    entity_ref parentedTo;
+    asset_ref<SoundEntry> sound;
+    FP volume;
+    FP minPitch;
+    FP maxPitch;
+    FP minDistance;
+    FP maxDistance;
+    bool cancelOthersSoundEntry;
+    bool cancelOthersTag;
+    bool ignoreIfSoundPlaying;
+    bool ignoreIfTagPlaying;
+    bool isGlobal;
+    nothashed asset_ref<AudioSourceConfig> audioSourceConfig;
+    nothashed FPVector3 position;
+    nothashed asset_ref<Tag> tag;
+}

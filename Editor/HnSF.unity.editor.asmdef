@@ -1,0 +1,30 @@
+{
+    "name": "HnSF.unity.editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:4c173844a68621548ba50e78fdad1e2e",
+        "GUID:5d82202959c2f144ea95e134645b6833",
+        "GUID:f51ebe6a0ceec4240a699833d6309b23",
+        "GUID:f6fa0c2f8b9a9f64897d3351666f3d66",
+        "GUID:e94ecb5840834674a98da7a6792d8762",
+        "GUID:9e24947de15b9834991c9d8411ea37cf",
+        "GUID:3dc2666f1394e2c48a30ea492efb1717",
+        "GUID:4c25c05f410a3a447a75c3b0909152ef",
+        "GUID:f06555f75b070af458a003d92f9efb00",
+        "GUID:70ef9a24f4cfc4aec911c1414e3f90ad",
+        "GUID:d1e08c06f8f9473888c892637c83c913",
+        "GUID:c45bcd05427ac6d4887a3549019d911f",
+        "GUID:49b49c76ee64f6b41bf28ef951cb0e50"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,0 +1,4 @@
+component HNSFStateAgent{
+    asset_ref<HnSF.core.state.HNSFStateSet> stateSet;
+	HNSFStateAgentData stateData;
+}

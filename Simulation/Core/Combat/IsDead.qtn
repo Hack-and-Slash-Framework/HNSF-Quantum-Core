@@ -1,0 +1,6 @@
+component IsDead
+{
+    int frame;
+    TeamBitmask killedByTeam;
+    entity_ref killedByEntity;
+}

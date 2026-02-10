@@ -1,0 +1,8 @@
+enum AIContextUserType
+{
+    None,
+    BehaviourTree,
+    HFSM,
+    BattleActorHFSMCompound,
+    UtilityTheory
+}

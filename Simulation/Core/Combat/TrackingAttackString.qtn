@@ -1,0 +1,5 @@
+component TrackingAttackString
+{
+    [AllocateOnComponentAdded, FreeOnComponentRemoved]
+    list<asset_ref<HnSF.core.state.HNSFState>> currentAttackString;
+}

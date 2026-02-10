@@ -1,0 +1,6 @@
+event PlayCutsceneEvent
+{
+    entity_ref cutsceneSource;
+    asset_ref<Tag> cutsceneTag;
+    bool onlyPlayOnPlayerLocalMachine;
+}

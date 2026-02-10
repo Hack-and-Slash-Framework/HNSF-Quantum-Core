@@ -1,0 +1,8 @@
+﻿component Hurtbox
+{
+    int id;
+    int priority;
+    bool active;
+    EntityRef owner;
+    asset_ref<HurtboxInfo> hurtboxInfoRef;
+}

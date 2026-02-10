@@ -1,0 +1,6 @@
+singleton component GamemodeParticipantsGlobal
+{
+    int participantIdCounter;
+    [AllocateOnComponentAdded, FreeOnComponentRemoved]
+    dictionary<Int32, entity_ref> participantDataEntities;
+}

@@ -1,0 +1,5 @@
+event BattleActorLinkRemoved
+{
+    entity_ref entity;
+    asset_ref<BattleActorDefinition> battleActorDefinitionReference;
+}

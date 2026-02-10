@@ -1,0 +1,5 @@
+struct GamemodeParticipantBattleActorData
+{
+    asset_ref<BattleActorDefinition> battleActor;
+    list<asset_ref<HnSF.core.state.HNSFSpecialSet>> specials;
+}

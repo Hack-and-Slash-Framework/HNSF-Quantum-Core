@@ -1,0 +1,5 @@
+component HasClashed
+{
+    bool hasClashed;
+    int lastReceivedClashLevel;
+}

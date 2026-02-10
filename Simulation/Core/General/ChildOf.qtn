@@ -1,0 +1,4 @@
+component ChildOf
+{
+    entity_ref parent;
+}

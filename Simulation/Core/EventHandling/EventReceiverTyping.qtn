@@ -1,0 +1,21 @@
+enum EventReceiverTyping : Byte
+{
+    StateChanged = 0,
+    GroundedStateChanged = 1,
+    TouchGround = 2,
+    Hitstop = 3,
+    Superfreeze = 4,
+    Tick = 5,
+    LateTick = 6,
+    DefenderPreHitReactionResolve = 10,
+    DefenderOnReceiveDamage = 11,
+    DefenderPostHitReactionResolve = 15,
+    AttackerReceivedHitReaction = 20,
+    ArticleOwnerHit = 40,
+    PreCombatboxBroadphase = 60,
+    PostCombatboxBroadphase = 65,
+    PreCombatboxResolution = 80,
+    PostCombatboxResolution = 85,
+    OnDeath = 150,
+    OnKill = 155
+}

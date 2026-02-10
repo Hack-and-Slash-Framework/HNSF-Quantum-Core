@@ -1,0 +1,7 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
+    <Style src="project://database/Assets/3.HNSF/Editor/Resources/UXML/USS_AdvancedTypePopup.uss?fileID=7433441132597879392&amp;guid=0848652e564f6214592ea6f19cb9d264&amp;type=3#USS_AdvancedTypePopup" />
+    <ui:VisualElement name="ListElement" class="atpElement" style="flex-grow: 1; height: 20px; flex-direction: row;">
+        <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Label" style="flex-grow: 1; flex-shrink: 1; padding-right: 0; padding-left: 10px; -unity-text-align: middle-left;" />
+        <ui:Label tabindex="-1" text="&gt;" parse-escape-sequences="true" display-tooltip-when-elided="true" name="folder-label" style="flex-grow: 1; flex-shrink: 1; width: 20px; max-width: 20px; display: flex;" />
+    </ui:VisualElement>
+</ui:UXML>

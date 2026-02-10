@@ -1,0 +1,5 @@
+﻿component BattleActorAnimator
+{
+    asset_ref<AnimationGroupDefinitions> animationDefinitionsReference;
+    BattleActorAnimatorState state;
+}

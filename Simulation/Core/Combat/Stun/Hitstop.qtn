@@ -1,0 +1,4 @@
+component Hitstop
+{
+    Int32 value;
+}

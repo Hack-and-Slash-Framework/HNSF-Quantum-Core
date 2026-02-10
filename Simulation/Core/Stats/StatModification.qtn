@@ -1,0 +1,6 @@
+struct StatModification
+{
+    asset_ref source;
+    StatModificationType modifierType;
+    FP value;
+}

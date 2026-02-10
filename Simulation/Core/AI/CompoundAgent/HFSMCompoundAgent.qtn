@@ -1,0 +1,8 @@
+component HFSMCompoundAgent
+{
+    HFSMAgent Brain;
+    HFSMAgent Action;
+    
+    AIBlackboardComponent BrainBb;
+    AIBlackboardComponent ActionBb;
+}

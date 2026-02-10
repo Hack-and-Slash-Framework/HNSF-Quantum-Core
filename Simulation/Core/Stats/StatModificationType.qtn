@@ -1,0 +1,6 @@
+enum StatModificationType
+{
+    Add,
+    Multiply,
+    Set
+}

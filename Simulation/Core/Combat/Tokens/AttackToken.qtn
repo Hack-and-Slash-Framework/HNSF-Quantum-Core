@@ -1,0 +1,8 @@
+component AttackToken
+{
+    entity_ref attackerEntityRef;
+    entity_ref attackingEntityRef;
+    ushort score;
+    byte priority;
+    byte tokenType;
+}

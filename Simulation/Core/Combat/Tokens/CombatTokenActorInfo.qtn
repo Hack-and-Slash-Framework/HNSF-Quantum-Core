@@ -1,0 +1,6 @@
+struct CombatTokenActorInfo
+{
+    entity_ref actorEntityRef;
+    int maxScore;
+    list<entity_ref> currentTokens;
+}

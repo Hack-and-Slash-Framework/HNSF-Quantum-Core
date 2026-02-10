@@ -1,0 +1,53 @@
+using System;
+using Cysharp.Threading.Tasks;
+using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
+
+namespace HnSF
+{
+    [CreateAssetMenu(menuName = "HnSF/Addressables/Content/Song Definition")]
+    public class AddressablesSongDefinition : BaseSongDefinition
+    {
+        public override string Name => songName;
+        public override string Description => description;
+        
+        [SerializeField] private string songName;
+        [SerializeField, TextArea] private string description;
+        [SerializeField] private AssetReferenceT<SongAudio> songAudioReference;
+        
+        [NonSerialized] private AsyncOperationHandle<SongAudio> songAudioHandle;
+
+        public override async UniTask<bool> LoadAssets()
+        {
+            try
+            {
+                if (!songAudioHandle.IsValid())
+                    songAudioHandle = Addressables.LoadAssetAsync<SongAudio>(songAudioReference);
+                await songAudioHandle;
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"Error loading Song {songName} ({name}). {e}");
+                return false;
+            }
+            
+            return true;
+        }
+
+        public override SongAudio GetSong()
+        {
+            return songAudioHandle.Result;
+        }
+
+        public override void UnloadAssets()
+        {
+            if(songAudioHandle.IsValid() && songAudioHandle.Status == AsyncOperationStatus.Succeeded)
+                Addressables.Release(songAudioHandle);
+        }
+
+        public override void Unload()
+        {
+        }
+    }
+}

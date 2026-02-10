@@ -1,0 +1,4 @@
+struct ExternalSystemGroup
+{
+    list<ExternalSystemRefCounted> systems;
+}

@@ -1,0 +1,6 @@
+synced event GamemodeTeamScoreChanged
+{
+    TeamBitmask team;
+    int oldScore;
+    int newScore;
+}

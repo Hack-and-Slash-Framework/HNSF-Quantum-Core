@@ -1,0 +1,25 @@
+singleton component GenericGamemodeGlobals
+{
+	FP DelayedStateTimer;
+	GenericGamemodeStates DelayedState;
+
+	GenericGamemodeStates CurrentState;
+	GenericGamemodeStates PreviousState;
+	
+	[AllocateOnComponentAdded, FreeOnComponentRemoved]
+	hash_set<Int32> playersFinishedIntro;
+}
+
+enum GenericGamemodeStates
+{
+	Off = 0,
+	Lobby,
+	Pregame,
+	MapIntro,
+	CharacterIntro,
+	Countdown,
+	Game,
+	Outro,
+	VictoryScreen,
+	Postgame
+}

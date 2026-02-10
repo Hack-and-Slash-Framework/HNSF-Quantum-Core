@@ -1,0 +1,4 @@
+component HNSFEventReceiver
+{
+    dictionary<int, HNSFEventReceiverGroup> actionGroups;
+}

@@ -1,0 +1,1 @@
+signal GamemodeStateChanged(GenericGamemodeStates newState, GenericGamemodeStates oldState);

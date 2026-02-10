@@ -1,0 +1,8 @@
+component Throwbox
+{
+    int id;
+    int priority;
+    bool active;
+    entity_ref owner;
+    asset_ref<ThrowInfo> throwInfoRef;
+}

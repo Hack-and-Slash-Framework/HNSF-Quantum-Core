@@ -1,0 +1,4 @@
+event TeleportCamera
+{
+    entity_ref callerEntity;
+}

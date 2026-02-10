@@ -1,0 +1,6 @@
+enum BattleActorIntroType
+{
+    None,
+    Special,
+    Generic
+}

@@ -1,0 +1,5 @@
+component IsThrowing
+{
+    [AllocateOnComponentAdded, FreeOnComponentRemoved]
+    dictionary<int, entity_ref> throwees;
+}

@@ -1,0 +1,29 @@
+component LastHitWithInfo
+{
+    int lastHitEntityOnFrame;
+    LastHitWithData data;
+}
+
+union LastHitWithData
+{
+    DataLastHitWithHitInfo hitInfoData;
+    DataLastHitWithThrowInfo throwInfoData;
+}
+
+struct DataLastHitWithHitInfo
+{
+    asset_ref<HitInfo> hitWithInfo;
+    entity_ref lastHitEntity;
+    int lastHitstopAmount;
+    int lastHitstunAmount;
+    int lastBlockstunAmount;
+    HitReactionResultData lastReceivedHitReaction;
+}
+
+struct DataLastHitWithThrowInfo
+{
+    asset_ref<ThrowInfo> hitWithInfo;
+    int lastHitstopAmount;
+    [AllocateOnComponentAdded, FreeOnComponentRemoved]
+    list<entity_ref> lastThrownEntities;
+}

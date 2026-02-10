@@ -1,0 +1,6 @@
+component BattleActorPhysics
+{
+    StateGroundedType currentGroundedState;
+    FP pushStrength;
+    FP selfPushStrength;
+}

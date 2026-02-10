@@ -1,0 +1,8 @@
+component GenericStateMachine
+{
+    bool disableAutoUpdates;
+    HNSFStateAgent stateAgent;
+    AIBlackboardComponent blackboard;
+    asset_ref<AIBlackboardInitializer> blackboardInitializer;
+    asset_ref<AIConfigBase> config;
+}

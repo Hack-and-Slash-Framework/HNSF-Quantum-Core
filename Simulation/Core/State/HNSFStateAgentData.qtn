@@ -1,0 +1,12 @@
+﻿struct HNSFStateAgentData
+{
+    asset_ref<Tag> moveset;
+	asset_ref<HnSF.core.state.HNSFState> state;
+	int frame;
+	int realFrame;
+	uint uniqueStateId;
+	bool toStateRequested;
+	asset_ref<HnSF.core.state.HNSFState> toState;
+	int toFrame;
+	bool dontAutoIncrementFrame;
+}
