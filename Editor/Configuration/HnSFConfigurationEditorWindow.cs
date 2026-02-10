@@ -27,9 +27,9 @@ namespace HnSF
         }
 
         public static readonly string HnSF_ScriptingDefine_UModSupport = "HNSF_UMOD";
-        public static readonly string HnSF_ScriptingDefine_AnimancerSupport = "HNSF_ANIMANCER";
-        public static readonly string HnSF_ScriptingDefine_PewEos = "HNSF_PEW_EOS";
-        public static readonly string HnSF_ScriptingDefine_NetcodeForGameobjects = "HNSF_NGO";
+        //public static readonly string HnSF_ScriptingDefine_AnimancerSupport = "HNSF_ANIMANCER";
+        //public static readonly string HnSF_ScriptingDefine_PewEos = "HNSF_PEW_EOS";
+        //public static readonly string HnSF_ScriptingDefine_NetcodeForGameobjects = "HNSF_NGO";
         
         [SerializeField] private HnSFConfigurationAsset configAsset = null;
         [SerializeField] private VisualTreeAsset visualTree_NoConfigFound;
@@ -123,13 +123,15 @@ namespace HnSF
             var pewEosLabel = new Label("PlayEveryWare Epic Online Services Support");
             tab.Add(pewEosLabel);
             
+            /*
             var pewEosSupportButton = new Button();
             pewEosSupportButton.name = "PewEosSupportToggle";
             pewEosSupportButton.text = "Enable PlayEveryWare Epic Online Services Support";
             pewEosSupportButton.clicked += Settings_TogglePlayEveryWareEosSupport;
-            tab.Add(pewEosSupportButton);
+            tab.Add(pewEosSupportButton);*/
         }
 
+        /*
         private void Settings_TogglePlayEveryWareEosSupport()
         {
             if (EditorApplication.isCompiling) return;
@@ -140,7 +142,7 @@ namespace HnSF
             else definesList.Add(HnSF_ScriptingDefine_PewEos);
             
             PlayerSettings.SetScriptingDefineSymbols(CurrentNamedBuildTarget, definesList.ToArray());
-        }
+        }*/
 
         /*
         private void Settings_ToggleAnimancerSupport()
@@ -181,8 +183,9 @@ namespace HnSF
             var animancerToggleButton = settingsTab.Q<Button>("AnimancerSupportToggle");
             animancerToggleButton.text = definesList.Contains(HnSF_ScriptingDefine_AnimancerSupport) ? "Disable Animancer Support" : "Enable Animancer Support";*/
             
+            /*
             var pewEosToggleButton = settingsTab.Q<Button>("PewEosSupportToggle");
-            pewEosToggleButton.text = definesList.Contains(HnSF_ScriptingDefine_PewEos) ? "Disable PlayEveryWare Epic Online Services Support" : "Enable PlayEveryWare Epic Online Services Support";
+            pewEosToggleButton.text = definesList.Contains(HnSF_ScriptingDefine_PewEos) ? "Disable PlayEveryWare Epic Online Services Support" : "Enable PlayEveryWare Epic Online Services Support";*/
         }
         
         private void CreateTabUI_ConfigurePaths(Tab tab)

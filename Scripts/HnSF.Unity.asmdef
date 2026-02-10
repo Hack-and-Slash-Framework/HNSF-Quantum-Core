@@ -37,6 +37,16 @@
             "name": "com.kybernetik.animancer",
             "expression": "0.0.0",
             "define": "HNSF_ANIMANCER"
+        },
+        {
+            "name": "com.playeveryware.eos",
+            "expression": "1.0.0",
+            "define": "HNSF_PEW_EOS"
+        },
+        {
+            "name": "com.unity.netcode.gameobjects",
+            "expression": "1.0.0",
+            "define": "HNSF_NGO"
         }
     ],
     "noEngineReferences": false
