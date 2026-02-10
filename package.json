@@ -8,13 +8,8 @@
     {
       "displayName": "Core Content",
       "description": "Core HnSF content.",
-      "path": "Samples~/CoreContent"
+      "path": "Samples~/Core"
     },
-    {
-      "displayName": "Example Content",
-      "description": "Example content for quick starting.",
-      "path": "Samples~/ExampleContent"
-    }
   ]
 }
 
