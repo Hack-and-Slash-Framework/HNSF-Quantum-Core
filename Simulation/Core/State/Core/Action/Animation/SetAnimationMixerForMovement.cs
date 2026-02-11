@@ -19,7 +19,7 @@ namespace HnSF.core.state.actions
             ref HNSFStateContext stateContext)
         {
             /*
-            var charaInputs = frame.Unsafe.GetPointer<ActorInputInfo>(entity);
+            var charaInputs = frame.Unsafe.GetPointer<ActorInputBuffer>(entity);
             var charaAnimator = frame.Unsafe.GetPointer<BattleActorAnimator>(entity);
 
             var lookForward = charaInputs->CameraForward;

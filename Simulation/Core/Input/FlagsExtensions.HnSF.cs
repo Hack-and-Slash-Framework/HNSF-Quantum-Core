@@ -1,3 +1,5 @@
+using System;
+
 namespace Quantum
 {
     public static unsafe partial class FlagsExtensions 
@@ -30,6 +32,16 @@ namespace Quantum
         public static ActorInputButtonType All(this ActorInputButtonType self)
         {
             return (ActorInputButtonType)~0;
+        }
+        
+        public static Boolean IsFlagSet(this ActorInputButtonType self, ActorInputButtonType flag) {
+            return (self & flag) == flag;
+        }
+        public static ActorInputButtonType SetFlag(this ActorInputButtonType self, ActorInputButtonType flag) {
+            return self | flag;
+        }
+        public static ActorInputButtonType ClearFlag(this ActorInputButtonType self, ActorInputButtonType flag) {
+            return self & ~flag;
         }
     }
 }

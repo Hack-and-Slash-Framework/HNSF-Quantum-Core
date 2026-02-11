@@ -13,8 +13,7 @@ namespace HnSF.core.state.decisions
             Released = 2,
             IsUp = 3
         }
-
-        public bool checkAbilityButton;
+        
         public ActorInputButtonType button;
         public ButtonStateType buttonState;
         public int offset;
@@ -23,11 +22,11 @@ namespace HnSF.core.state.decisions
 
         public override bool Decide(Frame frame, EntityRef entity, ref HNSFStateContext stateContext)
         {
-            var actorInputs = frame.Unsafe.GetPointer<ActorInputInfo>(entity);
-            if (!checkAbilityButton && (actorInputs->ignoreButtons & button) == button) return false; 
-            
+            var actorInputs = frame.Unsafe.GetPointer<ActorInputBuffer>(entity);
+            if ((actorInputs->ignoreButtons & button) == button) return false;
+
             var bData = InputHelper.GetButtonData(frame, actorInputs,
-                checkAbilityButton ? actorInputs->lastSpecialInput : button,
+                button,
                 offset,
                 buffer,
                 checkType);
@@ -55,7 +54,6 @@ namespace HnSF.core.state.decisions
         public override HNSFStateDecision CopyTo(HNSFStateDecision target)
         {
             var t = target as InputButtonDecision;
-            t.checkAbilityButton = this.checkAbilityButton;
             t.button = this.button;
             t.buttonState = this.buttonState;
             t.offset = this.offset;

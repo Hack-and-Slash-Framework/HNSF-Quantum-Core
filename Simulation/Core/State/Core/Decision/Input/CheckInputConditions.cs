@@ -20,7 +20,7 @@ namespace HnSF.core.state.decisions
         
         public override bool Decide(Frame frame, EntityRef entity, ref HNSFStateContext stateContext)
         {
-            if (!frame.Unsafe.TryGetPointer<ActorInputInfo>(entity, out var charaInputs)) return false;
+            if (!frame.Unsafe.TryGetPointer<ActorInputBuffer>(entity, out var charaInputs)) return false;
             if (charaInputs->ignoreButtons == (ActorInputButtonType)~0) return false;
             if (offset >= Constants.INPUT_BUFFER_SIZE)
             {

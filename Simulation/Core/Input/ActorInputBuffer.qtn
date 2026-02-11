@@ -1,0 +1,12 @@
+#define NETWORKBUTTONS_SIZE 4 // Define a constant value with the known size of the struct
+import struct NetworkButtons(4);
+import enum ActorInputButtonType(int);
+
+component ActorInputBuffer
+{
+    ActorInputButtonType ignoreButtons;
+    array<NetworkButtons>[30] inputBuffer;
+    array<NetworkButtons>[30] inputDisabled;
+    UInt16 bufferPosition;
+    Int32 extraBuffer;
+}

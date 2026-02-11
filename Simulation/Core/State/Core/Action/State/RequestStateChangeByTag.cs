@@ -82,7 +82,7 @@ namespace HnSF.core.state.actions
                 
                 if (entry.checkToStateInputCondition 
                     && toState.defaultInputConditions.Length > 0 
-                    && frame.Unsafe.TryGetPointer<ActorInputInfo>(entity, out var actorInputInfo) )
+                    && frame.Unsafe.TryGetPointer<ActorInputBuffer>(entity, out var actorInputInfo) )
                 {
                     var gotValidInput = false;
                     foreach (var ic in toState.defaultInputConditions)

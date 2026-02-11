@@ -10,7 +10,7 @@ namespace HnSF.core.state.actions
         public override bool ExecuteAction(Frame frame, EntityRef entity, FP rangePercent,
             ref HNSFStateContext stateContext)
         {
-            var inputs = frame.Unsafe.GetPointer<ActorInputInfo>(entity);
+            var inputs = frame.Unsafe.GetPointer<ActorInputBuffer>(entity);
 
             var str = "";
             for (int i = inputs->bufferPosition; i >= inputs->bufferPosition - Constants.INPUT_BUFFER_SIZE + 1; i--)

@@ -18,7 +18,7 @@ namespace HnSF.core.state.actions
         public override bool ExecuteAction(Frame frame, EntityRef entity, FP rangePercent,
             ref HNSFStateContext stateContext)
         {
-            if (!frame.Unsafe.TryGetPointer<ActorInputInfo>(entity, out var charaInputs)) return false;
+            if (!frame.Unsafe.TryGetPointer<ActorInputBuffer>(entity, out var charaInputs)) return false;
 
             _maxChargeAmount = GetMaxCharge();
             

@@ -10,7 +10,7 @@ namespace HnSF
 
         public override void OnUpdateView()
         {
-            if (PredictedFrame.Unsafe.TryGetPointer(customEntityView.EntityRef, out ActorInputInfo* actorInputInfo))
+            if (PredictedFrame.Unsafe.TryGetPointer(customEntityView.EntityRef, out ActorInputBuffer* ActorInputBuffer))
             {
                 
             }

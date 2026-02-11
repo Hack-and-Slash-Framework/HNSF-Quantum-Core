@@ -77,7 +77,7 @@ namespace HnSF.core.state
                 if (wasStateChanged
                     && currentStateAsset
                     && currentStateAsset.clearInputBuffer
-                    && frame.Unsafe.TryGetPointer<ActorInputInfo>(entity, out var actorInputInfo))
+                    && frame.Unsafe.TryGetPointer<ActorInputBuffer>(entity, out var actorInputInfo))
                 {
                     InputHelper.DisableLastInput(frame, actorInputInfo);
                 }

@@ -6,13 +6,13 @@ namespace Quantum
     {
         public static NetworkButtons GetButtons(Frame frame, EntityRef entityRef, int offset = 0)
         {
-            var actorInputInfo = frame.Unsafe.GetPointer<ActorInputInfo>(entityRef);
-            var inputBuffer = actorInputInfo->inputBuffer;
+            var actorInputBuffer = frame.Unsafe.GetPointer<ActorInputBuffer>(entityRef);
+            var inputBuffer = actorInputBuffer->inputBuffer;
 
-            return inputBuffer[(actorInputInfo->bufferPosition - offset) % Constants.INPUT_BUFFER_SIZE];
+            return inputBuffer[(actorInputBuffer->bufferPosition - offset) % Constants.INPUT_BUFFER_SIZE];
         }
         
-        public static ButtonData GetButtonData(Frame frame, ActorInputInfo* actorInputInfo, ActorInputButtonType buttons, 
+        public static ButtonData GetButtonData(Frame frame, ActorInputBuffer* actorInputInfo, ActorInputButtonType buttons, 
             int startOffset = 0, int bufferFrames = 0, ButtonDataCheckType checkType = ButtonDataCheckType.ALL, bool ignoreDisabledInputs = false)
         {
             if(startOffset + bufferFrames >= Constants.INPUT_BUFFER_SIZE-1) return default;
@@ -94,7 +94,7 @@ namespace Quantum
             return FPVector2.Down;
         }
 
-        public static int CheckInputConditions(Frame frame, ActorInputInfo* actorInputInfo, InputCondition[] conditions, int lastBufferPos)
+        public static int CheckInputConditions(Frame frame, ActorInputBuffer* actorInputInfo, InputCondition[] conditions, int lastBufferPos)
         {
             for(var i = conditions.Length-1; i >= 0; i--)
             {
@@ -104,7 +104,7 @@ namespace Quantum
             return lastBufferPos;
         }
         
-        public static bool CheckInputConditionsResult(Frame frame, ActorInputInfo* actorInputInfo, InputCondition[] conditions)
+        public static bool CheckInputConditionsResult(Frame frame, ActorInputBuffer* actorInputInfo, InputCondition[] conditions)
         {
             int lastBufferPos = actorInputInfo->bufferPosition;
             for(int i = conditions.Length-1; i >= 0; i--)
@@ -115,7 +115,7 @@ namespace Quantum
             return true;
         }
 
-        public static int CheckInputCondition(Frame frame, ActorInputInfo* actorInputInfo, InputCondition condition, int bufferStartPosition)
+        public static int CheckInputCondition(Frame frame, ActorInputBuffer* actorInputInfo, InputCondition condition, int bufferStartPosition)
         {
             if (condition.sequence.Length == 0) return -1;
             
@@ -139,7 +139,7 @@ namespace Quantum
             return (source & input) == input;
         }
         
-        public static int CheckInputSequence(Frame frame, ActorInputInfo* actorInputInfo, InputBitmask[] sequence, int impreciseInputCount, bool inputAllowDisable, int bufferStartPosition, int bufferEndPosition)
+        public static int CheckInputSequence(Frame frame, ActorInputBuffer* actorInputInfo, InputBitmask[] sequence, int impreciseInputCount, bool inputAllowDisable, int bufferStartPosition, int bufferEndPosition)
         {
             int sequencesIndex = sequence.Length - 1;
             int framesSinceLastMatch = 0;
@@ -179,7 +179,7 @@ namespace Quantum
             return -1;
         }
 
-        public static int CheckInputSequenceStrict(Frame frame, ActorInputInfo* actorInputInfo, InputBitmask[] sequence, int impreciseInputCount, bool inputAllowDisable, int bufferStartPosition, int bufferEndPosition)
+        public static int CheckInputSequenceStrict(Frame frame, ActorInputBuffer* actorInputInfo, InputBitmask[] sequence, int impreciseInputCount, bool inputAllowDisable, int bufferStartPosition, int bufferEndPosition)
         {
             int inputIndex = sequence.Length - 1;
             int framesSinceLastMatch = 0;
@@ -229,7 +229,7 @@ namespace Quantum
             return -1;
         }
 
-        public static int CheckInputSequenceOnce(Frame frame, ActorInputInfo* actorInputInfo, InputBitmask[] sequence, int impreciseInputCount, bool inputAllowDisable, int bufferStartPosition, int bufferEndPosition)
+        public static int CheckInputSequenceOnce(Frame frame, ActorInputBuffer* actorInputInfo, InputBitmask[] sequence, int impreciseInputCount, bool inputAllowDisable, int bufferStartPosition, int bufferEndPosition)
         {
             int inputIndex = sequence.Length - 1;
             int framesSinceLastMatch = 0;
@@ -273,7 +273,7 @@ namespace Quantum
             return -1;
         }
 
-        public static int CheckInputSequenceOnceStrict(Frame frame, ActorInputInfo* actorInputInfo, InputBitmask[] sequence, int impreciseInputCount, bool inputAllowDisable, int bufferStartPosition, int bufferEndPosition)
+        public static int CheckInputSequenceOnceStrict(Frame frame, ActorInputBuffer* actorInputInfo, InputBitmask[] sequence, int impreciseInputCount, bool inputAllowDisable, int bufferStartPosition, int bufferEndPosition)
         {
             int inputIndex = sequence.Length - 1;
             int framesSinceLastMatch = 0;
@@ -329,7 +329,7 @@ namespace Quantum
             return -1;
         }
 
-        public static void DisableLastInput(Frame frame, ActorInputInfo* actorInputInfo)
+        public static void DisableLastInput(Frame frame, ActorInputBuffer* actorInputInfo)
         {
             var inputDisabled = actorInputInfo->inputDisabled;
             var inputBuffer = actorInputInfo->inputBuffer;
@@ -337,7 +337,7 @@ namespace Quantum
             inputDisabled[actorInputInfo->bufferPosition % Constants.INPUT_BUFFER_SIZE] = inputBuffer[actorInputInfo->bufferPosition % Constants.INPUT_BUFFER_SIZE];
         }
 
-        public static void DisableInput(Frame frame, ActorInputInfo* actorInputInfo, ActorInputButtonType buttons)
+        public static void DisableInput(Frame frame, ActorInputBuffer* actorInputInfo, ActorInputButtonType buttons)
         {
             var inputDisabled = actorInputInfo->inputDisabled;
             inputDisabled[actorInputInfo->bufferPosition % Constants.INPUT_BUFFER_SIZE] = new NetworkButtons((int)buttons);

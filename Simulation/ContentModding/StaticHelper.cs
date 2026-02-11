@@ -88,7 +88,7 @@ namespace Quantum
             .Add<Quantum.BoxCombatant>(Quantum.BoxCombatant.Serialize, null, Quantum.BoxCombatant.OnRemoved,
               ComponentFlags.None)
             .Add<Quantum.CharaAnimator>(Quantum.CharaAnimator.Serialize, null, null, ComponentFlags.None)
-            .Add<Quantum.ActorInputInfo>(Quantum.ActorInputInfo.Serialize, null, Quantum.ActorInputInfo.OnRemoved,
+            .Add<Quantum.ActorInputBufferr>(Quantum.ActorInputBufferr.Serialize, null, Quantum.ActorInputBufferr.OnRemoved,
               ComponentFlags.None)
             .Add<Quantum.CharaLink>(Quantum.CharaLink.Serialize, null, null, ComponentFlags.None)
             .Add<Quantum.CharaPhysics>(Quantum.CharaPhysics.Serialize, null, null, ComponentFlags.None)
