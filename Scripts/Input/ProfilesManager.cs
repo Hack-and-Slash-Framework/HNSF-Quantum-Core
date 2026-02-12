@@ -33,16 +33,14 @@ namespace HnSF.Input
             }
         }
 
-        public void SaveProfiles()
+        public virtual void SaveProfiles()
         {
-            FileSaveLoadService.SaveFileAsJson("profiles.json", profiles, true);
+            Debug.LogError("SaveProfiles not implemented.");
         }
 
-        public bool LoadProfiles()
+        public virtual bool LoadProfiles()
         {
-            if (!FileSaveLoadService.TryLoadFileFromJson("profiles.json", out List<ProfileDefinition> loadedProfiles))
-                return false;
-            profiles = loadedProfiles;
+            Debug.LogError("LoadProfiles not implemented.");
             UpdateProfileIndexMappings();
             return true;
         }

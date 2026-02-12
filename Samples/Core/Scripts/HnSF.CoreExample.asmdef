@@ -1,0 +1,19 @@
+{
+    "name": "HnSF.CoreExample",
+    "rootNamespace": "",
+    "references": [
+        "GUID:4c173844a68621548ba50e78fdad1e2e",
+        "GUID:f51ebe6a0ceec4240a699833d6309b23",
+        "GUID:5d82202959c2f144ea95e134645b6833",
+        "GUID:75469ad4d38634e559750d17036d5f7c"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

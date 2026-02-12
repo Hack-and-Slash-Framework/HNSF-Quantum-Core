@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 using Cysharp.Threading.Tasks;
+using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.AddressableAssets.ResourceLocators;
@@ -95,8 +96,8 @@ namespace HnSF
                     Debug.LogError($"Mod folder {infoFilePath} has no info.json file.");
                     continue;
                 }
-
-                if (!FileSaveLoadService.TryLoadFileFromJson(infoFilePath, out AvailableModDefinition amd))
+                
+                if (!TryLoadInfoFile(infoFilePath, out AvailableModDefinition amd))
                 {
                     Debug.LogError($"Mod folder {infoFilePath}: Couldn't load info.json file.");
                     continue;
@@ -111,6 +112,30 @@ namespace HnSF
             foreach (var invalidPath in currentAvailbleModPaths)
             {
                 RemoveAvailableMod(PathToAvailableMod[invalidPath]);
+            }
+        }
+
+        protected virtual bool TryLoadInfoFile(string infoFilePath, out AvailableModDefinition availableModDefinition)
+        {
+            availableModDefinition = default;
+            var filePathUri = new Uri(Path.Combine(Application.persistentDataPath, infoFilePath));
+            var filePath = Uri.UnescapeDataString(filePathUri.AbsolutePath);
+            if (!filePathUri.IsFile || !File.Exists(filePath)) return false;
+            
+            try
+            {
+                string jsonString;
+                using (var streamReader = File.OpenText(filePath))
+                {
+                    jsonString = streamReader.ReadToEnd();
+                }
+                availableModDefinition = JsonConvert.DeserializeObject<AvailableModDefinition>(jsonString);
+                return true;
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"Error loading info file from json: {e}");
+                return false;
             }
         }
 
@@ -291,16 +316,18 @@ namespace HnSF
             currentModProfileIndex = modProfiles.IndexOf(modProfile);
         }
 
-        public void LoadModProfiles()
+        public virtual void LoadModProfiles()
         {
-            if (!FileSaveLoadService.TryLoadFileFromJson(ModProfilesFilename, out modProfiles))
-            {
-                Debug.Log("Couldn't load mod profile. Creating new one.");
-                modProfiles = new List<ModProfile>();
-                modProfiles.Add(new ModProfile());
-                SaveModProfiles();
-                return;
-            }
+            Debug.Log("Couldn't load mod profile. Creating new one.");
+            modProfiles = new List<ModProfile>();
+            modProfiles.Add(new ModProfile());
+            SaveModProfiles();
+            return;
+        }
+        
+        public virtual void SaveModProfiles()
+        {
+            Debug.LogError("SaveModProfiles not implemented.");
         }
 
         public bool IsModLoaded(string modID)
@@ -318,11 +345,6 @@ namespace HnSF
         {
             currentProfile = GetCurrentModProfile();
             return currentProfile != null;
-        }
-
-        public void SaveModProfiles()
-        {
-            FileSaveLoadService.SaveFileAsJson(ModProfilesFilename, modProfiles);
         }
 
         public Guid GenerateModGuid(bool loadedOnly = true, bool onlyRequiredMods = true)
