@@ -8,7 +8,7 @@ namespace HnSF
 {
     [System.Serializable]
     [CreateAssetMenu(menuName = "HnSF/UMod/Content/Hud Element Definition")]
-    public class UModHudElementDefinition : BaseHudElementDefinition
+    public partial class UModHudElementDefinition : BaseHudElementDefinition
     {
         public override string Name => label;
         public override string Description => description;

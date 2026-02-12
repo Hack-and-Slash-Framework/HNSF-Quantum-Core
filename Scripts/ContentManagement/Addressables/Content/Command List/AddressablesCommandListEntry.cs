@@ -8,7 +8,7 @@ using UnityEngine.Video;
 namespace HnSF
 {
     [CreateAssetMenu(menuName = "HnSF/Addressables/Content/Command List Entry")]
-    public class AddressablesCommandListEntry : BaseCommandListEntry
+    public partial class AddressablesCommandListEntry : BaseCommandListEntry
     {
         public override BaseCommandListEntry[] ChildCommands => children;
 

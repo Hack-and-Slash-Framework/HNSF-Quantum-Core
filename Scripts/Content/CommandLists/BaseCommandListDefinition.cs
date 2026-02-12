@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace HnSF
 {
-    public abstract class BaseCommandListDefinition : IContentDefinition
+    public abstract partial class BaseCommandListDefinition : IContentDefinition
     {
         public abstract BaseCommandListMovesetDefinition[] GetMovesets();
     }

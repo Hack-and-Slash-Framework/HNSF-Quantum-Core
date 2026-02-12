@@ -6,8 +6,11 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace HnSF
 {
+#if HNSF_DISABLE_CONTENT_ASSET_MENU
+#else
     [CreateAssetMenu(menuName = "HnSF/Addressables/Content/Song Definition")]
-    public class AddressablesSongDefinition : BaseSongDefinition
+#endif
+    public partial class AddressablesSongDefinition : BaseSongDefinition
     {
         public override string Name => songName;
         public override string Description => description;

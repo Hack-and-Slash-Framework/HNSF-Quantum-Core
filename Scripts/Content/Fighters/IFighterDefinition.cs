@@ -3,7 +3,7 @@ using Quantum;
 using HnSF;
 using UnityEngine;
 
-public class IFighterDefinition : IContentDefinition
+public partial class IFighterDefinition : IContentDefinition
 {
     public virtual int Health { get; }
 

@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using Quantum;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace HnSF
 {
     [System.Serializable]
     [CreateAssetMenu(menuName = "HnSF/UMod/Content/Gamemode Definition")]
-    public class UModGamemodeDefinition : BaseGamemodeDefinition
+    public partial class UModGamemodeDefinition : BaseGamemodeDefinition
     {
         public override string Name => gamemodeName;
         public override string Description => description;

@@ -1,7 +1,7 @@
 using Cysharp.Threading.Tasks;
 
 [System.Serializable]
-public abstract class IMapDefinition : IContentDefinition
+public abstract partial class IMapDefinition : IContentDefinition
 {
     public abstract Quantum.Map GetMapAsset();
     public abstract string GetSceneName();

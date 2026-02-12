@@ -3,7 +3,7 @@ using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 [System.Serializable]
-public abstract class IContentDefinition : ScriptableObject
+public abstract partial class IContentDefinition : ScriptableObject
 {
     public virtual LoadedModDefinition modDefinition
     {

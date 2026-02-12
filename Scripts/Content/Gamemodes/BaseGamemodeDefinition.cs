@@ -3,7 +3,7 @@ using Quantum;
 using UnityEngine;
 
 [System.Serializable]
-public abstract class BaseGamemodeDefinition : IContentDefinition
+public abstract partial class BaseGamemodeDefinition : IContentDefinition
 {
     public abstract int MinimumPlayers { get; protected set; }
     public abstract int MaximumPlayers { get; protected set; }

@@ -17,6 +17,12 @@
     "defineConstraints": [
         "HNSF_UMOD"
     ],
-    "versionDefines": [],
+    "versionDefines": [
+        {
+            "name": "Select...",
+            "expression": "",
+            "define": ""
+        }
+    ],
     "noEngineReferences": false
 }

@@ -7,8 +7,11 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace HnSF
 {
+#if HNSF_DISABLE_CONTENT_ASSET_MENU
+#else
     [CreateAssetMenu(menuName = "HnSF/Addressables/Content/Hud Element Definition")]
-    public class AddressablesHudElementDefinition : BaseHudElementDefinition
+#endif
+    public partial class AddressablesHudElementDefinition : BaseHudElementDefinition
     {
         public override string Name => label;
         public override string Description => description;

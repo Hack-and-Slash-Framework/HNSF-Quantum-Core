@@ -9,7 +9,7 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 namespace HnSF
 {
     [CreateAssetMenu(menuName = "HnSF/Addressables/Content/Command List Definition")]
-    public class AddressablesCommandListDefinition : BaseCommandListDefinition
+    public partial class AddressablesCommandListDefinition : BaseCommandListDefinition
     {
         [SerializeField] private AssetReferenceT<BaseCommandListMovesetDefinition>[] movesetRootEntries;
 

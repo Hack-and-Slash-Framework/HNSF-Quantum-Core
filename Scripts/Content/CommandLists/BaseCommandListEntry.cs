@@ -5,7 +5,7 @@ using UnityEngine.Video;
 
 namespace HnSF
 {
-    public abstract class BaseCommandListEntry : IContentDefinition
+    public abstract partial class BaseCommandListEntry : IContentDefinition
     {
         public string commandName;
         public string command;

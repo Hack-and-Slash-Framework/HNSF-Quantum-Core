@@ -5,7 +5,7 @@ using UnityEngine;
 namespace HnSF
 {
     [CreateAssetMenu(menuName = "HnSF/UMod/Content/Song Definition")]
-    public class UModSongDefinition : BaseSongDefinition, IOnUModPrebuild
+    public partial class UModSongDefinition : BaseSongDefinition, IOnUModPrebuild
     {
         public override string Name => songName;
         public override string Description => description;
