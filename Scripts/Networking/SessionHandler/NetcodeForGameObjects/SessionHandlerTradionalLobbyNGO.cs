@@ -330,9 +330,14 @@ namespace HnSF.sessionhandling.handlers.NGO
         {
             roomMatchSessionHandler?.OnMatchEnded.RemoveListener(RoomMatchEnded);
             ReportMatchEndReason(MatchEndResult.Ended);
-            _ = LobbyHelpers.ReturnToTraditionalLobby();
+            WhenRoomMatchEnded();
         }
 
+        protected virtual void WhenRoomMatchEnded()
+        {
+            
+        }
+        
         protected virtual void RoomMasterSendMatchCode(Room arg0)
         {
             lobbyNetworkObject.SendRoomMatchCodeRpc(networkManager.LocalClient.ClientId, arg0.Name);
