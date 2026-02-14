@@ -80,19 +80,10 @@ namespace Quantum
 #endif
         public bool forceIgnoreRotY = true;
         public bool basedOnLookVector = false;
-        public FPVector3 hitForceGrounded;
-        public FPVector3 hitForceAerial;
-        public FPVector3 blockForceGrounded;
-        public FPVector3 blockForceAerial;
-        public bool hasCustomGravity;
-        [DrawIf(nameof(hasCustomGravity), true)]
-        public FP hitstunGravity = 0;
-        public bool hasCustomTraction;
-        [DrawIf(nameof(hasCustomTraction), true)]
-        public FP hitstunTraction = 0;
-        public bool hasCustomAirFriction;
-        [DrawIf(nameof(hasCustomAirFriction), true)]
-        public FP hitstunAirFriction = 0;
+        public HitForceData forceGroundHit;
+        public HitForceData forceAerialHit;
+        public HitForceData forceGroundBlocked;
+        public HitForceData forceAerialBlocked;
         public bool canReverseHit;
         
 #if QUANTUM_UNITY

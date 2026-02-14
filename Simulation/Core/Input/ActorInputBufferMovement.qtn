@@ -1,0 +1,6 @@
+component ActorInputBufferMovement
+{
+    array<FPVector2>[MOVEMENT_BUFFER_SIZE] buffer;
+    UInt16 bufferPosition;
+    bool disableReadMovement;
+}

@@ -1,8 +1,6 @@
-using Photon.Deterministic;
-
 namespace Quantum
 {
-    public static unsafe class VisualEffectHelper
+    public static unsafe partial class VisualEffectHelper
     {
         
     }

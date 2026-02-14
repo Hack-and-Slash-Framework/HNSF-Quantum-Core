@@ -1,0 +1,8 @@
+signal CombatboxResolvingPreBroadphase();
+signal CombatboxResolvingPostBroadphase();
+signal CombatboxResolvingPostNarrowphase();
+
+signal CombatboxResolvingHitboxHurtboxPairCreatedOrUpdated(HitboxCombatPair* pair);
+signal CombatboxResolvingGotHitReactionResult(HitboxCombatPair* pair, HitReactionResultData* hitReactionData);
+
+signal CombatboxResolvingPostResolution();

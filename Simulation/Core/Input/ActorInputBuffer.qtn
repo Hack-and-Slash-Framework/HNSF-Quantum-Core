@@ -5,8 +5,8 @@ import enum ActorInputButtonType(int);
 component ActorInputBuffer
 {
     ActorInputButtonType ignoreButtons;
-    array<NetworkButtons>[30] inputBuffer;
-    array<NetworkButtons>[30] inputDisabled;
+    array<NetworkButtons>[INPUT_BUFFER_SIZE] inputBuffer;
+    array<NetworkButtons>[INPUT_BUFFER_SIZE] inputDisabled;
     UInt16 bufferPosition;
     Int32 extraBuffer;
 }

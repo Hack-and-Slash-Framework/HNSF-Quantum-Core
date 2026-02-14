@@ -21,7 +21,7 @@ namespace Quantum
         public bool positionAsOffset;
         public FPVector3 positionOffset;
         public bool rotationAsOffset;
-        public FP rotationOffset;
+        public FPVector3 rotationOffset;
         public bool rotateToMoveForce;
         public FP forwardOffset;
         
