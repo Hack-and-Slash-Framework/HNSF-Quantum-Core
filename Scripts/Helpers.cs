@@ -158,38 +158,6 @@ namespace HnSF
             return key;
         }
 
-        public static async UniTask<bool> TrySetupLocalPlayers()
-        {
-            var gameManager = HnSFManagersContainer.instance;
-            bool ss = false;
-            bool pResult = true;
-            var inputManager = gameManager.inputManager;
-            gameManager.devicePickerUtility.Open(minimumPlayers: 1, maximumPlayers: 4);
-            gameManager.devicePickerUtility.OnPickerCancel += (dpu) =>
-            {
-                ss = true;
-                pResult = false;
-            };
-            gameManager.devicePickerUtility.OnPickerConfirm += (dpu) => ss = true;
-            await UniTask.WaitUntil(() => ss == true);
-
-            if (pResult == false) return false;
-
-            var players = gameManager.devicePickerUtility.GetValidInputPlayers();
-            gameManager.devicePickerUtility.Close();
-
-            gameManager.inputManager.SetPlayerCount(players.Count);
-            inputManager.ReturnAllDevicesToSystem();
-            for (int i = 0; i < players.Count; i++)
-            {
-                inputManager.AssignDevicesToPlayer(players[i].ToArray(), i + 1);
-                inputManager.playerInputManagers[i + 1].ApplyProfile("Default");
-                inputManager.playerInputManagers[i + 1].SwitchToPlayerMap();
-            }
-
-            return true;
-        }
-
         public static Vector3 WorldToScreenSpace(Vector3 worldPos, Camera cam, RectTransform area)
         {
             Vector3 screenPoint = cam.WorldToScreenPoint(worldPos);

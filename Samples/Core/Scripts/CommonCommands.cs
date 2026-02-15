@@ -20,21 +20,22 @@ namespace HnSF.commands
             {
                 bool? devicePickerResult = null;
 
-                drm.devicePickerUtility.Open(selectedCharacters.Count, selectedCharacters.Count);
-                drm.devicePickerUtility.OnPickerConfirm += dpu => { devicePickerResult = true; };
-                drm.devicePickerUtility.OnPickerCancel += dpu => { devicePickerResult = false; };
+                var devicePickerUtility = DevicePickerUtility.instance;
+                devicePickerUtility.Open(selectedCharacters.Count, selectedCharacters.Count);
+                devicePickerUtility.OnPickerConfirm += dpu => { devicePickerResult = true; };
+                devicePickerUtility.OnPickerCancel += dpu => { devicePickerResult = false; };
                 await UniTask.WaitUntil(() => devicePickerResult.HasValue);
 
                 if (devicePickerResult == null || devicePickerResult.Value == false)
                 {
-                    drm.devicePickerUtility.Close();
+                    devicePickerUtility.Close();
                     return;
                 }
 
-                var validPlayers = drm.devicePickerUtility.GetValidInputPlayers();
+                var validPlayers = devicePickerUtility.GetValidInputPlayers();
                 drm.inputManager.SetPlayersBasedOnDeviceLists(validPlayers);
                 drm.inputManager.SwitchAllToUIActionMap();
-                drm.devicePickerUtility.Close();
+                devicePickerUtility.Close();
             }
 
             var gameManager = HnSFManagersContainer.instance;

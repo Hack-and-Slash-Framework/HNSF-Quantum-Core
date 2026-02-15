@@ -13,7 +13,7 @@ namespace HnSF.Input
             GAMEPAD
         }
         
-        public List<InputPlayerManager> playerInputManagers = new();
+        public List<InputPlayerManagerBase> playerInputManagers = new();
         public int autoAssignDevicesTo = 0;
         
         public void Initialize()
@@ -36,7 +36,7 @@ namespace HnSF.Input
         {
             GameObject go = new GameObject("System Player");
             go.transform.SetParent(transform, false);
-            var ipm = go.AddComponent<InputPlayerManager>();
+            var ipm = go.AddComponent<InputPlayerManagerBase>();
             ipm.Initialize(0);
 
             playerInputManagers.Add(ipm);
@@ -49,7 +49,7 @@ namespace HnSF.Input
         {
             GameObject go = new GameObject($"Player {playerInputManagers.Count}");
             go.transform.SetParent(transform, false);
-            var ipm = go.AddComponent<InputPlayerManager>();
+            var ipm = go.AddComponent<InputPlayerManagerBase>();
             
             playerInputManagers.Add(ipm);
             ipm.Initialize(playerInputManagers.Count-1);
@@ -92,20 +92,20 @@ namespace HnSF.Input
             }
         }
 
-        public InputPlayerManager GetSystemPlayer()
+        public InputPlayerManagerBase GetSystemPlayer()
         {
             return playerInputManagers[0];
         }
         
-        public InputPlayerManager GetPlayer(int playerId)
+        public InputPlayerManagerBase GetPlayer(int playerId)
         {
             if (playerId == 0 || playerId >= playerInputManagers.Count) return null;
             return playerInputManagers[playerId];
         }
 
-        public List<InputPlayerManager> GetPlayers()
+        public List<InputPlayerManagerBase> GetPlayers()
         {
-            var l = new List<InputPlayerManager>();
+            var l = new List<InputPlayerManagerBase>();
             for (int i = 1; i < playerInputManagers.Count; i++)
             {
                 l.Add(playerInputManagers[i]);
@@ -140,16 +140,7 @@ namespace HnSF.Input
                 pim.SwitchToPlayerMap();
             }
         }
-
-        public void ApplyProfileToAll(string profileName)
-        {
-            foreach (var pim in playerInputManagers)
-            {
-                if (pim.Id == 0) continue;
-                pim.ApplyProfile(profileName);
-            }
-        }
-
+        
         public void ReturnAllDevicesToSystem()
         {
             for (int i = 1; i < playerInputManagers.Count; i++)
@@ -221,7 +212,7 @@ namespace HnSF.Input
             }
         }
 
-        public void SetPlayersBasedOnDeviceLists(List<List<InputDevice>> players)
+        public virtual void SetPlayersBasedOnDeviceLists(List<List<InputDevice>> players)
         {
             if (players.Count == 0) return;
             ReturnAllDevicesToSystem();
@@ -230,7 +221,6 @@ namespace HnSF.Input
             for (int i = 0; i < players.Count; i++)
             {
                 AssignDevicesToPlayer(players[i].ToArray(), i+1);
-                playerInputManagers[i+1].ApplyProfile("Default");
             }
         }
     }

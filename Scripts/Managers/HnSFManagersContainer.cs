@@ -1,9 +1,7 @@
 using System;
-using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using HnSF.Input;
 using HnSF.sessionhandling;
-using HnSF.ui;
 using UnityEngine;
 using UnityEngine.Events;
 #if HNSF_PEW_EOS
@@ -17,23 +15,18 @@ using UnityEditor;
 
 namespace HnSF
 {
-    public class HnSFManagersContainer : MonoBehaviour, IServiceProviderEx
+    public class HnSFManagersContainer : MonoBehaviour
     {
-        public Dictionary<Type, object> Services = new Dictionary<Type, object>();
-        
         [NonSerialized] public static UnityEvent WhenInitialized = new UnityEvent();
         [NonSerialized] public static bool initialized = false;
         
         public static HnSFManagersContainer instance = null;
         
         public InputManager inputManager;
-        public ProfilesManager profilesManager;
-        public DevicePickerUtility devicePickerUtility;
         public SplitScreenManager splitScreenManager;
         public ModManager modManager;
         public ModContentManager contentManager;
         public AudioListenerManager audioListenerManager;
-        public GenericContentPickerInstanceManager genericContentPickerInstanceManager;
         public SessionHandlerManager sessionHandlerManager;
         public MusicManager musicManager;
 #if HNSF_PEW_EOS
@@ -77,7 +70,6 @@ namespace HnSF
             if(dontDestroyOnLoad && transform.parent == null) DontDestroyOnLoad(gameObject);
             instance = this;
             inputManager?.Initialize();
-            profilesManager?.Init();
             splitScreenManager?.Init();
             if(modManager != null) await modManager.Init();
             contentManager?.Init();
@@ -91,39 +83,13 @@ namespace HnSF
                 eosManager = eosManagerGameobject.GetComponent<EOSManager>();
             }
 #endif
-            RegisterServices();
             initialized = true;
             WhenInitialized.Invoke();
-        }
-
-        private void RegisterServices()
-        {
-            if(inputManager) Services.Add(typeof(InputManager), inputManager);
-            if(profilesManager) Services.Add(typeof(ProfilesManager), profilesManager);
-            if(splitScreenManager) Services.Add(typeof(SplitScreenManager), splitScreenManager);
-            if(modManager) Services.Add(typeof(ModManager), modManager);
-            if(contentManager) Services.Add(typeof(ModContentManager), contentManager);
-            if(musicManager) Services.Add(typeof(MusicManager), musicManager);
         }
 
         private void OnDestroy() 
         {
             if(instance == this) instance = null;
-        }
-
-        public object GetService(Type serviceType)
-        {
-            return Services.GetValueOrDefault(serviceType);
-        }
-
-        public T GetService<T>() where T : class
-        {
-            return Services.GetValueOrDefault(typeof(T)) as T;
-        }
-
-        public bool ServiceExists(Type serviceType)
-        {
-            return Services.ContainsKey(serviceType);
         }
     }
 }

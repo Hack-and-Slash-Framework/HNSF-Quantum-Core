@@ -1,0 +1,33 @@
+{
+    "name": "HnSF.BaseExample.NGO",
+    "rootNamespace": "",
+    "references": [
+        "UniTask",
+        "HnSF.Unity",
+        "Unity.TextMeshPro",
+        "Unity.Netcode.Runtime",
+        "Quantum.Simulation",
+        "Photon.Realtime",
+        "HnSF.CoreExample",
+        "Unity.Collections",
+        "Unity.Networking.Transport"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "HAS_NGO",
+        "UNITY_NETCODE_NATIVE_COLLECTION_SUPPORT"
+    ],
+    "versionDefines": [
+        {
+            "name": "com.unity.netcode.gameobjects",
+            "expression": "1.0.0",
+            "define": "HAS_NGO"
+        }
+    ],
+    "noEngineReferences": false
+}
