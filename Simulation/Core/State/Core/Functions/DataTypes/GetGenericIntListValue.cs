@@ -30,6 +30,8 @@ namespace HnSF.core.state.functions
         public override HNSFStateFunction CopyTo(HNSFStateFunction target)
         {
             var t = target as GetGenericIntListValue;
+            t.startingDirection = startingDirection;
+            t.offset = offset;
             return base.CopyTo(target);
         }
     }

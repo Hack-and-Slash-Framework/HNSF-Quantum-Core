@@ -68,6 +68,8 @@ namespace HnSF.core.state.actions
         {
             var t = target as StateActionExternalFirstValid;
             t.externalActionWithConditions = externalActionWithConditions.ToArray();
+            t.shouldExitEarlyWhenPossible = shouldExitEarlyWhenPossible;
+            t.returnExitEarlyStatus = returnExitEarlyStatus;
             return base.CopyTo(target);
         }
     }

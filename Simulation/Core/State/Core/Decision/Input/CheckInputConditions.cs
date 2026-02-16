@@ -64,6 +64,7 @@ namespace HnSF.core.state.decisions
             var t = target as CheckInputConditions;
             t.inputConditionListAssetRef = inputConditionListAssetRef.ToArray();
             t.offset = offset;
+            t.checkType = checkType;
             return base.CopyTo(target);
         }
     }

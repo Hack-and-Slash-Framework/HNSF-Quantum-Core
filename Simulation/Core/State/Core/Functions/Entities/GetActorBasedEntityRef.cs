@@ -21,6 +21,7 @@ namespace HnSF.core.state.functions
         public override HNSFStateFunction CopyTo(HNSFStateFunction target)
         {
             var t = target as GetActorBasedEntityRef;
+            t.targetContext = targetContext;
             return base.CopyTo(target);
         }
     }

@@ -36,12 +36,13 @@ namespace HnSF.core.state.actions
 
         public override HNSFStateAction Copy()
         {
-            return CopyTo(new WaitForEndOfState());
+            return CopyTo(new WaitForFrames());
         }
 
         public override HNSFStateAction CopyTo(HNSFStateAction target)
         {
-            var t = target as WaitForEndOfState;
+            var t = target as WaitForFrames;
+            t.framesToWait = framesToWait;
             return base.CopyTo(target);
         }
     }

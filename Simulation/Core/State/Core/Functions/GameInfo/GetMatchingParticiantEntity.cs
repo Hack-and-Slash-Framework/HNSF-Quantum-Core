@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Quantum;
 
 namespace HnSF.core.state.functions
@@ -77,12 +78,15 @@ namespace HnSF.core.state.functions
 
         public override HNSFStateFunction Copy()
         {
-            return CopyTo(new GetChargeLevel());
+            return CopyTo(new GetMatchingParticipantEntity());
         }
 
         public override HNSFStateFunction CopyTo(HNSFStateFunction target)
         {
-            var t = target as GetChargeLevel;
+            var t = target as GetMatchingParticipantEntity;
+            t.battleActorFilter = battleActorFilter.ToList();
+            t.teamFilter = teamFilter;
+            t.checkIfExistsInTaggedEntityMap = checkIfExistsInTaggedEntityMap;
             return base.CopyTo(target);
         }
     }

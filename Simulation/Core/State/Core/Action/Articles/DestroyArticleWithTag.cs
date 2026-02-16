@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Photon.Deterministic;
 using Quantum;
 
@@ -36,6 +37,14 @@ namespace HnSF.core.state.actions
         public override HNSFStateAction Copy()
         {
             return CopyTo(new DestroyArticleWithTag());
+        }
+
+        public override HNSFStateAction CopyTo(HNSFStateAction target)
+        {
+            var t = target as DestroyArticleWithTag;
+            t.destroyAllWithTag = destroyAllWithTag;
+            t.validTags = validTags.ToList();
+            return base.CopyTo(target);
         }
     }
 }

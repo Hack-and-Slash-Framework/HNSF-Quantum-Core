@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Quantum;
 
 namespace HnSF.core.state.decisions
@@ -31,6 +32,7 @@ namespace HnSF.core.state.decisions
         public override HNSFStateDecision CopyTo(HNSFStateDecision target)
         {
             var t = target as HasArticleWithTag;
+            t.validTags = validTags.ToList();
             return base.CopyTo(target);
         }
     }

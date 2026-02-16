@@ -33,6 +33,7 @@ namespace HnSF.core.state.actions
         public override HNSFStateAction CopyTo(HNSFStateAction target)
         {
             var t = target as AssignGenericIntTyping;
+            t.assignedTargetContext = assignedTargetContext;
             t.assignedValueParam = assignedValueParam.Clone() as HNSFParamInt;
             return base.CopyTo(target);
         }

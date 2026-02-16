@@ -7,7 +7,7 @@ namespace HnSF.core.state.actions
     [Serializable]
     public unsafe partial class DirectDamage : HNSFStateAction
     {
-        public AssetRef<HitInfo> hitInfo;
+        public AssetRef<HitInfoBase> hitInfo;
         public bool releaseThrowee;
         
         public override bool ExecuteAction(Frame frame, EntityRef entity, FP rangePercent,

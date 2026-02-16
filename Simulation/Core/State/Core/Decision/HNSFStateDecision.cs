@@ -27,6 +27,7 @@ namespace HnSF.core.state.decisions
         public virtual HNSFStateDecision CopyTo(HNSFStateDecision target)
         {
             target.Label = Label;
+            target.decisionTargetType = decisionTargetType;
             return target;
         }
     }

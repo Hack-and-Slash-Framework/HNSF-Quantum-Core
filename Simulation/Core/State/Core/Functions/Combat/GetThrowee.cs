@@ -37,6 +37,8 @@ namespace HnSF.core.state.functions
         public override HNSFStateFunction CopyTo(HNSFStateFunction target)
         {
             var t = target as GetThrowee;
+            t.anyThrowee = anyThrowee;
+            t.throweeId = throweeId;
             return base.CopyTo(target);
         }
     }

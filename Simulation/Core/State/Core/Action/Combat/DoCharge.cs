@@ -69,6 +69,10 @@ namespace HnSF.core.state.actions
         public override HNSFStateAction CopyTo(HNSFStateAction target)
         {
             var t = target as DoCharge;
+            t.chargePerLevel = chargePerLevel.ToArray();
+            t.canHoldCharge = canHoldCharge;
+            t.buttonsToHold = buttonsToHold;
+            t.holdOnLastRangeFrame = holdOnLastRangeFrame;
             return base.CopyTo(target);
         }
     }

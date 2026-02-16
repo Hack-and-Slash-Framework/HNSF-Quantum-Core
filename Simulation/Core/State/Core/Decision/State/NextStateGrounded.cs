@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Quantum;
 
 namespace HnSF.core.state.decisions
@@ -25,7 +26,8 @@ namespace HnSF.core.state.decisions
         public override HNSFStateDecision CopyTo(HNSFStateDecision target)
         {
             var t = target as NextStateGrounded;
-            t.validGroundedTypes = validGroundedTypes;
+            t.inverse = inverse;
+            t.validGroundedTypes = validGroundedTypes.ToArray();
             return base.CopyTo(target);
         }
     }

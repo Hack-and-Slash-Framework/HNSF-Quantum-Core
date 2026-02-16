@@ -7,7 +7,7 @@ namespace HnSF.core.state.actions
     [Serializable]
     public unsafe partial class SetLastHitByHitInfo : HNSFStateAction
     {
-        public AssetRef<HitInfo> hitInfo;
+        public AssetRef<HitInfoBase> hitInfo;
         
         public override bool ExecuteAction(Frame frame, EntityRef entity, FP rangePercent,
             ref HNSFStateContext stateContext)

@@ -34,6 +34,9 @@ namespace HnSF.core.state.decisions
         public override HNSFStateDecision CopyTo(HNSFStateDecision target)
         {
             var t = target as AttemptAssignTaggedEntity;
+            t.tagRef = tagRef;
+            t.entityRefParam = entityRefParam;
+            t.clearTaggedEntities = clearTaggedEntities;
             return base.CopyTo(target);
         }
     }
