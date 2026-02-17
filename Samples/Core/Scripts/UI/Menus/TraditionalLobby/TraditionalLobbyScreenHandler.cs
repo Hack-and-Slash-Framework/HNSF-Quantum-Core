@@ -24,7 +24,7 @@ namespace HnSF.ui.menus.traditionallobby
         public virtual bool Open()
         {
             if (roomSessionHandler == null) return false;
-            inputPlayer = HnSFManagersContainer.instance.inputManager.GetPlayer(1);
+            inputPlayer = InputManager.instance.GetPlayer(1);
             lobbyRepresentation = new TraditionalLobbyUIRepresentation();
             roomSessionHandler.SetUiLobbyRepresentation(lobbyRepresentation);
             

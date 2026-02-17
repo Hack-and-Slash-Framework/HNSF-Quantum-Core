@@ -15,9 +15,24 @@ namespace HnSF.Input
         
         public List<InputPlayerManagerBase> playerInputManagers = new();
         public int autoAssignDevicesTo = 0;
-        
+
+        public static InputManager instance;
+        public static bool initialized = false;
+
+        public void Awake()
+        {
+            Initialize();
+        }
+
         public void Initialize()
         {
+            if (instance != null)
+            {
+                GameObject.Destroy(gameObject);
+                return;
+            }
+            instance = this;
+            initialized = false;
             playerInputManagers = new(4);
             InitializeSystemPlayer();
             
@@ -25,6 +40,7 @@ namespace HnSF.Input
             playerInputManagers[0].ActivateUIHandling();
             
             InputSystem.onDeviceChange += onInputDeviceChange;
+            initialized = true;
         }
 
         private void OnDestroy()

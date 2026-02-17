@@ -53,7 +53,7 @@ namespace HnSF
         {
             this.minimumPlayers = minimumPlayers;
             this.maximumPlayers = maximumPlayers;
-            inputManager = HnSFManagersContainer.instance.inputManager;
+            inputManager = InputManager.instance;
             EventSystem.current.SetSelectedGameObject(null);
             canvasObject.SetActive(true);
             Initialize();

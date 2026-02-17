@@ -5,6 +5,7 @@ using Photon.Deterministic;
 using Quantum;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 
 namespace HnSF
 {
@@ -87,18 +88,7 @@ namespace HnSF
         
         public virtual void PollInput(CallbackPollInput callback)
         {
-            var inputManager = HnSFManagersContainer.instance.inputManager;
-            var inputPlayer = inputManager.GetPlayer(callback.PlayerSlot + 1);
-            if (inputPlayer == null)
-            {
-                Debug.LogError($"Invalid input player. {callback.PlayerSlot+1} vs input player count of {inputManager.playerInputManagers.Count-1}.");
-                return;
-            }
-
             Quantum.Input input = new Quantum.Input();
-            
-            
-            
             callback.SetInput(input, DeterministicInputFlags.Repeatable);
         }
     }

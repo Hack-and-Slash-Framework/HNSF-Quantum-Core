@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
+using HnSF.Input;
 using HnSF.sessionhandling.handlers;
 using UnityEngine;
 using UnityEngine.Events;
@@ -79,7 +80,7 @@ namespace HnSF.ui.menus
             quickMatchScreenInstancePrefab.transform.parent.gameObject.SetActive(false);
             gameObject.SetActive(true);
 
-            var inputPlayerManager = HnSFManagersContainer.instance.inputManager;
+            var inputPlayerManager = InputManager.instance;
             var splitscreenManager = HnSFManagersContainer.instance.splitScreenManager;
             
             foreach (var inputPlayer in inputPlayerManager.GetPlayers())

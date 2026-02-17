@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
+using HnSF.Input;
 using HnSF.sessionhandling.handlers;
 using Quantum;
 using UnityEngine;
@@ -33,8 +34,8 @@ namespace HnSF.commands
                 }
 
                 var validPlayers = devicePickerUtility.GetValidInputPlayers();
-                drm.inputManager.SetPlayersBasedOnDeviceLists(validPlayers);
-                drm.inputManager.SwitchAllToUIActionMap();
+                InputManager.instance.SetPlayersBasedOnDeviceLists(validPlayers);
+                InputManager.instance.SwitchAllToUIActionMap();
                 devicePickerUtility.Close();
             }
 

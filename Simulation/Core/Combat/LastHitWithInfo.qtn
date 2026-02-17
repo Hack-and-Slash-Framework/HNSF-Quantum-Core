@@ -12,7 +12,7 @@ union LastHitWithData
 
 struct DataLastHitWithHitInfo
 {
-    asset_ref<HitInfo> hitWithInfo;
+    asset_ref<HitInfoBase> hitWithInfo;
     entity_ref lastHitEntity;
     int lastHitstopAmount;
     int lastHitstunAmount;

@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using HnSF.Input;
 using HnSF.ui.menus.examples.mainmenu;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -21,8 +22,8 @@ namespace HnSF
             await UniTask.NextFrame();
             var screenSetter = GameObject.FindFirstObjectByType<MainMenuScreenResetter>();
             //screenSetter.ReturnToLobbyScreen();
-            HnSFManagersContainer.instance.inputManager.ReturnAllDevicesToSystem();
-            HnSFManagersContainer.instance.inputManager.SetPlayerCount(0);
+            InputManager.instance.ReturnAllDevicesToSystem();
+            InputManager.instance.SetPlayerCount(0);
         }
     }
 }

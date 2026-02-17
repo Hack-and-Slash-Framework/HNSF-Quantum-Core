@@ -1,6 +1,5 @@
 using System;
 using Cysharp.Threading.Tasks;
-using HnSF.Input;
 using HnSF.sessionhandling;
 using UnityEngine;
 using UnityEngine.Events;
@@ -22,7 +21,6 @@ namespace HnSF
         
         public static HnSFManagersContainer instance = null;
         
-        public InputManager inputManager;
         public SplitScreenManager splitScreenManager;
         public ModManager modManager;
         public ModContentManager contentManager;
@@ -69,7 +67,13 @@ namespace HnSF
             initialized = false;
             if(dontDestroyOnLoad && transform.parent == null) DontDestroyOnLoad(gameObject);
             instance = this;
-            inputManager?.Initialize();
+            await InitializeManagers();
+            initialized = true;
+            WhenInitialized.Invoke();
+        }
+
+        protected virtual async UniTask InitializeManagers()
+        {
             splitScreenManager?.Init();
             if(modManager != null) await modManager.Init();
             contentManager?.Init();
@@ -83,8 +87,6 @@ namespace HnSF
                 eosManager = eosManagerGameobject.GetComponent<EOSManager>();
             }
 #endif
-            initialized = true;
-            WhenInitialized.Invoke();
         }
 
         private void OnDestroy() 

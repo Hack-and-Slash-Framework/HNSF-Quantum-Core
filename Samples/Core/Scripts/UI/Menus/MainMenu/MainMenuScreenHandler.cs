@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using HnSF.Input;
 using HnSF.sessionhandling.handlers;
 using HnSF.ui.menus.traditionallobby;
 using UnityEngine;
@@ -94,8 +95,8 @@ namespace HnSF.ui.menus.examples.mainmenu
             }
             
             var validPlayers = devicePicker.GetValidInputPlayers();
-            drm.inputManager.SetPlayersBasedOnDeviceLists(validPlayers);
-            drm.inputManager.SwitchAllToUIActionMap();
+            InputManager.instance.SetPlayersBasedOnDeviceLists(validPlayers);
+            InputManager.instance.SwitchAllToUIActionMap();
             devicePicker.Close();
             return true;
         }
@@ -118,8 +119,8 @@ namespace HnSF.ui.menus.examples.mainmenu
             }
             
             var validPlayers = devicePicker.GetValidInputPlayers();
-            drm.inputManager.SetPlayersBasedOnDeviceLists(validPlayers);
-            drm.inputManager.SwitchAllToUIActionMap();
+            InputManager.instance.SetPlayersBasedOnDeviceLists(validPlayers);
+            InputManager.instance.SwitchAllToUIActionMap();
             devicePicker.Close();
 
             localMatchScreenHandler.Open();
