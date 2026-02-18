@@ -35,7 +35,7 @@ namespace HnSF
         [OnOpenAsset]
         public static bool OpenGraphAsset(int instanceID, int line)
         {
-            var asset = EditorUtility.InstanceIDToObject(instanceID);
+            var asset = EditorUtility.EntityIdToObject(instanceID);
             if (asset is not IFighterDefinition definition) return false;
 
             var ew = OpenWindow(definition);

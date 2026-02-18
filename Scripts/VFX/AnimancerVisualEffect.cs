@@ -1,13 +1,11 @@
+#if HNSF_ANIMANCER
 using System.Collections;
 using System.Collections.Generic;
-#if HNSF_ANIMANCER
 using Animancer;
-#endif
 using UnityEngine;
 
 public class AnimancerVisualEffect : VisualEffectBase
 {
-#if HNSF_ANIMANCER
     public override float CurrentTime { get => animancer.Layers[0].GetOrCreateState(clip).Time; protected set => animancer.Layers[0].GetOrCreateState(clip).Time = value; }
     
     public AnimancerComponent animancer;
@@ -61,5 +59,5 @@ public class AnimancerVisualEffect : VisualEffectBase
     {
         animancer.Graph.Speed = playRate;
     }
-#endif
 }
+#endif

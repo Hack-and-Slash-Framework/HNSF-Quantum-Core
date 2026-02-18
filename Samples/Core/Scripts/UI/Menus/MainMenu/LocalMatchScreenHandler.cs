@@ -146,7 +146,7 @@ namespace HnSF.ui.menus.examples.mainmenu
         private void SetupCharacterSelect()
         {
             var gameManager = HnSFManagersContainer.instance;
-            screenCharacterSelect.Initialize(InputManager.instance.GetPlayers());
+            _ = screenCharacterSelect.Initialize(InputManager.instance.GetPlayers());
             screenCharacterSelect.OnConfirmCharacters.AddListener(WhenCharactersConfirmed);
             screenCharacterSelect.OnCancel.AddListener(WhenCharactersCanceled);
         }

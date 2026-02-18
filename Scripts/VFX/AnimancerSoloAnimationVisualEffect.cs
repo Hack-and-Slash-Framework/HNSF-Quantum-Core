@@ -1,11 +1,9 @@
 #if HNSF_ANIMANCER
 using Animancer;
-#endif
 using UnityEngine;
 
 public class AnimancerSoloAnimationVisualEffect : VisualEffectBase
 {
-#if HNSF_ANIMANCER
     public override float CurrentTime { get => animancer.Time; protected set => animancer.Time = value; }
     
     public SoloAnimation animancer;
@@ -57,5 +55,5 @@ public class AnimancerSoloAnimationVisualEffect : VisualEffectBase
     {
         animancer.Speed = playRate;
     }
-#endif
 }
+#endif

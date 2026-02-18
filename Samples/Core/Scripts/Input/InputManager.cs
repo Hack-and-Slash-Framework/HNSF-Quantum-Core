@@ -2,6 +2,9 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace HnSF.Input
 {
@@ -21,8 +24,24 @@ namespace HnSF.Input
 
         public void Awake()
         {
+#if UNITY_EDITOR
+            EditorApplication.playModeStateChanged += OnExitPlayMode;
+#endif
+            
             Initialize();
         }
+        
+#if UNITY_EDITOR
+        private static void OnExitPlayMode(PlayModeStateChange state)
+        {
+            if(state == PlayModeStateChange.ExitingPlayMode)
+            {
+                EditorApplication.playModeStateChanged -= OnExitPlayMode;
+                instance = null;
+                initialized = false;
+            }
+        }
+#endif
 
         public void Initialize()
         {

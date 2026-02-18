@@ -72,7 +72,7 @@ namespace HnSF.ui.menus
 
         public SessionHandlerQuickMatchPhotonRealtime sessionHandlerPrefab;
         
-        public bool Open()
+        public virtual bool Open()
         {
             playerIdToScreenInstance.Clear();
             localPlayersInfo.Clear();
@@ -81,7 +81,6 @@ namespace HnSF.ui.menus
             gameObject.SetActive(true);
 
             var inputPlayerManager = InputManager.instance;
-            var splitscreenManager = HnSFManagersContainer.instance.splitScreenManager;
             
             foreach (var inputPlayer in inputPlayerManager.GetPlayers())
             {
@@ -95,15 +94,12 @@ namespace HnSF.ui.menus
                 localPlayersInfo[inputPlayer.Id].OnInfoUpdated.AddListener(WhenLocalPlayerInfoUpdated);
                 screenInstance.instanceHandler = this;
                 screenInstance.Open();
-                splitscreenManager.RegisterCamera(screenInstance.instanceCamera);
             }
             
-            splitscreenManager.Activate();
-
             return true;
         }
 
-        public void Close()
+        public virtual void Close()
         {
             foreach (var playerScreenInstance in playerIdToScreenInstance.Values)
             {
