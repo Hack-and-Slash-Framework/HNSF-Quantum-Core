@@ -1,0 +1,7 @@
+component GameplayTagContainer
+{
+    [AllocateOnComponentAdded, FreeOnComponentRemoved]
+    list<asset_ref> implicitTags;
+    [AllocateOnComponentAdded, FreeOnComponentRemoved]
+    list<asset_ref> tags;
+}

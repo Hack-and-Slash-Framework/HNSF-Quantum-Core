@@ -14,19 +14,21 @@ namespace Quantum
                 var statusEffector = frame.Unsafe.GetPointer<StatusEffector>(statusEffectEntityRefList[i]);
                 if (statusEffector->statusEffetAssetRef == statusEffectAssetRef) return true;
             }
+
             return false;
         }
-        
-        public bool TryApplyStatusEffect(Frame frame, EntityRef entity, AssetRef<StatusEffectAsset> statusEffectAssetRef, ref HNSFStateContext stateContext)
+
+        public bool TryApplyStatusEffect(Frame frame, EntityRef target,
+            AssetRef<StatusEffectAsset> statusEffectAssetRef, ref HNSFStateContext stateContext, ulong source = 0)
         {
             if (!frame.TryFindAsset(statusEffectAssetRef, out var statusEffectAsset)) return false;
-            
+
             // Check Conditions
             bool conditionsValid = true;
             foreach (var deci in statusEffectAsset.applyConditions)
             {
-                if(deci == null) continue;
-                if (deci.Decide(frame, entity, ref stateContext)) return false;
+                if (deci == null) continue;
+                if (deci.Decide(frame, target, ref stateContext)) return false;
                 conditionsValid = false;
                 break;
             }
@@ -44,7 +46,8 @@ namespace Quantum
                 if (statusEffector->statusEffetAssetRef != statusEffectAssetRef) continue;
                 foundStatusEffect = true;
 
-                if (statusEffectAsset.maxStacks > 0 && statusEffector->stacks >= statusEffectAsset.maxStacks) break;
+                if (statusEffectAsset.ignoreOverflowStacks && statusEffectAsset.maxStacks > 0 &&
+                    statusEffector->stacks >= statusEffectAsset.maxStacks) break;
 
                 statusEffector->stacks += 1;
                 statusEffectAsset.OnStackAdded(frame, statusEffectEntityRefList[i], 1);
@@ -55,24 +58,33 @@ namespace Quantum
             var newStatusEffectEntityRef = frame.Create();
             frame.Add(newStatusEffectEntityRef, new StatusEffector()
             {
-                actor = entity,
+                target = target,
+                source = source,
                 stacks = 1,
                 statusEffetAssetRef = statusEffectAssetRef
             });
-            
+
             statusEffectEntityRefList.Add(newStatusEffectEntityRef);
-            statusEffectAsset.OnApply(frame, newStatusEffectEntityRef);
-            return true;
+            bool applyResult = statusEffectAsset.OnApply(frame, newStatusEffectEntityRef);
+
+            if (applyResult == false)
+            {
+                statusEffectEntityRefList.Remove(newStatusEffectEntityRef);
+                frame.Destroy(newStatusEffectEntityRef);
+            }
+
+            return applyResult;
         }
 
-        public void RemoveAllStatusEffects(Frame frame, EntityRef statusEffectActorEntityRef)
+        public void RemoveAllStatusEffects(Frame frame, EntityRef statusEffectTargetEntityRef)
         {
             var statusEffectEntityRefList = frame.ResolveList(statusEffectors);
-            
+
             for (int i = statusEffectEntityRefList.Count - 1; i >= 0; i--)
             {
                 if (frame.Unsafe.TryGetPointer<StatusEffector>(statusEffectEntityRefList[i], out var statusEffector)
-                    &&frame.TryFindAsset<StatusEffectAsset>(statusEffector->statusEffetAssetRef, out var statusEffectAsset))
+                    && frame.TryFindAsset<StatusEffectAsset>(statusEffector->statusEffetAssetRef,
+                        out var statusEffectAsset))
                 {
                     statusEffectAsset.OnRemove(frame, statusEffectEntityRefList[i]);
                 }
@@ -80,19 +92,22 @@ namespace Quantum
                 frame.Destroy(statusEffectEntityRefList[i]);
                 statusEffectEntityRefList.RemoveAt(i);
             }
+
             statusEffectEntityRefList.Clear();
         }
-        
-        public void RemoveStatusEffect(Frame frame, EntityRef statusEffectActorEntityRef, EntityRef statusEffectorEntityRef)
+
+        public void RemoveStatusEffect(Frame frame, EntityRef statusEffectTargetEntityRef,
+            EntityRef statusEffectorEntityRef)
         {
             var statusEffectEntityRefList = frame.ResolveList(statusEffectors);
 
             for (int i = statusEffectEntityRefList.Count - 1; i >= 0; i--)
             {
-                if(statusEffectEntityRefList[i] != statusEffectorEntityRef) continue;
+                if (statusEffectEntityRefList[i] != statusEffectorEntityRef) continue;
 
                 if (frame.Unsafe.TryGetPointer<StatusEffector>(statusEffectEntityRefList[i], out var statusEffector)
-                    &&frame.TryFindAsset<StatusEffectAsset>(statusEffector->statusEffetAssetRef, out var statusEffectAsset))
+                    && frame.TryFindAsset<StatusEffectAsset>(statusEffector->statusEffetAssetRef,
+                        out var statusEffectAsset))
                 {
                     statusEffectAsset.OnRemove(frame, statusEffectorEntityRef);
                 }
@@ -103,18 +118,20 @@ namespace Quantum
             }
         }
 
-        public void RemoveStatusEffectsOfQualityType(Frame frame, EntityRef statusEffectActorEntityRef, StatusEffectQualityType qualityType)
+        public void RemoveStatusEffectsOfQualityType(Frame frame, EntityRef statusEffectTargetEntityRef,
+            StatusEffectQualityType qualityType)
         {
             var statusEffectEntityRefList = frame.ResolveList(statusEffectors);
 
             for (int i = statusEffectEntityRefList.Count - 1; i >= 0; i--)
             {
-                if(!frame.Unsafe.TryGetPointer<StatusEffector>(statusEffectEntityRefList[i], out var statusEffector)
-                   || !frame.TryFindAsset<StatusEffectAsset>(statusEffector->statusEffetAssetRef, out var statusEffectAsset)
-                   || statusEffectAsset.qualityType != qualityType) continue;
+                if (!frame.Unsafe.TryGetPointer<StatusEffector>(statusEffectEntityRefList[i], out var statusEffector)
+                    || !frame.TryFindAsset<StatusEffectAsset>(statusEffector->statusEffetAssetRef,
+                        out var statusEffectAsset)
+                    || statusEffectAsset.qualityType != qualityType) continue;
 
                 statusEffectAsset.OnRemove(frame, statusEffectEntityRefList[i]);
-                
+
                 frame.Destroy(statusEffectEntityRefList[i]);
                 statusEffectEntityRefList.RemoveAt(i);
             }

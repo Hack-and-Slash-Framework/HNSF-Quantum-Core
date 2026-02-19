@@ -1,5 +1,4 @@
-﻿using HnSF;
-#if QUANTUM_UNITY
+﻿#if QUANTUM_UNITY
 using UnityEngine;
 #endif
 
@@ -9,6 +8,7 @@ namespace Quantum
     {
         public string entryName;
         public AssetRef<Tag> sharedAnimationTag;
+
         public enum MixerType
         {
             none,
@@ -18,22 +18,21 @@ namespace Quantum
         }
 
         [System.Serializable]
-        public class AnimWithTargetEntry
+        public partial class AnimWithTargetEntry
         {
             public AssetRef<Tag> animTargetTag;
             public AnimEntry[] anims;
         }
-        
+
         [System.Serializable]
-        public class AnimEntry
+        public partial class AnimEntry
         {
 #if QUANTUM_UNITY
             public AnimationClip clip;
             public Vector2 param;
 #endif
-            public AssetRef<AnimationClipBakedData> bakedClipData;
         }
-        
+
         public MixerType mixer;
         public float mixerSmoothing = 0;
         public float playRate = 1;
@@ -41,15 +40,16 @@ namespace Quantum
         public float maxFadeInTime = 0.05f;
 
         public AnimWithTargetEntry[] animsTargets;
-        
+
         public bool HasTarget(AssetRef<Tag> targetTag)
         {
             if (animsTargets == null || animsTargets.Length == 0) return false;
-            
+
             foreach (var v in animsTargets)
             {
                 if (v.animTargetTag == targetTag) return true;
             }
+
             return false;
         }
 
@@ -60,30 +60,8 @@ namespace Quantum
                 if (v.animTargetTag != targetTag) continue;
                 return v.anims;
             }
-            return null;
-        }
-        
-        public AssetRef<AnimationClipBakedData> GetAnimTargetBakedClipData(AssetRef<Tag> targetTag)
-        {
-            foreach (var v in animsTargets)
-            {
-                if (v.animTargetTag != targetTag) continue;
-                return v.anims[0].bakedClipData;
-            }
-            return default;
-        }
-        
-        public bool TryGetAnimTargetBakedClipData(AssetRef<Tag> targetTag, out AssetRef<AnimationClipBakedData> bakedClipData)
-        {
-            bakedClipData = default;
-            foreach (var v in animsTargets)
-            {
-                if (v.animTargetTag != targetTag) continue;
-                bakedClipData = v.anims[0].bakedClipData;
-                return true;
-            }
 
-            return false;
+            return null;
         }
     }
 }

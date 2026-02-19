@@ -23,9 +23,8 @@ namespace HnSF.core.state.actions
                 for (var index = 0; index < articles.Count; index++)
                 {
                     var articleEntityRef = articles[index];
-                    if (!frame.Unsafe.TryGetPointer<Tagged>(articleEntityRef, out var tagged)
-                        || !validTags.Contains(tagged->tag)) continue;
-
+                    if (!TagContainerHelper.HasAny(frame, articleEntityRef, validTags)) continue;
+                    
                     articlesOwner->RemoveArticle(frame, articleEntityRef);
                     frame.Destroy(articleEntityRef);
                     break;

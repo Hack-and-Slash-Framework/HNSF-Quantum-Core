@@ -12,13 +12,13 @@ namespace Quantum
 
         public void RemoveStatusEffect(Frame frame, EntityRef statusEffectorEntityRef)
         {
-            if (!frame.Unsafe.TryGetPointer<StatusEffectActor>(actor, out var statusEffectActor))
+            if (!frame.Unsafe.TryGetPointer<StatusEffectActor>(target, out var statusEffectActor))
             {
                 frame.Destroy(statusEffectorEntityRef);
                 return;
             }
 
-            statusEffectActor->RemoveStatusEffect(frame, actor, statusEffectorEntityRef);
+            statusEffectActor->RemoveStatusEffect(frame, target, statusEffectorEntityRef);
         }
     }
 }

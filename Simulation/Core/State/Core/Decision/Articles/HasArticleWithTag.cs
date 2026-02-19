@@ -18,8 +18,7 @@ namespace HnSF.core.state.decisions
 
             foreach (var article in articles)
             {
-                if(!frame.Unsafe.TryGetPointer<Tagged>(article, out var tagged)) continue;
-                if (validTags.Contains(tagged->tag)) return true;
+                if (TagContainerHelper.HasAny(frame, article, validTags)) return true;
             }
             return false;
         }

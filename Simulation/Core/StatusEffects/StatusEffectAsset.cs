@@ -1,5 +1,6 @@
 using System;
 using HnSF.core.state.decisions;
+using HnSF.StatusEffects.Components;
 using Quantum;
 #if QUANTUM_UNITY
 using UnityEngine;
@@ -13,57 +14,104 @@ namespace HnSF.StatusEffects
         [Header("General")]
 #endif
         public string Label;
+
         public string displayName;
         public AssetRef<Tag>[] tags = Array.Empty<AssetRef<Tag>>();
-        public int maxStacks = 1;
+        public StatusEffectDuration durationPolicy = StatusEffectDuration.HasDuration;
+
+        [DrawIf(nameof(durationPolicy), (int)StatusEffectDuration.HasDuration)]
         public int durationPerStack = 300;
-        public bool stackCanBeRefreshed = true;
+
+        public int maxStacks = 1;
+        public StackDurationRefreshPolicy stackRefreshPolicy = StackDurationRefreshPolicy.OnSuccessfulApplication;
+        public StackExpirationPolicy stackExpirationPolicy = StackExpirationPolicy.RemoveSingleStackAndRefresh;
+        public StackingType stackingType = StackingType.PerTarget;
+        public bool ignoreOverflowStacks = true;
         public bool shownInHud = true;
         public StatusEffectQualityType qualityType;
         public bool checkStacks = true;
-        
+
 #if QUANTUM_UNITY
         [SerializeReference, SubclassSelector]
 #endif
         public HNSFStateDecision[] applyConditions = Array.Empty<HNSFStateDecision>();
-        
+
         public StatusEffectAsset[] childrenStatusEffects = Array.Empty<StatusEffectAsset>();
-        
-        public virtual void OnApply(Frame frame, EntityRef statusEffectEntityRef, bool asChild = false)
+
+#if QUANTUM_UNITY
+        [SerializeReference, SubclassSelector]
+#endif
+        public StatusEffectComponent[] components = Array.Empty<StatusEffectComponent>();
+
+        public virtual bool OnApply(Frame frame, EntityRef statusEffectEntityRef, bool asChild = false)
         {
-            if (!asChild && durationPerStack > 0)
+            foreach (var component in components)
             {
-                frame.Add<GenericTimer>(statusEffectEntityRef, new GenericTimer()
+                if (component.OnApply(frame) == false)
                 {
-                    countingType = TimerCountingType.CountDown,
-                    value = durationPerStack
-                });
+                    return false;
+                }
             }
-            
+
+            if (!asChild)
+            {
+                switch (durationPolicy)
+                {
+                    case StatusEffectDuration.Instant:
+                        break;
+                    case StatusEffectDuration.Infinite:
+                        break;
+                    case StatusEffectDuration.HasDuration:
+                        if (durationPerStack <= 0) break;
+                        frame.Add<GenericTimer>(statusEffectEntityRef, new GenericTimer()
+                        {
+                            countingType = TimerCountingType.CountDown,
+                            value = durationPerStack
+                        });
+                        break;
+                }
+            }
+
             for (int i = 0; i < this.childrenStatusEffects.Length; i++)
             {
                 childrenStatusEffects[i].OnApply(frame, statusEffectEntityRef, true);
             }
+
+            return true;
         }
 
-        public virtual void OnTick(Frame frame, EntityRef statusEffectEntityRef, bool asChild = false)
+        public virtual bool OnTick(Frame frame, EntityRef statusEffectEntityRef, bool asChild = false)
         {
-            if (!asChild && checkStacks && frame.Unsafe.TryGetPointer<GenericTimer>(statusEffectEntityRef, out var timer)
-                && timer->value <= 0)
+            foreach (var component in components)
             {
-                if (frame.Unsafe.TryGetPointer<StatusEffector>(statusEffectEntityRef, out var statusEffector))
+                if (component.OnTick(frame) == false)
                 {
-                    statusEffector->stacks--;
+                    return false;
                 }
-                timer->value = durationPerStack;
             }
-            
+
+            if (!asChild)
+            {
+                if (checkStacks && frame.Unsafe.TryGetPointer<GenericTimer>(statusEffectEntityRef, out var timer)
+                                && timer->value <= 0)
+                {
+                    if (frame.Unsafe.TryGetPointer<StatusEffector>(statusEffectEntityRef, out var statusEffector))
+                    {
+                        statusEffector->stacks--;
+                    }
+
+                    timer->value = durationPerStack;
+                }
+            }
+
             for (int i = 0; i < this.childrenStatusEffects.Length; i++)
             {
                 childrenStatusEffects[i].OnTick(frame, statusEffectEntityRef, true);
             }
+
+            return true;
         }
-        
+
         public virtual void OnStackAdded(Frame frame, EntityRef statusEffectEntityRef, int stackDifference,
             bool asChild = false)
         {
@@ -72,7 +120,7 @@ namespace HnSF.StatusEffects
                 childrenStatusEffects[i].OnStackAdded(frame, statusEffectEntityRef, stackDifference, true);
             }
         }
-        
+
         public virtual void OnStackRemoved(Frame frame, EntityRef statusEffectEntityRef, int stackDifference,
             bool asChild = false)
         {
@@ -82,12 +130,22 @@ namespace HnSF.StatusEffects
             }
         }
 
-        public virtual void OnRemove(Frame frame, EntityRef statusEffectEntityRef, bool asChild = false)
+        public virtual bool OnRemove(Frame frame, EntityRef statusEffectEntityRef, bool asChild = false)
         {
+            foreach (var component in components)
+            {
+                if (component.OnTick(frame) == false)
+                {
+                    return false;
+                }
+            }
+
             for (int i = 0; i < this.childrenStatusEffects.Length; i++)
             {
                 childrenStatusEffects[i].OnRemove(frame, statusEffectEntityRef, true);
             }
+
+            return true;
         }
     }
 }

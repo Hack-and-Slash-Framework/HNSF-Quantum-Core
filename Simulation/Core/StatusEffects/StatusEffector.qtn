@@ -1,6 +1,7 @@
 component StatusEffector
 {
-    entity_ref actor;
+    entity_ref target;
+    ulong source;
     asset_ref<HnSF.StatusEffects.StatusEffectAsset> statusEffetAssetRef;
     int stacks;
 }

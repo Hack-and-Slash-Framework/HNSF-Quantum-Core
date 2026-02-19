@@ -1,0 +1,7 @@
+component GameplayTagCountContainer
+{
+    [AllocateOnComponentAdded, FreeOnComponentRemoved]
+    dictionary<asset_ref, byte> implicitTags;
+    [AllocateOnComponentAdded, FreeOnComponentRemoved]
+    dictionary<asset_ref, byte> tags;
+}

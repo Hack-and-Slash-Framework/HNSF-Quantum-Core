@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Quantum;
 using UnityEngine;
 
+/*
 namespace HnSF
 {
     [System.Serializable]
@@ -69,4 +70,4 @@ namespace HnSF
             _unconfirmedShakes.Add(eventKey, entity.GetComponent<FighterShakeManager>());
         }
     }
-}
+}*/

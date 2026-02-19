@@ -16,8 +16,7 @@ namespace HnSF.core.state.functions
 
             foreach (var article in articles)
             {
-                if (frame.Unsafe.TryGetPointer<Tagged>(article, out var tagged)
-                    && validTags.Contains(tagged->tag)) return article;
+                if (TagContainerHelper.HasAny(frame, article, validTags)) return article;
             }
             return EntityRef.None;
         }

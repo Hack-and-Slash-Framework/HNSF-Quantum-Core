@@ -21,13 +21,13 @@ namespace HnSF.StatusEffects
 #endif
         public List<EventActionGrouping> actionsToApply = new();
 
-        public override void OnApply(Frame frame, EntityRef statusEffectEntityRef, bool asChild = false)
+        public override bool OnApply(Frame frame, EntityRef statusEffectEntityRef, bool asChild = false)
         {
-            base.OnApply(frame, statusEffectEntityRef, asChild);
+            if (base.OnApply(frame, statusEffectEntityRef, asChild) == false) return false;
 
-            if (!frame.Unsafe.TryGetPointer<StatusEffector>(statusEffectEntityRef, out var statusEffector)) return;
+            if (!frame.Unsafe.TryGetPointer<StatusEffector>(statusEffectEntityRef, out var statusEffector)) return true;
             
-            frame.AddOrGet(statusEffector->actor, out HNSFEventReceiver* eventReceiver);
+            frame.AddOrGet(statusEffector->target, out HNSFEventReceiver* eventReceiver);
 
             foreach (var actionGrouping in actionsToApply)
             {
@@ -39,14 +39,17 @@ namespace HnSF.StatusEffects
                 actionGroups[(int)actionGrouping.eventType].Initialize(frame, tagRef);
                 actionGroups[(int)actionGrouping.eventType].RegisterAction(frame, tagRef, actionGrouping.action);
             }
+            
+            return true;
         }
 
-        public override void OnRemove(Frame frame, EntityRef statusEffectEntityRef, bool asChild = false)
+        public override bool OnRemove(Frame frame, EntityRef statusEffectEntityRef, bool asChild = false)
         {
-            base.OnRemove(frame, statusEffectEntityRef, asChild);
-            
+            if (base.OnRemove(frame, statusEffectEntityRef, asChild) == false) return false;
+
             if (!frame.Unsafe.TryGetPointer<StatusEffector>(statusEffectEntityRef, out var statusEffector)
-                || !frame.Unsafe.TryGetPointer<HNSFEventReceiver>(statusEffector->actor, out var eventReceiver)) return;
+                || !frame.Unsafe.TryGetPointer<HNSFEventReceiver>(statusEffector->target, out var eventReceiver))
+                return true;
 
             foreach (var actionGrouping in actionsToApply)
             {
@@ -58,6 +61,8 @@ namespace HnSF.StatusEffects
                 actionGroups[(int)actionGrouping.eventType].Initialize(frame, tagRef);
                 actionGroups[(int)actionGrouping.eventType].UnregisterAction(frame, tagRef, actionGrouping.action);
             }
+
+            return true;
         }
     }
 }
