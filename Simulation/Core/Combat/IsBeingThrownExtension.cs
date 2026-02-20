@@ -2,12 +2,15 @@ namespace Quantum
 {
     public unsafe partial struct IsBeingThrown
     {
-        public static void EscapeThrow(Frame frame, EntityRef entityRef)
+        public void ReleaseFromThrow(Frame frame, EntityRef selfEntityRef)
         {
-            var isInThrow = frame.Get<IsBeingThrown>(entityRef);
-
-            var thrower = frame.Unsafe.GetPointer<IsThrowing>(isInThrow.thrower);
-            thrower->ReleaseThrowee(frame, isInThrow.thrower, entityRef);
+            if (!frame.Unsafe.TryGetPointer<IsThrowing>(thrower, out var throwerComponent))
+            {
+                frame.Remove<IsBeingThrown>(selfEntityRef);
+                Log.Warn("Throwee released from throw due to thrower not existing.");
+                return;
+            }
+            throwerComponent->ReleaseThrowee(frame, thrower, selfEntityRef);
         }
     }
 }
