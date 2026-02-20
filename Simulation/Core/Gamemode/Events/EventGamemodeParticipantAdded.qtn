@@ -1,4 +1,5 @@
 synced event GamemodeParticipantAdded
 {
+    player_ref playerRef;
     int participantId;
 }

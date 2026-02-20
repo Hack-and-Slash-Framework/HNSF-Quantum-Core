@@ -6,7 +6,6 @@ namespace Quantum
     [Serializable]
     public partial struct HitForceData
     {
-        public FPVector3 force;
         public bool hasCustomGravity;
         [DrawIf(nameof(hasCustomGravity), true)] public FP hitstunGravity;
         public bool hasCustomTraction;
