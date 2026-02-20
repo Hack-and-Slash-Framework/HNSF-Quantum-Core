@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.1.0...v1.2.0) (2026-02-20)
+
+
+### Features
+
+* Added playerRef to event ParticipantAdded ([5ee7127](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/5ee712758f01642d95bc829fc979bd4725355b8a))
+
 # [1.1.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.0.0...v1.1.0) (2026-02-19)
 
 
