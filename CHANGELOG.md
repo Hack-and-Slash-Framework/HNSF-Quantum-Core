@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.2.0...v1.3.0) (2026-02-20)
+
+
+### Features
+
+* Added SoundEffectHelper methods ([9555270](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/955527009a0c99bb398385e2b91409800923847b))
+
 # [1.2.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.1.0...v1.2.0) (2026-02-20)
 
 
