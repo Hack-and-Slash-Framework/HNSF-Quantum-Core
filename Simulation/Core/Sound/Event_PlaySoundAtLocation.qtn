@@ -1,4 +1,4 @@
-﻿event PlaySoundAtLocation2D
+﻿event PlaySoundAtLocation
 {
     entity_ref owner;
     entity_ref parentedTo;
@@ -14,6 +14,6 @@
     bool ignoreIfTagPlaying;
     bool isGlobal;
     nothashed asset_ref<AudioSourceConfig> audioSourceConfig;
-    nothashed FPVector2 position;
+    nothashed FPVector3 position;
     nothashed asset_ref<Tag> tag;
 }

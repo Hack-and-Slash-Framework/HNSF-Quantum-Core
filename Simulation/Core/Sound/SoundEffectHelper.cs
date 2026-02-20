@@ -2,7 +2,7 @@ using Photon.Deterministic;
 
 namespace Quantum
 {
-    public static unsafe class SoundEffectHelper
+    public static unsafe partial class SoundEffectHelper
     {
         
     }
