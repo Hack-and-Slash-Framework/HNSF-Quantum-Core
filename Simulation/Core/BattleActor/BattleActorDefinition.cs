@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using HnSF.core.GroupControl;
 using HnSF.core.state;
 #if QUANTUM_UNITY
 using UnityEngine;
@@ -21,6 +22,8 @@ namespace Quantum
         public ScriptableObject fighterDefinition;
         public GameObject cutsceneGroupingPrefab;
 #endif
+        
+        public AssetRef<BattleActorGroupControlScript>[] introScripts = Array.Empty<AssetRef<BattleActorGroupControlScript>>();
         
         public AssetRef<BattleActorAIDefinition>[] aiDefinitions = Array.Empty<AssetRef<BattleActorAIDefinition>>();
 
