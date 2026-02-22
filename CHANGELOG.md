@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.3.0...v1.4.0) (2026-02-22)
+
+
+### Features
+
+* intro scripts for BattleActorDefinition ([833f87e](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/833f87e627e9a86a4e1367f5d7f5b5c015e429bc))
+
 # [1.3.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.2.0...v1.3.0) (2026-02-20)
 
 
