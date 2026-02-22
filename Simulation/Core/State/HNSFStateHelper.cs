@@ -153,5 +153,23 @@ namespace HnSF.core.state
             }
             return EntityRef.None;
         }
+        
+        public static AssetRef<HNSFState> GetEntityState(Frame frame, EntityRef attackerEntityRef)
+        {
+            if (frame.Unsafe.TryGetPointer<GenericStateMachine>(attackerEntityRef, out var acStateMachines))
+            {
+                return acStateMachines->stateAgent.stateData.state;
+            }
+            return default;
+        }
+        
+        public static uint GetEntityStateId(Frame frame, EntityRef attackerEntityRef)
+        {
+            if (frame.Unsafe.TryGetPointer<GenericStateMachine>(attackerEntityRef, out var acStateMachines))
+            {
+                return acStateMachines->stateAgent.stateData.uniqueStateId;
+            }
+            return 0;
+        }
     }
 }

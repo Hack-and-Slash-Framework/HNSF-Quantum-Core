@@ -8,7 +8,7 @@ namespace Quantum
     public unsafe partial class HitInfoBase : AssetObject
     {
 #if QUANTUM_UNITY
-        [Header("General")]
+        [Header("Base Properties")]
 #endif
         public List<AssetRef<Tag>> attributes;
         public int clashLevel;
