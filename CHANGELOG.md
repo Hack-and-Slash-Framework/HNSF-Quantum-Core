@@ -1,3 +1,10 @@
+## [1.4.1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.4.0...v1.4.1) (2026-02-23)
+
+
+### Bug Fixes
+
+* Change protection levels for content definitions ([b5d0053](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/b5d00531b276d0c25107e19ab56de1dcf5caaf54))
+
 # [1.4.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.3.0...v1.4.0) (2026-02-22)
 
 
