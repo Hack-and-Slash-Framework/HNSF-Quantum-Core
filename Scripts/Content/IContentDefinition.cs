@@ -21,9 +21,9 @@ public abstract partial class IContentDefinition : ScriptableObject
     public virtual string Description { get; }
     public virtual bool Selectable { get; }
     public virtual List<string> Tags => tags;
-    [SerializeField] private List<string> tags;
-    private LoadedModDefinition _modDefinition;
-    private string _id;
+    [SerializeField] protected List<string> tags;
+    protected LoadedModDefinition _modDefinition;
+    protected string _id;
 
     public virtual UniTask<bool> Load(string id)
     {

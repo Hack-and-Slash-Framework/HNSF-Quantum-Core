@@ -15,11 +15,11 @@ namespace HnSF
         public override string Name => songName;
         public override string Description => description;
         
-        [SerializeField] private string songName;
-        [SerializeField, TextArea] private string description;
-        [SerializeField] private AssetReferenceT<SongAudio> songAudioReference;
+        [SerializeField] protected string songName;
+        [SerializeField, TextArea] protected string description;
+        [SerializeField] protected AssetReferenceT<SongAudio> songAudioReference;
         
-        [NonSerialized] private AsyncOperationHandle<SongAudio> songAudioHandle;
+        [NonSerialized] protected AsyncOperationHandle<SongAudio> songAudioHandle;
 
         public override async UniTask<bool> LoadAssets()
         {

@@ -31,17 +31,20 @@ namespace HnSF.core.GroupControl.Nodes
             // Update Asset
             var targetAsset = GetInputPortValue<BattleActorGroupControlScript>(targetNodeModel.GetInputPortByName(TargetNode.IN_PORT_CONTROL_SCRIPT_ASSET));
             if (targetAsset == null) return;
-            targetAsset.actions.Clear();
+
+            var newActions = new List<GroupControlAction>();
             
             var nextNodeModel = GetNextNode(startNodeModel);
             while (nextNodeModel != null)
             {
                 var runtimeNodes = TranslateNodeModelToRuntimeNodes(nextNodeModel);
-                targetAsset.actions.AddRange(runtimeNodes);
+                newActions.AddRange(runtimeNodes);
 
                 nextNodeModel = GetNextNode(nextNodeModel);
             }
-            
+
+            targetAsset.actions.Clear();
+            targetAsset.actions = newActions;
             EditorUtility.SetDirty(targetAsset);
         }
 

@@ -15,12 +15,12 @@ namespace HnSF
         
         public override AssetRef<Tag> ElementParent => elementParent;
         
-        [SerializeField] private string label;
-        [SerializeField, TextArea] private string description;
-        [SerializeField] private ExternalModAssetSoftReference hudElementReference;
-        [SerializeField] private AssetRef<Tag> elementParent;
+        [SerializeField] protected string label;
+        [SerializeField, TextArea] protected string description;
+        [SerializeField] protected ExternalModAssetSoftReference hudElementReference;
+        [SerializeField] protected AssetRef<Tag> elementParent;
         
-        [NonSerialized] private ModAsyncOperation assetHandle;
+        [NonSerialized] protected ModAsyncOperation assetHandle;
 
         public override async UniTask<bool> LoadAssets()
         {

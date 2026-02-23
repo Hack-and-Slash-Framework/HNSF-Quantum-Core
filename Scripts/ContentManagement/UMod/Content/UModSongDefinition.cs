@@ -10,12 +10,12 @@ namespace HnSF
         public override string Name => songName;
         public override string Description => description;
         
-        [SerializeField] private string songName;
-        [SerializeField, TextArea] private string description;
-        [SerializeField] private ExternalModAssetSoftReference songAudioReference;
-        [SerializeField, HideInInspector] private ModAssetSoftReference songAudioRef;
+        [SerializeField] protected string songName;
+        [SerializeField, TextArea] protected string description;
+        [SerializeField] protected ExternalModAssetSoftReference songAudioReference;
+        [SerializeField, HideInInspector] protected ModAssetSoftReference songAudioRef;
         
-        [NonSerialized] private LoadedAssetHandleWrapper _songAudioHandle;
+        [NonSerialized] protected LoadedAssetHandleWrapper _songAudioHandle;
 
         public void OnUModPrebuild()
         {

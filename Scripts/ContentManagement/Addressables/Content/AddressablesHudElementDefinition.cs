@@ -18,12 +18,12 @@ namespace HnSF
 
         public override AssetRef<Tag> ElementParent => elementParent;
 
-        [SerializeField] private string label;
-        [SerializeField, TextArea] private string description;
-        [SerializeField] private AssetReferenceT<GameObject> hudElementReference;
-        [SerializeField] private AssetRef<Tag> elementParent;
+        [SerializeField] protected string label;
+        [SerializeField, TextArea] protected string description;
+        [SerializeField] protected AssetReferenceT<GameObject> hudElementReference;
+        [SerializeField] protected AssetRef<Tag> elementParent;
         
-        [NonSerialized] private AsyncOperationHandle<GameObject> assetHandle;
+        [NonSerialized] protected AsyncOperationHandle<GameObject> assetHandle;
 
         public override async UniTask<bool> LoadAssets()
         {

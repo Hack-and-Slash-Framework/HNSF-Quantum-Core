@@ -11,9 +11,9 @@ namespace HnSF
     [CreateAssetMenu(menuName = "HnSF/Addressables/Content/Command List Definition")]
     public partial class AddressablesCommandListDefinition : BaseCommandListDefinition
     {
-        [SerializeField] private AssetReferenceT<BaseCommandListMovesetDefinition>[] movesetRootEntries;
+        [SerializeField] protected AssetReferenceT<BaseCommandListMovesetDefinition>[] movesetRootEntries;
 
-        [NonSerialized] private AsyncOperationHandle<BaseCommandListMovesetDefinition>[] handles;
+        [NonSerialized] protected AsyncOperationHandle<BaseCommandListMovesetDefinition>[] handles;
 
         public override UniTask<bool> Load(string id)
         {

@@ -22,10 +22,10 @@ namespace HnSF
         public override bool Selectable => selectable;
 
         [SerializeField] public bool selectable = true;
-        [SerializeField] private string _mapName;
-        [SerializeField, TextArea] private string _mapDescription;
-        [SerializeField] private AssetReference _sceneReference;
-        [SerializeField] private Quantum.Map mapAsset;
+        [SerializeField] protected string _mapName;
+        [SerializeField, TextArea] protected string _mapDescription;
+        [SerializeField] protected AssetReference _sceneReference;
+        [SerializeField] protected Quantum.Map mapAsset;
 
         [NonSerialized] private AsyncOperationHandle<SceneInstance> sceneHandle;
 
