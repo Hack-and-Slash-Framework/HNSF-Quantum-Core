@@ -1,3 +1,10 @@
+## [1.4.2](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.4.1...v1.4.2) (2026-02-24)
+
+
+### Bug Fixes
+
+* Move menu & input management out of HnSF ([f148a0c](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/f148a0ce965af98d5975a9ea3da756c04a2224ac))
+
 ## [1.4.1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.4.0...v1.4.1) (2026-02-23)
 
 
