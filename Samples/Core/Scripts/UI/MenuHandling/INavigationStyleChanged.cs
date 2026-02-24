@@ -1,4 +1,4 @@
-using HnSF.Input;
+using CT.LocalInputManagement;
 
 namespace HnSF.ui
 {

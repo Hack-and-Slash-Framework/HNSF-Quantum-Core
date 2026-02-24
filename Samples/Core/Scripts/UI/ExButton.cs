@@ -1,4 +1,4 @@
-using HnSF.Input;
+using CT.LocalInputManagement;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -36,7 +36,7 @@ namespace HnSF.ui
             set { m_OnPointerExit = value; }
         }
         
-        public InputPlayerManagerBase validInputPlayer;
+        public InputPlayerManagerUIM validInputPlayer;
 
         public override void OnSubmit(BaseEventData eventData)
         {

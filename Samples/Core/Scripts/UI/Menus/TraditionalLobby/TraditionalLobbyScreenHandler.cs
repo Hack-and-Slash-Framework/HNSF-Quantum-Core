@@ -1,5 +1,6 @@
 using System;
-using HnSF.Input;
+using CT.LocalInputManagement;
+using CT.MenuNav;
 using HnSF.sessionhandling.handlers;
 using UnityEngine;
 
@@ -7,7 +8,7 @@ namespace HnSF.ui.menus.traditionallobby
 {
     public class TraditionalLobbyScreenHandler : MenuHandlerBase
     {
-        [HideInInspector] public InputPlayerManagerBase inputPlayer;
+        [HideInInspector] public InputPlayerManagerUIM inputPlayer;
         public Camera instanceCamera;
 
         public TraditionalLobbyScreenMainMenu screenMainMenu;
@@ -24,7 +25,7 @@ namespace HnSF.ui.menus.traditionallobby
         public virtual bool Open()
         {
             if (roomSessionHandler == null) return false;
-            inputPlayer = InputManager.instance.GetPlayer(1);
+            inputPlayer = InputManagerUIM.instance.GetPlayer(1) as InputPlayerManagerUIM;
             lobbyRepresentation = new TraditionalLobbyUIRepresentation();
             roomSessionHandler.SetUiLobbyRepresentation(lobbyRepresentation);
             

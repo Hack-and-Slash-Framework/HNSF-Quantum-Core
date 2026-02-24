@@ -10,7 +10,9 @@
         "Photon.Realtime",
         "HnSF.CoreExample",
         "Unity.Collections",
-        "Unity.Networking.Transport"
+        "Unity.Networking.Transport",
+        "LocalMultiplayerInputManagement",
+        "LocalMultiplayerInputManagement.InputSystem"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

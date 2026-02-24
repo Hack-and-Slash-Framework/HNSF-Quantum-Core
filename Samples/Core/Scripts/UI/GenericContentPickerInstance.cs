@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
-using HnSF.Input;
+using CT.LocalInputManagement;
+using CT.MenuNav;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -16,7 +17,7 @@ namespace HnSF.ui
         
         public Canvas canvas;
 
-        public InputPlayerManagerBase inputPlayer;
+        public InputPlayerManagerUIM inputPlayer;
         
         public ScrollRect contentScrollRect;
 
@@ -59,7 +60,7 @@ namespace HnSF.ui
             return base.TryClose(direction, forceClose);
         }
 
-        public virtual void Initialize<T>(InputPlayerManagerBase inputPlayerManager) where T : IContentDefinition
+        public virtual void Initialize<T>(InputPlayerManagerUIM inputPlayerManager) where T : IContentDefinition
         {
             this.inputPlayer = inputPlayerManager;
             contentListingUtility = new GenericContentListingUtility<T>();

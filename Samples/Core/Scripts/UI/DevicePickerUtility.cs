@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using HnSF.Input;
+using CT.LocalInputManagement;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -16,7 +16,7 @@ namespace HnSF
         public DelegatePickerEvent OnPickerConfirm;
         public DelegatePickerEvent OnPickerCancel;
 
-        protected InputManager inputManager;
+        protected InputManagerUIM inputManager;
 
         public GameObject canvasObject;
         
@@ -53,7 +53,7 @@ namespace HnSF
         {
             this.minimumPlayers = minimumPlayers;
             this.maximumPlayers = maximumPlayers;
-            inputManager = InputManager.instance;
+            inputManager = InputManagerUIM.instance as InputManagerUIM;
             EventSystem.current.SetSelectedGameObject(null);
             canvasObject.SetActive(true);
             Initialize();
@@ -61,7 +61,7 @@ namespace HnSF
 
         public void Close()
         {
-            var systemPlayer = inputManager.GetSystemPlayer();
+            var systemPlayer = inputManager.GetSystemPlayer() as InputPlayerManagerUIM;
             systemPlayer.inputActions.UI.Navigate.performed -= ReadSystemPlayerNavigate;
             systemPlayer.inputActions.UI.Submit.performed -= WhenSubmitPerformed;
             systemPlayer.inputActions.UI.Pause.performed -= WhenSubmitPerformed;
@@ -97,7 +97,7 @@ namespace HnSF
             inputDeviceItemMap.Clear();
             lastNavigateInput.Clear();
 
-            var systemPlayer = inputManager.GetSystemPlayer();
+            var systemPlayer = inputManager.GetSystemPlayer() as InputPlayerManagerUIM;
             newDeviceLists[0] = systemPlayer.assignedDevices.ToList();
 
             foreach (InputDevice inputDevice in systemPlayer.assignedDevices)
@@ -144,7 +144,7 @@ namespace HnSF
 
         protected void ReadSystemPlayerNavigate(InputAction.CallbackContext obj)
         {
-            var systemPlayer = inputManager.GetSystemPlayer();
+            var systemPlayer = inputManager.GetSystemPlayer() as InputPlayerManagerUIM;
 
             var input = CompressInput(obj.ReadValue<Vector2>());
             var movingDevice = systemPlayer.playerInput.GetDevice<InputDevice>();

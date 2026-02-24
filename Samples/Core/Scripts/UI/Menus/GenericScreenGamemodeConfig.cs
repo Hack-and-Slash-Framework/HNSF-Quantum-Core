@@ -1,6 +1,7 @@
 using System.Collections.Generic;
+using CT.LocalInputManagement;
+using CT.MenuNav;
 using Cysharp.Threading.Tasks;
-using HnSF.Input;
 using Quantum;
 using UnityEngine;
 using UnityEngine.Events;
@@ -28,7 +29,7 @@ namespace HnSF.ui.menus
         
         public bool initialized = false;
 
-        public InputPlayerManagerBase inputPlayer;
+        public InputPlayerManagerUIM inputPlayer;
         
         public override void Open(MenuDirection direction, IMenuHandler menuHandler)
         {

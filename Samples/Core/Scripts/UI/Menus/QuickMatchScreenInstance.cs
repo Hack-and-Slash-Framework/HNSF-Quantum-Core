@@ -1,5 +1,6 @@
 using System;
-using HnSF.Input;
+using CT.LocalInputManagement;
+using CT.MenuNav;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,7 +14,7 @@ namespace HnSF.ui.menus
         [NonSerialized] public QuickMatchScreenHandler.QuickMatchLocalPlayerInfo playerInfo;
 
         [NonSerialized] public Camera instanceCamera;
-        public InputPlayerManagerBase inputPlayer;
+        public InputPlayerManagerUIM inputPlayer;
 
         public Canvas canvas;
         

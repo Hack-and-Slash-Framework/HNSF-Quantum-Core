@@ -1,5 +1,5 @@
+using CT.LocalInputManagement;
 using Cysharp.Threading.Tasks;
-using HnSF.Input;
 using UnityEngine;
 
 namespace HnSF.BaseExample
@@ -11,7 +11,7 @@ namespace HnSF.BaseExample
             var gameManager = HnSFManagersContainer.instance;
             bool ss = false;
             bool pResult = true;
-            var inputManager = InputManager.instance;
+            var inputManager = InputManagerUIM.instance as InputManagerUIM;
             var devicePicker = DevicePickerUtility.instance;
             devicePicker.Open(minimumPlayers: 1, maximumPlayers: 4);
             devicePicker.OnPickerCancel += (dpu) =>
@@ -32,7 +32,7 @@ namespace HnSF.BaseExample
             for (int i = 0; i < players.Count; i++)
             {
                 inputManager.AssignDevicesToPlayer(players[i].ToArray(), i + 1);
-                inputManager.playerInputManagers[i + 1].SwitchToPlayerMap();
+                (inputManager.playerInputManagers[i + 1] as InputPlayerManagerUIM).SwitchToPlayerMap();
             }
 
             return true;

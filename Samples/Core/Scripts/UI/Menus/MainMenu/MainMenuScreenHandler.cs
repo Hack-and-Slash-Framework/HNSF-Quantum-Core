@@ -1,5 +1,6 @@
+using CT.LocalInputManagement;
+using CT.MenuNav;
 using Cysharp.Threading.Tasks;
-using HnSF.Input;
 using HnSF.sessionhandling.handlers;
 using HnSF.ui.menus.traditionallobby;
 using UnityEngine;
@@ -95,8 +96,9 @@ namespace HnSF.ui.menus.examples.mainmenu
             }
             
             var validPlayers = devicePicker.GetValidInputPlayers();
-            InputManager.instance.SetPlayersBasedOnDeviceLists(validPlayers);
-            InputManager.instance.SwitchAllToUIActionMap();
+            var inputManager = InputManagerBase.instance as InputManagerUIM;
+            inputManager.SetPlayersBasedOnDeviceLists(validPlayers);
+            inputManager.SwitchAllToUIActionMap();
             devicePicker.Close();
             return true;
         }
@@ -119,8 +121,9 @@ namespace HnSF.ui.menus.examples.mainmenu
             }
             
             var validPlayers = devicePicker.GetValidInputPlayers();
-            InputManager.instance.SetPlayersBasedOnDeviceLists(validPlayers);
-            InputManager.instance.SwitchAllToUIActionMap();
+            var inputManager = InputManagerBase.instance as InputManagerUIM;
+            inputManager.SetPlayersBasedOnDeviceLists(validPlayers);
+            inputManager.SwitchAllToUIActionMap();
             devicePicker.Close();
 
             localMatchScreenHandler.Open();

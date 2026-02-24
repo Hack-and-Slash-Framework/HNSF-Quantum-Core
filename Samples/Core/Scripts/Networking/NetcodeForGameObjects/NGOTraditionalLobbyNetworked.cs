@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using HnSF.Input;
+using CT.LocalInputManagement;
 using Quantum;
 using Unity.Collections;
 using Unity.Netcode;
@@ -64,7 +64,7 @@ namespace HnSF.sessionhandling.handlers.NGO
 
             if (NetworkManager.IsHost)
             {
-                RegisterClientPlayersRpc(NetworkManager.LocalClient.ClientId, InputManager.instance.GetPlayerCount(), $"Hosting Player");
+                RegisterClientPlayersRpc(NetworkManager.LocalClient.ClientId, InputManagerBase.instance.GetPlayerCount(), $"Hosting Player");
             }
         }
 
@@ -151,7 +151,7 @@ namespace HnSF.sessionhandling.handlers.NGO
                 case ConnectionEvent.ClientConnected:
                     if (connectionEventData.ClientId == networkManager.LocalClient.ClientId)
                     {
-                        RegisterClientPlayersRpc(networkManager.LocalClient.ClientId, InputManager.instance.GetPlayerCount(), $"{Random.Range(0, 1000)}");
+                        RegisterClientPlayersRpc(networkManager.LocalClient.ClientId, InputManagerBase.instance.GetPlayerCount(), $"{Random.Range(0, 1000)}");
                     }
                     break;
                 case ConnectionEvent.ClientDisconnected:

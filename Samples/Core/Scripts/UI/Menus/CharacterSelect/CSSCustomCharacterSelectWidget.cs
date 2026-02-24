@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using HnSF.Input;
+using CT.LocalInputManagement;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -12,7 +12,7 @@ namespace HnSF.ui.menus
         public UnityEvent<CSSCustomCharacterSelectWidget> OnCancel = new UnityEvent<CSSCustomCharacterSelectWidget>();
         public UnityEvent<CSSCustomCharacterSelectWidget> OnSubmit = new UnityEvent<CSSCustomCharacterSelectWidget>();
         
-        private InputPlayerManagerBase inputPlayer;
+        private InputPlayerManagerUIM inputPlayer;
         public CSSCustomCharacterSelectWidgetViewItem viewItemPrefab;
         public Transform viewItemParent;
         private List<CSSCustomCharacterSelectWidgetViewItem> items = new();
@@ -22,7 +22,7 @@ namespace HnSF.ui.menus
         private List<LoadedAssetHandleWrapper> loadedAssets = new List<LoadedAssetHandleWrapper>();
         private NavigationDirections playerLastNavigation = NavigationDirections.None;
         
-        public void Open(InputPlayerManagerBase player)
+        public void Open(InputPlayerManagerUIM player)
         {
             inputPlayer = player;
             viewItemPrefab.gameObject.SetActive(false);

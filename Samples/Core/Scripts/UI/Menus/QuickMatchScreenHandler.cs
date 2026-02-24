@@ -1,6 +1,7 @@
 using System.Collections.Generic;
+using CT.LocalInputManagement;
+using CT.MenuNav;
 using Cysharp.Threading.Tasks;
-using HnSF.Input;
 using HnSF.sessionhandling.handlers;
 using UnityEngine;
 using UnityEngine.Events;
@@ -80,7 +81,7 @@ namespace HnSF.ui.menus
             quickMatchScreenInstancePrefab.transform.parent.gameObject.SetActive(false);
             gameObject.SetActive(true);
 
-            var inputPlayerManager = InputManager.instance;
+            var inputPlayerManager = InputManagerUIM.instance as InputManagerUIM;
             
             foreach (var inputPlayer in inputPlayerManager.GetPlayers())
             {
@@ -88,7 +89,7 @@ namespace HnSF.ui.menus
                 localPlayersInfo[inputPlayer.Id].PlayerId = inputPlayer.Id;
                 var screenInstance = Instantiate(quickMatchScreenInstancePrefab, transform, false);
                 playerIdToScreenInstance.Add(inputPlayer.Id, screenInstance);
-                screenInstance.inputPlayer = inputPlayer;
+                screenInstance.inputPlayer = inputPlayer as InputPlayerManagerUIM;
                 screenInstance.playerInfo = localPlayersInfo[inputPlayer.Id];
                 screenInstance.instanceCamera = GameObject.Instantiate(instanceCameraPrefab, transform, false);
                 localPlayersInfo[inputPlayer.Id].OnInfoUpdated.AddListener(WhenLocalPlayerInfoUpdated);
