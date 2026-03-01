@@ -3,37 +3,42 @@ using HnSF.core.state;
 using HnSF.core.state.actions;
 using HnSF.core.state.decisions;
 using UnityEngine;
+using UnityEngine.Scripting.APIUpdating;
 
 namespace Quantum
 {
+    [MovedFrom(autoUpdateAPI: true, sourceNamespace: "Quantum", sourceClassName: "StateActionListExternal")]
     public unsafe partial class StateActionList : AssetObject
     {
 #if QUANTUM_UNITY
         [SerializeReference, SubclassSelector]
 #endif
         public HNSFStateDecision[] conditions = Array.Empty<HNSFStateDecision>();
-        
+
 #if QUANTUM_UNITY
         [SerializeReference, SubclassSelector]
 #endif
         public HNSFStateAction[] actions = Array.Empty<HNSFStateAction>();
+
         public bool shouldExitEarlyWhenPossible = false;
-        
-        public virtual void Execute(Frame frame, EntityRef entity)
+
+        public virtual bool Execute(Frame frame, EntityRef entity)
         {
-            if (!frame.Unsafe.TryGetPointer<GenericStateMachine>(entity, out var gsm)) return;
+            if (!frame.Unsafe.TryGetPointer<GenericStateMachine>(entity, out var gsm)) return false;
 
             var sc = new HNSFStateContext(frame, entity);
-            
-            if (!CheckConditions(frame, entity, ref sc)) return;
-            
+
+            if (!CheckConditions(frame, entity, ref sc)) return false;
+
             foreach (var act in actions)
             {
                 var exitEarly = act.Execute(frame, entity, &gsm->stateAgent.stateData, 0, ref sc);
-                if (exitEarly && shouldExitEarlyWhenPossible) break;
+                if (exitEarly && shouldExitEarlyWhenPossible) return true;
             }
+
+            return false;
         }
-        
+
         public bool CheckConditions(Frame frame, EntityRef entity, ref HNSFStateContext stateContext)
         {
             if (conditions == null || conditions.Length == 0) return true;
@@ -41,6 +46,7 @@ namespace Quantum
             {
                 if (d.Decide(frame, entity, ref stateContext) == false) return false;
             }
+
             return true;
         }
     }

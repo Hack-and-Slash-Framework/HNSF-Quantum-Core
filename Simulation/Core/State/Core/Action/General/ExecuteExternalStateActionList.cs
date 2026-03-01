@@ -8,7 +8,7 @@ namespace HnSF.core.state.actions
     [Serializable]
     public unsafe partial class ExecuteExternalStateActionList : HNSFStateAction
     {
-        public StateActionListExternal[] externalActionLists = Array.Empty<StateActionListExternal>();
+        public StateActionList[] externalActionLists = Array.Empty<StateActionList>();
         
         public override bool ExecuteAction(Frame frame, EntityRef entity, FP rangePercent, ref HNSFStateContext stateContext)
         {

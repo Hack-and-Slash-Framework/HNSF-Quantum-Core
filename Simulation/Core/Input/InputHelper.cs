@@ -120,14 +120,14 @@ namespace Quantum
             inputDisabled[actorInputInfo->bufferPosition % Constants.INPUT_BUFFER_SIZE] =
                 new NetworkButtons((int)buttons);
         }
-
+        
+#if HNSF_DISABLE_DEFAULTS
+#else
         public static void BuildInputFromButtons(ActorInputButtonType inputButtons, ref Input input,
             bool buttonSetValue = true)
         {
         }
-
-#if HNSF_DISABLE_DEFAULTS
-#else
+        
         public static byte GetButtonHeldTime(Frame frame, EntityRef actorEntityRef, ActorInputButtonType checkButton)
         {
             if (!frame.Unsafe.TryGetPointer<ActorHoldInputInfo>(actorEntityRef, out ActorHoldInputInfo* holdInputInfo))
