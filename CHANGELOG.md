@@ -1,3 +1,10 @@
+## [1.5.2](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.5.1...v1.5.2) (2026-03-01)
+
+
+### Bug Fixes
+
+* Changed UpdateActorInput privates to public ([2d74c22](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/2d74c22c3a8aa7ac9cbab5bf9735e2e12148e535))
+
 ## [1.5.1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.5.0...v1.5.1) (2026-03-01)
 
 
