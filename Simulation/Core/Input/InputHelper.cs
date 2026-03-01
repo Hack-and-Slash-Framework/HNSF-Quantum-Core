@@ -126,13 +126,15 @@ namespace Quantum
         {
         }
 
+#if HNSF_DISABLE_DEFAULTS
+#else
         public static byte GetButtonHeldTime(Frame frame, EntityRef actorEntityRef, ActorInputButtonType checkButton)
         {
             if (!frame.Unsafe.TryGetPointer<ActorHoldInputInfo>(actorEntityRef, out ActorHoldInputInfo* holdInputInfo))
                 return 0;
             return GetButtonHeldTime(checkButton, holdInputInfo);
         }
-
+        
         public static byte GetButtonHeldTime(ActorInputButtonType inputButtons, ActorHoldInputInfo* actorHoldInputInfo)
         {
             switch (inputButtons)
@@ -141,6 +143,7 @@ namespace Quantum
 
             return 0;
         }
+#endif
 
         /// <summary>
         /// Make sure input doesn't produce a vector with a magnitude larger than 1. (for example, a keyboard or d-pad)
