@@ -23,14 +23,14 @@ namespace HnSF.core.systems
         static partial void ResolveInput(Frame frame, EntityRef entity, Input* input, ActorInputBuffer* charaInputs);
         static partial void ClearBufferItem(Frame frame, FixedArray<NetworkButtons> inputBuffer, int index);
 
-        private static void IncrementBufferPosition(ActorInputBuffer* charaInputs)
+        public static void IncrementBufferPosition(ActorInputBuffer* charaInputs)
         {
             charaInputs->bufferPosition += 1;
             if (charaInputs->bufferPosition == Constants.INPUT_BUFFER_SIZE * 6)
                 charaInputs->bufferPosition = Constants.INPUT_BUFFER_SIZE * 5;
         }
 
-        private static void CheckHeldTime(bool inputValue, byte* val)
+        public static void CheckHeldTime(bool inputValue, byte* val)
         {
             if (inputValue)
             {
