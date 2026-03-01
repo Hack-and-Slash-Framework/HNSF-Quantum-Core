@@ -1,6 +1,6 @@
 {
 	"name": "com.christides.hnsf-quantum-core",
-	"version": "1.4.2",
+	"version": "1.5.0",
 	"displayName": "Hack and Slash Framework Quantum Edition - CORE",
 	"description": "A framework for hack and slash games.",
 	"unity": "6000.3",

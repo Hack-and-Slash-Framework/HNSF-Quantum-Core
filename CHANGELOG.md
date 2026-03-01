@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.4.2...v1.5.0) (2026-03-01)
+
+
+### Features
+
+* Held input methods, various state actions ([be0bd50](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/be0bd50a452570fecb60e6f2c3007bf52be6821b))
+
 ## [1.4.2](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.4.1...v1.4.2) (2026-02-24)
 
 
