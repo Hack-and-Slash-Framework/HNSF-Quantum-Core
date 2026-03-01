@@ -1,3 +1,10 @@
+## [1.5.1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.5.0...v1.5.1) (2026-03-01)
+
+
+### Bug Fixes
+
+* Fixed StateActionList ([8cd5501](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/8cd5501cd436cb22d705494c3d0622d96e410476))
+
 # [1.5.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.4.2...v1.5.0) (2026-03-01)
 
 
