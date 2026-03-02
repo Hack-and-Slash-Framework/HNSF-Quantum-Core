@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Pool;
 
 [System.Serializable]
-public unsafe class GlobalVFXManager
+public unsafe class CallbackReceiverPlayOneshotVFX3D
 {
     private List<IDisposable> _disposableCallbacks = new List<IDisposable>();
 
