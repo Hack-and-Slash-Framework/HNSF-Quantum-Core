@@ -1,6 +1,9 @@
 using System.Collections.Generic;
 using Quantum;
 using UnityEngine.Profiling;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace HnSF
 {
@@ -8,6 +11,25 @@ namespace HnSF
     {
         protected static List<EntityAnimationUpdaterBase> eauList = new List<EntityAnimationUpdaterBase>();
         protected static HashSet<EntityAnimationUpdaterBase> priorityEau = new HashSet<EntityAnimationUpdaterBase>();
+
+        private void Awake()
+        {
+#if UNITY_EDITOR
+            EditorApplication.playModeStateChanged += OnExitPlayMode;
+#endif
+        }
+
+#if UNITY_EDITOR
+        private static void OnExitPlayMode(PlayModeStateChange state)
+        {
+            if(state == PlayModeStateChange.ExitingPlayMode)
+            {
+                EditorApplication.playModeStateChanged -= OnExitPlayMode;
+                eauList = new List<EntityAnimationUpdaterBase>();
+                priorityEau = new HashSet<EntityAnimationUpdaterBase>();
+            }
+        }
+#endif 
         
         public override void OnActivate(Frame frame)
         {
