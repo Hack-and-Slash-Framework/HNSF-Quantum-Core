@@ -1,3 +1,10 @@
+## [1.5.4](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.5.3...v1.5.4) (2026-03-02)
+
+
+### Bug Fixes
+
+* Fixed animation updater issue with domain reload ([fce5f7b](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/fce5f7b97e1d6deaef0318571be791d3e53453e5))
+
 ## [1.5.3](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.5.2...v1.5.3) (2026-03-02)
 
 
