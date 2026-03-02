@@ -1,3 +1,10 @@
+## [1.5.3](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.5.2...v1.5.3) (2026-03-02)
+
+
+### Bug Fixes
+
+* Properly name GlobalVFXManager ([0141351](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/0141351144085b535ac236beddbc6bb93b288bba))
+
 ## [1.5.2](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.5.1...v1.5.2) (2026-03-01)
 
 
