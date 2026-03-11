@@ -1,3 +1,10 @@
+## [1.5.5](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.5.4...v1.5.5) (2026-03-11)
+
+
+### Bug Fixes
+
+* Ignore movement input when movement disabled ([4f4de23](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/4f4de231de9f8072eab417120f0e6c59226255a0))
+
 ## [1.5.4](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.5.3...v1.5.4) (2026-03-02)
 
 
