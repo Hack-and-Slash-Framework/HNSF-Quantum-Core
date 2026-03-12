@@ -8,6 +8,7 @@ namespace HnSF.core.state.actions
     [AddTypeMenu(menuName: "Cutscene/Stop Actor Cutscene")]
     public unsafe partial class StopActorCutscene : HNSFStateAction
     {
+        public AssetRef cutsceneSource;
         public AssetRef<Tag> cutsceneTag;
         
         public override bool ExecuteAction(Frame frame, EntityRef entity, FP rangePercent,
@@ -20,7 +21,8 @@ namespace HnSF.core.state.actions
             while (syncedFilter.NextUnsafe(out var syncedEntity, out var syncedCutsceneSource))
             {
                 if (syncedCutsceneSource->sourcePlayer != entity
-                    || syncedCutsceneSource->cutsceneTag != cutsceneTag) continue;
+                    || syncedCutsceneSource->cutsceneTag != cutsceneTag
+                    || syncedCutsceneSource->cutsceneSource != cutsceneSource) continue;
 
                 entityToRemove = syncedEntity;
                 break;
@@ -39,6 +41,7 @@ namespace HnSF.core.state.actions
         public override HNSFStateAction CopyTo(HNSFStateAction target)
         {
             var t = target as StopActorCutscene;
+            t.cutsceneSource = cutsceneSource;
             t.cutsceneTag = cutsceneTag;
             return base.CopyTo(target);
         }

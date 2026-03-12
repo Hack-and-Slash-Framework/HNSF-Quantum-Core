@@ -20,6 +20,7 @@ namespace HnSF.core.state.actions
         public bool autoPlay = true;
         public bool autoEnd = false;
         [DrawIf(nameof(autoEnd), true)] public int autoEndFrame;
+        public AssetRef cutsceneSource;
         public AssetRef<Tag> cutsceneTag;
 
         public TagToTag[] cutsceneControlledEntities = Array.Empty<TagToTag>();
@@ -32,6 +33,7 @@ namespace HnSF.core.state.actions
             var scc = new SyncedCutsceneSource()
             {
                 sourcePlayer = entity,
+                cutsceneSource = cutsceneSource,
                 cutsceneTag = cutsceneTag,
                 frame = 0,
                 playrate = 1,
@@ -66,6 +68,7 @@ namespace HnSF.core.state.actions
             t.autoPlay = autoPlay;
             t.autoEnd = autoEnd;
             t.autoEndFrame = autoEndFrame;
+            t.cutsceneSource = cutsceneSource;
             t.cutsceneTag = cutsceneTag;
             t.cutsceneControlledEntities = cutsceneControlledEntities.ToArray();
             return base.CopyTo(target);
