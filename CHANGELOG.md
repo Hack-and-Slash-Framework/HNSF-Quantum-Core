@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.5.5...v1.6.0) (2026-03-12)
+
+
+### Features
+
+* Play Cutscene from any source ([72a42ba](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/72a42baab7aa5691cc2a671b6261f856d6d18c0e))
+
 ## [1.5.5](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.5.4...v1.5.5) (2026-03-11)
 
 
