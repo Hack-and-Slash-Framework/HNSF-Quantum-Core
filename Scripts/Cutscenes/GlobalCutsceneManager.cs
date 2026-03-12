@@ -4,6 +4,7 @@ using Quantum;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Pool;
+using UnityEngine.Profiling;
 
 namespace HnSF
 {
@@ -17,9 +18,9 @@ namespace HnSF
 
         public QuantumEntityViewUpdater viewUpdater;
 
+        public Dictionary<AssetRef, CutsceneGrouping> cutsceneGroupingPrefabs = new();
+        public Dictionary<AssetRef, List<CutsceneGrouping>> cutsceneGroupingPools = new();
         public Dictionary<EntityRef, CutsceneGrouping> entityToCutscenePlayers = new();
-
-        public Dictionary<AssetRef<BattleActorDefinition>, List<CutsceneGrouping>> cutsceneGroupingPool = new();
 
         public CutsceneBindingSource globalBindingSource;
 
@@ -34,9 +35,9 @@ namespace HnSF
             _disposableCallbacks.Add(
                 QuantumCallback.SubscribeManual((CallbackEventConfirmed c) => WhenEventConfirmed(c)));
             _disposableCallbacks.Add(QuantumEvent.SubscribeManual((EventBattleActorLinkAdded e) =>
-                LinkCutscenePlayerGroup(e)));
+                WhenBattleActorLinkAdded(e)));
             _disposableCallbacks.Add(QuantumEvent.SubscribeManual((EventBattleActorLinkRemoved e) =>
-                UnlinkCutscenePlayerGroup(e)));
+                WhenBattleActorLinkRemoved(e)));
             _disposableCallbacks.Add(QuantumEvent.SubscribeManual((EventUpdateCutsceneControlledEntities e) =>
                 UpdateCutsceneControlledEntitiesEvent(e)));
 
@@ -85,35 +86,31 @@ namespace HnSF
 
             foreach (var v in currentSyncedCutscenes) v.Value.valid = false;
 
-            //Profiler.BeginSample("Finding Synced Cutscenes");
+            Profiler.BeginSample("Global Cutscene Manager");
+            UpdateKnownSyncedCutscenes(callback, filter, frame);
+            TickSyncedCutscenes(callback, frame);
+            CleanupInvalidCutscenes(frame);
+            Profiler.EndSample();
+        }
+
+        /// Updates the view's known running cutscenes along with their current values.
+        protected virtual void UpdateKnownSyncedCutscenes(CallbackUpdateView callback, ComponentFilter<SyncedCutsceneSource> filter, Frame frame)
+        {
+            Profiler.BeginSample("Updating Known Synced Cutscenes");
             while (filter.NextUnsafe(out var entityRef, out var syncedCutsceneSource))
             {
+                // If we're already tracking the cutscene...
                 if (currentSyncedCutscenes.TryGetValue(entityRef, out var dictGrouping))
                 {
-                    // Cutscene changed
-                    if (currentSyncedCutscenes[entityRef].currentSource.cutsceneTag !=
-                        syncedCutsceneSource->cutsceneTag)
+                    // Cutscene changed, remove it so it gets readded later.
+                    if (currentSyncedCutscenes[entityRef].currentSource.cutsceneTag != syncedCutsceneSource->cutsceneTag)
                     {
-                        var syncedCutsceneGroup = currentSyncedCutscenes[entityRef];
-
-                        foreach (var v in syncedCutsceneGroup.viewsUsed)
-                            ReturnExclusiveControlOfFighterAnimation(v.gameObject);
-
-                        if (entityToCutscenePlayers.TryGetValue(syncedCutsceneGroup.currentSource.sourcePlayer,
-                                out var playerCutsceneGrouping)
-                            && playerCutsceneGrouping.cutscenePlayers.TryGetValue(
-                                syncedCutsceneGroup.currentSource.cutsceneTag,
-                                out var gcp))
-                        {
-                            gcp.StopCutscene(pause: false);
-                        }
-
-                        syncedCutsceneGroupingPool.Release(syncedCutsceneGroup);
-                        currentSyncedCutscenes.Remove(entityRef);
+                        syncedCutscenesToRemove.Add(entityRef);
+                        CleanupInvalidCutscenes(frame);
                     }
                     else
                     {
-                        // Update values.
+                        // Only values changed, just update them.
                         var hasLdt =
                             frame.Unsafe.TryGetPointer<LocalDeltaTime>(syncedCutsceneSource->sourcePlayer, out var ldt);
 
@@ -126,11 +123,11 @@ namespace HnSF
                             dictGrouping.previousSource = dictGrouping.currentSource;
                             dictGrouping.currentSource = *syncedCutsceneSource;
                         }
-
                         continue;
                     }
                 }
 
+                // Only bother with the cutscene if it's valid for one of our local players.
                 if (frame.TryResolveList(syncedCutsceneSource->onlyFor, out var onlyPlayerList)
                     && onlyPlayerList.Count > 0)
                 {
@@ -150,24 +147,42 @@ namespace HnSF
 
                 currentSyncedCutscenes.Add(entityRef, scg);
             }
-            //Profiler.EndSample();
-
-            //Profiler.BeginSample("Processing Synced Cutscenes");
+            Profiler.EndSample();
+        }
+        
+        protected virtual void TickSyncedCutscenes(CallbackUpdateView callback, Frame frame)
+        {
+            Profiler.BeginSample("Processing Synced Cutscenes");
+            // Check all the cutscenes we know of view-side.
             foreach (var (syncedCutsceneEntity, syncedCutsceneGroup) in currentSyncedCutscenes)
             {
+                // Cutscene wasn't found in the sim this frame, mark it for deletion.
                 if (!syncedCutsceneGroup.valid)
                 {
                     syncedCutscenesToRemove.Add(syncedCutsceneEntity);
                     continue;
                 }
 
+                // Get or Create Cutscene Group GameObject for the playing entity.
                 if (!entityToCutscenePlayers.TryGetValue(syncedCutsceneGroup.currentSource.sourcePlayer,
-                        out var playerCutsceneGrouping)) continue;
+                        out var playerCutsceneGrouping))
+                {
+                    playerCutsceneGrouping = GetCutsceneGroupFromPool(syncedCutsceneGroup.currentSource.cutsceneSource);
+                    entityToCutscenePlayers.Add(syncedCutsceneGroup.currentSource.sourcePlayer, playerCutsceneGrouping);
+                }
+                
                 if (!playerCutsceneGrouping.cutscenePlayers.TryGetValue(syncedCutsceneGroup.currentSource.cutsceneTag,
-                        out var gcp)) continue;
-
-                var cutscenePlayer = viewUpdater.GetView(syncedCutsceneGroup.currentSource.sourcePlayer);
-                if (!cutscenePlayer) continue;
+                        out var gcp))
+                {
+                    Debug.LogError($"Could not get requested cutscene player this frame. " +
+                                   $"source={syncedCutsceneGroup.currentSource.cutsceneSource}," +
+                                   $"tag={syncedCutsceneGroup.currentSource.cutsceneTag}," +
+                                   $"player={syncedCutsceneGroup.currentSource.sourcePlayer}");
+                    continue;
+                }
+                
+                var cutscenePlayingActor = viewUpdater.GetView(syncedCutsceneGroup.currentSource.sourcePlayer);
+                if (!cutscenePlayingActor) continue;
 
                 var hasLdt =
                     frame.Unsafe.TryGetPointer<LocalDeltaTime>(syncedCutsceneGroup.currentSource.sourcePlayer,
@@ -187,11 +202,11 @@ namespace HnSF
                 
                 if (gcp.director.state != PlayState.Playing)
                 {
-                    syncedCutsceneGroup.viewsUsed.Add(cutscenePlayer);
-                    SetupStandardBindings(callback.Game, playerCutsceneGrouping.bindingSource, cutscenePlayer, gcp,
+                    syncedCutsceneGroup.viewsUsed.Add(cutscenePlayingActor);
+                    SetupStandardBindings(callback.Game, playerCutsceneGrouping.bindingSource, cutscenePlayingActor, gcp,
                         syncedCutsceneGroup);
-                    if (gcp.takeExclusiveControl) TakeExclusiveControlOfFighterAnimation(cutscenePlayer.gameObject);
-                    SetupPlayerGroupBindingSource(playerCutsceneGrouping.bindingSource, cutscenePlayer);
+                    if (gcp.takeExclusiveControl) TakeExclusiveControlOfFighterAnimation(cutscenePlayingActor.gameObject);
+                    SetupPlayerGroupBindingSource(playerCutsceneGrouping.bindingSource, cutscenePlayingActor);
                 }
 
                 if (syncedCutsceneGroup.updateControlledEntities)
@@ -210,7 +225,7 @@ namespace HnSF
 
                 syncedCutsceneGroup.updateControlledEntities = false;
 
-                gcp.playingEntityView = cutscenePlayer;
+                gcp.playingEntityView = cutscenePlayingActor;
                 gcp.autoUpdatePlayRate = false;
                 if (gcp.director.state != PlayState.Playing)
                     gcp.PlayCutscene(callback.Game, playerCutsceneGrouping.bindingSource, DirectorUpdateMode.Manual);
@@ -226,9 +241,12 @@ namespace HnSF
                 
                 syncedCutsceneGroup.accumulatedTimeSinceLastUpdate += Time.deltaTime;
             }
-            //.EndSample();
+            Profiler.EndSample();
+        }
 
-            //Profiler.BeginSample("Cleanup");
+        protected virtual void CleanupInvalidCutscenes(Frame frame)
+        {
+            Profiler.BeginSample("Cleanup");
             foreach (var invalidSyncedGroup in syncedCutscenesToRemove)
             {
                 var syncedCutsceneGroup = currentSyncedCutscenes[invalidSyncedGroup];
@@ -249,11 +267,8 @@ namespace HnSF
                 syncedCutsceneGroupingPool.Release(syncedCutsceneGroup);
                 currentSyncedCutscenes.Remove(invalidSyncedGroup);
             }
-
             syncedCutscenesToRemove.Clear();
-            //Profiler.EndSample();
-
-            //Profiler.EndSample();
+            Profiler.EndSample();
         }
 
         protected virtual void UpdateViewControl(GameObject view, bool controlAnimation, bool controlPosition)
@@ -289,47 +304,60 @@ namespace HnSF
             
         }
 
-        protected virtual void LinkCutscenePlayerGroup(EventBattleActorLinkAdded callback)
+        protected virtual void WhenBattleActorLinkAdded(EventBattleActorLinkAdded callback)
         {
             if (viewUpdater == null)
                 viewUpdater = GameObject.FindAnyObjectByType<QuantumEntityViewUpdater>();
 
             if (!QuantumUnityDB.TryGetGlobalAsset(callback.battleActorDefinitionReference, out var charaDefinitionAsset))
                 return;
-            if (entityToCutscenePlayers.ContainsKey(callback.entity)) return;
-            if (charaDefinitionAsset.cutsceneGroupingPrefab == null) return;
-
-            CutsceneGrouping cg = null;
-            if (cutsceneGroupingPool.ContainsKey(callback.battleActorDefinitionReference) &&
-                cutsceneGroupingPool[callback.battleActorDefinitionReference].Count > 0)
-            {
-                cg = cutsceneGroupingPool[callback.battleActorDefinitionReference][0];
-                cutsceneGroupingPool[callback.battleActorDefinitionReference].RemoveAt(0);
-            }
-            else
-            {
-                cg = GameObject
-                    .Instantiate(charaDefinitionAsset.cutsceneGroupingPrefab, Vector3.zero, Quaternion.identity)
-                    .GetComponent<CutsceneGrouping>();
-            }
-
-            cg.bindingSource = new CutsceneBindingSource()
-            {
-                parent = globalBindingSource
-            };
-
-            SetupPlayerGroupBindingSource(cg.bindingSource, viewUpdater.GetView(callback.entity));
-
-            entityToCutscenePlayers.Add(callback.entity, cg);
-
+            RegisterCutsceneGroupPrefab(charaDefinitionAsset, charaDefinitionAsset.cutsceneGroupingPrefab?.GetComponent<CutsceneGrouping>());
+            
             EventKey key = (EventKey)callback;
             _unconfirmedLinkCutsceneGrouping.Add(key, callback);
         }
-
-        protected virtual void UnlinkCutscenePlayerGroup(EventBattleActorLinkRemoved callback)
+        
+        protected virtual void WhenBattleActorLinkRemoved(EventBattleActorLinkRemoved callback)
         {
             EventKey key = (EventKey)callback;
             _unconfirmedUnlinkCutsceneGrouping.Add(key, callback);
+        }
+
+        protected virtual CutsceneGrouping GetCutsceneGroupFromPool(AssetRef source)
+        {
+            if (!cutsceneGroupingPools.ContainsKey(source)) return null;
+            CutsceneGrouping cg = null;
+            if(!cutsceneGroupingPools.ContainsKey(source) || cutsceneGroupingPools.Count == 0){
+                cg = GameObject.Instantiate(cutsceneGroupingPrefabs[source], Vector3.zero, Quaternion.identity);
+                cg.sourceKey = source;
+                cg.bindingSource = new CutsceneBindingSource();
+            }
+            else
+            {
+                cg = cutsceneGroupingPools[source][0];
+                cutsceneGroupingPools[source].Remove(cg);
+            }
+
+            cg.bindingSource.parent = globalBindingSource;
+            return cg;
+        }
+
+        protected virtual void ReturnCutsceneGroupToPool(CutsceneGrouping cg)
+        {
+            cg.StopAll();
+            if (cg.bindingSource == null || !cutsceneGroupingPools.ContainsKey(cg.sourceKey))
+            {
+                GameObject.Destroy(cg);
+                return;
+            }
+            cutsceneGroupingPools[cg.sourceKey].Add(cg);
+        }
+
+        public virtual void RegisterCutsceneGroupPrefab(AssetRef source, CutsceneGrouping groupPrefab)
+        {
+            if (groupPrefab == null) return;
+            cutsceneGroupingPrefabs.TryAdd(source, groupPrefab);
+            if(!cutsceneGroupingPools.ContainsKey(source)) cutsceneGroupingPools.Add(source, new List<CutsceneGrouping>());
         }
 
         protected virtual void SetupPlayerGroupBindingSource(CutsceneBindingSource bindingSource, QuantumEntityView view,
@@ -337,20 +365,7 @@ namespace HnSF
         {
             
         }
-
-        protected virtual void ConfirmUnlinkCutscenePlayerGroup(EntityRef entity,
-            AssetRef<BattleActorDefinition> charaDefinitionReference)
-        {
-            if (!entityToCutscenePlayers.ContainsKey(entity)) return;
-
-            entityToCutscenePlayers[entity].StopAll();
-
-            cutsceneGroupingPool.TryAdd(charaDefinitionReference, new List<CutsceneGrouping>());
-            cutsceneGroupingPool[charaDefinitionReference].Add(entityToCutscenePlayers[entity]);
-
-            entityToCutscenePlayers.Remove(entity);
-        }
-
+        
         protected virtual void Breakdown()
         {
             for (int i = 0; i < _disposableCallbacks.Count; i++)
@@ -387,6 +402,20 @@ namespace HnSF
             {
                 _unconfirmedUnlinkCutsceneGrouping.Remove(callback.EventKey);
             }
+        }
+        
+        protected virtual void ConfirmUnlinkCutscenePlayerGroup(EntityRef entity,
+            AssetRef<BattleActorDefinition> charaDefinitionReference)
+        {
+            /*
+            if (!entityToCutscenePlayers.ContainsKey(entity)) return;
+
+            entityToCutscenePlayers[entity].StopAll();
+
+            cutsceneGroupingPools.TryAdd(charaDefinitionReference.Id, new List<CutsceneGrouping>());
+            cutsceneGroupingPools[charaDefinitionReference.Id].Add(entityToCutscenePlayers[entity]);
+
+            entityToCutscenePlayers.Remove(entity);*/
         }
 
         public virtual void TakeExclusiveControlOfFighterAnimation(GameObject entityView)

@@ -1,6 +1,7 @@
 component SyncedCutsceneSource
 {
     entity_ref sourcePlayer;
+    asset_ref cutsceneSource;
     asset_ref<Tag> cutsceneTag;
     int frame;
     int playrate;

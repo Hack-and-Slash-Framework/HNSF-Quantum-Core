@@ -7,9 +7,9 @@ namespace HnSF
     public class CutsceneGrouping : MonoBehaviour
     {
         public Dictionary<AssetRef<Tag>, ActorCutscenePlayer> cutscenePlayers = new();
-        
-        [SerializeField] private List<ActorCutscenePlayer> _cutscenePlayers = new();
 
+        public AssetRef sourceKey;
+        [SerializeField] private List<ActorCutscenePlayer> _cutscenePlayers = new();
         public CutsceneBindingSource bindingSource;
         
         private void Awake()

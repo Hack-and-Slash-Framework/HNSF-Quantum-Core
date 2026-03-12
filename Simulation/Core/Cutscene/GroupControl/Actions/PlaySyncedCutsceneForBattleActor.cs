@@ -29,6 +29,7 @@ namespace HnSF.core.GroupControl.Actions
         public struct TargetAndState
         {
             public AssetRef<Tag> targetTag;
+            public AssetRef cutsceneSource;
             public AssetRef<Tag> cutsceneTag;
 
             public bool autoPlay;
@@ -58,6 +59,7 @@ namespace HnSF.core.GroupControl.Actions
             var scc = new SyncedCutsceneSource()
             {
                 sourcePlayer = battleActorRef,
+                cutsceneSource = tas.cutsceneSource,
                 cutsceneTag = tas.cutsceneTag,
                 frame = 0,
                 playrate = 1,
@@ -113,6 +115,7 @@ namespace HnSF.core.GroupControl.Nodes
     internal class PlaySyncedCutsceneForBattleActorNode : ActorGroupControlNode
     {
         public const string IN_PORT_Target_Tag = "TargetTag";
+        public const string IN_PORT_Cutscene_Source = "CutsceneSource";
         public const string IN_PORT_Cutscene_Tag = "CutsceneTag";
         public const string IN_PORT_Autoplay = "Autoplay";
         public const string IN_PORT_Autoend = "Autoend";
@@ -125,6 +128,10 @@ namespace HnSF.core.GroupControl.Nodes
             
             context.AddInputPort<Tag>(IN_PORT_Target_Tag)
                 .WithDisplayName("Target")
+                .Build();
+
+            context.AddInputPort<Tag>(IN_PORT_Cutscene_Source)
+                .WithDisplayName("Cutscene Source")
                 .Build();
             
             context.AddInputPort<Tag>(IN_PORT_Cutscene_Tag)
@@ -152,6 +159,7 @@ namespace HnSF.core.GroupControl.Nodes
         {
             var label = ActorGroupScriptDirectorImporter.GetInputPortValue<string>(this.GetInputPortByName(IN_PORT_LABEL));
             var targetTag = ActorGroupScriptDirectorImporter.GetInputPortValue<Tag>(this.GetInputPortByName(IN_PORT_Target_Tag));
+            var cutsceneSource = ActorGroupScriptDirectorImporter.GetInputPortValue<AssetObject>(this.GetInputPortByName(IN_PORT_Cutscene_Source));
             var cutsceneTag = ActorGroupScriptDirectorImporter.GetInputPortValue<Tag>(this.GetInputPortByName(IN_PORT_Cutscene_Tag));
             var autoplay = ActorGroupScriptDirectorImporter.GetInputPortValue<bool>(this.GetInputPortByName(IN_PORT_Autoplay));
             var autoend = ActorGroupScriptDirectorImporter.GetInputPortValue<bool>(this.GetInputPortByName(IN_PORT_Autoend));
@@ -165,6 +173,7 @@ namespace HnSF.core.GroupControl.Nodes
                     new PlaySyncedCutsceneForBattleActor.TargetAndState()
                     {
                         targetTag = targetTag,
+                        cutsceneSource = cutsceneSource,
                         cutsceneTag = cutsceneTag,
                         autoPlay = autoplay,
                         autoEnd = autoend,

@@ -1,6 +1,7 @@
 component SyncedCutsceneTimer
 {
     entity_ref playingEntity;
+    asset_ref cutsceneSource;
     asset_ref<Tag> playingCutscene;
     int cutsceneFrame;
     int playRate;
