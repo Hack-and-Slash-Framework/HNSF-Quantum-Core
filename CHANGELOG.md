@@ -1,3 +1,10 @@
+## [1.6.1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.6.0...v1.6.1) (2026-03-12)
+
+
+### Bug Fixes
+
+* Fixed cutscene actions ([e773740](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/e773740d94ec44b12d3f223ae28d070c21ee790e))
+
 # [1.6.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.5.5...v1.6.0) (2026-03-12)
 
 
