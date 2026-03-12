@@ -1,1 +1,0 @@
-signal HealthIncreased(entity_ref entity, int oldHealth, int newHealth);

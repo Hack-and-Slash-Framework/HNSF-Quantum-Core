@@ -165,9 +165,10 @@ namespace HnSF.sessionhandling.handlers
             matchSessionHandler.InitMatch();
         }
 
-        protected virtual async UniTask PreSessionCreation()
+        protected virtual UniTask PreSessionCreation()
         {
             defaultRuntimeConfig.Seed = Random.Range(int.MinValue, int.MaxValue);
+            return UniTask.CompletedTask;
         }
         
         protected virtual async UniTask LoadMap()

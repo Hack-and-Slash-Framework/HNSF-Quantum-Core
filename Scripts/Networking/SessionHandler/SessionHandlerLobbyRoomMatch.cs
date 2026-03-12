@@ -276,9 +276,10 @@ namespace HnSF.sessionhandling.handlers
             await selectedMapDefinition.GetAsset<IMapDefinition>().LoadMap(LoadSceneMode.Single);
         }
         
-        protected virtual async UniTask PreSessionCreation()
+        protected virtual UniTask PreSessionCreation()
         {
             defaultRuntimeConfig.Seed = Random.Range(int.MinValue, int.MaxValue);
+            return UniTask.CompletedTask;
         }
 
         protected virtual async UniTask<bool> InitializeMatchHandler()

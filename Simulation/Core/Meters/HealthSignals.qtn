@@ -1,0 +1,9 @@
+struct HealthChangeResult
+{
+    bool Ignore;
+    int From;
+    int To;
+}
+
+signal PreHealthChange(entity_ref entity, HealthChangeResult* change);
+signal OnHealthChanged(entity_ref entity, int From, int To);

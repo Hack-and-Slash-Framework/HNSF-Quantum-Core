@@ -6,32 +6,45 @@ namespace Quantum
     {
         public void ApplyDamage(Frame frame, EntityRef entity, int damage, bool doesNotKill, bool clampAtZero = true)
         {
-            var oldHealth = value;
-            ApplyDamage_NoSignal(damage, doesNotKill, clampAtZero);
-            if (oldHealth == value) return;
-            frame.Signals.HealthDecreased(entity, oldHealth, value);
+            var healthChangeResult = new HealthChangeResult()
+            {
+                Ignore = false,
+                From = value,
+                To = value - GetExpectedDamage(damage, doesNotKill, clampAtZero)
+            };
+            frame.Signals.PreHealthChange(entity, &healthChangeResult);
+            if (healthChangeResult.Ignore || healthChangeResult.From == healthChangeResult.To) return;
+            ApplyDamage_NoSignal((healthChangeResult.From - healthChangeResult.To), doesNotKill, clampAtZero);
+        }
+
+        private int GetExpectedDamage(int damage, bool doesNotKill, bool clampAtZero = true)
+        {
+            if (damage >= value)
+            {
+                if (doesNotKill) return value - 1;
+                if (clampAtZero) return value;
+            }
+            return damage;
         }
         
         public void ApplyDamage_NoSignal(int damage, bool doesNotKill, bool clampAtZero = true)
         {
-            if (damage <= 1) damage = 1;
-            if (doesNotKill && damage >= value)
-            {
-                value = 1;
-                return;
-            }
-
-            var oldHealth = value;
+            damage = GetExpectedDamage(damage, doesNotKill, clampAtZero);
             value -= damage;
             if (clampAtZero && value < 0) value = 0;
         }
 
         public void ApplyHealing(Frame frame, EntityRef entity, int healing, int maxHealth)
         {
-            var oldHealth = value;
-            ApplyHealing_NoSignal(healing, maxHealth);
-            if (oldHealth == value) return;
-            frame.Signals.HealthIncreased(entity, oldHealth, value);
+            var healthChangeResult = new HealthChangeResult()
+            {
+                Ignore = false,
+                From = value,
+                To = value + healing
+            };
+            frame.Signals.PreHealthChange(entity, &healthChangeResult);
+            if (healthChangeResult.Ignore || healthChangeResult.From == healthChangeResult.To) return;
+            ApplyHealing_NoSignal((healthChangeResult.To - healthChangeResult.From), maxHealth);
         }
         
         public void ApplyHealing_NoSignal(int healing, int maxHealth)
