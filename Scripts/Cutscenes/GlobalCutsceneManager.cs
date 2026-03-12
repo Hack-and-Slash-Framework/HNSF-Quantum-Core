@@ -327,8 +327,14 @@ namespace HnSF
         {
             if (!cutsceneGroupingPools.ContainsKey(source)) return null;
             CutsceneGrouping cg = null;
-            if(!cutsceneGroupingPools.ContainsKey(source) || cutsceneGroupingPools.Count == 0){
-                cg = GameObject.Instantiate(cutsceneGroupingPrefabs[source], Vector3.zero, Quaternion.identity);
+            if(!cutsceneGroupingPools.ContainsKey(source) || cutsceneGroupingPools[source].Count == 0)
+            {
+                if (!cutsceneGroupingPrefabs.TryGetValue(source, out var cgPrefab))
+                {
+                    Debug.LogError($"No cutscene group prefab found for source={source}.");
+                    return null;
+                }
+                cg = GameObject.Instantiate(cgPrefab, Vector3.zero, Quaternion.identity);
                 cg.sourceKey = source;
                 cg.bindingSource = new CutsceneBindingSource();
             }
