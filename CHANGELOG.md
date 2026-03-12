@@ -1,3 +1,10 @@
+# [1.7.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.6.4...v1.7.0) (2026-03-12)
+
+
+### Features
+
+* Improved health signals ([598b023](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/598b023d782bb9b9ca92767a301b45ab7ab61a0e))
+
 ## [1.6.4](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.6.3...v1.6.4) (2026-03-12)
 
 
