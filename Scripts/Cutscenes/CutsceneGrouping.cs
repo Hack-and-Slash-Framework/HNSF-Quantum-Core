@@ -17,11 +17,11 @@ namespace HnSF
             foreach(var gcp in _cutscenePlayers) cutscenePlayers.Add(gcp.cutscenePlayerTag, gcp);
         }
 
-        public void StopAll()
+        public void StopAll(bool pause = false)
         {
             foreach (var gcp in _cutscenePlayers)
             {
-                gcp.StopCutscene();
+                gcp.StopCutscene(pause);
             }
         }
     }

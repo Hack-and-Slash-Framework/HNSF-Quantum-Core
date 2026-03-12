@@ -255,15 +255,14 @@ namespace HnSF
 
                 foreach (var v in syncedCutsceneGroup.viewsUsed)
                     ReturnExclusiveControlOfFighterAnimation(v.gameObject);
-
-                if (entityToCutscenePlayers.TryGetValue(syncedCutsceneGroup.currentSource.sourcePlayer,
-                        out var playerCutsceneGrouping)
-                    && playerCutsceneGrouping.cutscenePlayers.TryGetValue(syncedCutsceneGroup.currentSource.cutsceneTag,
-                        out var gcp))
+                
+                if (entityToCutscenePlayers.TryGetValue(syncedCutsceneGroup.currentSource.sourcePlayer, out var playerCutsceneGrouping))
                 {
-                    gcp.StopCutscene(pause: false);
+                    ReturnCutsceneGroupToPool(playerCutsceneGrouping);
                 }
-
+                
+                entityToCutscenePlayers.Remove(syncedCutsceneGroup.currentSource.sourcePlayer);
+                
                 syncedCutsceneGroupingPool.Release(syncedCutsceneGroup);
                 currentSyncedCutscenes.Remove(invalidSyncedGroup);
             }
