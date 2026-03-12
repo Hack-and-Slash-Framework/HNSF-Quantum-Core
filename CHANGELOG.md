@@ -1,3 +1,10 @@
+## [1.6.4](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.6.3...v1.6.4) (2026-03-12)
+
+
+### Bug Fixes
+
+* Return cutscene group to pool on destruction ([3a861e4](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/3a861e441926eceee8cf72ae77258931ce06a6dc))
+
 ## [1.6.3](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.6.2...v1.6.3) (2026-03-12)
 
 
