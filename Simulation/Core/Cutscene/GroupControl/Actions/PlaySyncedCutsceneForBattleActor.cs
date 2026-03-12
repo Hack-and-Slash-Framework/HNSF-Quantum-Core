@@ -130,7 +130,7 @@ namespace HnSF.core.GroupControl.Nodes
                 .WithDisplayName("Target")
                 .Build();
 
-            context.AddInputPort<Tag>(IN_PORT_Cutscene_Source)
+            context.AddInputPort<AssetObject>(IN_PORT_Cutscene_Source)
                 .WithDisplayName("Cutscene Source")
                 .Build();
             
