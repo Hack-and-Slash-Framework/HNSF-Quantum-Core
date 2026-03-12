@@ -1,3 +1,10 @@
+## [1.6.3](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.6.2...v1.6.3) (2026-03-12)
+
+
+### Bug Fixes
+
+* Fixed incorrect cutscene source type ([cd86588](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/cd86588e6b4a15414dd941e9b594fe86a7fa12a1))
+
 ## [1.6.2](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.6.1...v1.6.2) (2026-03-12)
 
 
