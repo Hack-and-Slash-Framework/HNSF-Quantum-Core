@@ -163,7 +163,9 @@ public class StateTimelineEditorView : VisualElement
                 var atm = AdvancedTypeModal.Show(p, TypeCache.GetTypesDerivedFrom(typeof(HNSFStateAction)).Where(p =>
                     (p.IsPublic || p.IsNestedPublic) &&
                     !p.IsAbstract &&
-                    !p.IsGenericType), 
+                    !p.IsGenericType
+                    && !Attribute.IsDefined(p, typeof(IgnoreActionAttribute))
+                    ), 
                     20);
                 atm.OnItemSelected += (a) => { WhenItemSelected(null, a); };
             });
