@@ -1,3 +1,10 @@
+## [1.7.1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.7.0...v1.7.1) (2026-03-14)
+
+
+### Bug Fixes
+
+* Moved ActorCombatStats to sample ([d30025e](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/d30025e0d08e2c6989ba77312edf834bd9fcff83))
+
 # [1.7.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.6.4...v1.7.0) (2026-03-12)
 
 
