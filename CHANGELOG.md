@@ -1,3 +1,10 @@
+## [1.7.2](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.7.1...v1.7.2) (2026-03-15)
+
+
+### Bug Fixes
+
+* Stat sample now appears in menu ([e2e63b2](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/e2e63b2724c1d4331d51c1561b1006222e0f4af2))
+
 ## [1.7.1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.7.0...v1.7.1) (2026-03-14)
 
 
