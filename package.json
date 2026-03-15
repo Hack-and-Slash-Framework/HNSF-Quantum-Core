@@ -9,6 +9,11 @@
 			"displayName": "Core Content",
 			"description": "Core HnSF content.",
 			"path": "Samples~/Core"
+		},
+		{
+			"displayName": "Stats",
+			"description": "Stat support.",
+			"path": "Samples~/Stats"
 		}
 	],
 	"author": {
