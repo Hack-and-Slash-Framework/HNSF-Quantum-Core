@@ -34,8 +34,8 @@ namespace HnSF.commands
                 }
 
                 var validPlayers = devicePickerUtility.GetValidInputPlayers();
-                (InputManagerUIM.instance as InputManagerUIM).SetPlayersBasedOnDeviceLists(validPlayers);
-                (InputManagerUIM.instance as InputManagerUIM).SwitchAllToUIActionMap();
+                (InputManager.instance as InputManager).SetPlayersBasedOnDeviceLists(validPlayers);
+                (InputManager.instance as InputManager).SwitchAllToUIActionMap();
                 devicePickerUtility.Close();
             }
 

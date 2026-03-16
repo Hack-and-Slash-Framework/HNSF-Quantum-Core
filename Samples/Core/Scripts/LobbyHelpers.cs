@@ -22,8 +22,8 @@ namespace HnSF
             await UniTask.NextFrame();
             var screenSetter = GameObject.FindFirstObjectByType<MainMenuScreenResetter>();
             //screenSetter.ReturnToLobbyScreen();
-            InputManagerBase.instance.ReturnAllDevicesToSystem();
-            InputManagerBase.instance.SetPlayerCount(0);
+            InputManager.instance.ReturnAllDevicesToSystem();
+            InputManager.instance.SetPlayerCount(0);
         }
     }
 }

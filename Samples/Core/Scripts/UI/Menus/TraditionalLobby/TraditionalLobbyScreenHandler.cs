@@ -8,7 +8,7 @@ namespace HnSF.ui.menus.traditionallobby
 {
     public class TraditionalLobbyScreenHandler : MenuHandlerBase
     {
-        [HideInInspector] public InputPlayerManagerUIM inputPlayer;
+        [HideInInspector] public InputPlayerManager inputPlayer;
         public Camera instanceCamera;
 
         public TraditionalLobbyScreenMainMenu screenMainMenu;
@@ -25,7 +25,7 @@ namespace HnSF.ui.menus.traditionallobby
         public virtual bool Open()
         {
             if (roomSessionHandler == null) return false;
-            inputPlayer = InputManagerUIM.instance.GetPlayer(1) as InputPlayerManagerUIM;
+            inputPlayer = InputManager.instance.GetPlayer(1) as InputPlayerManager;
             lobbyRepresentation = new TraditionalLobbyUIRepresentation();
             roomSessionHandler.SetUiLobbyRepresentation(lobbyRepresentation);
             

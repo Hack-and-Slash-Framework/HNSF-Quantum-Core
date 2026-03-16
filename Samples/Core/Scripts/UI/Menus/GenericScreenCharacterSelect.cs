@@ -29,7 +29,7 @@ namespace HnSF.ui.menus
         public CharacterSelectScreenSelectable[] allCharacterUiItems = Array.Empty<CharacterSelectScreenSelectable>();
 
 
-        public List<InputPlayerManagerBase> inputPlayers = new();
+        public List<InputPlayerManager> inputPlayers = new();
         public List<List<CharacterSelectScreenSelectable>> playerSelections = new();
         public List<List<ModAssetSoftReference>> playerSelectionsFighterReferences = new();
         public NavigationDirections[] playerLastNavigation;
@@ -72,7 +72,7 @@ namespace HnSF.ui.menus
         private List<Action<InputAction.CallbackContext>> submitActions = new();
         private List<Action<InputAction.CallbackContext>> cancelActions = new();
 
-        public async UniTask<bool> Initialize(List<InputPlayerManagerBase> players, int wantedFighters = 1)
+        public async UniTask<bool> Initialize(List<InputPlayerManager> players, int wantedFighters = 1)
         {
             foreach (var acuitem in allCharacterUiItems)
             {
@@ -98,7 +98,7 @@ namespace HnSF.ui.menus
                 submitActions.Add((context) => { WhenSubmitPerformed(index, context); });
                 cancelActions.Add((context) => { WhenCancelPerformed(index, context); });
 
-                var inputPlayerManager = players[i] as InputPlayerManagerUIM;
+                var inputPlayerManager = players[i] as InputPlayerManager;
                 inputPlayerManager.inputActions.UI.Navigate.performed += navActions[i];
                 inputPlayerManager.inputActions.UI.Submit.performed += submitActions[i];
                 inputPlayerManager.inputActions.UI.Cancel.performed += cancelActions[i];
@@ -121,7 +121,7 @@ namespace HnSF.ui.menus
 
             for (int i = 0; i < inputPlayers.Count; i++)
             {
-                var inputPlayer = inputPlayers[i] as InputPlayerManagerUIM;
+                var inputPlayer = inputPlayers[i] as InputPlayerManager;
                 inputPlayer.inputActions.UI.Navigate.performed -= navActions[i];
                 inputPlayer.inputActions.UI.Submit.performed -= submitActions[i];
                 inputPlayer.inputActions.UI.Cancel.performed -= cancelActions[i];
@@ -302,7 +302,7 @@ namespace HnSF.ui.menus
             if (playerCssStates[playerIndex] == PlayerCssStates.CustomCharacterSelect) return;
             playerCssStates[playerIndex] = PlayerCssStates.CustomCharacterSelect;
 
-            customCharacterSelectWidgets[playerIndex].Open(inputPlayers[playerIndex] as InputPlayerManagerUIM);
+            customCharacterSelectWidgets[playerIndex].Open(inputPlayers[playerIndex] as InputPlayerManager);
             customCharacterSelectWidgets[playerIndex].OnCancel.AddListener(WhenCustomCharacterSelectCancel);
             customCharacterSelectWidgets[playerIndex].OnSubmit.AddListener(WhenCustomCharacterSelectSubmit);
         }

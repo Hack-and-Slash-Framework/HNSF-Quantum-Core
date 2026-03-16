@@ -12,7 +12,7 @@ namespace HnSF.ui.menus
         public UnityEvent<CSSCustomCharacterSelectWidget> OnCancel = new UnityEvent<CSSCustomCharacterSelectWidget>();
         public UnityEvent<CSSCustomCharacterSelectWidget> OnSubmit = new UnityEvent<CSSCustomCharacterSelectWidget>();
         
-        private InputPlayerManagerUIM inputPlayer;
+        private InputPlayerManager inputPlayer;
         public CSSCustomCharacterSelectWidgetViewItem viewItemPrefab;
         public Transform viewItemParent;
         private List<CSSCustomCharacterSelectWidgetViewItem> items = new();
@@ -22,7 +22,7 @@ namespace HnSF.ui.menus
         private List<LoadedAssetHandleWrapper> loadedAssets = new List<LoadedAssetHandleWrapper>();
         private NavigationDirections playerLastNavigation = NavigationDirections.None;
         
-        public void Open(InputPlayerManagerUIM player)
+        public void Open(InputPlayerManager player)
         {
             inputPlayer = player;
             viewItemPrefab.gameObject.SetActive(false);

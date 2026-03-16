@@ -29,7 +29,7 @@ namespace HnSF.ui.menus
         
         public bool initialized = false;
 
-        public InputPlayerManagerUIM inputPlayer;
+        public InputPlayerManager inputPlayer;
         
         public override void Open(MenuDirection direction, IMenuHandler menuHandler)
         {

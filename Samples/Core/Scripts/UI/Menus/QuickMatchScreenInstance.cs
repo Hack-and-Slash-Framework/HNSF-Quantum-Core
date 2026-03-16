@@ -14,7 +14,7 @@ namespace HnSF.ui.menus
         [NonSerialized] public QuickMatchScreenHandler.QuickMatchLocalPlayerInfo playerInfo;
 
         [NonSerialized] public Camera instanceCamera;
-        public InputPlayerManagerUIM inputPlayer;
+        public InputPlayerManager inputPlayer;
 
         public Canvas canvas;
         

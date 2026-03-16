@@ -17,7 +17,7 @@ namespace HnSF.ui
         
         public Canvas canvas;
 
-        public InputPlayerManagerUIM inputPlayer;
+        public InputPlayerManager inputPlayer;
         
         public ScrollRect contentScrollRect;
 
@@ -60,7 +60,7 @@ namespace HnSF.ui
             return base.TryClose(direction, forceClose);
         }
 
-        public virtual void Initialize<T>(InputPlayerManagerUIM inputPlayerManager) where T : IContentDefinition
+        public virtual void Initialize<T>(InputPlayerManager inputPlayerManager) where T : IContentDefinition
         {
             this.inputPlayer = inputPlayerManager;
             contentListingUtility = new GenericContentListingUtility<T>();

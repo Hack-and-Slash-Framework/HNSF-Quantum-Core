@@ -81,7 +81,7 @@ namespace HnSF.ui.menus
             quickMatchScreenInstancePrefab.transform.parent.gameObject.SetActive(false);
             gameObject.SetActive(true);
 
-            var inputPlayerManager = InputManagerUIM.instance as InputManagerUIM;
+            var inputPlayerManager = InputManager.instance as InputManager;
             
             foreach (var inputPlayer in inputPlayerManager.GetPlayers())
             {
@@ -89,7 +89,7 @@ namespace HnSF.ui.menus
                 localPlayersInfo[inputPlayer.Id].PlayerId = inputPlayer.Id;
                 var screenInstance = Instantiate(quickMatchScreenInstancePrefab, transform, false);
                 playerIdToScreenInstance.Add(inputPlayer.Id, screenInstance);
-                screenInstance.inputPlayer = inputPlayer as InputPlayerManagerUIM;
+                screenInstance.inputPlayer = inputPlayer as InputPlayerManager;
                 screenInstance.playerInfo = localPlayersInfo[inputPlayer.Id];
                 screenInstance.instanceCamera = GameObject.Instantiate(instanceCameraPrefab, transform, false);
                 localPlayersInfo[inputPlayer.Id].OnInfoUpdated.AddListener(WhenLocalPlayerInfoUpdated);

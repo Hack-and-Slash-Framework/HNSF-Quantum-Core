@@ -72,7 +72,7 @@ namespace HnSF.ui.menus.examples.mainmenu
             if(screenContentPicking == null) screenContentPicking = GenericContentPickerInstanceManager.instance.CreateInstance<BaseGamemodeDefinition>(transform);
             screenContentPicking.onContentPicked.AddListener(OnGamemodePicked);
             screenContentPicking.onCancel.AddListener(OnGamemodePickCanceled);
-            screenContentPicking.Initialize<BaseGamemodeDefinition>(InputManagerBase.instance.GetPlayer(1) as InputPlayerManagerUIM);
+            screenContentPicking.Initialize<BaseGamemodeDefinition>(InputManager.instance.GetPlayer(1) as InputPlayerManager);
         }
         
         private void OnGamemodePickCanceled(GenericContentPickerInstance arg0)
@@ -147,7 +147,7 @@ namespace HnSF.ui.menus.examples.mainmenu
         private void SetupCharacterSelect()
         {
             var gameManager = HnSFManagersContainer.instance;
-            _ = screenCharacterSelect.Initialize(InputManagerBase.instance.GetPlayers());
+            _ = screenCharacterSelect.Initialize(InputManager.instance.GetPlayers());
             screenCharacterSelect.OnConfirmCharacters.AddListener(WhenCharactersConfirmed);
             screenCharacterSelect.OnCancel.AddListener(WhenCharactersCanceled);
         }
@@ -212,7 +212,7 @@ namespace HnSF.ui.menus.examples.mainmenu
             var gameManager = HnSFManagersContainer.instance;
             screenContentPicking.onContentPicked.AddListener(OnMapPicked);
             screenContentPicking.onCancel.AddListener(OnMapPickCanceled);
-            screenContentPicking.Initialize<IMapDefinition>(InputManagerBase.instance.GetPlayer(1) as InputPlayerManagerUIM);
+            screenContentPicking.Initialize<IMapDefinition>(InputManager.instance.GetPlayer(1) as InputPlayerManager);
         }
 
         private void TeardownMapPick()

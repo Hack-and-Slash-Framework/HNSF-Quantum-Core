@@ -1,6 +1,6 @@
 namespace CT.LocalInputManagement
 {
-    public partial class InputPlayerManagerUIM : InputPlayerManagerBase
+    public partial class InputPlayerManager
     {
         public void DisableAllMaps()
         {

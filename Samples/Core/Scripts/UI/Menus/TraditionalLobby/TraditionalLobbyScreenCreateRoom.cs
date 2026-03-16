@@ -56,7 +56,7 @@ namespace HnSF.ui.menus.traditionallobby
             screenContentPicking = GenericContentPickerInstanceManager.instance.CreateInstance<BaseGamemodeDefinition>(transform);
             screenContentPicking.onContentPicked.AddListener(OnGamemodePicked);
             screenContentPicking.onCancel.AddListener(OnGamemodePickCanceled);
-            screenContentPicking.Initialize<BaseGamemodeDefinition>((MenuHandler as TraditionalLobbyScreenHandler).inputPlayer as InputPlayerManagerUIM);
+            screenContentPicking.Initialize<BaseGamemodeDefinition>((MenuHandler as TraditionalLobbyScreenHandler).inputPlayer as InputPlayerManager);
             Forward(screenContentPicking);
         }
 
@@ -78,10 +78,10 @@ namespace HnSF.ui.menus.traditionallobby
         public void OpenMapPickerScreen()
         {
             screenContentPicking = GenericContentPickerInstanceManager.instance.CreateInstance<IMapDefinition>(transform);
-            screenContentPicking.inputPlayer = (MenuHandler as TraditionalLobbyScreenHandler).inputPlayer as InputPlayerManagerUIM;
+            screenContentPicking.inputPlayer = (MenuHandler as TraditionalLobbyScreenHandler).inputPlayer as InputPlayerManager;
             screenContentPicking.onContentPicked.AddListener(OnMapPicked);
             screenContentPicking.onCancel.AddListener(OnMapPickCanceled);
-            screenContentPicking.Initialize<IMapDefinition>((MenuHandler as TraditionalLobbyScreenHandler).inputPlayer as InputPlayerManagerUIM);
+            screenContentPicking.Initialize<IMapDefinition>((MenuHandler as TraditionalLobbyScreenHandler).inputPlayer as InputPlayerManager);
             Forward(screenContentPicking);
         }
 

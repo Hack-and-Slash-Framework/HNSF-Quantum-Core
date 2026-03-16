@@ -96,7 +96,7 @@ namespace HnSF.ui.menus.examples.mainmenu
             }
             
             var validPlayers = devicePicker.GetValidInputPlayers();
-            var inputManager = InputManagerBase.instance as InputManagerUIM;
+            var inputManager = InputManager.instance as InputManager;
             inputManager.SetPlayersBasedOnDeviceLists(validPlayers);
             inputManager.SwitchAllToUIActionMap();
             devicePicker.Close();
@@ -121,7 +121,7 @@ namespace HnSF.ui.menus.examples.mainmenu
             }
             
             var validPlayers = devicePicker.GetValidInputPlayers();
-            var inputManager = InputManagerBase.instance as InputManagerUIM;
+            var inputManager = InputManager.instance as InputManager;
             inputManager.SetPlayersBasedOnDeviceLists(validPlayers);
             inputManager.SwitchAllToUIActionMap();
             devicePicker.Close();

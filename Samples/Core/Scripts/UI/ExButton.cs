@@ -36,7 +36,7 @@ namespace HnSF.ui
             set { m_OnPointerExit = value; }
         }
         
-        public InputPlayerManagerUIM validInputPlayer;
+        public InputPlayerManager validInputPlayer;
 
         public override void OnSubmit(BaseEventData eventData)
         {

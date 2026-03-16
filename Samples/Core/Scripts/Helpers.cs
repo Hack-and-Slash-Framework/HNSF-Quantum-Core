@@ -11,7 +11,7 @@ namespace HnSF.BaseExample
             var gameManager = HnSFManagersContainer.instance;
             bool ss = false;
             bool pResult = true;
-            var inputManager = InputManagerUIM.instance as InputManagerUIM;
+            var inputManager = InputManager.instance as InputManager;
             var devicePicker = DevicePickerUtility.instance;
             devicePicker.Open(minimumPlayers: 1, maximumPlayers: 4);
             devicePicker.OnPickerCancel += (dpu) =>
@@ -32,7 +32,7 @@ namespace HnSF.BaseExample
             for (int i = 0; i < players.Count; i++)
             {
                 inputManager.AssignDevicesToPlayer(players[i].ToArray(), i + 1);
-                (inputManager.playerInputManagers[i + 1] as InputPlayerManagerUIM).SwitchToPlayerMap();
+                (inputManager.playerInputManagers[i + 1] as InputPlayerManager).SwitchToPlayerMap();
             }
 
             return true;

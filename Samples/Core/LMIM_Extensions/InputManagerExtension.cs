@@ -1,15 +1,15 @@
 namespace CT.LocalInputManagement
 {
-    public partial class InputManagerUIM
+    public partial class InputManager
     {
         public void SwitchToUIActionMap(int playerId = 0)
         {
-            (playerInputManagers[playerId] as InputPlayerManagerUIM).SwitchToUIMap();
+            (playerInputManagers[playerId]).SwitchToUIMap();
         }
 
         public void SwitchToPlayerActionMap(int playerId = 0)
         {
-            (playerInputManagers[playerId] as InputPlayerManagerUIM).SwitchToPlayerMap();
+            (playerInputManagers[playerId]).SwitchToPlayerMap();
         }
 
         public void SwitchAllToUIActionMap()
@@ -17,7 +17,7 @@ namespace CT.LocalInputManagement
             foreach (var pim in playerInputManagers)
             {
                 if (pim.Id == 0) continue;
-                (pim as InputPlayerManagerUIM).SwitchToUIMap();
+                (pim).SwitchToUIMap();
             }
         }
         
@@ -26,7 +26,7 @@ namespace CT.LocalInputManagement
             foreach (var pim in playerInputManagers)
             {
                 if (pim.Id == 0) continue;
-                (pim as InputPlayerManagerUIM).SwitchToPlayerMap();
+                (pim).SwitchToPlayerMap();
             }
         }
     }
