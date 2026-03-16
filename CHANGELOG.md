@@ -1,3 +1,10 @@
+## [1.7.3](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.7.2...v1.7.3) (2026-03-16)
+
+
+### Bug Fixes
+
+* Fix Input management in sample ([ded31a5](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/ded31a50f2b9477ed63820fb05ef304bf836f3e5))
+
 ## [1.7.2](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.7.1...v1.7.2) (2026-03-15)
 
 
