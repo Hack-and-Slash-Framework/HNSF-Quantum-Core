@@ -1,3 +1,10 @@
+# [1.8.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.7.3...v1.8.0) (2026-03-18)
+
+
+### Features
+
+* Improved screen shake event ([411694a](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/411694a15ac62466ae2664a9ae93b05deec4c958))
+
 ## [1.7.3](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.7.2...v1.7.3) (2026-03-16)
 
 
