@@ -5,17 +5,12 @@ using Quantum;
 namespace HnSF
 {
     [Serializable]
-    public class MatchScreenShakeManager
+    public class EventReceiverScreenShakeBase
     {
         private List<IDisposable> _disposableCallbacks = new List<IDisposable>();
         
-        public ImpulseSourceGrouping impulseSourceGrouping;
-        public float defaultDistance = 10;
-        
         public virtual void Initialize()
         {
-            impulseSourceGrouping.Initialize();
-            
             _disposableCallbacks.Add(
                 QuantumCallback.SubscribeManual((CallbackEventCanceled c) => WhenEventCanceled(c)));
             _disposableCallbacks.Add(
@@ -35,29 +30,6 @@ namespace HnSF
         
         protected virtual void FireScreenShakeImpulse(EventCauseScreenShake callback)
         {
-            EventKey eventKey = (EventKey)callback;
-
-            if (callback.shakeFrames <= 0 || callback.shakeStrength == 0) return;
-
-            if (!impulseSourceGrouping.idToImpulseGroup.TryGetValue(callback.shakeType, out var value))
-            {
-                return;
-            }
-            
-            foreach (var impulseSource in value.impulseSources)
-            {
-                impulseSource.ImpulseDefinition.ImpulseDuration = ((float)callback.shakeFrames / (float)callback.Game.Frames.Predicted.UpdateRate);
-                impulseSource.ImpulseDefinition.DissipationDistance = callback.distance > 0 ? callback.distance.AsFloat : defaultDistance;
-                
-                var impulseOrigin = callback.origin.ToUnityVector3();
-
-                if (callback.isGlobal)
-                {
-                    
-                }
-                
-                impulseSource.GenerateImpulseAt(impulseOrigin, impulseSource.DefaultVelocity * callback.shakeStrength.AsFloat);
-            }
         }
 
         protected virtual void WhenEventConfirmed(CallbackEventConfirmed callback)

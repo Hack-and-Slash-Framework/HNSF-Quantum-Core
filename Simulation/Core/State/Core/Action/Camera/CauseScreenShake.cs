@@ -22,9 +22,9 @@ namespace HnSF.core.state.actions
                     shakeType: shakeRequest.shakeType,
                     isGlobal: false,
                     origin: transform->Position.XYO,
-                    distance: 0,
                     shakeStrength: shakeRequest.cameraShakeStrength,
                     shakeFrames: shakeRequest.cameraShakeFrames,
+                    shakeInterval: shakeRequest.shakeInterval,
                     onlyFor: EntityRef.None);
             }
             return false;

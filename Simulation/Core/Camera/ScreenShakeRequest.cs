@@ -7,7 +7,8 @@ namespace Quantum
     public unsafe partial struct ScreenShakeRequest
     {
         public int shakeType;
-        public FP cameraShakeStrength;
+        public FPVector3 cameraShakeStrength;
         public int cameraShakeFrames;
+        public int shakeInterval;
     }
 }
