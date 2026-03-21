@@ -161,7 +161,11 @@ public unsafe class CallbackReceiverPlayOneshotVFX3D
             createFunc: () => GameObject.Instantiate(entryAsset.visualEffect).GetComponent<VisualEffectBase>(),
             actionOnGet: (ve) => ReinitializeVisualEffect(entryAsset, ve),
             actionOnRelease: ReleaseVisualEffect,
-            actionOnDestroy: (ve) => GameObject.Destroy(ve.gameObject),
+            actionOnDestroy: (ve) =>
+            {
+                if (ve == null) return;
+                GameObject.Destroy(ve.gameObject);
+            },
             collectionCheck: false,
             defaultCapacity: 10,
             maxSize: 50
