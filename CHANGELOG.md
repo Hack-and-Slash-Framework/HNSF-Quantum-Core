@@ -1,3 +1,10 @@
+## [1.8.1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.8.0...v1.8.1) (2026-03-21)
+
+
+### Bug Fixes
+
+* Fixed oneshotVFX destroy callback error on exit play mode ([e61fa19](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/e61fa19ca43ea058e4423152e8cce088ac0887eb))
+
 # [1.8.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.7.3...v1.8.0) (2026-03-18)
 
 
