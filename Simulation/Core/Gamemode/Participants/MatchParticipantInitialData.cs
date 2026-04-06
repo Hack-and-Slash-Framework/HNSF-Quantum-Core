@@ -7,6 +7,7 @@ namespace Quantum
     [System.Serializable]
     public enum MatchParticipantType
     {
+        None,
         Player,
         Cpu
     }
