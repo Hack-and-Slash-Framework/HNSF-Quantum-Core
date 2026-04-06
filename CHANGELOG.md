@@ -1,3 +1,10 @@
+# [1.9.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.8.1...v1.9.0) (2026-04-06)
+
+
+### Features
+
+* Add None to MatchParticipantType ([6612061](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/661206101b6b9ed4e6776fd8e7079b9b9ca78885))
+
 ## [1.8.1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.8.0...v1.8.1) (2026-03-21)
 
 
