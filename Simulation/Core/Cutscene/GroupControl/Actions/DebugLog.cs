@@ -69,7 +69,7 @@ namespace HnSF.core.GroupControl.Nodes
 
         public override GroupControlAction Convert()
         {
-            var label = ActorGroupScriptDirectorImporter.GetInputPortValue<string>(this.GetInputPortByName(IN_PORT_LABEL));
+            this.GetNodeOptionByName(OPTION_LABEL).TryGetValue<string>(out var label);
             var msgEnter = ActorGroupScriptDirectorImporter.GetInputPortValue<string>(this.GetInputPortByName(IN_PORT_MESSAGE_ENTER));
             var msgTick = ActorGroupScriptDirectorImporter.GetInputPortValue<string>(this.GetInputPortByName(IN_PORT_MESSAGE_TICK));
             var msgExit = ActorGroupScriptDirectorImporter.GetInputPortValue<string>(this.GetInputPortByName(IN_PORT_MESSAGE_EXIT));

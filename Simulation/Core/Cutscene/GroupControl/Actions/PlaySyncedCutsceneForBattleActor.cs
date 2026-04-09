@@ -157,7 +157,7 @@ namespace HnSF.core.GroupControl.Nodes
 
         public override GroupControlAction Convert()
         {
-            var label = ActorGroupScriptDirectorImporter.GetInputPortValue<string>(this.GetInputPortByName(IN_PORT_LABEL));
+            this.GetNodeOptionByName(OPTION_LABEL).TryGetValue<string>(out var label);
             var targetTag = ActorGroupScriptDirectorImporter.GetInputPortValue<Tag>(this.GetInputPortByName(IN_PORT_Target_Tag));
             var cutsceneSource = ActorGroupScriptDirectorImporter.GetInputPortValue<AssetObject>(this.GetInputPortByName(IN_PORT_Cutscene_Source));
             var cutsceneTag = ActorGroupScriptDirectorImporter.GetInputPortValue<Tag>(this.GetInputPortByName(IN_PORT_Cutscene_Tag));
