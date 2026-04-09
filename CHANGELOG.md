@@ -1,3 +1,10 @@
+# [1.10.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.9.0...v1.10.0) (2026-04-09)
+
+
+### Features
+
+* Improved groupcontrol logic ([0277204](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/02772042d5736ef1adbcb6727b6c4d2fc6297456))
+
 # [1.9.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.8.1...v1.9.0) (2026-04-06)
 
 
