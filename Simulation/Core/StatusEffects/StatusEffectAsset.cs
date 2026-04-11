@@ -43,6 +43,13 @@ namespace HnSF.StatusEffects
 #endif
         public StatusEffectComponent[] components = Array.Empty<StatusEffectComponent>();
 
+        /// <summary>
+        /// Called when the status effect is applied.
+        /// </summary>
+        /// <param name="frame"></param>
+        /// <param name="statusEffectEntityRef"></param>
+        /// <param name="asChild"></param>
+        /// <returns>False if the status effect should not be applied. True otherwise.</returns>
         public virtual bool OnApply(Frame frame, EntityRef statusEffectEntityRef, bool asChild = false)
         {
             foreach (var component in components)
@@ -130,6 +137,13 @@ namespace HnSF.StatusEffects
             }
         }
 
+        /// <summary>
+        /// Called when a status effect is removed.
+        /// </summary>
+        /// <param name="frame"></param>
+        /// <param name="statusEffectEntityRef"></param>
+        /// <param name="asChild"></param>
+        /// <returns>False if the status effect shouldn't be removed. True otherwise.</returns>
         public virtual bool OnRemove(Frame frame, EntityRef statusEffectEntityRef, bool asChild = false)
         {
             foreach (var component in components)
