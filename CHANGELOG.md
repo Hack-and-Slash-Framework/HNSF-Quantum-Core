@@ -1,3 +1,10 @@
+# [1.11.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.10.0...v1.11.0) (2026-04-17)
+
+
+### Features
+
+* Function to get movement input ([63ab74d](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/63ab74d5b4c4c9ffc738ca016c4084d24b36f3cd))
+
 # [1.10.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.9.0...v1.10.0) (2026-04-09)
 
 
