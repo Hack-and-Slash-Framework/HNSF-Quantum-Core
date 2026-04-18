@@ -44,8 +44,10 @@ public class AddressablesModInfoAsset : BaseModInfoAsset
     [NonSerialized] private Dictionary<string, List<AsyncOperationHandle>> loadedAssetList = new();
     private void OnValidate()
     {
+#if UNITY_EDITOR
         if (!Application.isEditor || Application.isPlaying) return;
         modGuid = AssetDatabase.AssetPathToGUID(AssetDatabase.GetAssetPath(this));
+#endif
     }
 
     public void SetInfo(string ModIdentifier, string modName, string modVersion, ModOnlineRequirement onlineRequirement)
