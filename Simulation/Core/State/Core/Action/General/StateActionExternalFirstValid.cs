@@ -27,6 +27,7 @@ namespace HnSF.core.state.actions
         
         public bool shouldExitEarlyWhenPossible = false;
         public bool returnExitEarlyStatus = false;
+        public bool executeAll;
         
         public override bool ExecuteAction(Frame frame, EntityRef entity, FP rangePercent, ref HNSFStateContext stateContext)
         {
@@ -54,7 +55,7 @@ namespace HnSF.core.state.actions
                         break;
                     }
                 }
-                return false;
+                if(!executeAll) return false;
             }
             return false;
         }
