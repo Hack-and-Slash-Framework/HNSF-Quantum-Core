@@ -1,3 +1,10 @@
+## [1.11.1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.11.0...v1.11.1) (2026-04-18)
+
+
+### Bug Fixes
+
+* Fixed AssetDatabase build issue ([a383981](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/a38398173aceed3107373e15d3cac3e368f4f69f))
+
 # [1.11.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.10.0...v1.11.0) (2026-04-17)
 
 
