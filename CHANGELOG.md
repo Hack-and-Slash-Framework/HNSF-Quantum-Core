@@ -1,3 +1,10 @@
+# [1.12.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.11.1...v1.12.0) (2026-04-18)
+
+
+### Features
+
+* Execute external actions with decisions ([f235ed1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/f235ed14224fb168401da8ea5c5f3725a3162e07))
+
 ## [1.11.1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.11.0...v1.11.1) (2026-04-18)
 
 
