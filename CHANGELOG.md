@@ -1,3 +1,10 @@
+## [1.12.1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.12.0...v1.12.1) (2026-04-19)
+
+
+### Bug Fixes
+
+* Fixed gamemode config assignment ([1a93655](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/1a93655f785b011112442b9c0ee133a97a00addc))
+
 # [1.12.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.11.1...v1.12.0) (2026-04-18)
 
 
