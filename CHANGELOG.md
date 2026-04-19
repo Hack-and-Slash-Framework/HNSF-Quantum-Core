@@ -1,3 +1,10 @@
+# [1.13.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.12.1...v1.13.0) (2026-04-19)
+
+
+### Features
+
+* Ignore actor's ldt for cutscenes ([fb1989f](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/fb1989f4078e68fd89c7bbdb67c52c82768c3337))
+
 ## [1.12.1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.12.0...v1.12.1) (2026-04-19)
 
 
