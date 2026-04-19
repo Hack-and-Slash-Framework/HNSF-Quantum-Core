@@ -32,6 +32,7 @@ namespace HnSF.core.GroupControl.Actions
             public AssetRef cutsceneSource;
             public AssetRef<Tag> cutsceneTag;
 
+            public bool ignoreLdt;
             public bool autoPlay;
             public bool autoEnd;
             public int autoEndFrame;
@@ -63,6 +64,7 @@ namespace HnSF.core.GroupControl.Actions
                 cutsceneTag = tas.cutsceneTag,
                 frame = 0,
                 playrate = 1,
+                ignorePlayerLdt = tas.ignoreLdt,
                 autoPlay = tas.autoPlay,
                 autoEnd = tas.autoEnd,
                 endFrame = tas.autoEndFrame
@@ -118,6 +120,7 @@ namespace HnSF.core.GroupControl.Nodes
         public const string IN_PORT_Cutscene_Source = "CutsceneSource";
         public const string IN_PORT_Cutscene_Tag = "CutsceneTag";
         public const string IN_PORT_Autoplay = "Autoplay";
+        public const string IN_PORT_IgnoreLdt = "IgnoreLdt";
         public const string IN_PORT_Autoend = "Autoend";
         public const string IN_PORT_Autoend_Frame = "AutoendFrame";
         public const string IN_PORT_Local_Only = "LocalOnly";
@@ -142,6 +145,10 @@ namespace HnSF.core.GroupControl.Nodes
                 .WithDisplayName("Autoplay")
                 .Build();
             
+            context.AddInputPort<bool>(IN_PORT_IgnoreLdt)
+                .WithDisplayName("Ignore Entity Local Delta Time")
+                .Build();
+            
             context.AddInputPort<bool>(IN_PORT_Autoend)
                 .WithDisplayName("Autoend")
                 .Build();
@@ -163,6 +170,7 @@ namespace HnSF.core.GroupControl.Nodes
             var cutsceneTag = ActorGroupScriptDirectorImporter.GetInputPortValue<Tag>(this.GetInputPortByName(IN_PORT_Cutscene_Tag));
             var autoplay = ActorGroupScriptDirectorImporter.GetInputPortValue<bool>(this.GetInputPortByName(IN_PORT_Autoplay));
             var autoend = ActorGroupScriptDirectorImporter.GetInputPortValue<bool>(this.GetInputPortByName(IN_PORT_Autoend));
+            var ignoreLdt = ActorGroupScriptDirectorImporter.GetInputPortValue<bool>(this.GetInputPortByName(IN_PORT_IgnoreLdt));
             var autoendFrame = ActorGroupScriptDirectorImporter.GetInputPortValue<int>(this.GetInputPortByName(IN_PORT_Autoend_Frame));
             var localOnly = ActorGroupScriptDirectorImporter.GetInputPortValue<bool>(this.GetInputPortByName(IN_PORT_Local_Only));
             return new PlaySyncedCutsceneForBattleActor()
@@ -177,6 +185,7 @@ namespace HnSF.core.GroupControl.Nodes
                         cutsceneTag = cutsceneTag,
                         autoPlay = autoplay,
                         autoEnd = autoend,
+                        ignoreLdt = ignoreLdt,
                         autoEndFrame = autoendFrame,
                         cutsceneControlledEntities = Array.Empty<PlaySyncedCutsceneForBattleActor.TagToTag>(),
                         localOnly = localOnly

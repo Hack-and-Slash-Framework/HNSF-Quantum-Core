@@ -16,7 +16,8 @@ namespace HnSF.core.state.actions
             public bool dontControlPosition;
             public bool dontControlAnimation;
         }
-        
+
+        public bool ignoreActorLdt = false;
         public bool autoPlay = true;
         public bool autoEnd = false;
         [DrawIf(nameof(autoEnd), true)] public int autoEndFrame;
@@ -39,6 +40,7 @@ namespace HnSF.core.state.actions
                 playrate = 1,
                 autoPlay = autoPlay,
                 autoEnd = autoEnd,
+                ignorePlayerLdt = ignoreActorLdt,
                 endFrame = autoEndFrame
             };
             frame.Add(sccEntity, scc, out var sccResult);
@@ -67,6 +69,7 @@ namespace HnSF.core.state.actions
             var t = target as StartActorCutscene;
             t.autoPlay = autoPlay;
             t.autoEnd = autoEnd;
+            t.ignoreActorLdt = ignoreActorLdt;
             t.autoEndFrame = autoEndFrame;
             t.cutsceneSource = cutsceneSource;
             t.cutsceneTag = cutsceneTag;
