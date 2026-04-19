@@ -1,3 +1,10 @@
+## [1.13.2](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.13.1...v1.13.2) (2026-04-19)
+
+
+### Bug Fixes
+
+* Fix synced cutscene ldt ignoring ([dc003eb](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/dc003ebb48ae7ef97bc53bfcc1c039579e031b90))
+
 ## [1.13.1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.13.0...v1.13.1) (2026-04-19)
 
 
