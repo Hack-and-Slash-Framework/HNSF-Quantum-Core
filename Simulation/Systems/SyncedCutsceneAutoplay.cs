@@ -28,7 +28,7 @@ namespace HnSF.core.systems
                 
                 if (hasHitstop && actorHitstop->value > 0) return;
 
-                if (hasLdt)
+                if (hasLdt && filter.syncedCutsceneSource->ignorePlayerLdt == false)
                 {
                     for (int i = 0; i < actorLocalDeltaTime->updatesThisTick; i++)
                     {
