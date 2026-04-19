@@ -267,6 +267,10 @@ namespace HnSF.sessionhandling.handlers
                     defaultRuntimeConfig.gamemodeConfigAsset = matchHandlerInstance.defaultSettings;
                 }
             }
+            else
+            {
+                defaultRuntimeConfig.gamemodeConfigAsset = matchHandlerInstance.defaultSettings;
+            }
         }
         
         protected virtual async UniTask LoadMap()

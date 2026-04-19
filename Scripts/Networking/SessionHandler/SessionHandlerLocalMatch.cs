@@ -203,6 +203,10 @@ namespace HnSF.sessionhandling.handlers
                     defaultRuntimeConfig.gamemodeConfigAsset = gamemodeMatchHandlerInstance.defaultSettings;
                 }
             }
+            else
+            {
+                defaultRuntimeConfig.gamemodeConfigAsset = gamemodeMatchHandlerInstance.defaultSettings;
+            }
         }
 
         protected virtual void BuildGamemodeSystemsConfig()
