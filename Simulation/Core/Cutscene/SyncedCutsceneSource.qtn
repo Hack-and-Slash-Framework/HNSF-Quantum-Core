@@ -5,6 +5,7 @@ component SyncedCutsceneSource
     asset_ref<Tag> cutsceneTag;
     int frame;
     int playrate;
+    bool ignorePlayerLdt;
     bool autoPlay;
     bool autoEnd;
     int endFrame;
