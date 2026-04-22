@@ -1,3 +1,10 @@
+# [1.14.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.13.2...v1.14.0) (2026-04-22)
+
+
+### Features
+
+* Return damage value on ApplyDamage ([978d80e](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/978d80eed0789a9103fe9ef6693bca7cc7c6753f))
+
 ## [1.13.2](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.13.1...v1.13.2) (2026-04-19)
 
 
