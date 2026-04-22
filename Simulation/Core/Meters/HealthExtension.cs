@@ -4,7 +4,7 @@ namespace Quantum
 {
     public unsafe partial struct Health
     {
-        public void ApplyDamage(Frame frame, EntityRef entity, int damage, bool doesNotKill, bool clampAtZero = true)
+        public int ApplyDamage(Frame frame, EntityRef entity, int damage, bool doesNotKill, bool clampAtZero = true)
         {
             var healthChangeResult = new HealthChangeResult()
             {
@@ -13,8 +13,8 @@ namespace Quantum
                 To = value - GetExpectedDamage(damage, doesNotKill, clampAtZero)
             };
             frame.Signals.PreHealthChange(entity, &healthChangeResult);
-            if (healthChangeResult.Ignore || healthChangeResult.From == healthChangeResult.To) return;
-            ApplyDamage_NoSignal((healthChangeResult.From - healthChangeResult.To), doesNotKill, clampAtZero);
+            if (healthChangeResult.Ignore || healthChangeResult.From == healthChangeResult.To) return 0;
+            return ApplyDamage_NoSignal((healthChangeResult.From - healthChangeResult.To), doesNotKill, clampAtZero);
         }
 
         private int GetExpectedDamage(int damage, bool doesNotKill, bool clampAtZero = true)
@@ -27,11 +27,11 @@ namespace Quantum
             return damage;
         }
         
-        public void ApplyDamage_NoSignal(int damage, bool doesNotKill, bool clampAtZero = true)
+        public int ApplyDamage_NoSignal(int damage, bool doesNotKill, bool clampAtZero = true)
         {
             damage = GetExpectedDamage(damage, doesNotKill, clampAtZero);
             value -= damage;
-            if (clampAtZero && value < 0) value = 0;
+            return damage;
         }
 
         public void ApplyHealing(Frame frame, EntityRef entity, int healing, int maxHealth)
