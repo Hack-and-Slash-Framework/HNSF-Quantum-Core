@@ -1,3 +1,10 @@
+## [1.14.1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.14.0...v1.14.1) (2026-04-26)
+
+
+### Bug Fixes
+
+* Fill team rules & config for default definition ([315165e](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/315165ee24f232da6f33082bbda4c04d98c70e1c))
+
 # [1.14.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.13.2...v1.14.0) (2026-04-22)
 
 
