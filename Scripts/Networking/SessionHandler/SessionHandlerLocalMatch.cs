@@ -187,26 +187,30 @@ namespace HnSF.sessionhandling.handlers
                 {
                     settingsAssetInstance =
                         JsonUtilityExtensions.FromJsonWithTypeAnnotation(gamemodeConfiguration) as GamemodeSettingsBase;
-                    settingsAssetInstance.name =
-                        $"GamemodeSettingsAsset_RUNTIME_{gamemodeDefinition.Name}";
-                    settingsAssetInstance.Guid = QuantumUnityDB.CreateRuntimeDeterministicGuid(settingsAssetInstance);
-                    QuantumUnityDB.Global.AddAsset(settingsAssetInstance);
-                    defaultRuntimeConfig.gamemodeConfigAsset = settingsAssetInstance;
-
-                    settingsAssetInstance.teamRules = gamemodeDefinition.GetTeamRules();
-                    settingsAssetInstance.teamConfigs = gamemodeDefinition.GetDefaultTeamConfig();
-                    settingsAssetInstance.Initialize();
                 }
                 catch (Exception e)
                 {
                     Debug.LogError($"Exception thrown while trying to load gamemode settings asset: {e}. Using default settings.");
-                    defaultRuntimeConfig.gamemodeConfigAsset = gamemodeMatchHandlerInstance.defaultSettings;
+                    settingsAssetInstance = gamemodeMatchHandlerInstance.defaultSettings.GetInstance();
                 }
             }
-            else
+            
+            if(settingsAssetInstance == null)
             {
-                defaultRuntimeConfig.gamemodeConfigAsset = gamemodeMatchHandlerInstance.defaultSettings;
+                settingsAssetInstance = gamemodeMatchHandlerInstance.defaultSettings.GetInstance();
             }
+            
+            // Register instance to quantum
+            settingsAssetInstance.name = $"GamemodeSettingsAsset_RUNTIME_{gamemodeDefinition.Name}";
+            settingsAssetInstance.Guid = QuantumUnityDB.CreateRuntimeDeterministicGuid(settingsAssetInstance);
+            QuantumUnityDB.Global.AddAsset(settingsAssetInstance);
+            
+            defaultRuntimeConfig.gamemodeConfigAsset = settingsAssetInstance;
+            
+            // Set settings
+            settingsAssetInstance.teamRules = gamemodeDefinition.GetTeamRules();
+            settingsAssetInstance.teamConfigs = gamemodeDefinition.GetDefaultTeamConfig();
+            settingsAssetInstance.Initialize();
         }
 
         protected virtual void BuildGamemodeSystemsConfig()
