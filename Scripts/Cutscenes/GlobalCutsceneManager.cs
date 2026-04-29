@@ -44,6 +44,18 @@ namespace HnSF
             _disposableCallbacks.Add(
                 QuantumCallback.SubscribeManual((CallbackUpdateView callback) => UpdateView(callback)));
         }
+        
+        public virtual void Teardown()
+        {
+            for (int i = 0; i < _disposableCallbacks.Count; i++)
+            {
+                _disposableCallbacks[i].Dispose();
+            }
+            _disposableCallbacks.Clear();
+            _disposableCallbacks = null;
+            globalBindingSource = null;
+            matchHandler = null;
+        }
 
         [Serializable]
         public class SyncedCutsceneGrouping
@@ -165,15 +177,21 @@ namespace HnSF
 
                 // Get or Create Cutscene Group GameObject for the playing entity.
                 if (!entityToCutscenePlayers.TryGetValue(syncedCutsceneGroup.currentSource.sourcePlayer,
-                        out var playerCutsceneGrouping))
+                        out var playerCutsceneGrouping) 
+                    || playerCutsceneGrouping == null 
+                    || playerCutsceneGrouping.sourceKey != syncedCutsceneGroup.currentSource.cutsceneSource)
                 {
+                    if (playerCutsceneGrouping == null || playerCutsceneGrouping.sourceKey !=
+                        syncedCutsceneGroup.currentSource.cutsceneSource)
+                    {
+                        entityToCutscenePlayers.Remove(syncedCutsceneGroup.currentSource.sourcePlayer);
+                    }
                     playerCutsceneGrouping = GetCutsceneGroupFromPool(syncedCutsceneGroup.currentSource.cutsceneSource);
                     if(playerCutsceneGrouping != null) entityToCutscenePlayers.Add(syncedCutsceneGroup.currentSource.sourcePlayer, playerCutsceneGrouping);
                 }
 
                 if (playerCutsceneGrouping == null)
                 {
-                    Debug.LogError($"PCG for player {syncedCutsceneGroup.currentSource.sourcePlayer} is null.");
                     continue;
                 }
                 
@@ -381,16 +399,6 @@ namespace HnSF
             
         }
         
-        protected virtual void Breakdown()
-        {
-            for (int i = 0; i < _disposableCallbacks.Count; i++)
-            {
-                _disposableCallbacks[i].Dispose();
-            }
-
-            _disposableCallbacks.Clear();
-        }
-
         protected virtual void WhenEventConfirmed(CallbackEventConfirmed callback)
         {
             if (_unconfirmedLinkCutsceneGrouping.ContainsKey(callback.EventKey))
