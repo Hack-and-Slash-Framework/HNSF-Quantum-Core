@@ -94,7 +94,7 @@ namespace HnSF.sessionhandling.handlers
                 matchSessionHandler.Teardown();
             }
             
-            quantumClient.Disconnect();
+            quantumClient?.Disconnect();
             quantumClient = null;
         }
 
