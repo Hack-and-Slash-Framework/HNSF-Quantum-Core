@@ -168,7 +168,13 @@ namespace HnSF
                         out var playerCutsceneGrouping))
                 {
                     playerCutsceneGrouping = GetCutsceneGroupFromPool(syncedCutsceneGroup.currentSource.cutsceneSource);
-                    entityToCutscenePlayers.Add(syncedCutsceneGroup.currentSource.sourcePlayer, playerCutsceneGrouping);
+                    if(playerCutsceneGrouping != null) entityToCutscenePlayers.Add(syncedCutsceneGroup.currentSource.sourcePlayer, playerCutsceneGrouping);
+                }
+
+                if (playerCutsceneGrouping == null)
+                {
+                    Debug.LogError($"PCG for player {syncedCutsceneGroup.currentSource.sourcePlayer} is null.");
+                    continue;
                 }
                 
                 if (!playerCutsceneGrouping.cutscenePlayers.TryGetValue(syncedCutsceneGroup.currentSource.cutsceneTag,
@@ -324,7 +330,11 @@ namespace HnSF
 
         protected virtual CutsceneGrouping GetCutsceneGroupFromPool(AssetRef source)
         {
-            if (!cutsceneGroupingPools.ContainsKey(source)) return null;
+            if (!cutsceneGroupingPools.ContainsKey(source))
+            {
+                Debug.LogError($"Cutscene Pools do not contain source {source}.");
+                return null;
+            }
             CutsceneGrouping cg = null;
             if(!cutsceneGroupingPools.ContainsKey(source) || cutsceneGroupingPools[source].Count == 0)
             {
