@@ -1,3 +1,10 @@
+## [1.14.2](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.14.1...v1.14.2) (2026-04-29)
+
+
+### Bug Fixes
+
+* Fix error on room match teardown ([ebb3a23](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/ebb3a23ae40eb1978cd78db53e6f6279322b276c))
+
 ## [1.14.1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.14.0...v1.14.1) (2026-04-26)
 
 
