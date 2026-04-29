@@ -1,3 +1,10 @@
+## [1.14.3](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.14.2...v1.14.3) (2026-04-29)
+
+
+### Bug Fixes
+
+* Fix cutscene groups applying when they're null ([6e69595](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/6e69595f1290fa4452dea1bf7e73d7f1015c324e))
+
 ## [1.14.2](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.14.1...v1.14.2) (2026-04-29)
 
 
