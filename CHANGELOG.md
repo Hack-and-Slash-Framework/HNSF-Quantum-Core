@@ -1,3 +1,10 @@
+## [1.14.4](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.14.3...v1.14.4) (2026-04-29)
+
+
+### Bug Fixes
+
+* Access level of cutscene manager teardown ([9e4bc54](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/9e4bc54b8a4397ab8ac7d440c60550033303ac3a))
+
 ## [1.14.3](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.14.2...v1.14.3) (2026-04-29)
 
 
