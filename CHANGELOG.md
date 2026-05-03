@@ -1,3 +1,10 @@
+## [1.14.5](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.14.4...v1.14.5) (2026-05-03)
+
+
+### Bug Fixes
+
+* Fix VisualEffectRequest cloning ([5d86cec](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/5d86cecf5dae3aa4bbc56fb86b90f9ef7cc9eb79))
+
 ## [1.14.4](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.14.3...v1.14.4) (2026-04-29)
 
 
