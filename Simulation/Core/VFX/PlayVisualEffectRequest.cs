@@ -1,3 +1,4 @@
+using System.Linq;
 using Photon.Deterministic;
 
 namespace Quantum
@@ -49,6 +50,23 @@ namespace Quantum
                 return i;
             }
             return visualEffects.Length-1;
+        }
+
+        public PlayVisualEffectRequest Clone()
+        {
+            var clone = new PlayVisualEffectRequest();
+            clone.visualEffects = visualEffects?.ToArray();
+            clone.chance = chance;
+            clone.parentedToSelf = parentedToSelf;
+            clone.parentBoneTag = parentBoneTag;
+            clone.pauseDuringHitstop = pauseDuringHitstop;
+            clone.positionAsOffset = positionAsOffset;
+            clone.positionOffset = positionOffset;
+            clone.rotationAsOffset = rotationAsOffset;
+            clone.rotationOffset = rotationOffset;
+            clone.rotateToMoveForce = rotateToMoveForce;
+            clone.forwardOffset = forwardOffset;
+            return clone;
         }
     }
 }

@@ -1,5 +1,3 @@
-using System;
-
 namespace Quantum
 {
     [System.Serializable]
@@ -16,8 +14,6 @@ namespace Quantum
         public PlayVisualEffectRequest request;
         public AssetRef<ExternalPlayVisualEffectRequest> externalRequest;
         
-        [NonSerialized] private ExternalPlayVisualEffectRequest _externalRequest;
-
         public PlayVisualEffectRequest Resolve(Frame frame)
         {
             switch (type)
@@ -25,16 +21,22 @@ namespace Quantum
                 case ParamType.Self:
                     return request;
                 case ParamType.External:
-                    if (_externalRequest == null && !frame.TryFindAsset(externalRequest, out _externalRequest))
-                        return default;
-                    return _externalRequest.request;
+                    if (frame.TryFindAsset(externalRequest, out var externalRequestAsset))
+                        return externalRequestAsset.request;
+                    break;
             }
             return default;
         }
 
-        public void ClearCache()
+        public PlayVisualEffectRequestParam Clone()
         {
-            _externalRequest = null;
+            var clone = new PlayVisualEffectRequestParam
+            {
+                type = type,
+                request = request.Clone(),
+                externalRequest = externalRequest
+            };
+            return clone;
         }
     }
 }
