@@ -1,3 +1,10 @@
+# [1.15.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.14.5...v1.15.0) (2026-05-04)
+
+
+### Features
+
+* State preview support ([f61ad74](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/f61ad7423cbaaf3b81cebc5138833785cff289fd))
+
 ## [1.14.5](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.14.4...v1.14.5) (2026-05-03)
 
 
