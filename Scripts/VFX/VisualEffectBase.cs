@@ -1,9 +1,10 @@
 using System;
+using HnSF;
 using Quantum;
 using UnityEngine;
 using UnityEngine.Pool;
 
-public class VisualEffectBase : MonoBehaviour
+public class VisualEffectBase : MonoBehaviour, IEditorFixedUpdate
 {
     public delegate void EffectDelegate(VisualEffectBase visualEffect);
     public EffectDelegate WhenEffectDestroyed;

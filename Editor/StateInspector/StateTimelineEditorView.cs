@@ -15,7 +15,7 @@ public class StateTimelineEditorView : VisualElement
 {
     private VisualTreeAsset topbarFrameLabelTemplate;
     
-    [SerializeField] private HNSFState stateAsset;
+    [SerializeField] public HNSFState stateAsset;
     [SerializeField] public float zoomMultiplier = 1.0f;
 
     [SerializeField] public static HNSFStateAction actionCopy;

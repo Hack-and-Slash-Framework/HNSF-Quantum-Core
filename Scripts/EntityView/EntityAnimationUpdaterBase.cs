@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace HnSF
 {
-    public unsafe class EntityAnimationUpdaterBase : MonoBehaviour, IOnUModPrebuild
+    public unsafe class EntityAnimationUpdaterBase : MonoBehaviour, IOnUModPrebuild, IEditorAwake
     {
         [System.Serializable]
         public class TagAvatarMaskInfo
@@ -37,7 +37,7 @@ namespace HnSF
         {
         }
 
-        protected virtual void Awake()
+        public virtual void Awake()
         {
             tagToAvatarMaskMapping.Clear();
             foreach (var b in tagAvatarMaskMapping)

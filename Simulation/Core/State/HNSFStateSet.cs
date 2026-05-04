@@ -31,6 +31,8 @@ namespace HnSF.core.state
 
         public bool debug;
 
+        public AssetRef<BattleActorDefinition> previewActor;
+
         public bool HasStateWithTag(AssetRef<Tag> movesetTag, AssetRef<Tag> stateTag)
         {
             return statesByTag.TryGetValue(movesetTag, out var movesetToStatesByTag) && movesetToStatesByTag.ContainsKey(stateTag);

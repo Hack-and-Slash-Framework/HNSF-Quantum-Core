@@ -3,19 +3,19 @@ using HnSF;
 using Quantum;
 using UnityEngine;
 
-public unsafe class FighterVFXManager : MonoBehaviour
+public unsafe class FighterVFXManager : MonoBehaviour, IEditorOnEnable, IEditorOnDisable
 {
     public QuantumEntityView view;
     
     public List<VisualEffectBase> currentPlayingEffects = new();
     private DispatcherSubscription _updateViewDispatcher;
-    
-    private void OnEnable()
+
+    public virtual void OnEnable()
     {
         _updateViewDispatcher = QuantumCallback.Subscribe(this, (CallbackUpdateView callback) => UpdateView(callback));
     }
 
-    private void OnDisable()
+    public virtual void OnDisable()
     {
         QuantumCallback.Unsubscribe(_updateViewDispatcher);
     }

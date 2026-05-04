@@ -21,11 +21,12 @@ namespace HnSF
         
         [SerializeField] public HNSFStateSet stateSet;
         [SerializeField] private StateTimelineEditorView stateTimelineEditorView;
+        
 
+        // Previewing
         [SerializeField] public bool inPreviewMode;
-        [SerializeField] public List<string> previousLoadedScenes = new List<string>();
-
         [SerializeField] public bool previewChangeInProgress;
+        [SerializeField] private StatePreviewEditorWindow previewEditorWindow;
         
         [OnOpenAsset]
         public static bool OpenGraphAsset(int instanceID, int line)
@@ -104,6 +105,7 @@ namespace HnSF
             var playControlBeginning = root.Q<Button>("beginning");
             playControlBeginning.text = "";
             playControlBeginning.iconImage = Background.FromTexture2D((EditorGUIUtility.IconContent("d_Animation.FirstKey").image as Texture2D));
+            playControlBeginning.clicked += PreviewButton_Beginning;
             
             var playControlPrevKey = root.Q<Button>("back-frame");
             playControlPrevKey.text = "";
@@ -112,14 +114,40 @@ namespace HnSF
             var playControlPlayPause = root.Q<Button>("play-pause");
             playControlPlayPause.text = "";
             playControlPlayPause.iconImage = Background.FromTexture2D((EditorGUIUtility.IconContent("d_Animation.Play").image as Texture2D));
+            playControlPlayPause.clicked += PreviewButton_TogglePlay;
             
             var playControlNextKey = root.Q<Button>("forward-frame");
             playControlNextKey.text = "";
             playControlNextKey.iconImage = Background.FromTexture2D((EditorGUIUtility.IconContent("d_Animation.NextKey").image as Texture2D));
+            playControlNextKey.clicked += PreviewButton_AdvanceFrame;
             
             var playControlEnd = root.Q<Button>("end");
             playControlEnd.text = "";
             playControlEnd.iconImage = Background.FromTexture2D((EditorGUIUtility.IconContent("d_Animation.LastKey").image as Texture2D));
+        }
+
+        private void PreviewButton_TogglePlay()
+        {
+            if (!inPreviewMode || previewEditorWindow == null) return;
+
+            previewEditorWindow.ToggleAutoPlay();
+        }
+
+        private void PreviewButton_AdvanceFrame()
+        {
+            if (!inPreviewMode || previewEditorWindow == null) return;
+
+            previewEditorWindow.TickSimulation();
+        }
+
+        private void PreviewButton_Beginning()
+        {
+            if (!inPreviewMode || previewEditorWindow == null) return;
+
+            if (stateTimelineEditorView.stateAsset)
+            {
+                previewEditorWindow.SetStateForPlayback(stateTimelineEditorView.stateAsset);
+            }
         }
 
         private void AttemptTogglePreview()
@@ -129,11 +157,8 @@ namespace HnSF
             previewChangeInProgress = true;
             if (inPreviewMode)
             {
-                for (int i = 0; i < previousLoadedScenes.Count; i++)
-                {
-                    EditorSceneManager.LoadScene(previousLoadedScenes[i], i == 0 ? LoadSceneMode.Single : LoadSceneMode.Additive);
-                }
-
+                previewEditorWindow?.OnWindowClosed.RemoveListener(EndPreviewing);
+                previewEditorWindow?.Teardown();
                 inPreviewMode = false;
             }
             else
@@ -153,34 +178,36 @@ namespace HnSF
                     return;
                 }
 
+                /*
                 if (string.IsNullOrEmpty(previewSettingsAsset.previewScene) ||
                     !SceneManager.GetSceneByName(previewSettingsAsset.previewScene).IsValid())
                 {
                     Debug.LogError("Failed setting up state preview: Invalid scene.");
                     previewChangeInProgress = false;
                     return;
-                }
+                }*/
 
-                if (previewSettingsAsset.quantumConfiguration == null)
+                if (previewSettingsAsset.quantumSettings == null)
                 {
                     Debug.LogError("Failed setting up state preview: Invalid quantum configuration.");
                     previewChangeInProgress = false;
                     return;
                 }
                 
-                previousLoadedScenes.Clear();
-                for (int i = 0; i < SceneManager.loadedSceneCount; i++)
+                previewEditorWindow = EditorWindow.GetWindow<StatePreviewEditorWindow>("State Preview");
+                if (previewEditorWindow.Initialize(previewSettingsAsset, stateSet, stateTimelineEditorView.stateAsset))
                 {
-                    var s = SceneManager.GetSceneAt(i);
-                    previousLoadedScenes.Add(s.path);
+                    previewEditorWindow.OnWindowClosed.AddListener(EndPreviewing);
+                    inPreviewMode = true;
                 }
-
-                SceneManager.LoadScene(previewSettingsAsset.previewScene);
-                
-                inPreviewMode = true;
             }
 
             previewChangeInProgress = false;
+        }
+
+        private void EndPreviewing()
+        {
+            inPreviewMode = false;
         }
 
         public virtual void RefreshAll(bool refreshData = false)

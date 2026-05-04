@@ -34,7 +34,7 @@ namespace HnSF
         [Header("Animancer")] public TagToAnimator[] animators;
         [NonSerialized] public Dictionary<AssetRef<Tag>, AnimatorInfo> animatorInfoGroups = new();
 
-        protected override void Awake()
+        public override void Awake()
         {
             animatorInfoGroups.Clear();
             foreach (var a in animators)
@@ -150,7 +150,12 @@ namespace HnSF
                 SetAnimationLayerPlayState(0, false);
                 SetAnimationLayerPlayState(1, false);
                 EvaluateAnimators(effectiveFixedDT);
+#if UNITY_EDITOR
+                if(Application.isEditor) accumulatedTimeSinceLastUpdate += (float)EditorDeltaTime.editorDeltaTime;
+                else accumulatedTimeSinceLastUpdate += Time.deltaTime;
+#else
                 accumulatedTimeSinceLastUpdate += Time.deltaTime;
+#endif
                 return;
             }
 
@@ -167,7 +172,12 @@ namespace HnSF
             _lastSetState = actorAnimator.state;
             EvaluateAnimators(effectiveFixedDT);
 
+#if UNITY_EDITOR
+            if(Application.isEditor) accumulatedTimeSinceLastUpdate += (float)EditorDeltaTime.editorDeltaTime;
+            else accumulatedTimeSinceLastUpdate += Time.deltaTime;
+#else
             accumulatedTimeSinceLastUpdate += Time.deltaTime;
+#endif
         }
 
         protected virtual void HandleInterpolation(int layer, float fdt, float alpha)
