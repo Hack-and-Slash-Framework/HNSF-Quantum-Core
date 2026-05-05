@@ -1,3 +1,10 @@
+## [1.15.2](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.15.1...v1.15.2) (2026-05-05)
+
+
+### Bug Fixes
+
+* Move oneshotVFX3D to 3d ([48c0f4b](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/48c0f4ba2a624a8cf1772b31d56d2474dc0200d4))
+
 ## [1.15.1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.15.0...v1.15.1) (2026-05-05)
 
 
