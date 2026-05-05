@@ -14,7 +14,7 @@ namespace HnSF
     {
         [SerializeField] public UnityEvent OnWindowClosed = new UnityEvent();
         
-        public PreviewRenderUtility renderUtils;
+        public PreviewRenderUtility previewUtility;
         protected int frame = 0;
         protected bool rotationMode = false;
         protected bool moveMode = false;
@@ -24,7 +24,7 @@ namespace HnSF
         protected float scrollWheel = 0;
         protected float scrollSpeed = 0.5f;
         protected float moveSpeed = 0.5f;
-        private bool autoPlay = false;
+        protected bool autoPlay = false;
 
         public GameObject rootGameObject;
         
@@ -45,6 +45,7 @@ namespace HnSF
         unsafe partial void PreQuantumInitUser();
         unsafe partial void TeardownUser();
         unsafe partial void HandleControlsUser(Rect pos);
+        unsafe partial void ConfigurePreviewRenderUser();
         
         [MenuItem("Tools/State Preview Window")]
         public static void ShowWindow()
@@ -55,23 +56,22 @@ namespace HnSF
 
         protected virtual void OnEnable()
         {
-            //playInterval = Time.fixedDeltaTime;
-            //nextPlayTime = EditorApplication.timeSinceStartup+playInterval;
-            if (renderUtils == null)
+            if (previewUtility == null)
             {
-                renderUtils = new PreviewRenderUtility(true);
+                previewUtility = new PreviewRenderUtility(true);
             }
-
-            //renderUtils.camera.cameraType = CameraType.Preview;
-            renderUtils.camera.cameraType = CameraType.SceneView;
-            renderUtils.camera.fieldOfView = 40;
-            renderUtils.camera.transform.position = new Vector3(0, 1.5f, -15);
-            renderUtils.camera.transform.LookAt(new Vector3(0, 1, 0));
-            renderUtils.camera.farClipPlane = 100;
+            
+            previewUtility.camera.cameraType = CameraType.SceneView;
+            previewUtility.camera.fieldOfView = 40;
+            previewUtility.camera.transform.position = new Vector3(0, 1.5f, -15);
+            previewUtility.camera.transform.LookAt(new Vector3(0, 1, 0));
+            previewUtility.camera.farClipPlane = 100;
             
             rootGameObject = new GameObject("StatePreviewRoot");
             rootGameObject.hideFlags = HideFlags.HideAndDontSave;
-            renderUtils.AddSingleGO(rootGameObject);
+            previewUtility.AddSingleGO(rootGameObject);
+            
+            ConfigurePreviewRenderUser();
         }
 
         public virtual void Teardown()
@@ -83,9 +83,9 @@ namespace HnSF
         protected virtual void OnDisable()
         {
             CleanupQuantum();
-            if (renderUtils != null)
+            if (previewUtility != null)
             {
-                renderUtils.Cleanup();
+                previewUtility.Cleanup();
             }
             OnWindowClosed?.Invoke();
         }
@@ -137,8 +137,8 @@ namespace HnSF
             this.stateAsset = sAsset;
             
             this.previewConfig = configuration;
-            evu = renderUtils.InstantiatePrefabInScene(configuration.evuPrefab.gameObject).GetComponent<StatePreviewEntityViewUpdater>();
-            evu.RenderUtility = renderUtils;
+            evu = previewUtility.InstantiatePrefabInScene(configuration.evuPrefab.gameObject).GetComponent<StatePreviewEntityViewUpdater>();
+            evu.RenderUtility = previewUtility;
             evu.rootObject = rootGameObject;
 
             PreQuantumInitUser();
@@ -319,7 +319,7 @@ namespace HnSF
             
             if (scrollWheel != 0)
             {
-                renderUtils.camera.transform.position += renderUtils.camera.transform.forward * (scrollWheel * scrollSpeed);
+                previewUtility.camera.transform.position += previewUtility.camera.transform.forward * (scrollWheel * scrollSpeed);
                 scrollWheel = 0;
             }
             
@@ -327,7 +327,7 @@ namespace HnSF
             {
                 if (moveMode)
                 {
-                    renderUtils.camera.transform.position += new Vector3(diff.x * -moveSpeed * Time.deltaTime, diff.y * moveSpeed * Time.deltaTime, 0);
+                    previewUtility.camera.transform.position += new Vector3(diff.x * -moveSpeed * Time.deltaTime, diff.y * moveSpeed * Time.deltaTime, 0);
                 }
                 /*
                 if (rotationMode)
@@ -340,13 +340,13 @@ namespace HnSF
 
         private void RenderingMain(Rect pos)
         {
-            renderUtils.BeginPreview(pos, EditorStyles.helpBox);
+            previewUtility.BeginPreview(pos, EditorStyles.helpBox);
             DrawGround();
             //DrawHurtboxes();
             //DrawHitboxes();
             RenderSub();
-            renderUtils.Render(allowScriptableRenderPipeline: true, false);
-            renderUtils.EndAndDrawPreview(pos);
+            previewUtility.Render(allowScriptableRenderPipeline: true, false);
+            previewUtility.EndAndDrawPreview(pos);
         }
 
         private void RenderSub()
@@ -355,7 +355,7 @@ namespace HnSF
 
         protected virtual void DrawGround()
         {
-            Handles.SetCamera(renderUtils.camera);
+            Handles.SetCamera(previewUtility.camera);
             Handles.color = Color.grey;
             for (int i = -10; i <= 10; i++)
             {
