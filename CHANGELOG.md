@@ -1,3 +1,10 @@
+# [1.16.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.15.2...v1.16.0) (2026-05-05)
+
+
+### Features
+
+* Configure preview user method ([324b115](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/324b115f8aba877ac16919166a402b469e0a87e1))
+
 ## [1.15.2](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.15.1...v1.15.2) (2026-05-05)
 
 
