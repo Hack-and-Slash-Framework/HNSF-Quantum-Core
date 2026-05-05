@@ -14,7 +14,7 @@ namespace HnSF.core.statepreview
         {
             base.OnEnabled(f);
 
-            var testingConfig = f.FindAsset<StatePreviewQuantumSettings>(f.RuntimeConfig.gamemodeConfigAsset);
+            var testingConfig = f.FindAsset<StatePreviewQuantumSettingsBase>(f.RuntimeConfig.gamemodeConfigAsset);
             GenericGamemodeStateSystem.SetState(f, GenericGamemodeStates.Game);
         }
 

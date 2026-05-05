@@ -178,7 +178,7 @@ namespace HnSF
             QuantumRunnerUnityFactory.Init();
             QuantumUnityDB.UpdateGlobal();
             
-            configuration.quantumSettings.Initialize();
+            configuration.simulationSettings.Initialize();
             
             int gameFlags = 0;
             var sessionRunnerArgs = new SessionRunner.Arguments

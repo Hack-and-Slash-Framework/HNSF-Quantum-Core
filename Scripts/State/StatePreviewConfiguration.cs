@@ -7,11 +7,10 @@ namespace HnSF
     public class StatePreviewConfiguration : ScriptableObject
     {
         public RuntimeConfig runtimeConfig;
-        public StatePreviewQuantumSettings quantumSettings;
+        public StatePreviewQuantumSettingsBase simulationSettings;
         public StatePreviewEntityViewUpdater evuPrefab;
-        public string previewScene;
-        public EntityPrototype testPrototype;
         public SystemsConfigOverrider systemsConfigOverrider;
         public SystemsConfig generatedConfig;
+        public string previewScene;
     }
 }

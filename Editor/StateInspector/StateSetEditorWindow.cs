@@ -187,7 +187,7 @@ namespace HnSF
                     return;
                 }*/
 
-                if (previewSettingsAsset.quantumSettings == null)
+                if (previewSettingsAsset.simulationSettings == null)
                 {
                     Debug.LogError("Failed setting up state preview: Invalid quantum configuration.");
                     previewChangeInProgress = false;
