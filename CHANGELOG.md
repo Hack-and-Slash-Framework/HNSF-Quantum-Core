@@ -1,3 +1,10 @@
+## [1.15.1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.15.0...v1.15.1) (2026-05-05)
+
+
+### Bug Fixes
+
+* Move state preview settings to 3d/2d extensions instead ([67646ec](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/67646ec2a45b7b30809997ad78c1ec7b0b99df72))
+
 # [1.15.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.14.5...v1.15.0) (2026-05-04)
 
 
