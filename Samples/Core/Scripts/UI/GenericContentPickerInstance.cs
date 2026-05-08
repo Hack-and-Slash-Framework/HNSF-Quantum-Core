@@ -1,23 +1,21 @@
 using System;
 using System.Collections.Generic;
-using CT.LocalInputManagement;
 using CT.MenuNav;
+using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace HnSF.ui
 {
-    public class GenericContentPickerInstance : MenuBase
+    public class GenericContentPickerInstance : MenuPage, IMenuInputOnPressedConfirm, IMenuInputOnPressedBack, IMenuInputOnNavigateRaw
     {
         public UnityEvent<GenericContentPickerInstance> onContentPicked = new UnityEvent<GenericContentPickerInstance>();
         public UnityEvent<GenericContentPickerInstance> onCancel = new UnityEvent<GenericContentPickerInstance>();
         
         public Canvas canvas;
-
-        public InputPlayerManager inputPlayer;
         
         public ScrollRect contentScrollRect;
 
@@ -36,33 +34,27 @@ namespace HnSF.ui
         public TextMeshProUGUI titleText;
         public TextMeshProUGUI contentTitleText;
         public TextMeshProUGUI contentDescriptionText;
-        
-        public override void Open(MenuDirection direction, IMenuHandler menuHandler)
+
+        public override UniTask<bool> TryOpenAsync(MenuNavDirection direction, int pageCount)
         {
-            base.Open(direction, menuHandler);
+            PageState = MenuPageState.Opening;
             buttonConfirmSelection.interactable = false;
             currentSelectedContentIndex = -1;
             gameObject.SetActive(true);
+            PageState = MenuPageState.Opened;
 
-            inputPlayer.mpEventSystem.SetSelectedGameObject(null);
-            inputPlayer.inputActions.UI.Cancel.performed += WhenPressedCancel;
-            inputPlayer.inputActions.UI.Pause.performed += WhenPressedStart;
-            inputPlayer.inputActions.UI.Navigate.performed += WhenNavigationPerformed;
+            currentManager.SetCurrentSelectedGameobject(null);
+            return new UniTask<bool>(true);
         }
 
-        public override bool TryClose(MenuDirection direction, bool forceClose = false)
+        public override UniTask<bool> TryCloseAsync(MenuNavDirection direction)
         {
-            if(direction == MenuDirection.BACKWARDS) Uninitialize();
-            gameObject.SetActive(false);
-            inputPlayer.inputActions.UI.Cancel.performed -= WhenPressedCancel;
-            inputPlayer.inputActions.UI.Pause.performed -= WhenPressedStart;
-            inputPlayer.inputActions.UI.Navigate.performed -= WhenNavigationPerformed;
-            return base.TryClose(direction, forceClose);
+            if(direction == MenuNavDirection.Back) Uninitialize();
+            return base.TryCloseAsync(direction);
         }
-
-        public virtual void Initialize<T>(InputPlayerManager inputPlayerManager) where T : IContentDefinition
+        
+        public virtual void Initialize<T>() where T : IContentDefinition
         {
-            this.inputPlayer = inputPlayerManager;
             contentListingUtility = new GenericContentListingUtility<T>();
             contentListingUtility.UpdateMaxPageCount();
             contentListingUtility.onPreContentListChanged.AddListener(BeforeContentListChanged);
@@ -72,10 +64,6 @@ namespace HnSF.ui
 
         public virtual void Uninitialize()
         {
-            inputPlayer.inputActions.UI.Cancel.performed -= WhenPressedCancel;
-            inputPlayer.inputActions.UI.Pause.performed -= WhenPressedStart;
-            inputPlayer.inputActions.UI.Navigate.performed -= WhenNavigationPerformed;
-            
             var contentManager = HnSFManagersContainer.instance?.contentManager;
             if (contentManager == null) return;
             
@@ -94,29 +82,7 @@ namespace HnSF.ui
         {
             Uninitialize();
         }
-
-        protected virtual void WhenPressedCancel(InputAction.CallbackContext obj)
-        {
-            onCancel.Invoke(this);
-        }
         
-        protected virtual void WhenPressedStart(InputAction.CallbackContext obj)
-        {
-            if (currentSelectedContentIndex == -1) return;
-            onContentPicked.Invoke(this);
-        }
-        
-        protected virtual void WhenNavigationPerformed(InputAction.CallbackContext obj)
-        {
-            if (inputPlayer.mpEventSystem.currentSelectedGameObject == null)
-            {
-                if (contentScrollRect.content.transform.childCount <= 0) return;
-                var cTransform = contentScrollRect.content.transform.GetChild(0);
-                if (cTransform == null) return;
-                inputPlayer.mpEventSystem.SetSelectedGameObject(cTransform.gameObject);
-            }
-        }
-
         public virtual ModAssetSoftReference ConfirmWantedContent()
         {
             if (currentSelectedContentIndex == -1) return default;
@@ -188,8 +154,9 @@ namespace HnSF.ui
                 }
                 
                 uiContentItem.button.onClick.AddListener(() => { OnSelectContentItem(index); });
-                
-                if(i == 0 && uiContentItem != null) inputPlayer.mpEventSystem.SetSelectedGameObject(uiContentItem.gameObject);
+
+                if (i == 0 && uiContentItem != null)
+                    currentManager.SetCurrentSelectedGameobject(uiContentItem.gameObject);
             }
         }
 
@@ -212,6 +179,28 @@ namespace HnSF.ui
         public virtual void Button_ConfirmSelection()
         {
             onContentPicked.Invoke(this);
+        }
+        
+        public void OnInputConfirmPressed(int playerID, BaseEventData eventData)
+        {
+            if (currentSelectedContentIndex == -1) return;
+            onContentPicked.Invoke(this);
+        }
+
+        public void OnInputBackPressed(int playerID, BaseEventData eventData)
+        {
+            onCancel.Invoke(this);
+        }
+
+        public void OnNavigateRaw(Vector2 navInput, int playerID, BaseEventData eventData)
+        {
+            if (currentManager.GetCurrentSelectedGameObject() == null)
+            {
+                if (contentScrollRect.content.transform.childCount <= 0) return;
+                var cTransform = contentScrollRect.content.transform.GetChild(0);
+                if (cTransform == null) return;
+                currentManager.SetCurrentSelectedGameobject(cTransform.gameObject);
+            }
         }
     }
 }

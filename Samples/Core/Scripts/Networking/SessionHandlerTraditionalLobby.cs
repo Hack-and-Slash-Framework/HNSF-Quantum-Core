@@ -14,7 +14,9 @@ namespace HnSF.sessionhandling.handlers
         public SessionHandlerLobbyRoomMatch roomMatchSessionHandler;
         
         public TraditionalLobbyUIRepresentation uiLobbyRepresentation;
-        
+
+        public int LocalPlayerCount { get; protected set; }
+
         public void InitializeRoomMatchSessionHandler()
         {
             if (roomMatchSessionHandler != null) return;
@@ -34,6 +36,11 @@ namespace HnSF.sessionhandling.handlers
         public virtual void SetConnectionData(string address, int port)
         {
             
+        }
+
+        public virtual void SetLocalPlayerCount(int playerAmount)
+        {
+            LocalPlayerCount = playerAmount;
         }
 
         public virtual UniTask<bool> TryCreateLobby()

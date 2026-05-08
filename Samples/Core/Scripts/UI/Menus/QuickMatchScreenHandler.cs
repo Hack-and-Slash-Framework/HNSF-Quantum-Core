@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using CT.LocalInputManagement;
 using CT.MenuNav;
 using Cysharp.Threading.Tasks;
 using HnSF.sessionhandling.handlers;
@@ -8,7 +7,7 @@ using UnityEngine.Events;
 
 namespace HnSF.ui.menus
 {
-    public class QuickMatchScreenHandler : MenuHandlerBase
+    public class QuickMatchScreenHandler : MenuPage
     {
         [System.Serializable]
         public class QuickMatchLocalPlayerInfo
@@ -72,35 +71,34 @@ namespace HnSF.ui.menus
         public LoadedAssetHandleWrapper selectedGamemodeDefinition;
 
         public SessionHandlerQuickMatchPhotonRealtime sessionHandlerPrefab;
-        
-        public virtual bool Open()
+
+        public override UniTask<bool> TryOpenAsync(MenuNavDirection direction, int pageCount)
         {
             playerIdToScreenInstance.Clear();
             localPlayersInfo.Clear();
             
             quickMatchScreenInstancePrefab.transform.parent.gameObject.SetActive(false);
             gameObject.SetActive(true);
-
-            var inputPlayerManager = InputManager.instance as InputManager;
             
+            /*
             foreach (var inputPlayer in inputPlayerManager.GetPlayers())
             {
                 localPlayersInfo.Add(inputPlayer.Id, new QuickMatchLocalPlayerInfo());
                 localPlayersInfo[inputPlayer.Id].PlayerId = inputPlayer.Id;
                 var screenInstance = Instantiate(quickMatchScreenInstancePrefab, transform, false);
                 playerIdToScreenInstance.Add(inputPlayer.Id, screenInstance);
-                screenInstance.inputPlayer = inputPlayer as InputPlayerManager;
                 screenInstance.playerInfo = localPlayersInfo[inputPlayer.Id];
                 screenInstance.instanceCamera = GameObject.Instantiate(instanceCameraPrefab, transform, false);
                 localPlayersInfo[inputPlayer.Id].OnInfoUpdated.AddListener(WhenLocalPlayerInfoUpdated);
                 screenInstance.instanceHandler = this;
                 screenInstance.Open();
             }
+            */
             
-            return true;
+            return base.TryOpenAsync(direction, pageCount);
         }
 
-        public virtual void Close()
+        public override UniTask<bool> TryCloseAsync(MenuNavDirection direction)
         {
             foreach (var playerScreenInstance in playerIdToScreenInstance.Values)
             {
@@ -110,7 +108,8 @@ namespace HnSF.ui.menus
             }
             
             playerIdToScreenInstance.Clear();
-            gameObject.SetActive(false);
+            
+            return base.TryCloseAsync(direction);
         }
         
         private void WhenLocalPlayerInfoUpdated(QuickMatchLocalPlayerInfo arg0)

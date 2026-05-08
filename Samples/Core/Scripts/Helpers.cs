@@ -1,6 +1,5 @@
 using CT.LocalInputManagement;
 using Cysharp.Threading.Tasks;
-using UnityEngine;
 
 namespace HnSF.BaseExample
 {

@@ -169,7 +169,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 173288243519661761}
-  - component: {fileID: 422647659290743033}
+  - component: {fileID: 8622946835482311169}
   m_Layer: 0
   m_Name: Input
   m_TagString: Untagged
@@ -192,7 +192,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1547066381769303588}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &422647659290743033
+--- !u!114 &8622946835482311169
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -201,11 +201,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 7824431364910633646}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 365e34c84752e1140866da40cf307dd6, type: 3}
+  m_Script: {fileID: 11500000, guid: 1dbbf6aca1eba6c4baadf53bddf7dc4a, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier: LocalMultiplayerInputManagement::CT.LocalInputManagement.InputManager
   playerInputManagers: []
   autoAssignDevicesTo: 0
+  initializeOnAwake: 1
+  createStaticInstance: 1
 --- !u!1001 &1636404080102681140
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -257,6 +259,18 @@ PrefabInstance:
     - target: {fileID: 2960680413160607592, guid: 8546ff6e69d1868468a3ab098755c84f, type: 3}
       propertyPath: m_Name
       value: GenericContentPicker
+      objectReference: {fileID: 0}
+    - target: {fileID: 8292454645428043841, guid: 8546ff6e69d1868468a3ab098755c84f, type: 3}
+      propertyPath: m_Colors.m_NormalColor.b
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8292454645428043841, guid: 8546ff6e69d1868468a3ab098755c84f, type: 3}
+      propertyPath: m_Colors.m_NormalColor.g
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8292454645428043841, guid: 8546ff6e69d1868468a3ab098755c84f, type: 3}
+      propertyPath: m_Colors.m_NormalColor.r
+      value: 0.8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using CT.LocalInputManagement;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 namespace HnSF.ui.menus
@@ -12,7 +12,6 @@ namespace HnSF.ui.menus
         public UnityEvent<CSSCustomCharacterSelectWidget> OnCancel = new UnityEvent<CSSCustomCharacterSelectWidget>();
         public UnityEvent<CSSCustomCharacterSelectWidget> OnSubmit = new UnityEvent<CSSCustomCharacterSelectWidget>();
         
-        private InputPlayerManager inputPlayer;
         public CSSCustomCharacterSelectWidgetViewItem viewItemPrefab;
         public Transform viewItemParent;
         private List<CSSCustomCharacterSelectWidgetViewItem> items = new();
@@ -22,9 +21,8 @@ namespace HnSF.ui.menus
         private List<LoadedAssetHandleWrapper> loadedAssets = new List<LoadedAssetHandleWrapper>();
         private NavigationDirections playerLastNavigation = NavigationDirections.None;
         
-        public void Open(InputPlayerManager player)
+        public void Open()
         {
-            inputPlayer = player;
             viewItemPrefab.gameObject.SetActive(false);
             gameObject.SetActive(true);
             
@@ -33,22 +31,12 @@ namespace HnSF.ui.menus
             contentListingUtility.onPostContentListChanged.AddListener(WhenContentListChanged);
             contentListingUtility.Initialize(amountPerPage: 8);
             contentListingUtility.UpdateMaxPageCount();
-
-            inputPlayer.inputActions.UI.Navigate.performed += WhenNavigationPerformed;
-            inputPlayer.inputActions.UI.Submit.performed += WhenSubmitPerformed;
-            inputPlayer.inputActions.UI.Cancel.performed += WhenCancelPerformed;
         }
 
         public void Close()
         {
-            if (inputPlayer == null) return;
-            inputPlayer.inputActions.UI.Navigate.performed -= WhenNavigationPerformed;
-            inputPlayer.inputActions.UI.Submit.performed -= WhenSubmitPerformed;
-            inputPlayer.inputActions.UI.Cancel.performed -= WhenCancelPerformed;
-            
             Uninitialize();
             gameObject.SetActive(false);
-            inputPlayer = null;
         }
         
         public void Uninitialize()
@@ -72,43 +60,6 @@ namespace HnSF.ui.menus
             return loadedAssets[items[currentlySelectedItemIndex].fighterIndex].assetReference;
         }
         
-        private void WhenNavigationPerformed(InputAction.CallbackContext context)
-        {
-            var navDir = UIHelpers.ConvertNavigationToDirection(context.ReadValue<Vector2>());
-            if (navDir == playerLastNavigation)
-            {
-                playerLastNavigation = navDir;
-                return;
-            }
-            playerLastNavigation = navDir;
-            
-            switch (navDir)
-            {
-                case NavigationDirections.Up:
-                    UpdateSelection(currentlySelectedItemIndex-1);
-                    break;
-                case NavigationDirections.Down:
-                    UpdateSelection(currentlySelectedItemIndex+1);
-                    break;
-                case NavigationDirections.Left:
-                    PageLeft();
-                    break;
-                case NavigationDirections.Right:
-                    PageRight();
-                    break;
-            }
-        }
-        
-        private void WhenSubmitPerformed(InputAction.CallbackContext context)
-        {
-            OnSubmit.Invoke(this);
-        }
-        
-        private void WhenCancelPerformed(InputAction.CallbackContext obj)
-        {
-            OnCancel.Invoke(this);
-        }
-
         private void UpdateSelection(int requestedIndex)
         {
             requestedIndex = Mathf.Clamp(requestedIndex, 0, items.Count - 1);
@@ -178,6 +129,43 @@ namespace HnSF.ui.menus
 
             currentlySelectedItemIndex = 0;
             UpdateSelection(currentlySelectedItemIndex);
+        }
+
+        public void OnInputConfirmPressed(int playerID, BaseEventData eventData)
+        {
+            OnSubmit.Invoke(this);
+        }
+
+        public void OnInputBackPressed(int playerID, BaseEventData eventData)
+        {
+            OnCancel.Invoke(this);
+        }
+
+        public void OnInputNavigateRaw(Vector2 navInput, int playerID, BaseEventData eventData)
+        {
+            var navDir = UIHelpers.ConvertNavigationToDirection(navInput);
+            if (navDir == playerLastNavigation)
+            {
+                playerLastNavigation = navDir;
+                return;
+            }
+            playerLastNavigation = navDir;
+            
+            switch (navDir)
+            {
+                case NavigationDirections.Up:
+                    UpdateSelection(currentlySelectedItemIndex-1);
+                    break;
+                case NavigationDirections.Down:
+                    UpdateSelection(currentlySelectedItemIndex+1);
+                    break;
+                case NavigationDirections.Left:
+                    PageLeft();
+                    break;
+                case NavigationDirections.Right:
+                    PageRight();
+                    break;
+            }
         }
     }
 }

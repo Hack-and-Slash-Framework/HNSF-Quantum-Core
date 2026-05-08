@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffe1e3753e5736442a4bf194d28ec341, type: 3}
+  m_Name: Chara_Dummy_FighterDefinition
+  m_EditorClassIdentifier: HnSF.Unity::HnSF.AddressablesFighterDefinition
+  tags: []
+  fighterName: Dummy
+  description: 
+  menuVisualReference:
+    m_AssetGUID: 
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
+  fighterReference:
+    m_AssetGUID: bc2e383a5fa502c40a0e194b1ae84d84
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
+  quantumDefinition:
+    m_AssetGUID: 61693d3d907ce924ba4dbb245580b63e
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
+  labelsForLoading: []
+  selectable: 1
+  health: 10000
+  hudReferences: []
+  hudOverrideReferences: []
+  commandList:
+    m_AssetGUID: 
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0

@@ -1,12 +1,15 @@
 using CT.MenuNav;
+using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace HnSF.ui.menus.traditionallobby
 {
-    public class TraditionalLobbyScreenMainMenu : MenuBase
+    public class TraditionalLobbyScreenMainMenu : MenuPage
     {
+        public TraditionalLobbyScreenHelper helper;
+        
         public Canvas canvas;
         public Button buttonLeaveLobby;
         public ScrollRect scrollRectChat;
@@ -14,23 +17,21 @@ namespace HnSF.ui.menus.traditionallobby
         public ScrollRect scrollRectRooms;
 
         public GameObject roomRectViewItem;
-        
-        public override void Open(MenuDirection direction, IMenuHandler menuHandler)
+
+        public override UniTask<bool> TryOpenAsync(MenuNavDirection direction, int pageCount)
         {
-            base.Open(direction, menuHandler);
-            gameObject.SetActive(true);
             roomRectViewItem.gameObject.SetActive(false);
 
-            var screenInstance = (menuHandler as TraditionalLobbyScreenHandler);
+            var screenInstance = helper;
             screenInstance.lobbyRepresentation.onRoomOpened.AddListener(UpdateRoomList);
             screenInstance.lobbyRepresentation.onRoomClosed.AddListener(UpdateRoomList);
             UpdateRoomList(-1);
+            return base.TryOpenAsync(direction, pageCount);
         }
 
-        public override bool TryClose(MenuDirection direction, bool forceClose = false)
+        public override UniTask<bool> TryCloseAsync(MenuNavDirection direction)
         {
-            gameObject.SetActive(false);
-            return base.TryClose(direction, forceClose);
+            return base.TryCloseAsync(direction);
         }
         
         private void UpdateRoomList(int arg0)
@@ -41,7 +42,7 @@ namespace HnSF.ui.menus.traditionallobby
                 Destroy(child.gameObject);
             }
             
-            var lobbyRepresentation = (MenuHandler as TraditionalLobbyScreenHandler).lobbyRepresentation;
+            var lobbyRepresentation = helper.lobbyRepresentation;
 
             foreach (var room in lobbyRepresentation.rooms)
             {
@@ -60,15 +61,13 @@ namespace HnSF.ui.menus.traditionallobby
         
         private void CreateRoom()
         {
-            var instanceHanlder = (MenuHandler as TraditionalLobbyScreenHandler);
-            instanceHanlder.Forward(instanceHanlder.screenCreateRoom);
+            helper.screenManager.TryForwardPage(helper.screenCreateRoom);
         }
 
         private void GoTo_RoomScreen(int roomId)
         {
-            var instanceHanlder = (MenuHandler as TraditionalLobbyScreenHandler);
-            instanceHanlder.screenRoom.roomId = roomId;
-            instanceHanlder.Forward(instanceHanlder.screenRoom);
+            helper.screenRoom.roomId = roomId;
+            helper.screenManager.TryForwardPage(helper.screenRoom);
         }
     }
 }

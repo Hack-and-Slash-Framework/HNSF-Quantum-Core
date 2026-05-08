@@ -1,5 +1,4 @@
 using System;
-using CT.LocalInputManagement;
 using CT.MenuNav;
 using TMPro;
 using UnityEngine;
@@ -7,15 +6,14 @@ using UnityEngine.UI;
 
 namespace HnSF.ui.menus
 {
-    public class QuickMatchScreenInstance : MenuHandlerBase
+    public class QuickMatchScreenInstance : MenuManager
     {
         public QuickMatchScreenHandler instanceHandler;
         
         [NonSerialized] public QuickMatchScreenHandler.QuickMatchLocalPlayerInfo playerInfo;
 
         [NonSerialized] public Camera instanceCamera;
-        public InputPlayerManager inputPlayer;
-
+        
         public Canvas canvas;
         
         public Button buttonReadyUp;
@@ -30,8 +28,8 @@ namespace HnSF.ui.menus
         
         public void Open()
         {
-            inputPlayer.mpEventSystem.SetSelectedGameObject(null);
-            ResetAndForwardTo(screenMainMenu);
+            SetCurrentSelectedGameobject(null);
+            _ = TryForwardPage(screenMainMenu);
         }
 
         public void Close()

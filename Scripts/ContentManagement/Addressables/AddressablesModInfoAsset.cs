@@ -196,12 +196,12 @@ public class AddressablesModInfoAsset : BaseModInfoAsset
         });
         loadResult.result = false;
         
+        
         var lmd = ModDefinition as AddressablesLoadedModDefinition;
-
         lmd.resourceLocator.Locate(id, typeof(T), out var locations);
         if (locations == null || locations.Count == 0)
         {
-            Debug.LogError("Could not find asset location.");
+            Debug.LogError($"Could not find asset location. ID={id}");
             return loadResult;
         }
 

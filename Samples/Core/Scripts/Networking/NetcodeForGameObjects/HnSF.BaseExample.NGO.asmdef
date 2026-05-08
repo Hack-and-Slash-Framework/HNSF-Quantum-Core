@@ -12,7 +12,8 @@
         "Unity.Collections",
         "Unity.Networking.Transport",
         "LocalMultiplayerInputManagement",
-        "LocalMultiplayerInputManagement.InputSystem"
+        "LocalMultiplayerInputManagement.InputSystem",
+        "Unity.InputSystem"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

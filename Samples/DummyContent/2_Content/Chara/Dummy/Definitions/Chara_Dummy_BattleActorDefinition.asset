@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: add0a8edde1392b42b2d50e2a31bf7bd, type: 3}
+  m_Name: Chara_Dummy_BattleActorDefinition
+  m_EditorClassIdentifier: Quantum.Simulation::Quantum.BattleActorDefinition
+  Identifier:
+    Path: HNSF-Quantum-Core/Samples/DummyContent/2_Content/Chara/Dummy/Definitions/Chara_Dummy_BattleActorDefinition
+    Guid:
+      Value: 501696479352384277
+  CharacterPrototype:
+    Id:
+      Value: 1451456295885345293
+  parameters:
+    Id:
+      Value: 0
+  overridedView:
+    Id:
+      Value: 0
+  defaultMoveset:
+    Id:
+      Value: 0
+  statesets:
+  - Id:
+      Value: 323154442024792637
+  fighterDefinition: {fileID: 11400000, guid: caa6935e9ea0c024589042591ae16dfa, type: 2}
+  cutsceneGroupingPrefab: {fileID: 0}
+  introScripts: []
+  aiDefinitions: []
+  customSystems:
+    Id:
+      Value: 0
+  externalSystems: []

@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bfadf72f8b6f8a4bb437178875c54e1, type: 3}
+  m_Name: Chara_Dummy_StateSet
+  m_EditorClassIdentifier: Quantum.Simulation::HnSF.core.state.HNSFStateSet
+  Identifier:
+    Path: HNSF-Quantum-Core/Samples/DummyContent/2_Content/Chara/Dummy/States/Chara_Dummy_StateSet
+    Guid:
+      Value: 323154442024792637
+  Label: 
+  states: []
+  specials: []
+  defaultSpecials: []
+  template:
+    Id:
+      Value: 0
+  movesets:
+  - Id:
+      Value: 0
+  debug: 0
+  previewActor:
+    Id:
+      Value: 0
+  stateGroups: []

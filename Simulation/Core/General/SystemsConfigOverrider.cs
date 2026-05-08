@@ -30,6 +30,10 @@ namespace Quantum
         {
             var sc = ScriptableObject.CreateInstance<SystemsConfig>();
             sc.Entries.Clear();
+            if (baseSystemsConfig == null)
+            {
+                return sc;
+            }
             foreach (var baseEntry in baseSystemsConfig.Entries)
             {
                 _AddSystem(sc, baseEntry);

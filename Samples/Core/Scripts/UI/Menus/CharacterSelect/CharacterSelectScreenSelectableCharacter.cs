@@ -13,6 +13,10 @@ namespace HnSF.ui.menus
         {
             var hnsfManagers = HnSFManagersContainer.instance;
 
+            if (characterAssetHandle.IsValid() == false)
+            {
+                return true;
+            }
             var loadResult = await hnsfManagers.contentManager.LoadAssetFromModAsync(characterReference.reference);
             if (loadResult.result == false) return false;
             characterAssetHandle = loadResult.handle;

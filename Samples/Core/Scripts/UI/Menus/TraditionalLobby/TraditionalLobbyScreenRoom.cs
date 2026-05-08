@@ -9,8 +9,11 @@ using UnityEngine.UI;
 
 namespace HnSF.ui.menus.traditionallobby
 {
-    public class TraditionalLobbyScreenRoom : MenuBase
+    public class TraditionalLobbyScreenRoom : MenuPage
     {
+        [Space]
+        public TraditionalLobbyScreenHelper helper;
+        
         public Canvas canvas;
         
         public Button buttonReturnToLobby;
@@ -31,27 +34,21 @@ namespace HnSF.ui.menus.traditionallobby
 
         public LoadedAssetHandleWrapper gamemodeAssetHandle;
         public LoadedAssetHandleWrapper mapAssetHandle;
-        
-        public override void Open(MenuDirection direction, IMenuHandler menuHandler)
+
+        public override UniTask<bool> TryOpenAsync(MenuNavDirection direction, int pageCount)
         {
-            base.Open(direction, menuHandler);
-            gameObject.SetActive(true);
-            
             playerListItemPrefab.gameObject.SetActive(false);
             RegisterInputEvents();
             AssignRoom(roomId);
+            return base.TryOpenAsync(direction, pageCount);
         }
 
-        public override bool TryClose(MenuDirection direction, bool forceClose = false)
+        public override UniTask<bool> TryCloseAsync(MenuNavDirection direction)
         {
-            if (direction == MenuDirection.BACKWARDS)
-            {
-                
-            }
-            gameObject.SetActive(false);
             UnregisterInputEvents();
-            return base.TryClose(direction, forceClose);
+            return base.TryCloseAsync(direction);
         }
+        
 
         private void OnDestroy()
         {
@@ -60,18 +57,20 @@ namespace HnSF.ui.menus.traditionallobby
 
         public void RegisterInputEvents()
         {
-            var tlsh = (TraditionalLobbyScreenHandler)MenuHandler;
+            /*
+            var tlsh = (TraditionalLobbyScreenHelper)MenuHandler;
             if (tlsh == null || tlsh.inputPlayer == null) return;
             tlsh.inputPlayer.inputActions.UI.PageLeft.performed += PageTeamLeft;
-            tlsh.inputPlayer.inputActions.UI.PageRight.performed += PageTeamRight;
+            tlsh.inputPlayer.inputActions.UI.PageRight.performed += PageTeamRight;*/
         }
         
         public void UnregisterInputEvents()
         {
-            var tlsh = (TraditionalLobbyScreenHandler)MenuHandler;
+            /*
+            var tlsh = (TraditionalLobbyScreenHelper)MenuHandler;
             if (tlsh == null || tlsh.inputPlayer == null) return;
             tlsh.inputPlayer.inputActions.UI.PageLeft.performed -= PageTeamLeft;
-            tlsh.inputPlayer.inputActions.UI.PageRight.performed -= PageTeamRight;
+            tlsh.inputPlayer.inputActions.UI.PageRight.performed -= PageTeamRight;*/
         }
 
         private void PageTeamLeft(InputAction.CallbackContext obj)
@@ -79,10 +78,8 @@ namespace HnSF.ui.menus.traditionallobby
             if (!gamemodeAssetHandle.IsValid()) return;
             var gamemodeDefinition = gamemodeAssetHandle.GetAsset<BaseGamemodeDefinition>();
             if (gamemodeDefinition == null) return;
-            
-            var instanceHandler = (MenuHandler as TraditionalLobbyScreenHandler);
 
-            var myPlayer = instanceHandler.lobbyRepresentation.GetPlayer(instanceHandler.roomSessionHandler.localClientPlayerIds[instanceHandler.GetLocalPlayerID()]);
+            var myPlayer = helper.lobbyRepresentation.GetPlayer(helper.roomSessionHandler.localClientPlayerIds[helper.GetLocalPlayerIndex()]);
             if (myPlayer == null) return;
             var myCurrentTeam = myPlayer.selectedTeamId;
 
@@ -91,7 +88,7 @@ namespace HnSF.ui.menus.traditionallobby
             var currentTeamIndex = allTeams.FindIndex(x => x.team == myCurrentTeam);
             if (currentTeamIndex == -1)
             {
-                instanceHandler.roomSessionHandler.ChangePlayerTeam(
+                helper.roomSessionHandler.ChangePlayerTeam(
                     localPlayer: 0,
                     team: allTeams[0].team);
             }
@@ -99,7 +96,7 @@ namespace HnSF.ui.menus.traditionallobby
             {
                 var cti = currentTeamIndex - 1;
                 if (cti == -1) cti = allTeams.Count - 1;
-                instanceHandler.roomSessionHandler.ChangePlayerTeam(
+                helper.roomSessionHandler.ChangePlayerTeam(
                     localPlayer: 0,
                     team: allTeams[cti].team);
             }
@@ -110,10 +107,8 @@ namespace HnSF.ui.menus.traditionallobby
             if (!gamemodeAssetHandle.IsValid()) return;
             var gamemodeDefinition = gamemodeAssetHandle.GetAsset<BaseGamemodeDefinition>();
             if (gamemodeDefinition == null) return;
-            
-            var instanceHandler = (MenuHandler as TraditionalLobbyScreenHandler);
 
-            var myPlayer = instanceHandler.lobbyRepresentation.GetPlayer(instanceHandler.roomSessionHandler.localClientPlayerIds[instanceHandler.GetLocalPlayerID()]);
+            var myPlayer = helper.lobbyRepresentation.GetPlayer(helper.roomSessionHandler.localClientPlayerIds[helper.GetLocalPlayerIndex()]);
             if (myPlayer == null) return;
             var myCurrentTeam = myPlayer.selectedTeamId;
 
@@ -122,13 +117,13 @@ namespace HnSF.ui.menus.traditionallobby
             var currentTeamIndex = allTeams.FindIndex(x => x.team == myCurrentTeam);
             if (currentTeamIndex == -1)
             {
-                instanceHandler.roomSessionHandler.ChangePlayerTeam(
+                helper.roomSessionHandler.ChangePlayerTeam(
                     localPlayer: 0,
                     team: allTeams[0].team);
             }
             else
             {
-                instanceHandler.roomSessionHandler.ChangePlayerTeam(
+                helper.roomSessionHandler.ChangePlayerTeam(
                     localPlayer: 0,
                     team: allTeams[(currentTeamIndex+1) % allTeams.Count].team);
             }
@@ -136,8 +131,8 @@ namespace HnSF.ui.menus.traditionallobby
 
         public void Update()
         {
-            if(UnityEngine.Input.GetKeyDown(KeyCode.F5)) UpdateAll();
-            if (UnityEngine.Input.GetKeyDown(KeyCode.F6))
+            if(Keyboard.current[Key.F5].wasPressedThisFrame) UpdateAll();
+            if (Keyboard.current[Key.F6].wasPressedThisFrame)
             {
                 string lobbyPlayerPrintout = "";
                 for (int i = 0; i < room.players.Count; i++) lobbyPlayerPrintout += $"{room.players[i]},\n";
@@ -147,48 +142,42 @@ namespace HnSF.ui.menus.traditionallobby
 
         public void BUTTON_ReturnToLobby()
         {
-            var instanceHandler = (MenuHandler as TraditionalLobbyScreenHandler);
-            instanceHandler.roomSessionHandler.LeaveRoom();
-            MenuHandler.Back();
+            helper.roomSessionHandler.LeaveRoom();
+            _ = helper.screenManager.TryBackPage();
         }
 
         public void BUTTON_GamemodeSelect()
         {
             if (!IsRoomMaster()) return;
-         
-            var instanceHandler = (MenuHandler as TraditionalLobbyScreenHandler);
             
             var contentPickerInstanceManager = GenericContentPickerInstanceManager.instance;
-            instanceHandler.screenContentPicker = contentPickerInstanceManager.CreateInstance<BaseGamemodeDefinition>(instanceHandler.transform);
-            instanceHandler.screenContentPicker.inputPlayer = instanceHandler.inputPlayer;
-            instanceHandler.Forward(instanceHandler.screenContentPicker);
-            instanceHandler.screenContentPicker.Initialize<BaseGamemodeDefinition>(instanceHandler.inputPlayer);
-            instanceHandler.screenContentPicker.SetCameraTarget(instanceHandler.instanceCamera);
+            helper.screenContentPicker = contentPickerInstanceManager.CreateInstance<BaseGamemodeDefinition>(helper.transform);
+            _ = helper.screenManager.TryForwardPage(helper.screenContentPicker);
+            helper.screenContentPicker.Initialize<BaseGamemodeDefinition>();
+            helper.screenContentPicker.SetCameraTarget(helper.instanceCamera);
             
-            instanceHandler.screenContentPicker.onContentPicked.AddListener(WhenGamemodeSubmitted);
-            instanceHandler.screenContentPicker.onCancel.AddListener(WhenCancelContentPick);
+            helper.screenContentPicker.onContentPicked.AddListener(WhenGamemodeSubmitted);
+            helper.screenContentPicker.onCancel.AddListener(WhenCancelContentPick);
         }
 
         private void WhenCancelContentPick(GenericContentPickerInstance arg0)
         {
-            var instanceHandler = (MenuHandler as TraditionalLobbyScreenHandler);
-            MenuHandler.Back();
-            GameObject.Destroy(instanceHandler.screenContentPicker);
+            _ = helper.screenManager.TryBackPage();
+            GameObject.Destroy(helper.screenContentPicker);
         }
 
         private async void WhenGamemodeSubmitted(GenericContentPickerInstance arg0)
         {
             DisableAllButtons();
-            var instanceHandler = (MenuHandler as TraditionalLobbyScreenHandler);
             var contentManager = HnSFManagersContainer.instance.contentManager;
             
             var tempGamemodeAssetHandle = arg0.ConfirmWantedContentAndRemoveFromList();
             ModAssetSoftReference gamemodeReference = tempGamemodeAssetHandle.assetReference;
             contentManager.ReleaseAssetFromMod(tempGamemodeAssetHandle);
-            instanceHandler.screenContentPicker.Uninitialize();
-            MenuHandler.Back();
+            helper.screenContentPicker.Uninitialize();
+            await helper.screenManager.TryBackPage();
             
-            var gamemodeSetResult = await instanceHandler.roomSessionHandler.ChangeRoomGamemode(gamemodeReference);
+            var gamemodeSetResult = await helper.roomSessionHandler.ChangeRoomGamemode(gamemodeReference);
             EnableAllButtons();
         }
 
@@ -201,32 +190,28 @@ namespace HnSF.ui.menus.traditionallobby
         {
             if (!IsRoomMaster()) return;
             
-            var instanceHandler = (MenuHandler as TraditionalLobbyScreenHandler);
-            
             var contentPickerInstanceManager = GenericContentPickerInstanceManager.instance;
-            instanceHandler.screenContentPicker = contentPickerInstanceManager.CreateInstance<IMapDefinition>(instanceHandler.transform);
-            instanceHandler.screenContentPicker.inputPlayer = instanceHandler.inputPlayer;
-            instanceHandler.Forward(instanceHandler.screenContentPicker);
-            instanceHandler.screenContentPicker.Initialize<IMapDefinition>(instanceHandler.inputPlayer);
-            instanceHandler.screenContentPicker.SetCameraTarget(instanceHandler.instanceCamera);
+            helper.screenContentPicker = contentPickerInstanceManager.CreateInstance<IMapDefinition>(helper.transform);
+            _ = helper.screenManager.TryForwardPage(helper.screenContentPicker);
+            helper.screenContentPicker.Initialize<IMapDefinition>();
+            helper.screenContentPicker.SetCameraTarget(helper.instanceCamera);
             
-            instanceHandler.screenContentPicker.onContentPicked.AddListener(WhenMapSubmitted);
-            instanceHandler.screenContentPicker.onCancel.AddListener(WhenCancelContentPick);
+            helper.screenContentPicker.onContentPicked.AddListener(WhenMapSubmitted);
+            helper.screenContentPicker.onCancel.AddListener(WhenCancelContentPick);
         }
         
         private async void WhenMapSubmitted(GenericContentPickerInstance arg0)
         {
             DisableAllButtons();
-            var instanceHandler = (MenuHandler as TraditionalLobbyScreenHandler);
             var contentManager = HnSFManagersContainer.instance.contentManager;
             
             var tempAssetHandle = arg0.ConfirmWantedContentAndRemoveFromList();
             ModAssetSoftReference mapReference = tempAssetHandle.assetReference;
             contentManager.ReleaseAssetFromMod(tempAssetHandle);
-            instanceHandler.screenContentPicker.Uninitialize();
-            MenuHandler.Back();
+            helper.screenContentPicker.Uninitialize();
+            await helper.screenManager.TryBackPage();
 
-            var setResult = await instanceHandler.roomSessionHandler.ChangeRoomMap(mapReference);
+            var setResult = await helper.roomSessionHandler.ChangeRoomMap(mapReference);
             EnableAllButtons();
         }
 
@@ -240,27 +225,24 @@ namespace HnSF.ui.menus.traditionallobby
         {
             Debug.Log($"Room fighter count of {room.GetPlayerFighterCount()}");
             var fightersToSet = room.GetPlayerFighterCount();
-            
-            var instanceHandler = (MenuHandler as TraditionalLobbyScreenHandler);
 
             var contentPickerInstanceManager = GenericContentPickerInstanceManager.instance;
-            instanceHandler.screenContentPicker = contentPickerInstanceManager.CreateInstance<IFighterDefinition>(instanceHandler.transform);
-            instanceHandler.screenContentPicker.inputPlayer = instanceHandler.inputPlayer;
-            instanceHandler.Forward(instanceHandler.screenContentPicker);
-            instanceHandler.screenContentPicker.SetCameraTarget(instanceHandler.instanceCamera);
+            helper.screenContentPicker = contentPickerInstanceManager.CreateInstance<IFighterDefinition>(helper.transform);
+            await helper.screenManager.TryForwardPage(helper.screenContentPicker);
+            helper.screenContentPicker.SetCameraTarget(helper.instanceCamera);
 
             LoadedAssetHandleWrapper? fighterPickResult = null;
             LoadedAssetHandleWrapper[] fightersPicked = new LoadedAssetHandleWrapper[fightersToSet];
             ModAssetSoftReference[] fightersPickedReferences = new ModAssetSoftReference[fightersToSet];
             int i = 0;
             
-            instanceHandler.screenContentPicker.onContentPicked.AddListener(WhenFighterSubmitted);
-            instanceHandler.screenContentPicker.onCancel.AddListener(WhenCancelFighterPick);
+            helper.screenContentPicker.onContentPicked.AddListener(WhenFighterSubmitted);
+            helper.screenContentPicker.onCancel.AddListener(WhenCancelFighterPick);
             
             for (i = 0; i < fightersToSet; i++)
             {
                 fighterPickResult = null;
-                instanceHandler.screenContentPicker.Initialize<IFighterDefinition>(instanceHandler.inputPlayer);
+                helper.screenContentPicker.Initialize<IFighterDefinition>();
                 
                 await UniTask.WaitUntil(() => fighterPickResult.HasValue);
 
@@ -272,14 +254,14 @@ namespace HnSF.ui.menus.traditionallobby
                 fightersPicked[i] = fighterPickResult.Value;
                 fightersPickedReferences[i] = fighterPickResult.Value.assetReference;
                 
-                instanceHandler.screenContentPicker.Uninitialize();
+                helper.screenContentPicker.Uninitialize();
             }
             
-            instanceHandler.screenContentPicker.onContentPicked.RemoveListener(WhenFighterSubmitted);
-            instanceHandler.screenContentPicker.onCancel.RemoveListener(WhenCancelFighterPick);
+            helper.screenContentPicker.onContentPicked.RemoveListener(WhenFighterSubmitted);
+            helper.screenContentPicker.onCancel.RemoveListener(WhenCancelFighterPick);
 
-            var setResult = await instanceHandler.roomSessionHandler.ChangePlayerFighters(instanceHandler.GetLocalPlayerID(), fightersPickedReferences);
-            MenuHandler.Back();
+            var setResult = await helper.roomSessionHandler.ChangePlayerFighters(helper.GetLocalPlayerIndex(), fightersPickedReferences);
+            _ = helper.screenManager.TryBackPage();
             
             void WhenFighterSubmitted(GenericContentPickerInstance arg0)
             {
@@ -294,18 +276,14 @@ namespace HnSF.ui.menus.traditionallobby
 
         public void BUTTON_ReadyUp()
         {
-            var instanceHandler = (MenuHandler as TraditionalLobbyScreenHandler);
-
-            instanceHandler.roomSessionHandler.AttemptToggleReadyState(0);
+            helper.roomSessionHandler.AttemptToggleReadyState(0);
         }
 
         public async void BUTTON_JoinRoom()
         {
             buttonJoinRoom.interactable = false;
             
-            var instanceHandler = (MenuHandler as TraditionalLobbyScreenHandler);
-
-            var joinResult = await instanceHandler.roomSessionHandler.TryJoinRoom(roomId);
+            var joinResult = await helper.roomSessionHandler.TryJoinRoom(roomId);
             buttonJoinRoom.interactable = true;
             
             if (joinResult)
@@ -331,15 +309,20 @@ namespace HnSF.ui.menus.traditionallobby
 
         public bool IsRoomMaster()
         {
-            var menuHandler = (MenuHandler as TraditionalLobbyScreenHandler);
-
-            return room.GetRoomMasterPlayerId() == menuHandler.roomSessionHandler.localClientPlayerIds[menuHandler.GetLocalPlayerID()];
+            if (helper.roomSessionHandler.localClientPlayerIds.Length != helper.roomSessionHandler.LocalPlayerCount)
+            {
+                return false;
+            }
+            return room.GetRoomMasterPlayerId() == helper.roomSessionHandler.localClientPlayerIds[helper.GetLocalPlayerIndex()];
         }
 
         public bool IsInRoom()
         {
-            var menuHandler = (MenuHandler as TraditionalLobbyScreenHandler);
-            return room.players.Contains(menuHandler.roomSessionHandler.localClientPlayerIds[menuHandler.GetLocalPlayerID()]);
+            if (helper.roomSessionHandler.localClientPlayerIds.Length != helper.roomSessionHandler.LocalPlayerCount)
+            {
+                return false;
+            }
+            return room.players.Contains(helper.roomSessionHandler.localClientPlayerIds[helper.GetLocalPlayerIndex()]);
         }
 
         public void AssignRoom(int roomId)
@@ -351,10 +334,10 @@ namespace HnSF.ui.menus.traditionallobby
             }
             
             this.roomId = roomId;
-            room = (MenuHandler as TraditionalLobbyScreenHandler).lobbyRepresentation.GetRoom(roomId);
+            room = helper.lobbyRepresentation.GetRoom(roomId);
             if (room == null)
             {
-                MenuHandler.Back();
+                _ = helper.screenManager.TryBackPage();
                 return;
             }
             
@@ -370,7 +353,6 @@ namespace HnSF.ui.menus.traditionallobby
         {
             if (updateLock) await UniTask.WaitUntil(() => updateLock == false);
             updateLock = true;
-            var instanceHandler = (MenuHandler as TraditionalLobbyScreenHandler);
             var contentManager = HnSFManagersContainer.instance.contentManager;
             
             // Gamemode
@@ -417,7 +399,7 @@ namespace HnSF.ui.menus.traditionallobby
 
         private void WhenRoomClosed(TraditionalLobbyUIRepresentation.Room arg0)
         {
-            MenuHandler.Back();
+            _ = helper.screenManager.TryBackPage();
         }
 
         public void UpdateAll()
@@ -431,8 +413,6 @@ namespace HnSF.ui.menus.traditionallobby
         
         public void UpdatePlayerList()
         {
-            var handler = (MenuHandler as TraditionalLobbyScreenHandler);
-            
             foreach (Transform child in scrollRectPlayerList.content)
             {
                 if (child.gameObject == playerListItemPrefab.gameObject) continue;
@@ -441,7 +421,7 @@ namespace HnSF.ui.menus.traditionallobby
 
             foreach (var playerId in room.players)
             {
-                var playerInfo = handler.lobbyRepresentation.GetPlayer(playerId);
+                var playerInfo = helper.lobbyRepresentation.GetPlayer(playerId);
                 if(playerInfo == null) continue;
 
                 playerInfo.onUpdated.RemoveListener(WhenPlayerUpdated);

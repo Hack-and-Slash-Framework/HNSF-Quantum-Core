@@ -12,7 +12,7 @@ namespace HnSF
         {
             await SceneManager.LoadSceneAsync("HnSF_MainMenu");
             await UniTask.NextFrame();
-            var screenSetter = GameObject.FindFirstObjectByType<MainMenuScreenResetter>();
+            var screenSetter = GameObject.FindFirstObjectByType<MainMenuScreenManager>();
             screenSetter.ReturnToLobbyScreen();
         }
 
@@ -20,7 +20,7 @@ namespace HnSF
         {
             await SceneManager.LoadSceneAsync("HnSF_MainMenu");
             await UniTask.NextFrame();
-            var screenSetter = GameObject.FindFirstObjectByType<MainMenuScreenResetter>();
+            var screenSetter = GameObject.FindFirstObjectByType<MainMenuScreenManager>();
             //screenSetter.ReturnToLobbyScreen();
             InputManager.instance.ReturnAllDevicesToSystem();
             InputManager.instance.SetPlayerCount(0);

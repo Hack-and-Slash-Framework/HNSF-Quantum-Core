@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
-using CT.LocalInputManagement;
 using Quantum;
 using Unity.Collections;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
@@ -29,14 +29,15 @@ namespace HnSF.sessionhandling.handlers.NGO
 
         public int roomIdCounter = 0;
         public int playerIdCounter = 0;
-        
+
+        public int localClientPlayerCount;
         [NonSerialized] public int[] localClientPlayerIds = null;
 
         public NGOClientSecretHandler secretHandler;
         
-        private void Update()
+        protected virtual void Update()
         {
-            if (UnityEngine.Input.GetKeyDown(KeyCode.Alpha7)) PrintAllLobbies();
+            if(Keyboard.current[Key.Digit7].wasPressedThisFrame) PrintAllLobbies();
         }
 
         private void PrintAllLobbies()
@@ -64,7 +65,7 @@ namespace HnSF.sessionhandling.handlers.NGO
 
             if (NetworkManager.IsHost)
             {
-                RegisterClientPlayersRpc(NetworkManager.LocalClient.ClientId, InputManager.instance.GetPlayerCount(), $"Hosting Player");
+                RegisterClientPlayersRpc(NetworkManager.LocalClient.ClientId, localClientPlayerCount, $"Hosting Player");
             }
         }
 
@@ -151,7 +152,7 @@ namespace HnSF.sessionhandling.handlers.NGO
                 case ConnectionEvent.ClientConnected:
                     if (connectionEventData.ClientId == networkManager.LocalClient.ClientId)
                     {
-                        RegisterClientPlayersRpc(networkManager.LocalClient.ClientId, InputManager.instance.GetPlayerCount(), $"{Random.Range(0, 1000)}");
+                        RegisterClientPlayersRpc(networkManager.LocalClient.ClientId, localClientPlayerCount, $"{Random.Range(0, 1000)}");
                     }
                     break;
                 case ConnectionEvent.ClientDisconnected:

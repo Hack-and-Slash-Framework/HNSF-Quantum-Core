@@ -57,11 +57,12 @@ namespace HnSF.sessionhandling.handlers.NGO
             if (!createResult) return false;
 
             lobbyNetworkObject = Instantiate(lobbyNetworkedPrefab, null, false);
+            lobbyNetworkObject.localClientPlayerCount = LocalPlayerCount;
             DontDestroyOnLoad(lobbyNetworkObject);
             lobbyNetworkObject.OnLocalClientPlayerIdsSet.AddListener(OnLocalClientPlayerIdsSet);
             lobbyNetworkObject.GetComponent<NetworkObject>().Spawn(destroyWithScene: false);
             RegisterForValueChanges();
-
+            
             await UniTask.WaitUntil(() => lobbyNetworkObject.localClientPlayerIds != null);
             return true;
         }
