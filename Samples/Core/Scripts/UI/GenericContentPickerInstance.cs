@@ -43,7 +43,7 @@ namespace HnSF.ui
             gameObject.SetActive(true);
             PageState = MenuPageState.Opened;
 
-            currentManager.SetCurrentSelectedGameobject(null);
+            currentManager.SetCurrentSelectedGameObject(null);
             return new UniTask<bool>(true);
         }
 
@@ -156,7 +156,7 @@ namespace HnSF.ui
                 uiContentItem.button.onClick.AddListener(() => { OnSelectContentItem(index); });
 
                 if (i == 0 && uiContentItem != null)
-                    currentManager.SetCurrentSelectedGameobject(uiContentItem.gameObject);
+                    currentManager.SetCurrentSelectedGameObject(uiContentItem.gameObject);
             }
         }
 
@@ -199,7 +199,7 @@ namespace HnSF.ui
                 if (contentScrollRect.content.transform.childCount <= 0) return;
                 var cTransform = contentScrollRect.content.transform.GetChild(0);
                 if (cTransform == null) return;
-                currentManager.SetCurrentSelectedGameobject(cTransform.gameObject);
+                currentManager.SetCurrentSelectedGameObject(cTransform.gameObject);
             }
         }
     }

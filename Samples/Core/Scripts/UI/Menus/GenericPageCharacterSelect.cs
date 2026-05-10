@@ -85,7 +85,7 @@ namespace HnSF.ui.menus
                 UpdateCurrentSelection(i, defaultCharacterSelections[i]);
             }
             
-            currentManager.SetCurrentSelectedGameobject(null);
+            currentManager.SetCurrentSelectedGameObject(null);
             return true;
         }
 
