@@ -1,3 +1,10 @@
+## [1.17.2](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.17.1...v1.17.2) (2026-05-14)
+
+
+### Bug Fixes
+
+* Remove PreviewRenderUtility from StatePreviewEVU ([6375797](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/637579722ffc8171d8a5d4ca9f288262a83ceca0))
+
 ## [1.17.1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.17.0...v1.17.1) (2026-05-10)
 
 
