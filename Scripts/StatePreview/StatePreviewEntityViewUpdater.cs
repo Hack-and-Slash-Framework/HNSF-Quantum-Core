@@ -1,12 +1,10 @@
 ﻿using Quantum;
-using UnityEditor;
 using UnityEngine;
 
 namespace HnSF
 {
     public class StatePreviewEntityViewUpdater : QuantumEntityViewUpdater
     {
-        public PreviewRenderUtility RenderUtility;
         public GameObject rootObject;
         
         protected override QuantumEntityView CreateEntityViewInstance(EntityView asset, Vector3? position = null, Quaternion? rotation = null)

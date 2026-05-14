@@ -138,7 +138,6 @@ namespace HnSF
             
             this.previewConfig = configuration;
             evu = previewUtility.InstantiatePrefabInScene(configuration.evuPrefab.gameObject).GetComponent<StatePreviewEntityViewUpdater>();
-            evu.RenderUtility = previewUtility;
             evu.rootObject = rootGameObject;
 
             PreQuantumInitUser();
