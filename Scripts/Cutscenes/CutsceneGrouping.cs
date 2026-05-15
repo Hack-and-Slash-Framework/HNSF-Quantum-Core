@@ -1,25 +1,33 @@
 using System.Collections.Generic;
 using Quantum;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace HnSF
 {
     public class CutsceneGrouping : MonoBehaviour
     {
-        public Dictionary<AssetRef<Tag>, ActorCutscenePlayer> cutscenePlayers = new();
+        public Dictionary<AssetRef<Tag>, ActorCutscenePlayer> CutscenePlayersMap = new();
 
         public AssetRef sourceKey;
-        [SerializeField] private List<ActorCutscenePlayer> _cutscenePlayers = new();
+        [FormerlySerializedAs("_cutscenePlayers")]
+        public List<ActorCutscenePlayer> cutscenePlayers = new();
         public CutsceneBindingSource bindingSource;
         
-        private void Awake()
+        protected virtual void Awake()
         {
-            foreach(var gcp in _cutscenePlayers) cutscenePlayers.Add(gcp.cutscenePlayerTag, gcp);
+            BuildMap();
+        }
+
+        public virtual void BuildMap()
+        {
+            CutscenePlayersMap.Clear();
+            foreach(var gcp in cutscenePlayers) CutscenePlayersMap.Add(gcp.cutscenePlayerTag, gcp);
         }
 
         public void StopAll(bool pause = false)
         {
-            foreach (var gcp in _cutscenePlayers)
+            foreach (var gcp in cutscenePlayers)
             {
                 gcp.StopCutscene(pause);
             }

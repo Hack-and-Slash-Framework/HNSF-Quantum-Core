@@ -9,7 +9,7 @@ namespace HnSF
 {
     public unsafe class ActorCutscenePlayer : MonoBehaviour
     {
-        public double CutsceneTime
+        public virtual double CutsceneTime
         {
             get => director.playableGraph.IsValid() ? director.time : -1;
             set

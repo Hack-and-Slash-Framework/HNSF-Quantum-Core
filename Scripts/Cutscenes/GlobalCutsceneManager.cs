@@ -195,7 +195,7 @@ namespace HnSF
                     continue;
                 }
                 
-                if (!playerCutsceneGrouping.cutscenePlayers.TryGetValue(syncedCutsceneGroup.currentSource.cutsceneTag,
+                if (!playerCutsceneGrouping.CutscenePlayersMap.TryGetValue(syncedCutsceneGroup.currentSource.cutsceneTag,
                         out var gcp))
                 {
                     Debug.LogError($"Could not get requested cutscene player this frame. " +
