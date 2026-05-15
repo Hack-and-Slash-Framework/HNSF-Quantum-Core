@@ -1,3 +1,10 @@
+# [1.18.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.17.2...v1.18.0) (2026-05-15)
+
+
+### Features
+
+* ActorCutscenePlayer end event return self ([9ca95fc](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/9ca95fcb042a1aea0557503fe71a2741bc8590d2))
+
 ## [1.17.2](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.17.1...v1.17.2) (2026-05-14)
 
 
