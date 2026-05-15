@@ -1,9 +1,9 @@
+using System;
 using System.Collections.Generic;
 using Quantum;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.Playables;
-using UnityEngine.Serialization;
 
 namespace HnSF
 {
@@ -29,9 +29,8 @@ namespace HnSF
                 }
             }
         }
-        
-        public delegate void CutsceneEvent();
-        public CutsceneEvent OnCutsceneReachedEnding;
+
+        public Action<ActorCutscenePlayer> OnCutsceneReachedEnding;
         
         public List<GameObject> cutsceneBindingsGetters = new();
         
@@ -87,7 +86,7 @@ namespace HnSF
                 
                 if (director.time >= director.playableAsset.duration)
                 {
-                    OnCutsceneReachedEnding?.Invoke();
+                    OnCutsceneReachedEnding?.Invoke(this);
                     shouldCallEndEvent = false;
                 }
             }
