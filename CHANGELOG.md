@@ -1,3 +1,10 @@
+## [1.18.1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.18.0...v1.18.1) (2026-05-15)
+
+
+### Bug Fixes
+
+* Made CutscenePlayer list public ([ab4848e](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/ab4848eac6ca059588579f1530c062ed16823574))
+
 # [1.18.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.17.2...v1.18.0) (2026-05-15)
 
 
