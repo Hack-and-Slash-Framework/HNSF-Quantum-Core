@@ -1,3 +1,10 @@
+## [1.18.2](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.18.1...v1.18.2) (2026-05-17)
+
+
+### Bug Fixes
+
+* Properly copy arrays for gamemode settings ([a332ca1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/a332ca1f7e78a8cc3112543ba2fb37f3e486d329))
+
 ## [1.18.1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.18.0...v1.18.1) (2026-05-15)
 
 
