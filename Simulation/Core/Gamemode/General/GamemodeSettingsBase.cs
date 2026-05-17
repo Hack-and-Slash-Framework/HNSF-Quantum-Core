@@ -41,10 +41,13 @@ namespace Quantum
 
         public virtual void FillBaseSettings(GamemodeSettingsBase asset)
         {
-            asset.teamRules = teamRules;
-            asset.teamConfigs = teamConfigs;
+            asset.teamRules = new GamemodeTeamRule[teamRules.Length];
+            Array.Copy(teamRules, asset.teamRules, teamRules.Length);
+            asset.teamConfigs = new GamemodeTeamConfig[teamConfigs.Length];
+            Array.Copy(teamConfigs, asset.teamConfigs, teamConfigs.Length);
             asset.fightersPerPlayer = fightersPerPlayer;
-            asset.initialParticipantsInfo = initialParticipantsInfo;
+            asset.initialParticipantsInfo = new MatchParticipantInitialData[initialParticipantsInfo.Length];
+            Array.Copy(initialParticipantsInfo, asset.initialParticipantsInfo, initialParticipantsInfo.Length);
         }
 
         public virtual GamemodeSettingsBase GetInstance()
