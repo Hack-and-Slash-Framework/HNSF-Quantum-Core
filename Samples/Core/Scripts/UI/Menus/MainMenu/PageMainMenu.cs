@@ -25,7 +25,7 @@ namespace HnSF.ui.menus.examples.mainmenu
 
         public void BUTTON_RoomMatch()
         {
-            _ = currentManager.TryForwardPage(pageFindLobby);
+            _ = currentManager.TryForwardPageAsync(pageFindLobby);
         }
 
         public async void BUTTON_LocalMatch()
@@ -44,7 +44,7 @@ namespace HnSF.ui.menus.examples.mainmenu
         
         public void BUTTON_Settings()
         {
-            //_ = currentManager.TryForwardPage(pageSettings);
+            //_ = currentManager.TryForwardPageAsync(pageSettings);
         }
 
         public void BUTTON_Quit()

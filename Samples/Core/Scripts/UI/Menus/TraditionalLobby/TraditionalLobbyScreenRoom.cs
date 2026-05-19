@@ -143,7 +143,7 @@ namespace HnSF.ui.menus.traditionallobby
         public void BUTTON_ReturnToLobby()
         {
             helper.roomSessionHandler.LeaveRoom();
-            _ = helper.screenManager.TryBackPage();
+            _ = helper.screenManager.TryBackPageAsync();
         }
 
         public void BUTTON_GamemodeSelect()
@@ -152,7 +152,7 @@ namespace HnSF.ui.menus.traditionallobby
             
             var contentPickerInstanceManager = GenericContentPickerInstanceManager.instance;
             helper.screenContentPicker = contentPickerInstanceManager.CreateInstance<BaseGamemodeDefinition>(helper.transform);
-            _ = helper.screenManager.TryForwardPage(helper.screenContentPicker);
+            _ = helper.screenManager.TryForwardPageAsync(helper.screenContentPicker);
             helper.screenContentPicker.Initialize<BaseGamemodeDefinition>();
             helper.screenContentPicker.SetCameraTarget(helper.instanceCamera);
             
@@ -162,7 +162,7 @@ namespace HnSF.ui.menus.traditionallobby
 
         private void WhenCancelContentPick(GenericContentPickerInstance arg0)
         {
-            _ = helper.screenManager.TryBackPage();
+            _ = helper.screenManager.TryBackPageAsync();
             GameObject.Destroy(helper.screenContentPicker);
         }
 
@@ -175,7 +175,7 @@ namespace HnSF.ui.menus.traditionallobby
             ModAssetSoftReference gamemodeReference = tempGamemodeAssetHandle.assetReference;
             contentManager.ReleaseAssetFromMod(tempGamemodeAssetHandle);
             helper.screenContentPicker.Uninitialize();
-            await helper.screenManager.TryBackPage();
+            await helper.screenManager.TryBackPageAsync();
             
             var gamemodeSetResult = await helper.roomSessionHandler.ChangeRoomGamemode(gamemodeReference);
             EnableAllButtons();
@@ -192,7 +192,7 @@ namespace HnSF.ui.menus.traditionallobby
             
             var contentPickerInstanceManager = GenericContentPickerInstanceManager.instance;
             helper.screenContentPicker = contentPickerInstanceManager.CreateInstance<IMapDefinition>(helper.transform);
-            _ = helper.screenManager.TryForwardPage(helper.screenContentPicker);
+            _ = helper.screenManager.TryForwardPageAsync(helper.screenContentPicker);
             helper.screenContentPicker.Initialize<IMapDefinition>();
             helper.screenContentPicker.SetCameraTarget(helper.instanceCamera);
             
@@ -209,7 +209,7 @@ namespace HnSF.ui.menus.traditionallobby
             ModAssetSoftReference mapReference = tempAssetHandle.assetReference;
             contentManager.ReleaseAssetFromMod(tempAssetHandle);
             helper.screenContentPicker.Uninitialize();
-            await helper.screenManager.TryBackPage();
+            await helper.screenManager.TryBackPageAsync();
 
             var setResult = await helper.roomSessionHandler.ChangeRoomMap(mapReference);
             EnableAllButtons();
@@ -228,7 +228,7 @@ namespace HnSF.ui.menus.traditionallobby
 
             var contentPickerInstanceManager = GenericContentPickerInstanceManager.instance;
             helper.screenContentPicker = contentPickerInstanceManager.CreateInstance<IFighterDefinition>(helper.transform);
-            await helper.screenManager.TryForwardPage(helper.screenContentPicker);
+            await helper.screenManager.TryForwardPageAsync(helper.screenContentPicker);
             helper.screenContentPicker.SetCameraTarget(helper.instanceCamera);
 
             LoadedAssetHandleWrapper? fighterPickResult = null;
@@ -261,7 +261,7 @@ namespace HnSF.ui.menus.traditionallobby
             helper.screenContentPicker.onCancel.RemoveListener(WhenCancelFighterPick);
 
             var setResult = await helper.roomSessionHandler.ChangePlayerFighters(helper.GetLocalPlayerIndex(), fightersPickedReferences);
-            _ = helper.screenManager.TryBackPage();
+            _ = helper.screenManager.TryBackPageAsync();
             
             void WhenFighterSubmitted(GenericContentPickerInstance arg0)
             {
@@ -337,7 +337,7 @@ namespace HnSF.ui.menus.traditionallobby
             room = helper.lobbyRepresentation.GetRoom(roomId);
             if (room == null)
             {
-                _ = helper.screenManager.TryBackPage();
+                _ = helper.screenManager.TryBackPageAsync();
                 return;
             }
             
@@ -399,7 +399,7 @@ namespace HnSF.ui.menus.traditionallobby
 
         private void WhenRoomClosed(TraditionalLobbyUIRepresentation.Room arg0)
         {
-            _ = helper.screenManager.TryBackPage();
+            _ = helper.screenManager.TryBackPageAsync();
         }
 
         public void UpdateAll()

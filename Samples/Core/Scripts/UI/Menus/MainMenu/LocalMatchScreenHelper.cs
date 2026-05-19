@@ -35,7 +35,7 @@ namespace HnSF.ui.menus.examples.mainmenu
             playerCount = playerAmount;
             gameObject.SetActive(true);
             SetupGamemodePickScreen();
-            _ = screenManager.TryForwardPage(pageContentPicking);
+            _ = screenManager.TryForwardPageAsync(pageContentPicking);
         }
 
         public virtual void Close()
@@ -104,7 +104,7 @@ namespace HnSF.ui.menus.examples.mainmenu
                 return;
             }
             SetupConfigurationScreen();
-            _ = screenManager.TryForwardPage(sectionGamemodeConfig);
+            _ = screenManager.TryForwardPageAsync(sectionGamemodeConfig);
             resolving = false;
         }
         
@@ -117,7 +117,7 @@ namespace HnSF.ui.menus.examples.mainmenu
             sectionGamemodeConfig.OnConfigurationConfirmed.RemoveAllListeners();
             var gotQuickSettings = sectionGamemodeConfig.ApplySettingsAndSave();
             gamemodeConfiguration = gotQuickSettings;
-            _ = screenManager.TryForwardPage(pageCharacterSelect);
+            _ = screenManager.TryForwardPageAsync(pageCharacterSelect);
             SetupCharacterSelect();
         }
 
@@ -134,7 +134,7 @@ namespace HnSF.ui.menus.examples.mainmenu
         {
             sectionGamemodeConfig.OnConfigurationCanceled.RemoveListener(WhenConfigurationCanceled);
             sectionGamemodeConfig.OnConfigurationConfirmed.RemoveListener(WhenConfigurationConfirmed);
-            _ = screenManager.TryBackPage();
+            _ = screenManager.TryBackPageAsync();
             SetupGamemodePickScreen();
         }
         
@@ -144,7 +144,7 @@ namespace HnSF.ui.menus.examples.mainmenu
             sectionGamemodeConfig.OnConfigurationConfirmed.RemoveListener(WhenConfigurationConfirmed);
             gamemodeConfiguration = configurationAsJson;
             
-            _ = screenManager.TryForwardPage(pageCharacterSelect);
+            _ = screenManager.TryForwardPageAsync(pageCharacterSelect);
             SetupCharacterSelect();
         }
 
@@ -161,7 +161,7 @@ namespace HnSF.ui.menus.examples.mainmenu
         {
             pageCharacterSelect.OnConfirmCharacters.RemoveListener(WhenCharactersConfirmed);
             pageCharacterSelect.OnCancel.RemoveListener(WhenCharactersCanceled);
-            _ = screenManager.TryBackPage();
+            _ = screenManager.TryBackPageAsync();
             
             if (gamemodeConfigurationEnabled == false)
             {
@@ -204,12 +204,12 @@ namespace HnSF.ui.menus.examples.mainmenu
 
             if (successfulLoad == false)
             {
-                _ = screenManager.TryBackPage(); // TODO: Hook the events back up
+                _ = screenManager.TryBackPageAsync(); // TODO: Hook the events back up
                 return;
             }
             
             SetupMapPick();
-            _ = screenManager.TryForwardPage(pageContentPicking);
+            _ = screenManager.TryForwardPageAsync(pageContentPicking);
         }
 
         // Map Picking
@@ -230,7 +230,7 @@ namespace HnSF.ui.menus.examples.mainmenu
         private void OnMapPickCanceled(GenericContentPickerInstance arg0)
         {
             TeardownMapPick();
-            _ = screenManager.TryBackPage();
+            _ = screenManager.TryBackPageAsync();
             SetupCharacterSelect();
         }
 

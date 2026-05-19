@@ -41,7 +41,7 @@ namespace HnSF.ui.menus.traditionallobby
         public async void BUTTON_Gamemode()
         {
             helper.screenContentPicking = GenericContentPickerInstanceManager.instance.CreateInstance<BaseGamemodeDefinition>(transform.parent);
-            await helper.screenManager.TryForwardPage(helper.screenContentPicking);
+            await helper.screenManager.TryForwardPageAsync(helper.screenContentPicking);
             helper.screenContentPicking.onContentPicked.AddListener(OnGamemodePicked);
             helper.screenContentPicking.onCancel.AddListener(OnGamemodePickCanceled);
             helper.screenContentPicking.Initialize<BaseGamemodeDefinition>();
@@ -49,7 +49,7 @@ namespace HnSF.ui.menus.traditionallobby
         
         private void OnGamemodePickCanceled(GenericContentPickerInstance arg0)
         {
-            _ = helper.screenManager.TryBackPage();
+            _ = helper.screenManager.TryBackPageAsync();
         }
 
         private void OnGamemodePicked(GenericContentPickerInstance arg0)
@@ -59,18 +59,18 @@ namespace HnSF.ui.menus.traditionallobby
                 HnSFManagersContainer.instance.contentManager.ReleaseAssetFromMod(helper.gamemodeHandle);
             }
             helper.gamemodeHandle = helper.screenContentPicking.ConfirmWantedContentAndRemoveFromList();
-            _ = helper.screenManager.TryBackPage();
+            _ = helper.screenManager.TryBackPageAsync();
         }
         
         public void BUTTON_GamemodeSettings()
         {
-            _ = helper.screenManager.TryForwardPage(helper.gamemodeConfigPage);
+            _ = helper.screenManager.TryForwardPageAsync(helper.gamemodeConfigPage);
         }
         
         public async void BUTTON_Stage()
         {
             helper.screenContentPicking = GenericContentPickerInstanceManager.instance.CreateInstance<IMapDefinition>(transform.parent);
-            await helper.screenManager.TryForwardPage(helper.screenContentPicking);
+            await helper.screenManager.TryForwardPageAsync(helper.screenContentPicking);
             helper.screenContentPicking.onContentPicked.AddListener(OnMapPicked);
             helper.screenContentPicking.onCancel.AddListener(OnMapPickCanceled);
             helper.screenContentPicking.Initialize<IMapDefinition>();
@@ -83,12 +83,12 @@ namespace HnSF.ui.menus.traditionallobby
                 HnSFManagersContainer.instance.contentManager.ReleaseAssetFromMod(helper.mapHandle);
             }
             helper.mapHandle = helper.screenContentPicking.ConfirmWantedContentAndRemoveFromList();
-            _ = helper.screenManager.TryBackPage();
+            _ = helper.screenManager.TryBackPageAsync();
         }
 
         private void OnMapPickCanceled(GenericContentPickerInstance arg0)
         {
-            _ = helper.screenManager.TryBackPage();
+            _ = helper.screenManager.TryBackPageAsync();
         }
         
         private bool creatingRoom = false;
@@ -104,13 +104,13 @@ namespace HnSF.ui.menus.traditionallobby
                 return;
             }
             
-            await helper.screenManager.TryBackPage();
+            await helper.screenManager.TryBackPageAsync();
             helper.GoTo_RoomScreen(createResult);
         }
         
         public void BUTTON_Cancel()
         {
-            _ = helper.screenManager.TryBackPage();
+            _ = helper.screenManager.TryBackPageAsync();
         }
     }
 }

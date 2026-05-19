@@ -54,7 +54,7 @@ namespace HnSF.ui.menus
         {
             var contentPickerInstanceManager = GenericContentPickerInstanceManager.instance;
             quickMatchScreenInstance.screenContentPicker = contentPickerInstanceManager.CreateInstance<IFighterDefinition>(quickMatchScreenInstance.transform);
-            _ = quickMatchScreenInstance.TryForwardPage(quickMatchScreenInstance.screenContentPicker);
+            _ = quickMatchScreenInstance.TryForwardPageAsync(quickMatchScreenInstance.screenContentPicker);
             quickMatchScreenInstance.screenContentPicker.Initialize<IFighterDefinition>();
             quickMatchScreenInstance.screenContentPicker.SetCameraTarget(quickMatchScreenInstance.instanceCamera);
             
@@ -64,7 +64,7 @@ namespace HnSF.ui.menus
 
         private void WhenCancelPickingCharacter(GenericContentPickerInstance arg0)
         {
-            _ = quickMatchScreenInstance.TryBackPage();
+            _ = quickMatchScreenInstance.TryBackPageAsync();
             GameObject.Destroy(quickMatchScreenInstance.screenContentPicker);
         }
 
@@ -78,14 +78,14 @@ namespace HnSF.ui.menus
                 contentManager.ReleaseAssetFromMod(quickMatchScreenInstance.playerInfo.assetHandleCharacter);
             }
             quickMatchScreenInstance.playerInfo.SetCharacterAssetHandle(characterAssetHandle);
-            _ = quickMatchScreenInstance.TryBackPage();
+            _ = quickMatchScreenInstance.TryBackPageAsync();
         }
 
         public void BUTTON_Gamemode()
         {
             var contentPickerInstanceManager = GenericContentPickerInstanceManager.instance;
             quickMatchScreenInstance.screenContentPicker = contentPickerInstanceManager.CreateInstance<BaseGamemodeDefinition>(quickMatchScreenInstance.transform);
-            _ = quickMatchScreenInstance.TryForwardPage(quickMatchScreenInstance.screenContentPicker);
+            _ = quickMatchScreenInstance.TryForwardPageAsync(quickMatchScreenInstance.screenContentPicker);
             quickMatchScreenInstance.screenContentPicker.Initialize<BaseGamemodeDefinition>();
             quickMatchScreenInstance.screenContentPicker.SetCameraTarget(quickMatchScreenInstance.instanceCamera);
             
@@ -95,7 +95,7 @@ namespace HnSF.ui.menus
 
         private void WhenCancelPickingGamemode(GenericContentPickerInstance arg0)
         {
-            _ = quickMatchScreenInstance.TryBackPage();
+            _ = quickMatchScreenInstance.TryBackPageAsync();
             GameObject.Destroy(quickMatchScreenInstance.screenContentPicker);
         }
 
@@ -111,7 +111,7 @@ namespace HnSF.ui.menus
 
             quickMatchScreenInstance.instanceHandler.selectedGamemodeDefinition = gamemodeAssetHandle;
 
-            _ = quickMatchScreenInstance.TryBackPage();
+            _ = quickMatchScreenInstance.TryBackPageAsync();
         }
 
         public void BUTTON_ToggleReady()

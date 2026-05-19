@@ -61,13 +61,13 @@ namespace HnSF.ui.menus.traditionallobby
         
         private void CreateRoom()
         {
-            helper.screenManager.TryForwardPage(helper.screenCreateRoom);
+            helper.screenManager.TryForwardPageAsync(helper.screenCreateRoom);
         }
 
         private void GoTo_RoomScreen(int roomId)
         {
             helper.screenRoom.roomId = roomId;
-            helper.screenManager.TryForwardPage(helper.screenRoom);
+            helper.screenManager.TryForwardPageAsync(helper.screenRoom);
         }
     }
 }

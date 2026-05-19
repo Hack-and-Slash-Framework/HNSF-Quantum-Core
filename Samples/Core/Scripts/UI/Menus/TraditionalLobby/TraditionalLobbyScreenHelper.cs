@@ -49,7 +49,7 @@ namespace HnSF.ui.menus.traditionallobby
             //screenRoom.TryCloseAsync(MenuNavDirection.Back_FORCED);
             //screenCreateRoom.TryCloseAsync(MenuNavDirection.Back_FORCED);
             
-            _ = screenManager.TryForwardPage(pageLobbyMainMenu);
+            _ = screenManager.TryForwardPageAsync(pageLobbyMainMenu);
             Debug.Log("Entered Lobby Screen.");
             return true;
         }
@@ -63,7 +63,7 @@ namespace HnSF.ui.menus.traditionallobby
         public async void GoTo_RoomScreen(int roomId)
         {
             screenRoom.roomId = roomId;
-            var sResult = await screenManager.TryForwardPage(screenRoom);
+            var sResult = await screenManager.TryForwardPageAsync(screenRoom);
             Debug.Log(sResult);
         }
 

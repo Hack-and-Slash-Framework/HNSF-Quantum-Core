@@ -32,7 +32,7 @@ namespace HnSF.ui.menus.traditionallobby
         {
             if (!helper.gamemodeHandle.IsValid())
             {
-                await helper.screenManager.TryBackPage();
+                await helper.screenManager.TryBackPageAsync();
                 return;
             }
 
@@ -40,7 +40,7 @@ namespace HnSF.ui.menus.traditionallobby
             
             if (!await ass.LoadAssets())
             {
-                await helper.screenManager.TryBackPage();
+                await helper.screenManager.TryBackPageAsync();
                 return;
             }
 
@@ -91,13 +91,13 @@ namespace HnSF.ui.menus.traditionallobby
 
         public void BUTTON_Back()
         {
-            _ = helper.screenManager.TryBackPage();
+            _ = helper.screenManager.TryBackPageAsync();
         }
 
         public void BUTTON_Apply()
         {
             ApplySettingsAndSave();
-            _ = helper.screenManager.TryBackPage();
+            _ = helper.screenManager.TryBackPageAsync();
         }
     }
 }

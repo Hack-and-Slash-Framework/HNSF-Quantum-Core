@@ -24,7 +24,7 @@ namespace HnSF.ui.menus.examples.mainmenu
                 _ = page.TryCloseAsync(MenuNavDirection.Back_FORCED);
             
             
-            _ = TryForwardPage(mainMenuScreen.pageMainMenu);
+            _ = TryForwardPageAsync(mainMenuScreen.pageMainMenu);
         }
 
         private void Update()
@@ -36,9 +36,9 @@ namespace HnSF.ui.menus.examples.mainmenu
         {
             var sessionHandler = HnSFManagersContainer.instance.sessionHandlerManager.sessionHandlers["onlineroom"];
 
-            await TryForwardPage(mainMenuScreen.pageMainMenu);
+            await TryForwardPageAsync(mainMenuScreen.pageMainMenu);
             lobbyScreen.roomSessionHandler = sessionHandler as SessionHandlerTraditionalLobby;
-            await TryForwardPage(lobbyScreen.pageLobbyMainMenu);
+            await TryForwardPageAsync(lobbyScreen.pageLobbyMainMenu);
         }
 
         public void OnInputConfirmPressed(int playerID, BaseEventData eventData)

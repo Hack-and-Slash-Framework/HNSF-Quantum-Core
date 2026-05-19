@@ -29,7 +29,7 @@ namespace HnSF.ui.menus
         public void Open()
         {
             SetCurrentSelectedGameObject(null);
-            _ = TryForwardPage(screenMainMenu);
+            _ = TryForwardPageAsync(screenMainMenu);
         }
 
         public void Close()
