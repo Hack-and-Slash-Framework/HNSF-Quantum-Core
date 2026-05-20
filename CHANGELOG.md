@@ -1,3 +1,10 @@
+# [1.20.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.19.0...v1.20.0) (2026-05-20)
+
+
+### Features
+
+* EntityTagged component ([1604ea4](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/1604ea460610e3e4eebd5bfffb0352abe3c45805))
+
 # [1.19.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.18.3...v1.19.0) (2026-05-20)
 
 
