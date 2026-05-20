@@ -1,0 +1,3 @@
+component EntityTagged{
+    asset_ref tag;
+}
