@@ -1,3 +1,10 @@
+# [1.19.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.18.3...v1.19.0) (2026-05-20)
+
+
+### Features
+
+* Modulo frame number state decision ([d6fa4f3](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/d6fa4f3de6dfb4c6d76597f092abae2a41eace74))
+
 ## [1.18.3](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.18.2...v1.18.3) (2026-05-19)
 
 
