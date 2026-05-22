@@ -1,3 +1,10 @@
+# [1.21.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.20.0...v1.21.0) (2026-05-22)
+
+
+### Features
+
+* Cutscene management & Tag improvements ([c5b4a7c](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/c5b4a7cc57946a8b2eb7639a7f66f2605a160896))
+
 # [1.20.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.19.0...v1.20.0) (2026-05-20)
 
 
