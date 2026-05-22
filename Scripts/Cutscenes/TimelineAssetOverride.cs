@@ -144,11 +144,13 @@ namespace HnSF
                 var track = timelineAsset.GetOutputTrack(i);
                 if (track.GetType() == typeof(CinemachineTrack))
                 {
-                    director.SetGenericBinding(track, (bindingSource.GetMapping(Bindings[i] as Tag) as GameObject).GetComponent<CinemachineBrain>() );
+                    var go = bindingSource.GetMapping(Bindings[i] as Tag) as GameObject;
+                    if(go) director.SetGenericBinding(track, go.GetComponent<CinemachineBrain>() );
                 }
                 else if (track.GetType() == typeof(AnimationTrack))
                 {
-                    director.SetGenericBinding(track, (bindingSource.GetMapping(Bindings[i] as Tag) as GameObject).GetComponent<Animator>() );
+                    var go = bindingSource.GetMapping(Bindings[i] as Tag) as GameObject;
+                    if(go) director.SetGenericBinding(track, go.GetComponent<Animator>() );
                 }
                 else
                 {
