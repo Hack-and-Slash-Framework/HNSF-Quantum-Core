@@ -15,7 +15,7 @@ using UnityEngine.Scripting.APIUpdating;
 namespace HnSF.core.GroupControl
 {
     [MovedFrom(autoUpdateAPI: true, sourceNamespace: "HnSF.core.scripting.VersusIntro", sourceClassName: "BattleActorVersusIntroScript")]
-    public class BattleActorGroupControlScript : AssetObject
+    public unsafe partial class BattleActorGroupControlScript : AssetObject
     {
         public AssetRef<BattleActorDefinition> vsTarget;
         

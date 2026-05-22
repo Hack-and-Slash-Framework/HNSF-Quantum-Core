@@ -1,0 +1,4 @@
+component PlayerReadyMap{
+    [AllocateOnComponentAdded, FreeOnComponentRemoved]
+    dictionary<player_ref, bool> readyMap;
+}

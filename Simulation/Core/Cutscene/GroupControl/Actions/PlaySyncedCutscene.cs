@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using HnSF.core.GroupControl.Actions;
 using Quantum;
@@ -13,10 +13,7 @@ using Unity.GraphToolkit.Editor;
 namespace HnSF.core.GroupControl.Actions
 {
     [Serializable]
-#if QUANTUM_UNITY
-    [MovedFrom(autoUpdateAPI: true, sourceNamespace: "HnSF.core.scripting.VersusIntro.Actions")]
-#endif
-    public unsafe partial class PlaySyncedCutsceneForBattleActor : GroupControlAction
+    public unsafe partial class PlaySyncedCutscene : GroupControlAction
     {
         [Serializable]
         public struct TagToTag
@@ -29,7 +26,6 @@ namespace HnSF.core.GroupControl.Actions
         [Serializable]
         public struct TargetAndState
         {
-            public AssetRef<Tag> targetTag;
             public AssetRef cutsceneSource;
             public AssetRef<Tag> cutsceneTag;
 
@@ -48,23 +44,16 @@ namespace HnSF.core.GroupControl.Actions
         {
             foreach (var state in statesToSet)
             {
-                EntityRef targetEntity = infoEntityRef;
-                if (state.targetTag != default)
-                {
-                    targetEntity = TaggedEntityMapping.GetEntityFromMap(frame, infoEntityRef, state.targetTag);
-                }
-                if(targetEntity == EntityRef.None || !frame.Exists(targetEntity)) continue;
-                
-                PlaySyncedCutsceneFor(frame, targetEntity, state);
+                PlaySyncedCutsceneFor(frame, infoEntityRef, state);
             }
         }
 
-        private void PlaySyncedCutsceneFor(Frame frame, EntityRef battleActorRef, TargetAndState tas)
+        private void PlaySyncedCutsceneFor(Frame frame, EntityRef playingEntityRef, TargetAndState tas)
         {
-            var sccEntity = frame.Create();
+            //var sccEntity = frame.Create();
             var scc = new SyncedCutsceneSource()
             {
-                sourcePlayer = battleActorRef,
+                sourcePlayer = playingEntityRef,
                 cutsceneSource = tas.cutsceneSource,
                 cutsceneTag = tas.cutsceneTag,
                 frame = 0,
@@ -74,19 +63,20 @@ namespace HnSF.core.GroupControl.Actions
                 autoEnd = tas.autoEnd,
                 endFrame = tas.autoEndFrame
             };
-            frame.Add(sccEntity, scc, out var sccResult);
+            frame.Add(playingEntityRef, scc, out var sccResult);
             
             if (tas.localOnly)
             {
                 var specificPlayers = frame.ResolveList(sccResult->onlyFor);
 
-                if (frame.Unsafe.TryGetPointer<PlayerLink>(battleActorRef, out var playerLink))
+                if (frame.Unsafe.TryGetPointer<PlayerLink>(playingEntityRef, out var playerLink))
                 {
                     specificPlayers.Add(playerLink->Player);
                 }
                 else
                 {
-                    frame.Destroy(sccEntity);
+                    //frame.Destroy(sccEntity);
+                    frame.Remove<SyncedCutsceneSource>(playingEntityRef);
                     return;
                 }
             }
@@ -119,9 +109,8 @@ namespace HnSF.core.GroupControl.Nodes
 {
     [Serializable]
     [UseWithGraph(typeof(ActorGroupScriptGraph))]
-    internal class PlaySyncedCutsceneForBattleActorNode : ActorGroupControlNode
+    internal class PlaySyncedCutscene: ActorGroupControlNode
     {
-        public const string IN_PORT_Target_Tag = "TargetTag";
         public const string IN_PORT_Cutscene_Source = "CutsceneSource";
         public const string IN_PORT_Cutscene_Tag = "CutsceneTag";
         public const string IN_PORT_Autoplay = "Autoplay";
@@ -135,10 +124,6 @@ namespace HnSF.core.GroupControl.Nodes
         {
             AddInputOutputExecutionPorts(context);
             
-            context.AddInputPort<Tag>(IN_PORT_Target_Tag)
-                .WithDisplayName("Target")
-                .Build();
-
             context.AddInputPort<AssetObject>(IN_PORT_Cutscene_Source)
                 .WithDisplayName("Cutscene Source")
                 .Build();
@@ -166,12 +151,16 @@ namespace HnSF.core.GroupControl.Nodes
             context.AddInputPort<bool>(IN_PORT_Local_Only)
                 .WithDisplayName("Local Only")
                 .Build();
+
+            context.AddInputPort(IN_PORT_Controlled_Entities)
+                .WithDisplayName("Controlled Entities")
+                .WithConnectorUI(PortConnectorUI.Circle)
+                .Build();
         }
 
         public override GroupControlAction Convert()
         {
             this.GetNodeOptionByName(OPTION_LABEL).TryGetValue<string>(out var label);
-            var targetTag = ActorGroupScriptDirectorImporter.GetInputPortValue<Tag>(this.GetInputPortByName(IN_PORT_Target_Tag));
             var cutsceneSource = ActorGroupScriptDirectorImporter.GetInputPortValue<AssetObject>(this.GetInputPortByName(IN_PORT_Cutscene_Source));
             var cutsceneTag = ActorGroupScriptDirectorImporter.GetInputPortValue<Tag>(this.GetInputPortByName(IN_PORT_Cutscene_Tag));
             var autoplay = ActorGroupScriptDirectorImporter.GetInputPortValue<bool>(this.GetInputPortByName(IN_PORT_Autoplay));
@@ -179,8 +168,8 @@ namespace HnSF.core.GroupControl.Nodes
             var ignoreLdt = ActorGroupScriptDirectorImporter.GetInputPortValue<bool>(this.GetInputPortByName(IN_PORT_IgnoreLdt));
             var autoendFrame = ActorGroupScriptDirectorImporter.GetInputPortValue<int>(this.GetInputPortByName(IN_PORT_Autoend_Frame));
             var localOnly = ActorGroupScriptDirectorImporter.GetInputPortValue<bool>(this.GetInputPortByName(IN_PORT_Local_Only));
-            
-            var cutsceneControlledEntities = new List<HnSF.core.GroupControl.Actions.PlaySyncedCutsceneForBattleActor.TagToTag>();
+
+            var cutsceneControlledEntities = new List<HnSF.core.GroupControl.Actions.PlaySyncedCutscene.TagToTag>();
             var controlledEntitiesNodePorts = new List<IPort>();
             this.GetInputPortByName(IN_PORT_Controlled_Entities).GetConnectedPorts(controlledEntitiesNodePorts);
 
@@ -193,7 +182,7 @@ namespace HnSF.core.GroupControl.Nodes
                 cei.GetNodeOptionByName(ControlledEntityInfo.CONSTANT_ControlPositon).TryGetValue<bool>(out var controlPositon);
                 cei.GetNodeOptionByName(ControlledEntityInfo.CONSTANT_ControlAnimation).TryGetValue<bool>(out var controlAnimation);
                 
-                cutsceneControlledEntities.Add(new Actions.PlaySyncedCutsceneForBattleActor.TagToTag()
+                cutsceneControlledEntities.Add(new Actions.PlaySyncedCutscene.TagToTag()
                 {
                     entityTag = entityTag,
                     dontControlAnimation = !controlAnimation,
@@ -201,14 +190,13 @@ namespace HnSF.core.GroupControl.Nodes
                 });
             }
             
-            return new PlaySyncedCutsceneForBattleActor()
+            return new HnSF.core.GroupControl.Actions.PlaySyncedCutscene()
             {
                 Label = label,
                 statesToSet = new []
                 {
-                    new PlaySyncedCutsceneForBattleActor.TargetAndState()
+                    new HnSF.core.GroupControl.Actions.PlaySyncedCutscene.TargetAndState()
                     {
-                        targetTag = targetTag,
                         cutsceneSource = cutsceneSource,
                         cutsceneTag = cutsceneTag,
                         autoPlay = autoplay,
@@ -220,6 +208,43 @@ namespace HnSF.core.GroupControl.Nodes
                     }
                 }
             };
+        }
+    }
+
+    [Serializable]
+    [UseWithGraph(typeof(ActorGroupScriptGraph))]
+    internal class ControlledEntityInfo : ControlNodeBase
+    {
+        public const string OUT_PORT_DEFAULT = "Output";
+        public const string CONSTANT_Entity_Tag = "EntityTag";
+        public const string CONSTANT_ControlPositon = "ControlPosition";
+        public const string CONSTANT_ControlAnimation = "ControlAnimation";
+
+        protected override void OnDefineOptions(IOptionDefinitionContext context)
+        {
+            base.OnDefineOptions(context);
+
+            context.AddOption<AssetRef<Tag>>(CONSTANT_Entity_Tag)
+                .WithDisplayName("Entity Tag")
+                .Build();
+            
+            context.AddOption<bool>(CONSTANT_ControlPositon)
+                .WithDisplayName("Control Position")
+                .Build();
+            
+            context.AddOption<bool>(CONSTANT_ControlAnimation)
+                .WithDisplayName("Control Animation")
+                .Build();
+        }
+
+        protected override void OnDefinePorts(IPortDefinitionContext context)
+        {
+            base.OnDefinePorts(context);
+            
+            context.AddOutputPort(OUT_PORT_DEFAULT)
+                .WithDisplayName(string.Empty)
+                .WithConnectorUI(PortConnectorUI.Arrowhead)
+                .Build();
         }
     }
 }

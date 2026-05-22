@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using HnSF.core.GroupControl.Actions;
 using Quantum;
 #if QUANTUM_UNITY
@@ -12,10 +12,7 @@ using Unity.GraphToolkit.Editor;
 namespace HnSF.core.GroupControl.Actions
 {
     [Serializable]
-#if QUANTUM_UNITY
-    [MovedFrom(autoUpdateAPI: true, sourceNamespace: "HnSF.core.scripting.VersusIntro.Actions")]
-#endif
-    public unsafe partial class StopSyncedCutsceneForBattleActor : GroupControlAction
+    public unsafe partial class StopSyncedCutscene : GroupControlAction
     {
         public enum TargetType
         {
@@ -37,32 +34,13 @@ namespace HnSF.core.GroupControl.Actions
         {
             foreach (var state in statesToSet)
             {
-                var targetEntity = infoEntityRef;
-                if (state.targetTag != default)
-                {
-                    targetEntity = TaggedEntityMapping.GetEntityFromMap(frame, infoEntityRef, state.targetTag);
-                }
-                if (targetEntity == EntityRef.None) continue;
-                StopSyncedCutsceneFor(frame, targetEntity, state.cutsceneTag);
+                StopSyncedCutsceneFor(frame, infoEntityRef, state.cutsceneTag);
             }
         }
 
         private void StopSyncedCutsceneFor(Frame frame, EntityRef battleActorRef, AssetRef<Tag> cutsceneTag)
         {
-            var syncedFilter = frame.Filter<SyncedCutsceneSource>();
-
-            var entityToRemove = default(EntityRef);
-            
-            while (syncedFilter.NextUnsafe(out var syncedEntity, out var syncedCutsceneSource))
-            {
-                if (syncedCutsceneSource->sourcePlayer != battleActorRef
-                    || syncedCutsceneSource->cutsceneTag != cutsceneTag) continue;
-
-                entityToRemove = syncedEntity;
-                break;
-            }
-            if (entityToRemove == default) return;
-            frame.Destroy(entityToRemove);
+            frame.Remove<SyncedCutsceneSource>(battleActorRef);
         }
 
         public override bool Tick(Frame frame, EntityRef infoEntityRef)
@@ -81,7 +59,7 @@ namespace HnSF.core.GroupControl.Nodes
 {
     [Serializable]
     [UseWithGraph(typeof(ActorGroupScriptGraph))]
-    internal class StopSyncedCutsceneForBattleActorNode : ActorGroupControlNode
+    internal class StopSyncedCutscene : ActorGroupControlNode
     {
         public const string IN_PORT_Target_Tag = "TargetTag";
         public const string IN_PORT_Cutscene_Tag = "CutsceneTag";
@@ -104,11 +82,11 @@ namespace HnSF.core.GroupControl.Nodes
             var targetTag = ActorGroupScriptDirectorImporter.GetInputPortValue<Tag>(this.GetInputPortByName(IN_PORT_Target_Tag));
             var cutsceneTag = ActorGroupScriptDirectorImporter.GetInputPortValue<Tag>(this.GetInputPortByName(IN_PORT_Cutscene_Tag));
             
-            return new StopSyncedCutsceneForBattleActor()
+            return new HnSF.core.GroupControl.Actions.StopSyncedCutscene()
             {
                 statesToSet = new []
                 {
-                    new StopSyncedCutsceneForBattleActor.TargetAndState()
+                    new HnSF.core.GroupControl.Actions.StopSyncedCutscene.TargetAndState()
                     {
                         targetTag = targetTag,
                         cutsceneTag = cutsceneTag

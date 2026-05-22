@@ -1,0 +1,4 @@
+singleton component GenericGroupControlManager{
+    [AllocateOnComponentAdded, FreeOnComponentRemoved] 
+    dictionary<asset_ref, entity_ref> controlInfoEntityMap;
+}

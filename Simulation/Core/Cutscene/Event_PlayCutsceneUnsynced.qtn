@@ -1,6 +1,7 @@
 event PlayCutsceneUnsynced
 {
     entity_ref cutsceneSource;
+    asset_ref<Tag> cutsceneSourceTag;
     asset_ref<Tag> cutsceneTag;
     bool onlyPlayOnPlayerLocalMachine;
 }
