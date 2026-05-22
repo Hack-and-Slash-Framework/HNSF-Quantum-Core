@@ -1,3 +1,10 @@
+# [1.22.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.21.1...v1.22.0) (2026-05-22)
+
+
+### Features
+
+* Group Control cutscene improvements ([7c86ac8](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/7c86ac8be4dafb3a32f49416c525abd86a60eaca))
+
 ## [1.21.1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.21.0...v1.21.1) (2026-05-22)
 
 
