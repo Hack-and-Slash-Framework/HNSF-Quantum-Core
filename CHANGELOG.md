@@ -1,3 +1,10 @@
+## [1.21.1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.21.0...v1.21.1) (2026-05-22)
+
+
+### Bug Fixes
+
+* Fixed binding error with no set binding ([5942a0d](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/5942a0db09ff9ee6111895234535040410b5652d))
+
 # [1.21.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.20.0...v1.21.0) (2026-05-22)
 
 
