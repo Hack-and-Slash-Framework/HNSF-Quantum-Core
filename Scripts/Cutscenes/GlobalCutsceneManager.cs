@@ -25,6 +25,8 @@ namespace HnSF
         public CutsceneBindingSource globalBindingSource;
 
         public MatchHandlerBase matchHandler;
+        
+        public static Dictionary<AssetRef, CutsceneGrouping> singletonCutsceneGroupings = new();
 
         public virtual void Initialize(MatchHandlerBase mHandler, CutsceneBindingSource bindingSource = null)
         {
@@ -204,56 +206,59 @@ namespace HnSF
                                    $"player={syncedCutsceneGroup.currentSource.sourcePlayer}");
                     continue;
                 }
-                
-                var cutscenePlayingActor = viewUpdater.GetView(syncedCutsceneGroup.currentSource.sourcePlayer);
-                if (!cutscenePlayingActor) continue;
 
-                var hasLdt =
-                    frame.Unsafe.TryGetPointer<LocalDeltaTime>(syncedCutsceneGroup.currentSource.sourcePlayer,
-                        out var ldt);
-                var fdt = callback.Game.Frames.Predicted.DeltaTime.AsFloat;
+                var playingEntityRef = syncedCutsceneGroup.currentSource.sourcePlayer;
+                var actorEntityView = viewUpdater.GetView(playingEntityRef);
 
+                LocalDeltaTime* ldt = null;
+                var hasLdt = frame.Exists(playingEntityRef)
+                             && frame.Unsafe.TryGetPointer<LocalDeltaTime>(syncedCutsceneGroup.currentSource.sourcePlayer, 
+                                 out ldt);
+                var fdt = frame.DeltaTime.AsFloat;
                 int lastFrame = syncedCutsceneGroup.currentSource.frame;
                 int currentFrame = syncedCutsceneGroup.currentSource.frame;
-
                 if (syncedCutsceneGroup.previousSource.cutsceneTag == syncedCutsceneGroup.currentSource.cutsceneTag)
                 {
                     lastFrame = syncedCutsceneGroup.previousSource.frame;
                 }
-
                 float lastFrameTime = lastFrame * fdt;
                 float currentFrameTime = currentFrame * fdt;
                 
+                // Hasn't played yet, initialize cutscene.
                 if (gcp.director.state != PlayState.Playing)
                 {
-                    syncedCutsceneGroup.viewsUsed.Add(cutscenePlayingActor);
-                    SetupStandardBindings(callback.Game, playerCutsceneGrouping.bindingSource, cutscenePlayingActor, gcp,
+                    SetupStandardBindings(callback.Game, playerCutsceneGrouping.bindingSource, playingEntityRef, gcp,
                         syncedCutsceneGroup);
-                    if (gcp.takeExclusiveControl) TakeExclusiveControlOfFighterAnimation(cutscenePlayingActor.gameObject);
-                    SetupPlayerGroupBindingSource(playerCutsceneGrouping.bindingSource, cutscenePlayingActor);
+                    SetupPlayerGroupBindingSource(playerCutsceneGrouping.bindingSource, playingEntityRef);
                 }
-
-                if (syncedCutsceneGroup.updateControlledEntities)
+                
+                // Controlling Tag Mapped Entities.
+                if (frame.Exists(playingEntityRef) 
+                    && frame.Unsafe.TryGetPointer<TaggedEntityMapping>(playingEntityRef, out var playerTaggedEntityMapping))
                 {
+                    var tagEntityMap = frame.ResolveDictionary(playerTaggedEntityMapping->tagToEntityMap);
                     var dd = frame.ResolveDictionary(syncedCutsceneGroup.currentSource.cutsceneControls);
 
-                    foreach (var cce in dd)
+                    foreach (var taggedEntity in tagEntityMap)
                     {
-                        var view = GetBindingObject(callback.Game, syncedCutsceneGroup.currentSource.sourcePlayer,
-                            cce.Key);
-                        if (!view) continue;
-                        syncedCutsceneGroup.viewsUsed.Add(view.GetComponent<QuantumEntityView>());
-                        UpdateViewControl(view, cce.Value.controlAnimation, cce.Value.controlPosition);
+                        var view = viewUpdater.GetView(taggedEntity.Value);
+                        if(view == null) continue;
+                        //if(!syncedCutsceneGroup.viewsUsed.Contains(view)) SetBindingsForTaggedView(callback.Game, playerCutsceneGrouping, taggedEntity.Key, view);
+                        SetBindingsForTaggedView(callback.Game, playerCutsceneGrouping, taggedEntity.Key, view);
+                        syncedCutsceneGroup.viewsUsed.Add(view);
+                        if (dd.ContainsKey(taggedEntity.Key))
+                        {
+                            UpdateViewControl(view.gameObject, dd[taggedEntity.Key].controlAnimation, dd[taggedEntity.Key].controlPosition);
+                        }
                     }
                 }
-
-                syncedCutsceneGroup.updateControlledEntities = false;
-
-                gcp.playingEntityView = cutscenePlayingActor;
+                
+                // Ticking.
+                gcp.playingEntityView = actorEntityView;
                 gcp.autoUpdatePlayRate = false;
                 if (gcp.director.state != PlayState.Playing)
                     gcp.PlayCutscene(callback.Game, playerCutsceneGrouping.bindingSource, DirectorUpdateMode.Manual);
-
+                
                 var effectiveFixedDT = hasLdt
                     ? callback.Game.Frames.Predicted.DeltaTime.AsFloat / ldt->multiplier.AsFloat
                     : callback.Game.Frames.Predicted.DeltaTime.AsFloat;
@@ -262,10 +267,14 @@ namespace HnSF
                 gcp.CutsceneTime = Mathf.Lerp(lastFrameTime, currentFrameTime, alpha);
                 gcp.director.playableGraph.Evaluate(effectiveFixedDT);
                 gcp.PostTimelineTicked();
-                
+
                 syncedCutsceneGroup.accumulatedTimeSinceLastUpdate += Time.deltaTime;
             }
             Profiler.EndSample();
+        }
+
+        protected virtual void SetBindingsForTaggedView(QuantumGame callbackGame, CutsceneGrouping playerCutsceneGrouping, AssetRef<Tag> taggedEntityKey, QuantumEntityView view)
+        {
         }
 
         protected virtual void CleanupInvalidCutscenes(Frame frame)
@@ -322,7 +331,7 @@ namespace HnSF
         }
 
         protected virtual void SetupStandardBindings(QuantumGame game, CutsceneBindingSource bindingSource,
-            QuantumEntityView cutsceneEntity, ActorCutscenePlayer gameCutscenePlayer, SyncedCutsceneGrouping scg)
+            EntityRef cutsceneEntityRef, ActorCutscenePlayer gameCutscenePlayer, SyncedCutsceneGrouping scg)
         {
             
         }
@@ -348,6 +357,12 @@ namespace HnSF
 
         protected virtual CutsceneGrouping GetCutsceneGroupFromPool(AssetRef source)
         {
+            if (singletonCutsceneGroupings.TryGetValue(source, out var singletonCutsceneGrouping))
+            {
+                singletonCutsceneGrouping.bindingSource.parent = globalBindingSource;
+                return singletonCutsceneGrouping;
+            }
+            
             if (!cutsceneGroupingPools.ContainsKey(source))
             {
                 Debug.LogError($"Cutscene Pools do not contain source {source}.");
@@ -378,6 +393,11 @@ namespace HnSF
         protected virtual void ReturnCutsceneGroupToPool(CutsceneGrouping cg)
         {
             cg.StopAll();
+            if (singletonCutsceneGroupings.ContainsKey(cg.sourceKey))
+            {
+                Debug.Log("Stopped singleton cutscene group.", cg.gameObject);
+                return;
+            }
             if (cg.bindingSource == null || !cutsceneGroupingPools.ContainsKey(cg.sourceKey))
             {
                 GameObject.Destroy(cg);
@@ -393,7 +413,7 @@ namespace HnSF
             if(!cutsceneGroupingPools.ContainsKey(source)) cutsceneGroupingPools.Add(source, new List<CutsceneGrouping>());
         }
 
-        protected virtual void SetupPlayerGroupBindingSource(CutsceneBindingSource bindingSource, QuantumEntityView view,
+        protected virtual void SetupPlayerGroupBindingSource(CutsceneBindingSource bindingSource, EntityRef sourceEntityRef,
             bool ignoreIfAlreadyHaveMapping = true)
         {
             

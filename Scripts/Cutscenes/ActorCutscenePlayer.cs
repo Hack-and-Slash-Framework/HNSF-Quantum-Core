@@ -92,15 +92,23 @@ namespace HnSF
             }
         }
 
-        public virtual void StopCutscene(bool pause = false)
+        public virtual void StopCutscene(bool pause = false, bool setTimeToEnd = true)
         {
             if (pause)
             {
-                director.time = director.playableAsset.duration;
+                if(setTimeToEnd)
+                {
+                    director.time = director.playableAsset.duration;
+                }
                 director.Pause();
             }
             else
             {
+                if (setTimeToEnd)
+                {
+                    director.time = director.playableAsset.duration;
+                    director.Evaluate();
+                }
                 director.Stop();
             }
             shouldCallEndEvent = false;
