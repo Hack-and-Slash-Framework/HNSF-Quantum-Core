@@ -1,3 +1,10 @@
+## [1.23.1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.23.0...v1.23.1) (2026-05-23)
+
+
+### Bug Fixes
+
+* Fix ActorCutscenePlayer null error ([2c4314d](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/2c4314d04cc5cb558ecb1df4c58bc45665c3cafe))
+
 # [1.23.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.22.0...v1.23.0) (2026-05-23)
 
 
