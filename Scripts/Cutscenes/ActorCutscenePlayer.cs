@@ -96,7 +96,7 @@ namespace HnSF
         {
             if (pause)
             {
-                if(setTimeToEnd)
+                if(director.playableAsset != null && setTimeToEnd)
                 {
                     director.time = director.playableAsset.duration;
                 }
@@ -104,7 +104,7 @@ namespace HnSF
             }
             else
             {
-                if (setTimeToEnd)
+                if (director.playableAsset != null && setTimeToEnd)
                 {
                     director.time = director.playableAsset.duration;
                     director.Evaluate();
