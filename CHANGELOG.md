@@ -1,3 +1,10 @@
+# [1.24.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.23.1...v1.24.0) (2026-05-23)
+
+
+### Features
+
+* Partial StatePreviewConfiguration ([b567e96](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/b567e96369238d3527cbaa9ae7dae4a5fff3039c))
+
 ## [1.23.1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.23.0...v1.23.1) (2026-05-23)
 
 
