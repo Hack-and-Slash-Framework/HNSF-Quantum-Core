@@ -1,3 +1,10 @@
+# [1.23.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.22.0...v1.23.0) (2026-05-23)
+
+
+### Features
+
+* Multiple group control scripts in one graph ([06b2519](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/06b2519171c856f2c3ae796e74bef11a509942dd))
+
 # [1.22.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.21.1...v1.22.0) (2026-05-22)
 
 
