@@ -4,7 +4,7 @@ using UnityEngine;
 namespace HnSF
 {
     [CreateAssetMenu(menuName = "HnSF/State Preview/Preview Configuration")]
-    public class StatePreviewConfiguration : ScriptableObject
+    public partial class StatePreviewConfiguration : ScriptableObject
     {
         public RuntimeConfig runtimeConfig;
         public StatePreviewQuantumSettingsBase simulationSettings;
