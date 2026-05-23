@@ -8,6 +8,17 @@ namespace HnSF.core.GroupControl.Nodes
     [UseWithGraph(typeof(ActorGroupScriptGraph))]
     public class StartNode : ActorGroupControlNode
     {
+        public const string OPTION_CONTROL_SCRIPT_ASSET = "CopyTarget";
+
+        protected override void OnDefineOptions(IOptionDefinitionContext context)
+        {
+            base.OnDefineOptions(context);
+            
+            context.AddOption<BattleActorGroupControlScript>(OPTION_CONTROL_SCRIPT_ASSET)
+                .WithDisplayName("Copy Target")
+                .Build();
+        }
+
         /// <summary>
         /// Defines the output for the node.
         /// </summary>

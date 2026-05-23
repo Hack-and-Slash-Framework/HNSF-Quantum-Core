@@ -26,32 +26,40 @@ namespace HnSF.core.GroupControl.Nodes
                 Debug.LogError($"Failed to load Group Script graph asset: {ctx.assetPath}");
                 return;
             }
-            
-            var startNodeModel = graph.GetNodes().OfType<StartNode>().FirstOrDefault();
-            if (startNodeModel == null) return;
-            
-            var targetNodeModel = graph.GetNodes().OfType<TargetNode>().FirstOrDefault();
-            if (targetNodeModel == null) return;
-            
-            // Update Asset
-            var targetAsset = GetInputPortValue<BattleActorGroupControlScript>(targetNodeModel.GetInputPortByName(TargetNode.IN_PORT_CONTROL_SCRIPT_ASSET));
-            if (targetAsset == null) return;
 
+            var startNodes = graph.GetNodes().OfType<StartNode>().ToList();
+
+            foreach (var startNode in startNodes)
+            {
+                if(startNode == null) 
+                    continue;
+                
+                startNode.GetNodeOptionByName(StartNode.OPTION_CONTROL_SCRIPT_ASSET)
+                    .TryGetValue(out BattleActorGroupControlScript gcScript);
+                if(gcScript == null)
+                    continue;
+
+                BuildForTarget(startNode, gcScript);
+            }
+        }
+
+        private void BuildForTarget(StartNode startNode, BattleActorGroupControlScript gcScript)
+        {
             actions = new List<GroupControlAction>();
             
             // Build Indexes
             indexCounter = 0;
             nodeToIndex.Clear();
             indexToNode.Clear();
-            BuildIndexMapRecursive(startNodeModel, skipSelf: true);
+            BuildIndexMapRecursive(startNode, skipSelf: true);
             
             // Build Map
             BuildActionList();
             
             // Finished
-            targetAsset.actions.Clear();
-            targetAsset.actions = actions;
-            EditorUtility.SetDirty(targetAsset);
+            gcScript.actions.Clear();
+            gcScript.actions = actions;
+            EditorUtility.SetDirty(gcScript);
             actions = null;
         }
 
