@@ -1,3 +1,10 @@
+# [1.25.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.24.0...v1.25.0) (2026-05-24)
+
+
+### Features
+
+* Improved sound management ([1a5e220](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/1a5e220c794cbc1e500cea22d8545641cc5e7389))
+
 # [1.24.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.23.1...v1.24.0) (2026-05-23)
 
 
