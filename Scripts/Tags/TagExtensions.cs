@@ -5,6 +5,7 @@ namespace HnSF
 {
     public static class TagExtensions
     {
+#if UNITY_EDITOR
         public static string GetFullTagString(this Quantum.Tag self)
         {
             List<string> parentStrings = new List<string>();
@@ -19,5 +20,6 @@ namespace HnSF
             parentStrings.Add(self.label);
             return string.Join(".", parentStrings);
         }
+#endif
     }
 }

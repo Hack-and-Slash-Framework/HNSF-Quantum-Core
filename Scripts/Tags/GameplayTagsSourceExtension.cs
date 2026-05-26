@@ -9,6 +9,7 @@ namespace HnSF
 {
     public static class GameplayTagsSourceExtension
     {
+#if UNITY_EDITOR
         public static List<Tag> GetBaseTags(this GameplayTagsSource self)
         {
             List<Tag> baseTags = new List<Tag>();
@@ -23,7 +24,6 @@ namespace HnSF
             return baseTags;
         }
         
-#if UNITY_EDITOR
         public static bool TryCreateTag(this GameplayTagsSource self, string tagName)
         {
             var tagParts = tagName.Split('.');
