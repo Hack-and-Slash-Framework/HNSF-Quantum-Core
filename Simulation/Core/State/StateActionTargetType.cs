@@ -13,6 +13,7 @@ namespace Quantum
         FromEntityMap,
         LastHitEntity,
         LastHitByEntity,
-        FromFunction
+        FromFunction,
+        None
     }
 }
