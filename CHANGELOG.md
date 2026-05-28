@@ -1,3 +1,10 @@
+# [1.26.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.25.1...v1.26.0) (2026-05-28)
+
+
+### Features
+
+* State action to set entities in tag map ([724db3b](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/724db3b3686600c88532cd29a51673d517547172))
+
 ## [1.25.1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.25.0...v1.25.1) (2026-05-26)
 
 
