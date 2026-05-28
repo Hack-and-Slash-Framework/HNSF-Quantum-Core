@@ -1,4 +1,5 @@
 using System;
+using HnSF.core.state.functions;
 
 namespace Quantum
 {
@@ -10,6 +11,7 @@ namespace Quantum
         public StateActionTargetType targetType;
         public AssetRef<Tag> mapTag;
         public int throweeId;
+        public StateFunctionEntityRef entityRefFunction;
 
         public StateActionTargetContext(StateActionTargetType targetType, EntityRef callingEntity)
         {
@@ -17,6 +19,7 @@ namespace Quantum
             this.callingEntity = callingEntity;
             this.mapTag = default;
             this.throweeId = 0;
+            this.entityRefFunction = null;
         }
         
         public StateActionTargetContext(StateActionTargetType targetType, EntityRef callingEntity, AssetRef<Tag> mapTag)
@@ -25,6 +28,7 @@ namespace Quantum
             this.callingEntity = callingEntity;
             this.mapTag = mapTag;
             this.throweeId = 0;
+            this.entityRefFunction = null;
         }
         
         public StateActionTargetContext(StateActionTargetType targetType, EntityRef callingEntity, AssetRef<Tag> mapTag, int throweeId)
@@ -33,6 +37,7 @@ namespace Quantum
             this.callingEntity = callingEntity;
             this.mapTag = mapTag;
             this.throweeId = throweeId;
+            this.entityRefFunction = null;
         }
     }
 }

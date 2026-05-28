@@ -29,7 +29,6 @@ namespace HnSF.core.state.actions
         public override bool ExecuteAction(Frame frame, EntityRef entity, FP rangePercent,
             ref HNSFStateContext stateContext)
         {
-            
             var sccEntity = frame.Create();
             var scc = new SyncedCutsceneSource()
             {
@@ -44,6 +43,11 @@ namespace HnSF.core.state.actions
                 endFrame = autoEndFrame
             };
             frame.Add(sccEntity, scc, out var sccResult);
+
+            frame.Add<TaggedEntityMapping>(sccEntity, new TaggedEntityMapping(), out var tem);
+            var mappingDict = frame.ResolveDictionary(tem->tagToEntityMap);
+            mappingDict.Add(frame.SimulationConfig.tag_self, entity);
+            
             var d = frame.ResolveDictionary(sccResult->cutsceneControls);
 
             if (cutsceneControlledEntities == null || cutsceneControlledEntities.Length == 0) return false;
