@@ -1,3 +1,10 @@
+# [1.27.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.26.0...v1.27.0) (2026-05-28)
+
+
+### Features
+
+* State function to get cutscene source entity ([ee610dc](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/ee610dcdbe44135078ab5a2835722acd777d495c))
+
 # [1.26.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.25.1...v1.26.0) (2026-05-28)
 
 
