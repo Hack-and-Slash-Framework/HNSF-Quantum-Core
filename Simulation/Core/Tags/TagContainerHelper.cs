@@ -17,15 +17,83 @@ namespace Quantum
             }
             return false;
         }
-
-        public static bool HasAny(Frame frame, EntityRef entityRef, List<AssetRef> tags)
+        
+        public static bool HasAny(Frame frame, EntityRef entityRef, IEnumerable<AssetRef> tags)
         {
             if (frame.Unsafe.TryGetPointer<GameplayTagContainer>(entityRef, out var tagContainer))
             {
-                return tagContainer->HasAny(frame, tags);
+                foreach (var tag in tags)
+                {
+                    if (tagContainer->HasTag(frame, tag)) return true;
+                }
             }else if (frame.Unsafe.TryGetPointer<GameplayTagCountContainer>(entityRef, out var tagCountContainer))
             {
-                return tagCountContainer->HasAny(frame, tags);
+                foreach (var tag in tags)
+                {
+                    if (tagCountContainer->HasTag(frame, tag)) return true;
+                }
+            }
+            return false;
+        }
+        
+        public static bool HasAny(Frame frame, EntityRef entityRef, IEnumerable<AssetRef<Tag>> tags)
+        {
+            if (frame.Unsafe.TryGetPointer<GameplayTagContainer>(entityRef, out var tagContainer))
+            {
+                foreach (var tag in tags)
+                {
+                    if (tagContainer->HasTag(frame, tag)) return true;
+                }
+            }else if (frame.Unsafe.TryGetPointer<GameplayTagCountContainer>(entityRef, out var tagCountContainer))
+            {
+                foreach (var tag in tags)
+                {
+                    if (tagCountContainer->HasTag(frame, tag)) return true;
+                }
+            }
+            return false;
+        }
+        
+        public static bool HasAll(Frame frame, EntityRef entityRef, IEnumerable<AssetRef> tags)
+        {
+            if (frame.Unsafe.TryGetPointer<GameplayTagContainer>(entityRef, out var tagContainer))
+            {
+                foreach (var t in tags)
+                {
+                    if (!tagContainer->HasTag(frame, t))
+                        return false;
+                }
+                return true;
+            }else if (frame.Unsafe.TryGetPointer<GameplayTagCountContainer>(entityRef, out var tagCountContainer))
+            {
+                foreach (var t in tags)
+                {
+                    if (!tagCountContainer->HasTag(frame, t))
+                        return false;
+                }
+                return true;
+            }
+            return false;
+        }
+        
+        public static bool HasAll(Frame frame, EntityRef entityRef, IEnumerable<AssetRef<Tag>> tags)
+        {
+            if (frame.Unsafe.TryGetPointer<GameplayTagContainer>(entityRef, out var tagContainer))
+            {
+                foreach (var t in tags)
+                {
+                    if (!tagContainer->HasTag(frame, t))
+                        return false;
+                }
+                return true;
+            }else if (frame.Unsafe.TryGetPointer<GameplayTagCountContainer>(entityRef, out var tagCountContainer))
+            {
+                foreach (var t in tags)
+                {
+                    if (!tagCountContainer->HasTag(frame, t))
+                        return false;
+                }
+                return true;
             }
             return false;
         }

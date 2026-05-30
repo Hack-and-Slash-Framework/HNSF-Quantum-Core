@@ -5,17 +5,24 @@ namespace HnSF.StatusEffects.Components
     [System.Serializable]
     public unsafe partial class StatusEffectComponent
     {
-        public virtual bool OnApply(Frame frame)
+#if QUANTUM_UNITY
+        public virtual void OnValidate(AssetObject statusEffectAsset)
+        {
+            
+        }
+#endif
+        
+        public virtual bool OnApply(Frame frame, EntityRef statusEffectEntityRef, StatusEffector* statusEffector)
         {
             return true;
         }
 
-        public virtual bool OnTick(Frame frame)
+        public virtual bool OnTick(Frame frame, EntityRef statusEffectEntityRef, StatusEffector* statusEffector)
         {
             return true;
         }
 
-        public virtual bool OnRemove(Frame frame)
+        public virtual bool OnRemove(Frame frame, EntityRef statusEffectEntityRef, StatusEffector* statusEffector)
         {
             return true;
         }

@@ -52,9 +52,11 @@ namespace HnSF.core.state
         public AssetRef<InputConditionListAsset>[] defaultInputConditions = Array.Empty<AssetRef<InputConditionListAsset>>();
 
         public List<HNSFStateIgnoredAction> ignoredActions = new List<HNSFStateIgnoredAction>();
-        [NonSerialized] public Dictionary<AssetRef<HNSFState>, HashSet<int>> ignoredActionsDictionary = new Dictionary<AssetRef<HNSFState>, HashSet<int>>();
 
-        public HashSet<AssetRef<Tag>> allTags = new HashSet<AssetRef<Tag>>();
+        // Realtime Data
+        [NonSerialized] public Dictionary<AssetRef<HNSFState>, HashSet<int>> ignoredActionsDictionary = new Dictionary<AssetRef<HNSFState>, HashSet<int>>();
+        [NonSerialized] public HashSet<AssetRef<Tag>> allTags = new HashSet<AssetRef<Tag>>();
+        [NonSerialized] public AssetRef<Tag> realSharedStateTag;
         
         public override void Loaded(IResourceManager resourceManager, Native.Allocator allocator)
         {
@@ -63,6 +65,20 @@ namespace HnSF.core.state
             BuildIgnoreDictionary(resourceManager, ignoredActionsDictionary);
             allTags.Clear();
             CollectAllTags(resourceManager, allTags);
+            GetRealSharedStateTagRecursive(resourceManager, out realSharedStateTag);
+        }
+        
+        private void GetRealSharedStateTagRecursive(IResourceManager resourceManager, out AssetRef<Tag> gotRealSharedStateTag)
+        {
+            gotRealSharedStateTag = sharedStateTag;
+            
+            if (gotRealSharedStateTag != default || useBaseState == false || baseState == default)
+                return;
+            
+            if (resourceManager.TryGetAsset(baseState, out var baseStateAsset))
+            {
+                baseStateAsset.GetRealSharedStateTagRecursive(resourceManager, out gotRealSharedStateTag);
+            }
         }
 
         protected virtual void CollectAllTags(IResourceManager resourceManager, HashSet<AssetRef<Tag>> tagSet)

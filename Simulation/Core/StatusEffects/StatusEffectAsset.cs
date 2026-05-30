@@ -43,6 +43,19 @@ namespace HnSF.StatusEffects
 #endif
         public StatusEffectComponent[] components = Array.Empty<StatusEffectComponent>();
 
+        private void OnValidate()
+        {
+#if QUANTUM_UNITY
+            if (Application.isPlaying)
+                return;
+            if (components == null)
+                return;
+            
+            foreach(var c in components)
+                c.OnValidate(this);
+#endif
+        }
+
         /// <summary>
         /// Called when the status effect is applied.
         /// </summary>
@@ -52,9 +65,11 @@ namespace HnSF.StatusEffects
         /// <returns>False if the status effect should not be applied. True otherwise.</returns>
         public virtual bool OnApply(Frame frame, EntityRef statusEffectEntityRef, bool asChild = false)
         {
+            var statusEffector = frame.Unsafe.GetPointer<StatusEffector>(statusEffectEntityRef);
+            
             foreach (var component in components)
             {
-                if (component.OnApply(frame) == false)
+                if (component.OnApply(frame, statusEffectEntityRef, statusEffector) == false)
                 {
                     return false;
                 }
@@ -89,9 +104,11 @@ namespace HnSF.StatusEffects
 
         public virtual bool OnTick(Frame frame, EntityRef statusEffectEntityRef, bool asChild = false)
         {
+            var statusEffector = frame.Unsafe.GetPointer<StatusEffector>(statusEffectEntityRef);
+            
             foreach (var component in components)
             {
-                if (component.OnTick(frame) == false)
+                if (component.OnTick(frame, statusEffectEntityRef, statusEffector) == false)
                 {
                     return false;
                 }
@@ -102,10 +119,7 @@ namespace HnSF.StatusEffects
                 if (checkStacks && frame.Unsafe.TryGetPointer<GenericTimer>(statusEffectEntityRef, out var timer)
                                 && timer->value <= 0)
                 {
-                    if (frame.Unsafe.TryGetPointer<StatusEffector>(statusEffectEntityRef, out var statusEffector))
-                    {
-                        statusEffector->stacks--;
-                    }
+                    statusEffector->stacks--;
 
                     timer->value = durationPerStack;
                 }
@@ -146,9 +160,11 @@ namespace HnSF.StatusEffects
         /// <returns>False if the status effect shouldn't be removed. True otherwise.</returns>
         public virtual bool OnRemove(Frame frame, EntityRef statusEffectEntityRef, bool asChild = false)
         {
+            var statusEffector = frame.Unsafe.GetPointer<StatusEffector>(statusEffectEntityRef);
+            
             foreach (var component in components)
             {
-                if (component.OnTick(frame) == false)
+                if (component.OnRemove(frame, statusEffectEntityRef, statusEffector) == false)
                 {
                     return false;
                 }

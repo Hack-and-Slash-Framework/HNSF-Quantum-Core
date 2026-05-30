@@ -25,6 +25,12 @@ namespace Quantum
             var tagDictionary = frame.ResolveDictionary(tags);
             return tagDictionary.ContainsKey(tag);
         }
+        
+        public bool HasTag(Frame frame, AssetRef<Tag> tag)
+        {
+            var tagDictionary = frame.ResolveDictionary(tags);
+            return tagDictionary.ContainsKey(tag.Id);
+        }
 
         public bool HasAny(Frame frame, List<AssetRef> validTags)
         {

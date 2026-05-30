@@ -33,6 +33,12 @@ namespace Quantum
             var tagList = frame.ResolveList(tags);
             return tagList.Contains(tag);
         }
+        
+        public bool HasTag(Frame frame, AssetRef<Tag> tag)
+        {
+            var tagList = frame.ResolveList(tags);
+            return tagList.Contains(tag.Id);
+        }
 
         public bool HasAny(Frame frame, List<AssetRef> validTags)
         {
