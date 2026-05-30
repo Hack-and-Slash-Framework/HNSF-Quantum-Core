@@ -1,3 +1,10 @@
+# [1.28.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.27.0...v1.28.0) (2026-05-30)
+
+
+### Features
+
+* Improved status effect component handling, tag helpers ([c63cd67](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/c63cd674e824aa083e80b4f7dfec8d4809a40071))
+
 # [1.27.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.26.0...v1.27.0) (2026-05-28)
 
 
