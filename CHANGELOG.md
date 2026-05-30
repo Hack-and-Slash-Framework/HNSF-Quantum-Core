@@ -1,3 +1,10 @@
+## [1.28.1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.28.0...v1.28.1) (2026-05-30)
+
+
+### Bug Fixes
+
+* Fix component state machine checks ([7a000ad](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/7a000ad1c8b3dc8d91d3c83f7834ec5ba6ac2054))
+
 # [1.28.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.27.0...v1.28.0) (2026-05-30)
 
 
