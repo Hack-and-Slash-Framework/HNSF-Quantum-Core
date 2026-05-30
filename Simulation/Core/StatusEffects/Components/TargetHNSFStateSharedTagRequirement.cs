@@ -56,9 +56,9 @@ namespace HnSF.StatusEffects.Components
             if(requirements.validTagsSet.Count == 0 && requirements.mustNotHaveTagsSet.Count == 0)
                 return true;
             
-            if(!frame.Unsafe.TryGetPointer<HNSFStateAgent>(statusEffector->target, out var hnsfStateAgent))
+            if(!frame.Unsafe.TryGetPointer<GenericStateMachine>(statusEffector->target, out var hnsfStateAgent))
                 return false;
-            if (!frame.TryFindAsset(hnsfStateAgent->stateData.state, out var currentStateAsset))
+            if (!frame.TryFindAsset(hnsfStateAgent->stateAgent.stateData.state, out var currentStateAsset))
                 return false;
             
 

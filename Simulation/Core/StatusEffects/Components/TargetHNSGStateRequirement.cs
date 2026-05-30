@@ -57,13 +57,13 @@ namespace HnSF.StatusEffects.Components
             if(requirements.validTagsSet.Count == 0 && requirements.mustNotHaveTagsSet.Count == 0)
                 return true;
             
-            if(!frame.Unsafe.TryGetPointer<HNSFStateAgent>(statusEffector->target, out var hnsfStateAgent))
+            if(!frame.Unsafe.TryGetPointer<GenericStateMachine>(statusEffector->target, out var gsm))
                 return false;
             
-            if (!requirements.validTagsSet.Contains(hnsfStateAgent->stateData.state))
+            if (!requirements.validTagsSet.Contains(gsm->stateAgent.stateData.state))
                 return false;
 
-            return !requirements.mustNotHaveTagsSet.Contains(hnsfStateAgent->stateData.state);
+            return !requirements.mustNotHaveTagsSet.Contains(gsm->stateAgent.stateData.state);
         }
     }
 }

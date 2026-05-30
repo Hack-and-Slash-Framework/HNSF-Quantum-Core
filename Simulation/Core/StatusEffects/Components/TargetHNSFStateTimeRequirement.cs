@@ -41,15 +41,15 @@ namespace HnSF.StatusEffects.Components
         
         private bool Check(Frame frame, StatusEffector* statusEffector)
         {
-            if(!frame.Unsafe.TryGetPointer<HNSFStateAgent>(statusEffector->target, out var hnsfStateAgent))
+            if(!frame.Unsafe.TryGetPointer<GenericStateMachine>(statusEffector->target, out var gsm))
                 return false;
 
             switch (timeCheckType)
             {
                 case TimeCheckType.StateFrame:
-                    return hnsfStateAgent->stateData.frame >= timeRequirement;
+                    return gsm->stateAgent.stateData.frame >= timeRequirement;
                 case TimeCheckType.TimeSinceStartOfState:
-                    return hnsfStateAgent->stateData.realFrame >= timeRequirement;
+                    return gsm->stateAgent.stateData.realFrame >= timeRequirement;
                 default:
                     return false;
             }
