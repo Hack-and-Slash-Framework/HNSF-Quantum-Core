@@ -130,6 +130,8 @@ public class StateActionLabel : VisualElement
                             if(workingState.ignoredActions[i].stateRef == stateAsset && workingState.ignoredActions[i].actionId == stateActionAsset.id) workingState.ignoredActions.RemoveAt(i);
                         }
                         
+                        EditorUtility.SetDirty(workingState);
+                        
                         OnIgnoreStatusChanged.Invoke();
                     });
                 }
@@ -144,6 +146,8 @@ public class StateActionLabel : VisualElement
                             actionId = stateActionAsset.id,
                             stateRef = stateAsset
                         });
+                        
+                        EditorUtility.SetDirty(workingState);
                         
                         OnIgnoreStatusChanged.Invoke();
                     });
