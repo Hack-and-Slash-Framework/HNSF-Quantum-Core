@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using HnSF.core.GroupControl.Actions;
 using Quantum;
 #if QUANTUM_UNITY
@@ -19,17 +19,17 @@ namespace HnSF.core.GroupControl.Actions
     {
         public AssetRef<SoundEntry> voiceClip;
         
-        public override void OnEnter(Frame frame, EntityRef infoEntityRef)
+        public override void OnEnter(Frame frame, EntityRef infoEntityRef, ref GroupControlContext context)
         {
             frame.Events.PlaySubtitledSoundEntry(infoEntityRef, voiceClip, 1);
         }
 
-        public override bool Tick(Frame frame, EntityRef infoEntityRef)
+        public override bool Tick(Frame frame, EntityRef infoEntityRef, ref GroupControlContext context)
         {
             return true;
         }
 
-        public override void OnExit(Frame frame, EntityRef infoEntityRef)
+        public override void OnExit(Frame frame, EntityRef infoEntityRef, ref GroupControlContext context)
         {
         }
     }

@@ -21,18 +21,18 @@ namespace HnSF.core.GroupControl.Actions
         public string tickString;
         public string exitString;
         
-        public override void OnEnter(Frame frame, EntityRef infoEntityRef)
+        public override void OnEnter(Frame frame, EntityRef infoEntityRef, ref GroupControlContext context)
         {
             if(!string.IsNullOrEmpty(enterString)) Log.Debug(enterString);
         }
 
-        public override bool Tick(Frame frame, EntityRef infoEntityRef)
+        public override bool Tick(Frame frame, EntityRef infoEntityRef, ref GroupControlContext context)
         {
             if(!string.IsNullOrEmpty(tickString)) Log.Debug(tickString);
             return true;
         }
 
-        public override void OnExit(Frame frame, EntityRef infoEntityRef)
+        public override void OnExit(Frame frame, EntityRef infoEntityRef, ref GroupControlContext context)
         {
             if(!string.IsNullOrEmpty(exitString)) Log.Debug(exitString);
         }

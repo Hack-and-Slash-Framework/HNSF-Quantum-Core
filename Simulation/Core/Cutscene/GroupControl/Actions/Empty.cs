@@ -15,16 +15,16 @@ namespace HnSF.core.GroupControl.Actions
     public unsafe partial class Empty : GroupControlAction
     {
         
-        public override void OnEnter(Frame frame, EntityRef infoEntityRef)
+        public override void OnEnter(Frame frame, EntityRef infoEntityRef, ref GroupControlContext context)
         {
         }
 
-        public override bool Tick(Frame frame, EntityRef infoEntityRef)
+        public override bool Tick(Frame frame, EntityRef infoEntityRef, ref GroupControlContext context)
         {
             return true;
         }
 
-        public override void OnExit(Frame frame, EntityRef infoEntityRef)
+        public override void OnExit(Frame frame, EntityRef infoEntityRef, ref GroupControlContext context)
         {
         }
     }

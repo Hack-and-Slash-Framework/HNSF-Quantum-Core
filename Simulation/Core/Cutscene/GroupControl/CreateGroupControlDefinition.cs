@@ -54,8 +54,11 @@ namespace Quantum
                 }
             }, out var ggc);
 
+            var groupControlContext = new GroupControlContext();
+            groupControlContext.SetScriptEntityAndBlackboard(frame, gcEntityRef, null);
+            
             ggc->data.SetData(controlScript);
-            ggc->data.Initialize(frame, gcEntityRef);
+            ggc->data.Initialize(frame, gcEntityRef, ref groupControlContext);
 
             infoEntityMap.Add(identifier, gcEntityRef);
             

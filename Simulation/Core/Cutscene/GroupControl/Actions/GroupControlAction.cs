@@ -1,5 +1,6 @@
 ﻿using System;
 using HnSF.core.GroupControl.Grabbers;
+using HnSF.core.systems;
 using Quantum;
 #if QUANTUM_UNITY
 using UnityEngine;
@@ -26,17 +27,17 @@ namespace HnSF.core.GroupControl.Actions
         public int[] nextNodesOrdered;
         public WeightedList<int> nextNodesWeighted;
 
-        public virtual void OnEnter(Frame frame, EntityRef infoEntityRef)
+        public virtual void OnEnter(Frame frame, EntityRef infoEntityRef, ref GroupControlContext context)
         {
             
         }
         
-        public virtual bool Tick(Frame frame, EntityRef infoEntityRef)
+        public virtual bool Tick(Frame frame, EntityRef infoEntityRef, ref GroupControlContext context)
         {
             return false;
         }
         
-        public virtual void OnExit(Frame frame, EntityRef infoEntityRef)
+        public virtual void OnExit(Frame frame, EntityRef infoEntityRef, ref GroupControlContext context)
         {
             
         }

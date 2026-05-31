@@ -16,7 +16,6 @@ namespace HnSF
 #else
     [CreateAssetMenu(menuName = "HnSF/Addressables/Content/Fighter Definition")]
 #endif
-    [MovedFrom(autoUpdateAPI: true, sourceNamespace: null, sourceClassName: "AddressablesFighterDefinition")]
     public partial class AddressablesFighterDefinition : IFighterDefinition
     {
         public override string Name => fighterName;

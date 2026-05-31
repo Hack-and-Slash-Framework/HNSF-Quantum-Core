@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using HnSF.core.GroupControl.Actions;
 using Photon.Deterministic;
 using Quantum;
@@ -19,7 +19,7 @@ namespace HnSF.core.GroupControl.Actions
         public AssetRef<Tag> cutsceneTag;
         public int maxWaitFrames;
         
-        public override void OnEnter(Frame frame, EntityRef infoEntityRef)
+        public override void OnEnter(Frame frame, EntityRef infoEntityRef, ref GroupControlContext context)
         {
             frame.AddOrGet(infoEntityRef, out PlayerReadyMap* prm);
             prm->ClearMap(frame);
@@ -32,13 +32,13 @@ namespace HnSF.core.GroupControl.Actions
             }
         }
         
-        public override bool Tick(Frame frame, EntityRef infoEntityRef)
+        public override bool Tick(Frame frame, EntityRef infoEntityRef, ref GroupControlContext context)
         {
             var prm = frame.Unsafe.GetPointer<PlayerReadyMap>(infoEntityRef);
             return prm->CheckForAllFinishedWithUnsyncedCutscene(frame, cutsceneSourceTag, cutsceneTag);
         }
         
-        public override void OnExit(Frame frame, EntityRef infoEntityRef)
+        public override void OnExit(Frame frame, EntityRef infoEntityRef, ref GroupControlContext context)
         {
             frame.Remove<PlayerReadyMap>(infoEntityRef);
             frame.Remove<GenericTimer>(infoEntityRef);

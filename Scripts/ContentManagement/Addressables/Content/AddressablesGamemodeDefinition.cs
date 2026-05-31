@@ -15,7 +15,6 @@ namespace HnSF
 #else
     [CreateAssetMenu(menuName = "HnSF/Addressables/Content/Gamemode Definition")]
 #endif
-    [MovedFrom(autoUpdateAPI: true, sourceNamespace: null, sourceClassName: "AddressablesGamemodeDefinition")]
     public partial class AddressablesGamemodeDefinition : BaseGamemodeDefinition
     {
         public override string Name => gamemodeName;

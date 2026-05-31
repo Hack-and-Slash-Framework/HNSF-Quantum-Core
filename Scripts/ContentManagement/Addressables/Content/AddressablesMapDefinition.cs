@@ -14,7 +14,6 @@ namespace HnSF
 #else
     [CreateAssetMenu(menuName = "HnSF/Addressables/Content/Map Definition")]
 #endif
-    [MovedFrom(autoUpdateAPI: true, sourceNamespace: null, sourceClassName: "AddressablesMapDefinition")]
     public partial class AddressablesMapDefinition : IMapDefinition
     {
         public override string Name => _mapName;

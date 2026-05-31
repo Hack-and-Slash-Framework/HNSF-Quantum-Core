@@ -30,7 +30,7 @@ namespace HnSF.core.GroupControl.Actions
 
         public TargetAndState[] statesToSet = Array.Empty<TargetAndState>();
         
-        public override void OnEnter(Frame frame, EntityRef infoEntityRef)
+        public override void OnEnter(Frame frame, EntityRef infoEntityRef, ref GroupControlContext context)
         {
             foreach (var state in statesToSet)
             {
@@ -43,12 +43,12 @@ namespace HnSF.core.GroupControl.Actions
             frame.Remove<SyncedCutsceneSource>(battleActorRef);
         }
 
-        public override bool Tick(Frame frame, EntityRef infoEntityRef)
+        public override bool Tick(Frame frame, EntityRef infoEntityRef, ref GroupControlContext context)
         {
             return true;
         }
 
-        public override void OnExit(Frame frame, EntityRef infoEntityRef)
+        public override void OnExit(Frame frame, EntityRef infoEntityRef, ref GroupControlContext context)
         {
         }
     }
