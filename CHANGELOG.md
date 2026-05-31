@@ -1,3 +1,10 @@
+# [1.30.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.29.0...v1.30.0) (2026-05-31)
+
+
+### Features
+
+* Release all from mod, External references gen helper ([7c9cf19](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/7c9cf19d728cc6bde506e464f3750d586dfe1ece))
+
 # [1.29.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.28.2...v1.29.0) (2026-05-31)
 
 
