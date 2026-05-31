@@ -1,3 +1,10 @@
+## [1.28.2](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.28.1...v1.28.2) (2026-05-31)
+
+
+### Bug Fixes
+
+* Fix ignoredActions not getting dirtied ([be3a872](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/be3a87253f7b1ab4185a3c7b75f3a86bb078cd1a))
+
 ## [1.28.1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.28.0...v1.28.1) (2026-05-30)
 
 
