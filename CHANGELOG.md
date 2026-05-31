@@ -1,3 +1,10 @@
+# [1.29.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.28.2...v1.29.0) (2026-05-31)
+
+
+### Features
+
+* Add context group GroupControlScripts ([348b8fd](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/348b8fd0f1d0b47ee1a3a1f64cfb17fcf23d3ac8))
+
 ## [1.28.2](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.28.1...v1.28.2) (2026-05-31)
 
 
