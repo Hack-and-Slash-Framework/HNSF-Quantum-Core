@@ -234,8 +234,11 @@ namespace HnSF
             return folderPath.Length < assetPath.Length && assetPath.StartsWith(folderPath);
         }
         
-        public bool LoadAssetByID(string id)
+        public override AssetLoadResult LoadAssetByID(string id)
         {
+            var loadResult = new AssetLoadResult(false, default);
+            loadResult.handle.handleType = AssetHandleType.UMod;
+            
             var assetPath = ConvertIDToAssetPath(id);
             var modHostAssets = _modDefinition.modHost.Assets;
             
@@ -253,14 +256,35 @@ namespace HnSF
                     var assetObject = modHostAssets.Find(folderAsset.RelativeName).AssetObject;
                     _ = RegisterLoadedAsset(folderAssetPath, assetObject);
                 }
-                return true;
+                
+                loadResult.result = true;
+                // TODO: Handles.
+                return loadResult;
             }
             
-            if (_loadedAssetList.ContainsKey(assetPath)) return true;
+            if (_loadedAssetList.ContainsKey(assetPath))
+            {
+                // TODO: Handles.
+                loadResult.result = true;
+                loadResult.handle = new LoadedAssetHandleWrapper()
+                {
+                    handleType = AssetHandleType.UMod
+                };
+                return loadResult;
+            }
+            
             var op = modHostAssets.Load(assetPath);
-            if (op == null) return false;
+            if (op == null)
+            {
+                loadResult.result = false;
+                return loadResult;
+            }
             _ = RegisterLoadedAsset(assetPath, modHostAssets.Find(assetPath).AssetObject);
-            return true;
+            
+            
+            loadResult.handle.assetReference = new ModAssetSoftReference(modID, id, false);
+            
+            return loadResult;
         }
 
         public override async UniTask<AssetLoadResult> LoadAssetByIDAsync(string id)
@@ -323,7 +347,12 @@ namespace HnSF
         public override Object GetAssetByID(string id, bool autoLoad = false)
         {
             var assetPath = ConvertIDToAssetPath(id);
-            if (autoLoad && !LoadAssetByID(assetPath)) return null;
+            //if (autoLoad && !LoadAssetByID(assetPath)) return null;
+            if (autoLoad)
+            {
+                var loadResult = LoadAssetByID(assetPath);
+                if (!loadResult.result) return null;
+            }
             return _loadedAssetList.GetValueOrDefault(assetPath);
         }
 

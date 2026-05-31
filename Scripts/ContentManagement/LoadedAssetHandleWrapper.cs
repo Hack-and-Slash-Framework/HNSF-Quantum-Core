@@ -32,6 +32,18 @@ public struct LoadedAssetHandleWrapper : IEquatable<LoadedAssetHandleWrapper>
         return null;
     }
 
+    public void Release()
+    {
+        if (HnSFManagersContainer.instance == null || handleType == AssetHandleType.None) return;
+        HnSFManagersContainer.instance.contentManager.ReleaseAssetFromMod(this);
+        handleType = AssetHandleType.None;
+        assetReference = default;
+        addressablesHandle = default;
+#if HNSF_UMOD
+        umodHandle = default;
+#endif
+    }
+
     public void Teardown(bool releaseAsset = true)
     {
         if (HnSFManagersContainer.instance == null || handleType == AssetHandleType.None) return;

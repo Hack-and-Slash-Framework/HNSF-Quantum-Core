@@ -181,7 +181,7 @@ public class AddressablesModInfoAsset : BaseModInfoAsset
     {
         return loadedAssetList.ContainsKey(id);
     }
-
+    
     public override async UniTask<AssetLoadResult> LoadAssetByIDAsync(string id)
     {
         return await LoadAssetByIDAsync<UnityEngine.Object>(id);
@@ -197,6 +197,7 @@ public class AddressablesModInfoAsset : BaseModInfoAsset
         loadResult.result = false;
         
         
+        // Locate Addressables Asset
         var lmd = ModDefinition as AddressablesLoadedModDefinition;
         lmd.resourceLocator.Locate(id, typeof(T), out var locations);
         if (locations == null || locations.Count == 0)
@@ -205,15 +206,17 @@ public class AddressablesModInfoAsset : BaseModInfoAsset
             return loadResult;
         }
 
+        // Load Addressables Asset
         var lc = locations.First();
         var handle = Addressables.LoadAssetAsync<UnityEngine.Object>(lc);
         await handle;
         if (handle.Status != AsyncOperationStatus.Succeeded)
         {
-            Debug.LogError("Couldn't load asset handle.");
+            Debug.LogError($"Could not load asset addressables handle. ID={id}");
             return loadResult;
         }
 
+        // Load Content Definition (If not already loaded)
         bool definitionLoadResult = true;
         if (loadedAssetList.ContainsKey(lc.PrimaryKey) == false || loadedAssetList[lc.PrimaryKey].Count == 0)
         {
@@ -224,6 +227,7 @@ public class AddressablesModInfoAsset : BaseModInfoAsset
             }
         }
 
+        // Register Asset & Return Success
         loadResult.result = true;
         loadResult.handle.addressablesHandle = handle;
         
@@ -231,20 +235,7 @@ public class AddressablesModInfoAsset : BaseModInfoAsset
         RegisterAssetByType(lc.PrimaryKey);
         return loadResult;
     }
-
-    /*
-    public override void RegisterQuantumAssets(string id)
-    {
-        if (!loadedAssetList.ContainsKey(id) || loadedAssetList[id].Count == 0 || loadedAssetList[id][0].Result is not AssetObject) return;
-        QuantumUnityDB.Global.AddAsset((AssetObject)loadedAssetList[id][0].Result);
-    }
-
-    public override void UnregisterQuantumAssets(string id)
-    {
-        if (!loadedAssetList.ContainsKey(id) || loadedAssetList[id].Count == 0 || loadedAssetList[id][0].Result is not AssetObject) return;
-        QuantumUnityDB.Global.RemoveSource((loadedAssetList[id][0].Result as AssetObject).Guid);
-    }*/
-
+    
     public override Object GetAssetByID(string id, bool autoLoad = false)
     {
         if (!loadedAssetList.ContainsKey(id) || loadedAssetList[id].Count == 0) return null;
@@ -270,12 +261,12 @@ public class AddressablesModInfoAsset : BaseModInfoAsset
 
     public override void ReleaseAsset(LoadedAssetHandleWrapper assetHandle)
     {
-        if (!loadedAssetList.ContainsKey(assetHandle.assetReference.assetID))
+        if (!loadedAssetList.TryGetValue(assetHandle.assetReference.assetID, out var handlesList))
         {
             Debug.LogError("Attempting to release handle for asset that hasn't been loaded.");
             return;
         }
-        if (!loadedAssetList[assetHandle.assetReference.assetID].Contains(assetHandle.addressablesHandle))
+        if (!handlesList.Contains(assetHandle.addressablesHandle))
         {
             Debug.LogError("Releasing handle that isn't valid anymore.");
             return;
@@ -296,30 +287,37 @@ public class AddressablesModInfoAsset : BaseModInfoAsset
         Addressables.Release(assetHandle.addressablesHandle);
     }
 
-    /*
-    public override void UnloadAssetByID(string id)
-    {
-        if (!loadedAssetList.TryGetValue(id, out var value)) return;
-        
-        /*if (value is IContentDefinition definition)
-        {
-            definition.Unload();
-        }
 
-        var savedObject = loadedAssetList[id];
-        UnregisterAssetByType(id);
-        UnregisterAsset(id);
-        Addressables.Release(savedObject);
-    }
-
-    public override void UnloadAssetsByType<T>(bool includeInheritors = true)
+    public override void ReleaseAll()
     {
-        foreach (var kvp in loadedAssetsByType)
+        var keys = loadedAssetList.Keys.ToArray();
+        foreach (var assetKey in keys)
         {
-            if (!kvp.Key.IsAssignableFrom(typeof(T))) continue;
+            var handlesList = loadedAssetList[assetKey];
+            if(handlesList.Count == 0)
+                continue;
+
+            bool hasUnloaded = false;
+            foreach (var handle in handlesList)
+            {
+                if (hasUnloaded == false)
+                {
+                    var assetAsContentDefinition = handle.Result;
+                    if (assetAsContentDefinition is IContentDefinition contentDefinition)
+                    {
+                        contentDefinition.Unload();
+                    }
+                    
+                    ProfilerStats.LoadedAssetsCount.Value--;
+                    hasUnloaded = true;
+                }
+                
+                Addressables.Release(handle);
+            }
             
+            loadedAssetList[assetKey].Clear();
         }
-    }*/
+    }
 
     public override void OnUnload()
     {
@@ -328,12 +326,14 @@ public class AddressablesModInfoAsset : BaseModInfoAsset
 
     private void RegisterAssetHandle(string id, AsyncOperationHandle assetHandle)
     {
-        loadedAssetList.TryAdd(id, new List<AsyncOperationHandle>());
+        if(!loadedAssetList.ContainsKey(id))
+            loadedAssetList.Add(id, new List<AsyncOperationHandle>());
         loadedAssetList[id].Add(assetHandle);
     }
     
     private void RegisterAssetByType(string key)
     {
+        // TODO
         /*
         if (!loadedAssetList.TryGetValue(key, out var asset)) return;
         loadedAssetsByType.TryAdd(asset.GetType(), new List<string>());
@@ -342,6 +342,7 @@ public class AddressablesModInfoAsset : BaseModInfoAsset
 
     private void AttemptUnregisterAssetByType(string key)
     {
+        // TODO
         /*
         if (!loadedAssetList.ContainsKey(key)
             || loadedAssetList[key].Count > 0

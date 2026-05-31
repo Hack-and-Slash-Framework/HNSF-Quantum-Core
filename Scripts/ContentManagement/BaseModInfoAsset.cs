@@ -91,6 +91,26 @@ public class BaseModInfoAsset : ScriptableObject
     }
     
     /// <summary>
+    /// Loads an asset by the ID given synchronously.
+    /// </summary>
+    /// <param name="id">The ID of the asset.</param>
+    /// <returns>True if the asset was loaded; otherwise false.</returns>
+    public virtual AssetLoadResult LoadAssetByID(string id)
+    {
+        return default;
+    }
+    
+    /// <summary>
+    /// Loads an asset by the ID given synchronously.
+    /// </summary>
+    /// <param name="id">The ID of the asset.</param>
+    /// <returns>True if the asset was loaded; otherwise false.</returns>
+    public virtual AssetLoadResult LoadAssetByID<T>(string id) where T : UnityEngine.Object
+    {
+        return default;
+    }
+    
+    /// <summary>
     /// Loads an asset by the ID given asynchronously.
     /// </summary>
     /// <param name="id">The ID of the asset.</param>
@@ -150,15 +170,9 @@ public class BaseModInfoAsset : ScriptableObject
     {
         
     }
-    
-    /*
-    public virtual void UnloadAssetByID(string id)
+
+    public virtual void ReleaseAll()
     {
         
     }
-
-    public virtual void UnloadAssetsByType<T>(bool includeInheritors = true) where T : UnityEngine.Object
-    {
-        
-    }*/
 }
