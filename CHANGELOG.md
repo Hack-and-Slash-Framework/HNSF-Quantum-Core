@@ -1,3 +1,10 @@
+# [1.32.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.31.0...v1.32.0) (2026-06-01)
+
+
+### Features
+
+* HTNAgent uninterruptible status ([d289902](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/d28990281f41672dea393f36466c208882472fda))
+
 # [1.31.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.30.0...v1.31.0) (2026-06-01)
 
 
