@@ -19,7 +19,7 @@ namespace HnSF.core.GroupControl.Actions
     {
         public int framesToWait = 60;
         
-        public override void OnEnter(Frame frame, EntityRef infoEntityRef, ref GroupControlContext context)
+        public override void OnEnter(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
         {
             frame.Add<GenericTimer>(infoEntityRef, new GenericTimer()
             {
@@ -28,13 +28,13 @@ namespace HnSF.core.GroupControl.Actions
             });
         }
 
-        public override bool Tick(Frame frame, EntityRef infoEntityRef, ref GroupControlContext context)
+        public override bool Tick(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
         {
             var gt = frame.Unsafe.GetPointer<GenericTimer>(infoEntityRef);
             return gt->value <= 0;
         }
 
-        public override void OnExit(Frame frame, EntityRef infoEntityRef, ref GroupControlContext context)
+        public override void OnExit(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
         {
             frame.Remove<GenericTimer>(infoEntityRef);
         }

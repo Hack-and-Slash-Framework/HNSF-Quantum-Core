@@ -50,7 +50,7 @@ namespace Quantum
 
         public unsafe void ExecuteOnExitActions(Frame frame, EntityRef infoEntityRef)
         {
-            var groupControlContext = new GroupControlContext();
+            var groupControlContext = new BattleScriptContext();
             groupControlContext.SetScriptEntityAndBlackboard(frame, infoEntityRef, null);
             
             for (int i = 0; i < actionsOnExit.Count; i++)
@@ -78,7 +78,7 @@ namespace Quantum
                 agent->currentActionData.script = behaviourSet.actions[nextActionIndex].action.Id;
                 agent->currentActionData.currentAction = 0;
                 agent->uninterruptible = behaviour.uninterruptible;
-                var groupControlContext = new GroupControlContext();
+                var groupControlContext = new BattleScriptContext();
                 groupControlContext.SetScriptEntityAndBlackboard(frame, agentEntityRef, null);
                 agent->currentActionData.Initialize(frame, agentEntityRef, ref groupControlContext);
                 return true;

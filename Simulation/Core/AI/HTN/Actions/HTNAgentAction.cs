@@ -8,7 +8,7 @@ namespace HnSF.core.AI.HTN.Actions
     [Serializable]
     public unsafe partial class HTNAgentAction : GroupControlAction
     {
-        public override void OnEnter(Frame frame, EntityRef infoEntityRef, ref GroupControlContext context)
+        public override void OnEnter(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
         {
             base.OnEnter(frame, infoEntityRef, ref context);
             
@@ -19,12 +19,12 @@ namespace HnSF.core.AI.HTN.Actions
             htnContext->agent->currentActionResult = HTNTaskResult.PROCESSING;
         }
 
-        public override bool Tick(Frame frame, EntityRef infoEntityRef, ref GroupControlContext context)
+        public override bool Tick(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
         {
             return base.Tick(frame, infoEntityRef, ref context);
         }
 
-        public override void OnExit(Frame frame, EntityRef infoEntityRef, ref GroupControlContext context)
+        public override void OnExit(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
         {
             base.OnExit(frame, infoEntityRef, ref context);
             

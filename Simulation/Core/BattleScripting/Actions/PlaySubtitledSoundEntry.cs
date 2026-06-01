@@ -19,17 +19,17 @@ namespace HnSF.core.GroupControl.Actions
     {
         public AssetRef<SoundEntry> voiceClip;
         
-        public override void OnEnter(Frame frame, EntityRef infoEntityRef, ref GroupControlContext context)
+        public override void OnEnter(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
         {
             frame.Events.PlaySubtitledSoundEntry(infoEntityRef, voiceClip, 1);
         }
 
-        public override bool Tick(Frame frame, EntityRef infoEntityRef, ref GroupControlContext context)
+        public override bool Tick(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
         {
             return true;
         }
 
-        public override void OnExit(Frame frame, EntityRef infoEntityRef, ref GroupControlContext context)
+        public override void OnExit(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
         {
         }
     }

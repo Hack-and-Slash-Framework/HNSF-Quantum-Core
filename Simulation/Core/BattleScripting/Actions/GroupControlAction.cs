@@ -27,17 +27,17 @@ namespace HnSF.core.GroupControl.Actions
         public int[] nextNodesOrdered;
         public WeightedList<int> nextNodesWeighted;
 
-        public virtual void OnEnter(Frame frame, EntityRef infoEntityRef, ref GroupControlContext context)
+        public virtual void OnEnter(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
         {
             
         }
         
-        public virtual bool Tick(Frame frame, EntityRef infoEntityRef, ref GroupControlContext context)
+        public virtual bool Tick(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
         {
             return false;
         }
         
-        public virtual void OnExit(Frame frame, EntityRef infoEntityRef, ref GroupControlContext context)
+        public virtual void OnExit(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
         {
             
         }

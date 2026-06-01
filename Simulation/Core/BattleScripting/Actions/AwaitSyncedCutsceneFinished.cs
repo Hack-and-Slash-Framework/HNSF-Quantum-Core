@@ -20,11 +20,11 @@ namespace HnSF.core.GroupControl.Actions
         public int waitForFrame = 0;
         public int timeout;
         
-        public override void OnEnter(Frame frame, EntityRef infoEntityRef, ref GroupControlContext context)
+        public override void OnEnter(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
         {
         }
         
-        public override bool Tick(Frame frame, EntityRef infoEntityRef, ref GroupControlContext context)
+        public override bool Tick(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
         {
             var syncedSourceEntityRef = entityRefFunction == null ? infoEntityRef : entityRefFunction.Execute(frame, infoEntityRef);
             if (syncedSourceEntityRef == default || !frame.Exists(syncedSourceEntityRef))
@@ -38,7 +38,7 @@ namespace HnSF.core.GroupControl.Actions
             return scs->frame >= scs->endFrame;
         }
 
-        public override void OnExit(Frame frame, EntityRef infoEntityRef, ref GroupControlContext context)
+        public override void OnExit(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
         {
         }
     }

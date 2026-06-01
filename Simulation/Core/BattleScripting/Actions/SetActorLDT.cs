@@ -27,7 +27,7 @@ namespace HnSF.core.GroupControl.Actions
         public int setForFrames;
         public bool resetOnExit = true;
         
-        public override void OnEnter(Frame frame, EntityRef infoEntityRef, ref GroupControlContext context)
+        public override void OnEnter(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
         {
             if (setForFrames > 0)
             {
@@ -37,7 +37,7 @@ namespace HnSF.core.GroupControl.Actions
             }
         }
         
-        public override bool Tick(Frame frame, EntityRef infoEntityRef, ref GroupControlContext context)
+        public override bool Tick(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
         {
             if (applyToAll)
             {
@@ -64,7 +64,7 @@ namespace HnSF.core.GroupControl.Actions
             return true;
         }
         
-        public override void OnExit(Frame frame, EntityRef infoEntityRef, ref GroupControlContext context)
+        public override void OnExit(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
         {
             frame.Remove<GenericTimer>(infoEntityRef);
             

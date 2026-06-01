@@ -32,7 +32,7 @@ namespace HnSF.core.GroupControl.Actions
         public TargetAndState[] statesToSet = Array.Empty<TargetAndState>();
         public bool immediateTransition = true;
         
-        public override void OnEnter(Frame frame, EntityRef infoEntityRef, ref GroupControlContext context)
+        public override void OnEnter(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
         {
             foreach (var state in statesToSet)
             {
@@ -56,12 +56,12 @@ namespace HnSF.core.GroupControl.Actions
             if(immediateTransition) HNSFStateHelper.Generic.CheckForStateChange(frame, battleActorRef);
         }
 
-        public override bool Tick(Frame frame, EntityRef infoEntityRef, ref GroupControlContext context)
+        public override bool Tick(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
         {
             return true;
         }
 
-        public override void OnExit(Frame frame, EntityRef infoEntityRef, ref GroupControlContext context)
+        public override void OnExit(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
         {
         }
     }

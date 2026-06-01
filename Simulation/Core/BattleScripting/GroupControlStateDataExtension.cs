@@ -9,18 +9,18 @@ namespace Quantum
             script = stageScript;
         }
         
-        public void Initialize(Frame frame, EntityRef entityRef, ref GroupControlContext groupControlContext)
+        public void Initialize(Frame frame, EntityRef entityRef, ref BattleScriptContext battleScriptContext)
         {
             frame.TryFindAsset(script, out var ism);
             var cIndex = currentAction;
 
             if (cIndex < ism.actions.Count)
             {
-                ism.actions[cIndex].OnEnter(frame, entityRef, ref groupControlContext);
+                ism.actions[cIndex].OnEnter(frame, entityRef, ref battleScriptContext);
             }
         }
 
-        public bool Tick(Frame frame, EntityRef entityRef, ref GroupControlContext groupControlContext)
+        public bool Tick(Frame frame, EntityRef entityRef, ref BattleScriptContext battleScriptContext)
         {
             frame.TryFindAsset(script, out var bsAsset);
             
@@ -28,15 +28,15 @@ namespace Quantum
             while (true)
             {
                 if (cIndex < 0 || cIndex >= bsAsset.actions.Count) break;
-                if (bsAsset.actions[cIndex].Tick(frame, entityRef, ref groupControlContext))
+                if (bsAsset.actions[cIndex].Tick(frame, entityRef, ref battleScriptContext))
                 {
-                    bsAsset.actions[cIndex].OnExit(frame, entityRef, ref groupControlContext);
+                    bsAsset.actions[cIndex].OnExit(frame, entityRef, ref battleScriptContext);
                     currentAction++;
                     cIndex = currentAction;
 
                     if (cIndex < bsAsset.actions.Count)
                     {
-                        bsAsset.actions[cIndex].OnEnter(frame, entityRef, ref groupControlContext);
+                        bsAsset.actions[cIndex].OnEnter(frame, entityRef, ref battleScriptContext);
                     }
                 }
                 else
@@ -48,7 +48,7 @@ namespace Quantum
             return currentAction < bsAsset.actions.Count;
         }
 
-        public bool IsEnd(Frame frame, ref GroupControlContext groupControlContext)
+        public bool IsEnd(Frame frame, ref BattleScriptContext battleScriptContext)
         {
             if (currentAction < 0) return true;
             if(!frame.TryFindAsset(script, out var bsAsset)) return true;

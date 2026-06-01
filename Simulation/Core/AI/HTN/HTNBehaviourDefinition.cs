@@ -64,7 +64,7 @@ namespace Quantum
 
         public unsafe void Tick(Frame frame, EntityRef agentEntityRef, HTNAgent* agent, BattleActorAI* actorAI)
         {
-            var groupControlContext = new GroupControlContext();
+            var groupControlContext = new BattleScriptContext();
             groupControlContext.SetScriptEntityAndBlackboard(frame, agentEntityRef, null);
 
             var htnContext = new HTNAgentContext(agent, actorAI);

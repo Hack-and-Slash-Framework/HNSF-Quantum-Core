@@ -2,7 +2,7 @@ using Quantum;
 
 namespace HnSF.core.GroupControl
 {
-    public unsafe partial struct GroupControlContext
+    public unsafe partial struct BattleScriptContext
     {
         private EntityRef _scriptEntity;
         private unsafe AIBlackboardComponent* _blackboard;

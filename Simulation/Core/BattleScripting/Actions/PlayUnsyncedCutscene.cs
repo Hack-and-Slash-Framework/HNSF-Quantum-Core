@@ -18,11 +18,11 @@ namespace HnSF.core.GroupControl.Actions
         public AssetRef<Tag> cutsceneSourceTag;
         public AssetRef<Tag> cutsceneTag;
         
-        public override void OnEnter(Frame frame, EntityRef infoEntityRef, ref GroupControlContext context)
+        public override void OnEnter(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
         {
         }
         
-        public override bool Tick(Frame frame, EntityRef infoEntityRef, ref GroupControlContext context)
+        public override bool Tick(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
         {
             frame.Events.PlayCutsceneUnsynced(
                 cutsceneSource: default,
@@ -32,7 +32,7 @@ namespace HnSF.core.GroupControl.Actions
             return true;
         }
         
-        public override void OnExit(Frame frame, EntityRef infoEntityRef, ref GroupControlContext context)
+        public override void OnExit(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
         {
         }
     }
