@@ -35,7 +35,7 @@ namespace HnSF.core.AI.HTN.Nodes
 {
     [Serializable]
     [UseWithGraph(typeof(ActorGroupScriptGraph))]
-    internal class HTNAgentSetUninterruptibleStatus : ActorGroupControlNode
+    internal class HTNAgentSetUninterruptibleStatusNode : ActorGroupControlNode
     {
         public const string OPTION_UNINTERRUPTIBLE = "Uninterruptible";
         
