@@ -1,3 +1,10 @@
+# [1.31.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.30.0...v1.31.0) (2026-06-01)
+
+
+### Features
+
+* AI HTN agents, moved GroupControl to BattleScripting ([1c2db9c](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/1c2db9cf4001d9c51a1747f89fd8ff0039a2181b))
+
 # [1.30.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.29.0...v1.30.0) (2026-05-31)
 
 
