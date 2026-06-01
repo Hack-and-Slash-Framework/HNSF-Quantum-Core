@@ -1,3 +1,10 @@
+# [1.33.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.32.0...v1.33.0) (2026-06-01)
+
+
+### Features
+
+* HTN Agent set task result node ([816b2da](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/816b2da96060b2a5b83984dc1e1fa862cddcccab))
+
 # [1.32.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.31.0...v1.32.0) (2026-06-01)
 
 
