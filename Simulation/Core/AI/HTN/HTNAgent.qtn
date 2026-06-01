@@ -1,0 +1,7 @@
+component HTNAgent{
+    asset_ref<HTNBehaviourDefinition> behaviourDefinition;
+    GroupControlStateData currentActionData;
+    HTNTaskResult currentActionResult;
+    bool uninterruptible;
+    FP cooldown;
+}
