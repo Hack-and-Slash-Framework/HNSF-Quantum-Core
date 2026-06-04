@@ -1,3 +1,10 @@
+## [1.34.1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.34.0...v1.34.1) (2026-06-04)
+
+
+### Bug Fixes
+
+* SendMessage for LateUpdate of evu in preview ([beb9925](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/beb99253074adf22473ab23eea4107d36caa5ff6))
+
 # [1.34.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.33.0...v1.34.0) (2026-06-04)
 
 
