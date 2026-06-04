@@ -205,7 +205,8 @@ namespace HnSF
             if (runner)
             {
                 runner.Service(1.0f / 60.0f);
-                evu.LateUpdate();
+                evu.SendMessage("LateUpdate");
+                //evu.LateUpdate();
             }
         }
         
