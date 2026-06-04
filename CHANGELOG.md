@@ -1,3 +1,10 @@
+# [1.34.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.33.0...v1.34.0) (2026-06-04)
+
+
+### Features
+
+* Anim blend tables ([a3a2ce0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/a3a2ce053c26df30a57664b58ff50aa1f60b719b))
+
 # [1.33.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.32.0...v1.33.0) (2026-06-01)
 
 
