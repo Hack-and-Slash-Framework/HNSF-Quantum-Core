@@ -138,7 +138,7 @@ namespace HnSF
                     if (actorAnimator.state.layers[i].animationEntry ==
                         actorAnimatorLast.state.layers[i].animationEntry) continue;
                     TrySetupAnimation(actorAnimator.state.layers[i].animationEntry);
-                    PlayAnimationForLayer(i, actorAnimator.state.layers[i].animationEntry,
+                    PlayAnimationForLayer(i, actorAnimatorLast.state.layers[i].animationEntry, actorAnimator.state.layers[i].animationEntry,
                         actorAnimator.state.layers[i].mask);
                 }
             }
@@ -238,14 +238,14 @@ namespace HnSF
             }
         }
 
-        protected virtual void PlayAnimationForLayer(int layer, AssetRef<AnimationEntry> entry,
+        protected virtual void PlayAnimationForLayer(int layer, AssetRef<AnimationEntry> lastEntry, AssetRef<AnimationEntry> entry,
             AssetRef<Tag> avatarMaskTag)
         {
             var animEntry = QuantumUnityDB.GetGlobalAsset<AnimationEntry>(entry.Id);
 
             tagToAvatarMaskMapping.TryGetValue(avatarMaskTag, out var avatarMask);
 
-            float wantedFadeDuration = float.MaxValue;
+            float wantedFadeDuration = GetFadeTimeFor(lastEntry, entry);
             foreach (var group in animatorInfoGroups)
             {
                 if (animEntry == null || !animEntry.HasTarget(group.Key))
@@ -269,32 +269,37 @@ namespace HnSF
 
                 if (!group.Value.animancer.gameObject.activeInHierarchy)
                     group.Value.animancer.gameObject.SetActive(true);
-
-                var fadeDuration = Mathf.Min(wantedFadeDuration, animEntry.maxFadeInTime);
+                
                 group.Value.layerMixerType[layer] = animEntry.mixer;
-                wantedFadeDuration = animEntry.fadeOutTime;
 
                 switch (animEntry.mixer)
                 {
                     case AnimationEntry.MixerType.none:
                         var clip = anims[0].clip;
-                        var blp = group.Value.layers[layer].Play(clip, fadeDuration);
+                        var blp = group.Value.layers[layer].Play(clip, wantedFadeDuration);
                         blp.Speed = animEntry.playRate;
                         group.Value.states[layer] = blp;
                         break;
                     case AnimationEntry.MixerType.Cartesian:
                     case AnimationEntry.MixerType.Directional:
                         group.Value.states[layer] =
-                            group.Value.layers[layer].Play(group.Value.mixers[animEntry], fadeDuration);
+                            group.Value.layers[layer].Play(group.Value.mixers[animEntry], wantedFadeDuration);
                         break;
                     case AnimationEntry.MixerType.Linear:
                         group.Value.states[layer] =
-                            group.Value.layers[layer].Play(group.Value.lMixers[animEntry], fadeDuration);
+                            group.Value.layers[layer].Play(group.Value.lMixers[animEntry], wantedFadeDuration);
                         break;
                 }
 
                 if (avatarMask != group.Value.layers[layer].Mask) group.Value.layers[layer].Mask = avatarMask;
             }
+        }
+
+        private float GetFadeTimeFor(AssetRef<AnimationEntry> lastEntry, AssetRef<AnimationEntry> entry)
+        {
+            if (!QuantumUnityDB.TryGetGlobalAsset(lastEntry, out var lastEntryAsset))
+                return 0;
+            return lastEntryAsset.GetFade(entry);
         }
 
         private void SetLayerWeight(int layer, float weight)
