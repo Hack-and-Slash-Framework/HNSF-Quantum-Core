@@ -1,0 +1,9 @@
+component ActiveVFXContainer{
+    list<ActiveVFXPart> vfxParts;
+}
+
+struct ActiveVFXPart{
+    int playFrame;
+    asset_ref<VisualEffectEntry> vfx;
+    FPVector3 offset;
+}

@@ -73,6 +73,15 @@ public class ParticleSystemVisualEffect : VisualEffectBase
         GameObject.Destroy(gameObject);
     }
 
+    public override bool EffectHasStopped()
+    {
+        foreach (var ps in particleSystems)
+        {
+            if (ps.particleCount > 0) return false;
+        }
+        return true;
+    }
+
     public override void SetSeed(uint seed)
     {
         foreach (var ps in particleSystems)

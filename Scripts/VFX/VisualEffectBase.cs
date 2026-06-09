@@ -79,6 +79,11 @@ public class VisualEffectBase : MonoBehaviour, IEditorFixedUpdate
         status = VisualEffectPlayStatus.Stopped;
     }
 
+    public virtual bool EffectHasStopped()
+    {
+        return true;
+    }
+
     public virtual void DestroyEffect()
     {
         WhenEffectDestroyed?.Invoke(this);
