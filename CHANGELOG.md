@@ -1,3 +1,10 @@
+# [1.35.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.34.1...v1.35.0) (2026-06-09)
+
+
+### Features
+
+* Active VFX ([5147dff](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/5147dfff5e0f50c99979c79cc77018174090a109))
+
 ## [1.34.1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.34.0...v1.34.1) (2026-06-04)
 
 
