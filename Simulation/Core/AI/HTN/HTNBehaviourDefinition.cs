@@ -95,9 +95,15 @@ namespace Quantum
                             if (foundScript)
                             {
                                 var cwaScript = (controlScript as HTNAgentControlScript);
-                                (controlScript as HTNAgentControlScript).ExecuteOnExitActions(frame, agentEntityRef);
 
-                                cwaScript.CheckBehaviours(frame, agentEntityRef, agent, actorAI);
+                                if (cwaScript.CheckBehaviours(frame, agentEntityRef, agent, actorAI))
+                                {
+                                    cwaScript.ExecuteOnExitActions(frame, agentEntityRef);
+                                    agent->currentActionData.Initialize(frame, agentEntityRef, ref groupControlContext);
+                                }else {
+                                    agent->currentActionData.script = default;
+                                    agent->currentActionData.currentAction = -1;
+                                }
                             }
                             else
                             {
@@ -127,21 +133,29 @@ namespace Quantum
                 var entitySlice = agentEntityRef.Index % actorAI->updateInterval;
                 if (frameSlice != entitySlice) return;
             }
-            
+
+            bool checkedBehaviours = false;
             if (frame.TryFindAsset(agent->currentActionData.script, out var cs))
             {
                 var cwaScript = (cs as HTNAgentControlScript);
-                (cs as HTNAgentControlScript).ExecuteOnExitActions(frame, agentEntityRef);
 
+                if (agent->currentActionResult == HTNTaskResult.PROCESSING && cwaScript.behaviourSets.Count > 0) checkedBehaviours = true;
+                
                 if (cwaScript.CheckBehaviours(frame, agentEntityRef, agent, actorAI))
+                {
+                    cwaScript.ExecuteOnExitActions(frame, agentEntityRef);
+                    agent->currentActionData.Initialize(frame, agentEntityRef, ref groupControlContext);
                     return;
+                }
             }
+
+            if (checkedBehaviours) return;
             
             foreach (var behaviourSet in behaviourSets)
             {
-                if(!behaviourSet.DoRulesPass(frame, agentEntityRef)) continue;
+                if (!behaviourSet.DoRulesPass(frame, agentEntityRef)) continue;
                 var nextActionIndex = behaviourSet.actionsWeighted.Next(frame.RNG);
-                
+
                 if (nextActionIndex < 0) return; // exit or continue?
                 if (!frame.TryFindAsset(behaviourSet.actions[nextActionIndex].action, out var behaviour)) return;
 

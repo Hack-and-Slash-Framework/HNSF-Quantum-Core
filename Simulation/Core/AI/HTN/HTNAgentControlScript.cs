@@ -63,24 +63,23 @@ namespace Quantum
 
         public unsafe bool CheckBehaviours(Frame frame, EntityRef agentEntityRef, HTNAgent* agent, BattleActorAI* actorAI)
         {
-            agent->currentActionData.currentAction = -1;
-            agent->currentActionData.script = default;
-            
             foreach (var behaviourSet in behaviourSets)
             {
                 if(!behaviourSet.DoRulesPass(frame, agentEntityRef)) continue;
                 var nextActionIndex = behaviourSet.actionsWeighted.Next(frame.RNG);
 
                 if (nextActionIndex < 0) return false;
-                if (!frame.TryFindAsset(behaviourSet.actions[nextActionIndex].action, out var behaviour)) return false;
+                if (!frame.TryFindAsset(behaviourSet.actions[nextActionIndex].action, out var behaviour))
+                {
+                    agent->currentActionData.currentAction = -1;
+                    agent->currentActionData.script = default;
+                    return false;
+                }
 
                 agent->cooldown = frame.RNG->NextInclusive(behaviour.minCooldown, behaviour.maxCooldown);
                 agent->currentActionData.script = behaviourSet.actions[nextActionIndex].action.Id;
                 agent->currentActionData.currentAction = 0;
                 agent->uninterruptible = behaviour.uninterruptible;
-                var groupControlContext = new BattleScriptContext();
-                groupControlContext.SetScriptEntityAndBlackboard(frame, agentEntityRef, null);
-                agent->currentActionData.Initialize(frame, agentEntityRef, ref groupControlContext);
                 return true;
             }
             return false;

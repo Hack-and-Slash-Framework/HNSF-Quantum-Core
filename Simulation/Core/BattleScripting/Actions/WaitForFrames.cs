@@ -21,11 +21,9 @@ namespace HnSF.core.GroupControl.Actions
         
         public override void OnEnter(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
         {
-            frame.Add<GenericTimer>(infoEntityRef, new GenericTimer()
-            {
-                countingType = TimerCountingType.CountDown,
-                value = framesToWait
-            });
+            frame.AddOrGet(infoEntityRef, out GenericTimer* gt);
+            gt->countingType = TimerCountingType.CountDown;
+            gt->value = framesToWait;
         }
 
         public override bool Tick(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
