@@ -11,12 +11,7 @@ namespace HnSF.core.AI.HTN.Actions
         public override void OnEnter(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
         {
             base.OnEnter(frame, infoEntityRef, ref context);
-            
-            var htnContext = (HTNAgentContext*)context.CustomData;
-            if (htnContext == null)
-                return;
-
-            htnContext->agent->currentActionResult = HTNTaskResult.PROCESSING;
+            SetAgentActionResult(frame, HTNTaskResult.PROCESSING, ref context);
         }
 
         public override bool Tick(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
@@ -27,11 +22,14 @@ namespace HnSF.core.AI.HTN.Actions
         public override void OnExit(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
         {
             base.OnExit(frame, infoEntityRef, ref context);
-            
+        }
+
+        public virtual void SetAgentActionResult(Frame frame, HTNTaskResult result, ref BattleScriptContext context)
+        {
             var htnContext = (HTNAgentContext*)context.CustomData;
             if (htnContext != null)
             {
-                htnContext->agent->currentActionResult = HTNTaskResult.SUCCESS;
+                htnContext->agent->currentActionResult = result;
             }
         }
     }
