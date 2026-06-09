@@ -22,8 +22,8 @@ namespace Quantum
 
             for (int i = 0; i < list.Count; i++)
             {
-                if (!frame.TryGet(list[i], out Hitbox h)) continue;
-                if (h.id != hitboxID) continue;
+                if (!frame.Unsafe.TryGetPointer<Hitbox>(list[i], out var h)) continue;
+                if (h->id != hitboxID) continue;
                 hitboxIndex = i;
                 return true;
             }
@@ -38,8 +38,8 @@ namespace Quantum
 
             for (int i = 0; i < list.Count; i++)
             {
-                if (!frame.TryGet(list[i], out Hitbox h)) continue;
-                if (h.id != hitboxID) continue;
+                if (!frame.Unsafe.TryGetPointer<Hitbox>(list[i], out var h)) continue;
+                if (h->id != hitboxID) continue;
                 frame.Destroy(list[i]);
                 list.RemoveAt(i);
                 return;

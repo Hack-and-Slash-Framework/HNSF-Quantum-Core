@@ -72,6 +72,7 @@ namespace Quantum
             CleanupHitboxes(frame);
             CleanupCollisionboxes(frame);
             CleanupThrowboxes(frame);
+            CleanupWarningboxes(frame);
         }
     }
 }

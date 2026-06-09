@@ -22,8 +22,8 @@ namespace Quantum
 
             for (int i = 0; i < list.Count; i++)
             {
-                if (!frame.TryGet(list[i], out Hurtbox h)) continue;
-                if (h.id != hurtboxID) continue;
+                if (!frame.Unsafe.TryGetPointer<Hurtbox>(list[i], out var h)) continue;
+                if (h->id != hurtboxID) continue;
                 hurtboxIndex = i;
                 return true;
             }
@@ -38,8 +38,8 @@ namespace Quantum
 
             foreach (var t in list)
             {
-                if (!frame.TryGet(t, out Hurtbox h)) continue;
-                if (h.id != hurtboxID) continue;
+                if (!frame.Unsafe.TryGetPointer<Hurtbox>(t, out var h)) continue;
+                if (h->id != hurtboxID) continue;
                 hurtbox = t;
                 return true;
             }
@@ -54,8 +54,8 @@ namespace Quantum
 
             for (int i = 0; i < list.Count; i++)
             {
-                if (!frame.TryGet(list[i], out Hurtbox h)) continue;
-                if (h.id != hurtboxID) continue;
+                if (!frame.Unsafe.TryGetPointer<Hurtbox>(list[i], out var h)) continue;
+                if (h->id != hurtboxID) continue;
                 frame.Destroy(list[i]);
                 list.RemoveAt(i);
                 return;
