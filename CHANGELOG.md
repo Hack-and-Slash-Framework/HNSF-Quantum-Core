@@ -1,3 +1,10 @@
+# [1.37.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.36.0...v1.37.0) (2026-06-09)
+
+
+### Features
+
+* DestroyWarningbox state action ([96eb0a5](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/96eb0a5ba00f121f0a4c27e708a89376ed4aad71))
+
 # [1.36.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.35.0...v1.36.0) (2026-06-09)
 
 
