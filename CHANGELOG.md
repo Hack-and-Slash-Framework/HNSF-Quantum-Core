@@ -1,3 +1,10 @@
+# [1.39.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.38.0...v1.39.0) (2026-06-09)
+
+
+### Features
+
+* HTN agent improvements ([4b403d1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/4b403d1269ee1e2e8611a18448cfbf9e34c57e40))
+
 # [1.38.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.37.0...v1.38.0) (2026-06-09)
 
 
