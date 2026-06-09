@@ -1,3 +1,10 @@
+# [1.38.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.37.0...v1.38.0) (2026-06-09)
+
+
+### Features
+
+* SoundHelper override values ([74457de](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/74457de5743d2f0741e02f4cf0dcbfb6c98c06a2))
+
 # [1.37.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.36.0...v1.37.0) (2026-06-09)
 
 
