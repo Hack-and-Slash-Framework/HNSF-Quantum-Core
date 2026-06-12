@@ -1,3 +1,10 @@
+# [1.40.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.39.0...v1.40.0) (2026-06-12)
+
+
+### Features
+
+* Start of HTN rewrite, animancer play improvements ([d37f1e5](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/d37f1e54c5dabbc03ea4159869186e39e272827e))
+
 # [1.39.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.38.0...v1.39.0) (2026-06-09)
 
 
