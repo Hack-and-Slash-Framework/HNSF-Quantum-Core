@@ -1,3 +1,10 @@
+## [1.40.1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.40.0...v1.40.1) (2026-06-12)
+
+
+### Bug Fixes
+
+* Use Animancer MoveTime ([a9b1926](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/a9b1926d0f42fc9eda1a64e77c999d0817dbd9a5))
+
 # [1.40.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.39.0...v1.40.0) (2026-06-12)
 
 
