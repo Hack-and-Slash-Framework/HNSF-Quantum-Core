@@ -56,11 +56,49 @@ namespace HnSF.core.GroupControl.Nodes
             // Build Map
             BuildActionList();
             
-            // Finished
-            gcScript.actions.Clear();
+            if (ActionListsEqual(gcScript.actions, actions))
+            {
+                actions = null;
+                return;
+            }
+
             gcScript.actions = actions;
             EditorUtility.SetDirty(gcScript);
             actions = null;
+        }
+
+        private static bool ActionListsEqual(IReadOnlyList<GroupControlAction> currentActions, IReadOnlyList<GroupControlAction> generatedActions)
+        {
+            if (ReferenceEquals(currentActions, generatedActions))
+                return true;
+
+            if (currentActions == null || generatedActions == null)
+                return false;
+
+            if (currentActions.Count != generatedActions.Count)
+                return false;
+
+            for (int i = 0; i < currentActions.Count; i++)
+            {
+                if (!ActionsEqual(currentActions[i], generatedActions[i]))
+                    return false;
+            }
+
+            return true;
+        }
+
+        private static bool ActionsEqual(GroupControlAction currentAction, GroupControlAction generatedAction)
+        {
+            if (ReferenceEquals(currentAction, generatedAction))
+                return true;
+
+            if (currentAction == null || generatedAction == null)
+                return false;
+
+            if (currentAction.GetType() != generatedAction.GetType())
+                return false;
+
+            return EditorJsonUtility.ToJson(currentAction) == EditorJsonUtility.ToJson(generatedAction);
         }
 
         private void BuildActionList()
