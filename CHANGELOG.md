@@ -1,3 +1,10 @@
+## [1.40.2](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.40.1...v1.40.2) (2026-06-12)
+
+
+### Bug Fixes
+
+* Fix graphs reimporting with no changes ([7277631](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/7277631b918737f75d4d7ab5c3234efd2009efba))
+
 ## [1.40.1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.40.0...v1.40.1) (2026-06-12)
 
 
