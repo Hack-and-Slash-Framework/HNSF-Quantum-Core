@@ -234,7 +234,7 @@ namespace HnSF
             foreach (var group in animatorInfoGroups)
             {
                 if (group.Value.states[layer] == null) continue;
-                group.Value.states[layer].Time = time * group.Value.states[layer].Speed;
+                group.Value.states[layer].MoveTime(time * group.Value.states[layer].Speed, false);
             }
         }
 
