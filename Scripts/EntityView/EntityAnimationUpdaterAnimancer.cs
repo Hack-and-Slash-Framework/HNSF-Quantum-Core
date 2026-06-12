@@ -257,8 +257,8 @@ namespace HnSF
                     continue;
                 }
 
-                var anims = animEntry.GetAnimsForTarget(group.Key);
-                if (anims == null || anims.Length == 0)
+                var anims = animEntry.GetAnimancerTransitionForTarget(group.Key);
+                if (anims == null)
                 {
                     if (group.Value.layers[layer].Mask != null) group.Value.layers[layer].Mask = null;
                     if (layer != 0) group.Value.layers[layer].Stop();
@@ -275,8 +275,7 @@ namespace HnSF
                 switch (animEntry.mixer)
                 {
                     case AnimationEntry.MixerType.none:
-                        var clip = anims[0].clip;
-                        var blp = group.Value.layers[layer].Play(clip, wantedFadeDuration);
+                        var blp = group.Value.layers[layer].Play(anims, wantedFadeDuration);
                         blp.Speed = animEntry.playRate;
                         group.Value.states[layer] = blp;
                         break;

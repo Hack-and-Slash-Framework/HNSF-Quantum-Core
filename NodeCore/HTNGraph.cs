@@ -8,14 +8,14 @@ namespace HnSF.core.GroupControl
 {
     [Graph(AssetExtension)]
     [Serializable]
-    public class ActorGroupScriptGraph : Graph
+    public class HTNGraph : Graph
     {
-        public const string AssetExtension = "agsg";
+        public const string AssetExtension = "htn";
         
-        [MenuItem("Assets/Create/HnSF/Battle Scripting", false)]
+        [MenuItem("Assets/Create/HnSF/AI/HTN Graph", false)]
         static void CreateAssetFile()
         {
-            GraphDatabase.PromptInProjectBrowserToCreateNewAsset<ActorGroupScriptGraph>();
+            GraphDatabase.PromptInProjectBrowserToCreateNewAsset<HTNGraph>();
         }
     }
 }

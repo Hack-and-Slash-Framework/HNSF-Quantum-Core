@@ -4,4 +4,7 @@ component HTNAgent{
     HTNTaskResult currentActionResult;
     bool uninterruptible;
     FP cooldown;
+    
+    
+    int operatorIndex;
 }

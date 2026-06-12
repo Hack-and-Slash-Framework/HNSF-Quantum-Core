@@ -1,4 +1,7 @@
-﻿using System;
+using System;
+using HnSF.core.AI.HTN.Conditions;
+using HnSF.core.AI.HTN.Effects;
+using HnSF.core.GroupControl;
 using HnSF.core.GroupControl.Grabbers;
 using HnSF.core.systems;
 using Quantum;
@@ -7,13 +10,10 @@ using UnityEngine;
 using UnityEngine.Scripting.APIUpdating;
 #endif
 
-namespace HnSF.core.GroupControl.Actions
+namespace HnSF.core.AI.HTN
 {
     [Serializable]
-#if QUANTUM_UNITY
-    [MovedFrom(autoUpdateAPI: false, sourceNamespace: "HnSF.core.scripting.VersusIntro.Actions", sourceClassName: "VersusScriptAction")]
-#endif
-    public unsafe partial class GroupControlAction
+    public unsafe partial class HTNOperatorBase
     {
         public string Label;
         public bool disable;
@@ -21,7 +21,11 @@ namespace HnSF.core.GroupControl.Actions
 #if QUANTUM_UNITY
         [SerializeReference, SubclassSelector]
 #endif
-        public GroupControlRule[] rules = Array.Empty<GroupControlRule>();
+        public HTNConditionBase[] preconditions = Array.Empty<HTNConditionBase>();
+#if QUANTUM_UNITY
+        [SerializeReference, SubclassSelector]
+#endif
+        public HTNEffectBase[] effects = Array.Empty<HTNEffectBase>();
         
         public NextExecutedNodeType nextExecutedNodeLogic;
         public int[] nextNodesOrdered;

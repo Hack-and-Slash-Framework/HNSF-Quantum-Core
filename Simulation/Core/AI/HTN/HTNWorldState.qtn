@@ -1,0 +1,4 @@
+struct HTNWorldState{
+    [AllocateOnComponentAdded, FreeOnComponentRemoved] 
+    dictionary<byte, byte> currentWorldState;
+}
