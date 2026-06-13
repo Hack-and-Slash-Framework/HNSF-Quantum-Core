@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using HnSF.core.AI.HTN.Conditions;
 using HnSF.core.AI.HTN.Effects;
 using HnSF.core.GroupControl;
@@ -7,7 +8,6 @@ using HnSF.core.systems;
 using Quantum;
 #if QUANTUM_UNITY
 using UnityEngine;
-using UnityEngine.Scripting.APIUpdating;
 #endif
 
 namespace HnSF.core.AI.HTN
@@ -21,29 +21,30 @@ namespace HnSF.core.AI.HTN
 #if QUANTUM_UNITY
         [SerializeReference, SubclassSelector]
 #endif
-        public HTNConditionBase[] preconditions = Array.Empty<HTNConditionBase>();
-#if QUANTUM_UNITY
-        [SerializeReference, SubclassSelector]
-#endif
-        public HTNEffectBase[] effects = Array.Empty<HTNEffectBase>();
+        public List<ICondition> preconditions = new List<ICondition>();
         
-        public NextExecutedNodeType nextExecutedNodeLogic;
-        public int[] nextNodesOrdered;
-        public WeightedList<int> nextNodesWeighted;
+        public NextExecutedNodeType nextOperatorSelectionType;
+        public int[] nextOperatorsOrdered;
+        public WeightedList<int> nextOperatorsWeighted;
 
-        public virtual void OnEnter(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
+        public virtual HTNTaskStatus OnEnter(ref HTNAgentContext context)
+        {
+            return HTNTaskStatus.Executing;
+        }
+        
+        public virtual HTNTaskStatus Tick(ref HTNAgentContext context)
+        {
+            return HTNTaskStatus.Success;
+        }
+        
+        public virtual void OnExit(ref HTNAgentContext context)
         {
             
         }
-        
-        public virtual bool Tick(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
+
+        public virtual void OnAbort(ref HTNAgentContext context)
         {
-            return false;
-        }
-        
-        public virtual void OnExit(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
-        {
-            
+            OnExit(ref context);
         }
     }
 }

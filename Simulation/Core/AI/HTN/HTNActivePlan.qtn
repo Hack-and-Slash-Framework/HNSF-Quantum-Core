@@ -1,4 +1,5 @@
 struct HTNActivePlan{
-    [AllocateOnComponentAdded, FreeOnComponentRemoved] 
     list<byte> tasksToProcess;
+    byte currentTask;
+    int currentOperator;
 }

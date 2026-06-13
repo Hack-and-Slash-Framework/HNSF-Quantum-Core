@@ -1,6 +1,0 @@
-enum HTNTaskResult{
-    UNINITIALIZED,
-    SUCCESS,
-    FAILURE,
-    PROCESSING
-}

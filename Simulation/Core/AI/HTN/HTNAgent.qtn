@@ -1,10 +1,13 @@
 component HTNAgent{
-    asset_ref<HTNBehaviourDefinition> behaviourDefinition;
-    GroupControlStateData currentActionData;
-    HTNTaskResult currentActionResult;
+    asset_ref<HnSF.core.AI.HTN.Tasks.DomainAssetObject> domainAssetRef;
+    HTNActivePlan currentPlan;
+    HTNWorldState worldState;
+    HTNContextState contextState;
+    [AllocateOnComponentAdded, FreeOnComponentRemoved] 
+    list<byte> lastMTR;
+    bool contextDirty;
+    HTNTaskStatus lastStatus;
+    
     bool uninterruptible;
     FP cooldown;
-    
-    
-    int operatorIndex;
 }

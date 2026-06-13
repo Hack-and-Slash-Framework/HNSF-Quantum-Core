@@ -1,3 +1,5 @@
+
+using HnSF.core.AI.HTN.Tasks;
 #if QUANTUM_UNITY
 using UnityEngine.Scripting.APIUpdating;
 using UnityEngine;
@@ -8,12 +10,12 @@ namespace Quantum
 #if QUANTUM_UNITY
     [MovedFrom(autoUpdateAPI: false, sourceClassName: "BattleActorAIDefinitionCWA")]
 #endif
-    public class BattleActorAIDefinitionHTN : BattleActorAIDefinition
+    public unsafe partial class BattleActorAIDefinitionHTN : BattleActorAIDefinition
     {
 #if QUANTUM_UNITY
         [Header("Agent Info")]
 #endif
-        public AssetRef<HTNBehaviourDefinition> behaviourDefinition;
+        public AssetRef<DomainAssetObject> startingDomain;
         public AssetRef<AIConfigBase> aiConfig;
         public AssetRef<AIBlackboardInitializer> blackboardInitRef;
 
@@ -23,9 +25,9 @@ namespace Quantum
 
             var agent = new HTNAgent()
             {
-                behaviourDefinition = behaviourDefinition,
+                domainAssetRef = startingDomain,
                 cooldown = 0,
-                currentActionData = default
+                lastStatus = HTNTaskStatus.Uninitialized
             };
             frame.Add(aiEntityRef, agent);
         }

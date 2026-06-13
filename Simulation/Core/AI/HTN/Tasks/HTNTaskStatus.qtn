@@ -1,0 +1,7 @@
+enum HTNTaskStatus{
+    Uninitialized,
+    Executing,
+    Executing_DelayFrame,
+    Success,
+    Failure
+}

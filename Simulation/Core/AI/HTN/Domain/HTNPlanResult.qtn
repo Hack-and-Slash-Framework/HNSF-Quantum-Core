@@ -1,0 +1,6 @@
+enum HTNPlanResult{
+    UNINITIALIZED,
+    SUCCESS,
+    FAILURE,
+    PROCESSING
+}
