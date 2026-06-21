@@ -1,3 +1,10 @@
+## [2.2.1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.2.0...v2.2.1) (2026-06-21)
+
+
+### Bug Fixes
+
+* Serialization ([0575292](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/05752924b3b156fc2b5b15c5d52e01a45fd926fc))
+
 # [2.2.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.1.2...v2.2.0) (2026-06-21)
 
 
