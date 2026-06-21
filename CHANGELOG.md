@@ -1,3 +1,10 @@
+## [2.1.2](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.1.1...v2.1.2) (2026-06-21)
+
+
+### Bug Fixes
+
+* Provide context to BattleScriptingParam ([811f608](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/811f608cd2b47045d7697ee3a35e0be6148f550d))
+
 ## [2.1.1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.1.0...v2.1.1) (2026-06-21)
 
 
