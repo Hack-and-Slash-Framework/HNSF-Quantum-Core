@@ -1,3 +1,10 @@
+# [2.2.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.1.2...v2.2.0) (2026-06-21)
+
+
+### Features
+
+* Graph untyped conversions ([faf7342](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/faf7342d6be8fc58ff2697214a6d7c7620a059bc))
+
 ## [2.1.2](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.1.1...v2.1.2) (2026-06-21)
 
 
