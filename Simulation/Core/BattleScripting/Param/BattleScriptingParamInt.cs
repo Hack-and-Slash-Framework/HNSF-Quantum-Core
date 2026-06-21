@@ -1,3 +1,4 @@
+using HnSF.core.GroupControl;
 using HnSF.core.GroupControl.Functions;
 using HnSF.core.state;
 using HnSF.core.state.functions;
@@ -31,14 +32,14 @@ namespace Quantum
             return configPair.Value.Integer;
         }
 
-        protected override int GetFunctionValue(Frame frame, EntityRef entity)
+        protected override int GetFunctionValue(Frame frame, EntityRef entity, ref BattleScriptContext context)
         {
-            return GetFunctionValue((FrameThreadSafe)frame, entity);
+            return GetFunctionValue((FrameThreadSafe)frame, entity, ref context);
         }
 
-        protected override int GetFunctionValue(FrameThreadSafe frame, EntityRef entity)
+        protected override int GetFunctionValue(FrameThreadSafe frame, EntityRef entity, ref BattleScriptContext context)
         {
-            return (FunctionRef as GroupControlFunction<int>).Execute((Frame)frame, entity);
+            return (FunctionRef as GroupControlFunction<int>).Execute((Frame)frame, entity, ref context);
         }
 
         public override void SetFunction(GroupControlFunction newFunction)

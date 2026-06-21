@@ -29,7 +29,7 @@ namespace HnSF.core.GroupControl.Functions
     [Serializable]
     public unsafe partial class GroupControlFunction<T> : GroupControlFunction
     {
-        public virtual T Execute(Frame frame, EntityRef infoEntityRef)
+        public virtual T Execute(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
         {
             return default(T);
         }
@@ -38,7 +38,7 @@ namespace HnSF.core.GroupControl.Functions
     [Serializable]
     public unsafe partial class GroupControlFunctionEntityRef : GroupControlFunction<EntityRef>
     {
-        public override EntityRef Execute(Frame frame, EntityRef infoEntityRef)
+        public override EntityRef Execute(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
         {
             return default;
         }
@@ -47,7 +47,7 @@ namespace HnSF.core.GroupControl.Functions
     [Serializable]
     public unsafe partial class GroupControlFunctionAssetRef : GroupControlFunction<AssetRef>
     {
-        public override AssetRef Execute(Frame frame, EntityRef infoEntityRef)
+        public override AssetRef Execute(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
         {
             return default;
         }
@@ -56,7 +56,7 @@ namespace HnSF.core.GroupControl.Functions
     [Serializable]
     public unsafe partial class GroupControlFunctionByte : GroupControlFunction<byte>
     {
-        public override byte Execute(Frame frame, EntityRef infoEntityRef)
+        public override byte Execute(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
         {
             return 0;
         }
@@ -65,7 +65,7 @@ namespace HnSF.core.GroupControl.Functions
     [Serializable]
     public unsafe partial class GroupControlFunctionInt : GroupControlFunction<int>
     {
-        public override int Execute(Frame frame, EntityRef infoEntityRef)
+        public override int Execute(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
         {
             return 0;
         }
@@ -74,7 +74,7 @@ namespace HnSF.core.GroupControl.Functions
     [Serializable]
     public unsafe partial class GroupControlFunctionLong : GroupControlFunction<long>
     {
-        public override long Execute(Frame frame, EntityRef infoEntityRef)
+        public override long Execute(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
         {
             return 0;
         }
@@ -83,7 +83,7 @@ namespace HnSF.core.GroupControl.Functions
     [Serializable]
     public unsafe partial class GroupControlFunctionFP : GroupControlFunction<FP>
     {
-        public override FP Execute(Frame frame, EntityRef infoEntityRef)
+        public override FP Execute(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
         {
             return 0;
         }
@@ -92,7 +92,7 @@ namespace HnSF.core.GroupControl.Functions
     [Serializable]
     public unsafe partial class GroupControlFunctionFPVector2 : GroupControlFunction<FPVector2>
     {
-        public override FPVector2 Execute(Frame frame, EntityRef infoEntityRef)
+        public override FPVector2 Execute(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
         {
             return FPVector2.Zero;
         }
@@ -101,7 +101,7 @@ namespace HnSF.core.GroupControl.Functions
     [Serializable]
     public unsafe partial class GroupControlFunctionFPVector3 : GroupControlFunction<FPVector3>
     {
-        public override FPVector3 Execute(Frame frame, EntityRef infoEntityRef)
+        public override FPVector3 Execute(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
         {
             return FPVector3.Zero;
         }

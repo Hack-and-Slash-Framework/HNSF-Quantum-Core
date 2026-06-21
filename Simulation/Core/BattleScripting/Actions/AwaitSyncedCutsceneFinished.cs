@@ -26,7 +26,7 @@ namespace HnSF.core.GroupControl.Actions
         
         public override bool Tick(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
         {
-            var syncedSourceEntityRef = entityRefFunction == null ? infoEntityRef : entityRefFunction.Execute(frame, infoEntityRef);
+            var syncedSourceEntityRef = entityRefFunction == null ? infoEntityRef : entityRefFunction.Execute(frame, infoEntityRef, ref context);
             if (syncedSourceEntityRef == default || !frame.Exists(syncedSourceEntityRef))
                 return true;
             if (!frame.Unsafe.TryGetPointer<SyncedCutsceneSource>(syncedSourceEntityRef, out var scs))
@@ -77,23 +77,12 @@ namespace HnSF.core.GroupControl.Nodes
         {
             this.GetNodeOptionByName(OPTION_LABEL).TryGetValue<string>(out var label);
             
-            this.GetInputPortByName(IN_PORT_FrameToWaitFor).TryGetValue(out int frameToWaitFor);
-            this.GetInputPortByName(IN_PORT_Timeout).TryGetValue(out int timeoutFrame);
-            var portEntityRef = this.GetInputPortByName(IN_PORT_EntityFunction).FirstConnectedPort;
-
-            GroupControlFunctionEntityRef entityRefFunction = null;
-            
-            if (portEntityRef?.GetNode() is FunctionNodeBase fnEntityRef)
-            {
-                entityRefFunction = fnEntityRef.Convert() as GroupControlFunctionEntityRef;
-            }
-            
             return new HnSF.core.GroupControl.Actions.AwaitSyncedCutsceneFinished()
             {
                 Label = label,
-                entityRefFunction =  entityRefFunction,
-                waitForFrame = frameToWaitFor,
-                timeout = timeoutFrame,
+                entityRefFunction = ConvertFunctionNode<GroupControlFunctionEntityRef>(GetInputPortByName(IN_PORT_EntityFunction)),
+                waitForFrame = GetInputPortValue<int>(GetInputPortByName(IN_PORT_FrameToWaitFor)),
+                timeout = GetInputPortValue<int>(GetInputPortByName(IN_PORT_Timeout)),
             };
         }
     }

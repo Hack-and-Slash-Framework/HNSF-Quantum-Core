@@ -1,3 +1,4 @@
+using HnSF.core.GroupControl;
 using HnSF.core.GroupControl.Functions;
 using HnSF.core.state;
 using HnSF.core.state.functions;
@@ -31,14 +32,14 @@ namespace Quantum
             return configPair.Value.FPVector3;
         }
 
-        protected override FPVector3 GetFunctionValue(Frame frame, EntityRef entity)
+        protected override FPVector3 GetFunctionValue(Frame frame, EntityRef entity, ref BattleScriptContext context)
         {
-            return GetFunctionValue((FrameThreadSafe)frame, entity);
+            return GetFunctionValue((FrameThreadSafe)frame, entity, ref context);
         }
 
-        protected override FPVector3 GetFunctionValue(FrameThreadSafe frame, EntityRef entity)
+        protected override FPVector3 GetFunctionValue(FrameThreadSafe frame, EntityRef entity, ref BattleScriptContext context)
         {
-            return (FunctionRef as GroupControlFunction<FPVector3>).Execute((Frame)frame, entity);
+            return (FunctionRef as GroupControlFunction<FPVector3>).Execute((Frame)frame, entity, ref context);
         }
         
         public override void SetFunction(GroupControlFunction newFunction)

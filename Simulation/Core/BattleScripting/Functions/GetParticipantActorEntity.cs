@@ -16,14 +16,17 @@ namespace HnSF.core.GroupControl.Functions
     [Serializable]
     public unsafe partial class GetParticipantActorEntity : GroupControlFunctionEntityRef
     {
-        public int participantId;
-        public int index;
+        public BattleScriptingParamInt paramParticipantId;
+        public BattleScriptingParamInt paramIndex;
         
-        public override EntityRef Execute(Frame frame, EntityRef infoEntityRef)
+        public override EntityRef Execute(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
         {
             var gamemodeParticipantsGlobal = frame.Unsafe.GetOrAddSingletonPointer<GamemodeParticipantsGlobal>();
             var participantDataEntities = frame.ResolveDictionary(gamemodeParticipantsGlobal->participantDataEntities);
 
+            var participantId = paramParticipantId.Resolve(frame, infoEntityRef, ref context);
+            var index = paramIndex.Resolve(frame, infoEntityRef, ref context);
+            
             if (!participantDataEntities.ContainsKey(participantId)) return default;
             var participantSpawnedActors = frame.Unsafe.GetPointer<ParticipantDataBattleActorEntities>(participantDataEntities[participantId]);
             var spawnedActorList = frame.ResolveList(participantSpawnedActors->battleActorEntities);
@@ -52,26 +55,21 @@ namespace HnSF.core.GroupControl.Nodes
         {
             AddInputOutputExecutionPorts(context);
             
-            context.AddInputPort<int>(PORT_PARTICIPANT_ID)
-                .WithDisplayName("Participant Id")
-                .WithDefaultValue(1)
+            context.AddInputPort(PORT_PARTICIPANT_ID)
+                .WithDisplayName("Participant Id Param")
                 .Build();
             
-            context.AddInputPort<int>(PORT_ACTOR_INDEX)
-                .WithDisplayName("Actor Index")
-                .WithDefaultValue(0)
+            context.AddInputPort(PORT_ACTOR_INDEX)
+                .WithDisplayName("Actor Index Param")
                 .Build();
         }
 
         public override GroupControlFunction Convert()
         {
-            this.GetInputPortByName(PORT_PARTICIPANT_ID).TryGetValue(out int participantId);
-            this.GetInputPortByName(PORT_ACTOR_INDEX).TryGetValue(out int actorIndex);
-            
-            return new HnSF.core.GroupControl.Functions.GetParticipantActorEntity()
+            return new Functions.GetParticipantActorEntity()
             {
-                participantId = participantId,
-                index = actorIndex
+                paramParticipantId = GetInputPortParam<BattleScriptingParamInt, int>(GetInputPortByName(PORT_PARTICIPANT_ID)),
+                paramIndex = GetInputPortParam<BattleScriptingParamInt, int>(GetInputPortByName(PORT_ACTOR_INDEX)),
             };
         }
     }

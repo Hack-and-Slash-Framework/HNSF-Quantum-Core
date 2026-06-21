@@ -24,7 +24,7 @@ namespace HnSF.core.GroupControl.Actions
         {
             frame.AddOrGet<TaggedEntityMapping>(infoEntityRef, out var tem);
             var mappingDict = frame.ResolveDictionary(tem->tagToEntityMap);
-            var entityRef = entityRefFunction.Execute(frame, infoEntityRef);
+            var entityRef = entityRefFunction.Execute(frame, infoEntityRef, ref context);
             if (clearTagIfEntityNotFound && (entityRef == EntityRef.None || !frame.Exists(entityRef)))
             {
                 mappingDict[tag] = EntityRef.None;
@@ -76,7 +76,6 @@ namespace HnSF.core.GroupControl.Nodes
         public override GroupControlAction Convert()
         {
             this.GetNodeOptionByName(optionMapTag).TryGetValue(out AssetRef<Tag> tag);
-            
             
             return new Actions.AssignEntityToTagMap()
             {

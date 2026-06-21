@@ -1,4 +1,5 @@
 using System;
+using HnSF.core.GroupControl;
 using HnSF.core.GroupControl.Functions;
 using HnSF.core.state;
 
@@ -30,12 +31,12 @@ namespace Quantum
             return default;
         }
 
-        protected virtual T GetFunctionValue(Frame frame, EntityRef entity)
+        protected virtual T GetFunctionValue(Frame frame, EntityRef entity, ref BattleScriptContext context)
         {
             return default;
         }
 
-        protected virtual T GetFunctionValue(FrameThreadSafe frame, EntityRef entity)
+        protected virtual T GetFunctionValue(FrameThreadSafe frame, EntityRef entity, ref BattleScriptContext context)
         {
             return default;
         }
@@ -48,21 +49,22 @@ namespace Quantum
         /// <summary>
         /// Use this to solve the AIParam value when the source of the value is unknown
         /// </summary>
-        public T Resolve(Frame frame, EntityRef entity, ref HNSFStateContext stateContext)
+        public T Resolve(Frame frame, EntityRef entity, ref BattleScriptContext context)
         {
             if (Source == HNSFParamSource.Value || (Source != HNSFParamSource.Function && string.IsNullOrEmpty(Key) == true))
                 return DefaultValue;
 
             switch (Source)
             {
+                /*
                 case HNSFParamSource.Blackboard:
-                    BlackboardValue blackboardValue = stateContext.blackboard->GetBlackboardValue(frame, Key);
+                    BlackboardValue blackboardValue = context.blackboard->GetBlackboardValue(frame, Key);
                     return GetBlackboardValue(blackboardValue);
                 case HNSFParamSource.Config:
-                    AIConfigBase.KeyValuePair configPair = stateContext.aiConfig?.Get(Key);
-                    return configPair != null ? GetConfigValue(configPair) : DefaultValue;
+                    AIConfigBase.KeyValuePair configPair = context.aiConfig?.Get(Key);
+                    return configPair != null ? GetConfigValue(configPair) : DefaultValue;*/
                 case HNSFParamSource.Function:
-                    return GetFunctionValue(frame, entity);
+                    return GetFunctionValue(frame, entity, ref context);
             }
         
             return DefaultValue;
@@ -89,17 +91,17 @@ namespace Quantum
         /// <summary>
         /// Use this if it is known that the HNSFParam stores specifically a Func
         /// </summary>
-        public unsafe T ResolveFunction(Frame frame, EntityRef entity, ref HNSFStateContext stateContext)
+        public unsafe T ResolveFunction(Frame frame, EntityRef entity, ref BattleScriptContext context)
         {
-            return ResolveFunction((FrameThreadSafe)frame, entity);
+            return ResolveFunction((FrameThreadSafe)frame, entity, ref context);
         }
 
         /// <summary>
         /// Use this if it is known that the HNSFParam stores specifically a Func
         /// </summary>
-        public unsafe T ResolveFunction(FrameThreadSafe frame, EntityRef entity)
+        public unsafe T ResolveFunction(FrameThreadSafe frame, EntityRef entity, ref BattleScriptContext context)
         {
-            return GetFunctionValue(frame, entity);
+            return GetFunctionValue(frame, entity, ref context);
         }
 
         public virtual BattleScriptingParam<T> Clone()
