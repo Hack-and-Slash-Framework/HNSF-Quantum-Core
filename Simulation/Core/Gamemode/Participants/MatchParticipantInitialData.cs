@@ -1,6 +1,6 @@
+using System;
 using System.Collections.Generic;
 using HnSF.core.state;
-using UnityEngine.Serialization;
 
 namespace Quantum
 {
@@ -22,7 +22,7 @@ namespace Quantum
         public bool spectator;
         public bool ready;
         public AssetRef<BattleActorDefinition>[] battleActorDefinitionReferences;
-        public List<List<AssetRef<HNSFSpecialSet>>> battleActorSpecials;
+        [NonSerialized] public List<List<AssetRef<HNSFSpecialSet>>> battleActorSpecials;
         public int teamId;
     }
 }

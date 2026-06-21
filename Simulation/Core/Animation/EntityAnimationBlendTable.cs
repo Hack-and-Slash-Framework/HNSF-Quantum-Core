@@ -9,7 +9,7 @@ namespace HnSF
     [Serializable]
     public class EntityAnimationBlendTable
     {
-        public Dictionary<AssetRef<AnimationEntry>, float> blends = new();
+        [NonSerialized] public Dictionary<AssetRef<AnimationEntry>, float> blends = new();
         
         [Serializable]
         public struct Entry

@@ -33,9 +33,9 @@ namespace HnSF
         List<List<List<(HNSFState, HNSFStateSet)>>> setToGroupToStateList = new List<List<List<(HNSFState, HNSFStateSet)>>>(); 
         
         [OnOpenAsset]
-        public static bool OpenGraphAsset(int instanceID, int line)
+        public static bool OpenGraphAsset(EntityId entityId, int line)
         {
-            var asset = EditorUtility.EntityIdToObject(instanceID);
+            var asset = EditorUtility.EntityIdToObject(entityId);
             if (asset is not IFighterDefinition definition) return false;
 
             var ew = OpenWindow(definition);

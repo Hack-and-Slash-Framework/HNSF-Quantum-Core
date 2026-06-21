@@ -12,6 +12,7 @@ namespace Quantum
         Function,
     }
 
+    [Serializable]
     public abstract unsafe class HNSFParam<T>
     {
         public HNSFParamSource Source = HNSFParamSource.Value;

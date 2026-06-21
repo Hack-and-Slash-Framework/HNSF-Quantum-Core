@@ -201,9 +201,9 @@ namespace HnSF
                         out var gcp))
                 {
                     Debug.LogError($"Could not get requested cutscene player this frame. " +
-                                   $"source={syncedCutsceneGroup.currentSource.cutsceneSource}," +
-                                   $"tag={syncedCutsceneGroup.currentSource.cutsceneTag}," +
-                                   $"player={syncedCutsceneGroup.currentSource.sourcePlayer}");
+                                   $"source={syncedCutsceneGroup.currentSource.cutsceneSource.ToString()}," +
+                                   $"tag={syncedCutsceneGroup.currentSource.cutsceneTag.ToString()}," +
+                                   $"player={syncedCutsceneGroup.currentSource.sourcePlayer.ToString()}");
                     continue;
                 }
 

@@ -135,7 +135,7 @@ namespace HnSF.ui.menus.traditionallobby
             if (Keyboard.current[Key.F6].wasPressedThisFrame)
             {
                 string lobbyPlayerPrintout = "";
-                for (int i = 0; i < room.players.Count; i++) lobbyPlayerPrintout += $"{room.players[i]},\n";
+                for (int i = 0; i < room.players.Count; i++) lobbyPlayerPrintout += $"{room.players[i].ToString()},\n";
                 Debug.Log(lobbyPlayerPrintout);
             }
         }

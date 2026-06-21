@@ -8,8 +8,8 @@ namespace Quantum
 {
     public unsafe partial class GameplayTagsSource : AssetObject
     {
-        public Dictionary<ushort, AssetRef<Tag>> shortIdToAssetRef = new();
-        public Dictionary<AssetRef<Tag>, ushort> tagAssetRefToShortId = new();
+        [NonSerialized] public Dictionary<ushort, AssetRef<Tag>> shortIdToAssetRef = new();
+        [NonSerialized] public Dictionary<AssetRef<Tag>, ushort> tagAssetRefToShortId = new();
         
         public string newTagLocation;
         public List<AssetRef<Tag>> GameplayTags = new List<AssetRef<Tag>>();

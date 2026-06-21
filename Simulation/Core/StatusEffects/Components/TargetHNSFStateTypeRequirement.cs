@@ -10,8 +10,8 @@ namespace HnSF.StatusEffects.Components
         [System.Serializable]
         public class TagRequirements
         {
-            public HashSet<AssetRef<Tag>> validTagsSet = new HashSet<AssetRef<Tag>>();
-            public HashSet<AssetRef<Tag>> mustNotHaveTagsSet = new HashSet<AssetRef<Tag>>();
+            [NonSerialized] public HashSet<AssetRef<Tag>> validTagsSet = new HashSet<AssetRef<Tag>>();
+            [NonSerialized] public HashSet<AssetRef<Tag>> mustNotHaveTagsSet = new HashSet<AssetRef<Tag>>();
             
             public AssetRef<Tag>[] validTags = Array.Empty<AssetRef<Tag>>();
             public AssetRef<Tag>[] mustNotHaveTags = Array.Empty<AssetRef<Tag>>();

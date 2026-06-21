@@ -242,9 +242,10 @@ namespace HnSF
             public int Index;
             public SerializedProperty Property;
         }
-
+        
+        /*
         public new class UxmlFactory : UxmlFactory<SimpleList, UxmlTraits>
         {
-        }
+        }*/
     }
 }

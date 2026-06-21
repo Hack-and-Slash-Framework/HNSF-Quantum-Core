@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -12,11 +13,11 @@ namespace HnSF
         {
             public int id;
             public string propertyPath;
-            public SerializedProperty sp;
+            [NonSerialized] public SerializedProperty sp;
             public bool selected;
             public Quantum.Tag tagAsset;
-            public TagReferenceData parent;
-            public TagReferenceData[] childTags;
+            [SerializeReference] public TagReferenceData parent;
+            [SerializeReference] public TagReferenceData[] childTags;
 
             public void SelectToRoot()
             {
@@ -34,8 +35,8 @@ namespace HnSF
             }
         }
 
-        [SerializeField] public List<TagReferenceData> tagMap = new List<TagReferenceData>();
-        [SerializeField] public List<TagReferenceData> selectedTags = new List<TagReferenceData>();
+        [SerializeReference] public List<TagReferenceData> tagMap = new List<TagReferenceData>();
+        [SerializeReference] public List<TagReferenceData> selectedTags = new List<TagReferenceData>();
 
         public void EvaluateSelectedTags()
         {

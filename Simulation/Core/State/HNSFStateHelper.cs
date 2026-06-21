@@ -153,7 +153,6 @@ namespace HnSF.core.state
                 case StateActionTargetType.FromFunction:
                     var tempContext = new HNSFStateContext(frame, targetContext.callingEntity);
                     return targetContext.entityRefFunction.Execute(frame, targetContext.callingEntity, ref tempContext);
-                    break;
             }
             return EntityRef.None;
         }

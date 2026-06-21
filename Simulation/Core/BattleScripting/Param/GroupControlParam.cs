@@ -11,7 +11,8 @@ namespace Quantum
         Blackboard,
         Function,
     }
-
+    
+    [System.Serializable]
     public abstract unsafe class GroupControlParam<T>
     {
         public HNSFParamSource Source = HNSFParamSource.Value;

@@ -14,31 +14,31 @@ namespace HnSF
     {
         [SerializeField] public UnityEvent OnWindowClosed = new UnityEvent();
         
-        public PreviewRenderUtility previewUtility;
-        protected int frame = 0;
-        protected bool rotationMode = false;
-        protected bool moveMode = false;
-        protected Vector2 mousePos = new Vector2(0, 0);
-        protected Vector2 diff = Vector2.zero;
-        protected float rotSpeed = 1;
-        protected float scrollWheel = 0;
-        protected float scrollSpeed = 0.5f;
-        protected float moveSpeed = 0.5f;
-        protected bool autoPlay = false;
+        [NonSerialized] public PreviewRenderUtility previewUtility;
+        [SerializeField] protected int frame = 0;
+        [SerializeField] protected bool rotationMode = false;
+        [SerializeField] protected bool moveMode = false;
+        [SerializeField] protected Vector2 mousePos = new Vector2(0, 0);
+        [SerializeField] protected Vector2 diff = Vector2.zero;
+        [SerializeField] protected float rotSpeed = 1;
+        [SerializeField] protected float scrollWheel = 0;
+        [SerializeField] protected float scrollSpeed = 0.5f;
+        [SerializeField] protected float moveSpeed = 0.5f;
+        [SerializeField] protected bool autoPlay = false;
 
-        public GameObject rootGameObject;
+        [SerializeField] public GameObject rootGameObject;
         
-        protected GameObject attackerSceneReference;
-        protected StatePreviewEntityViewUpdater evu;
-        public QuantumRunner runner;
+        [SerializeField] protected GameObject attackerSceneReference;
+        [SerializeField] protected StatePreviewEntityViewUpdater evu;
+        [NonSerialized] public QuantumRunner runner;
         
         // Config
-        public StatePreviewConfiguration previewConfig;
-        public HNSFStateSet stateSetAsset;
-        public HNSFState stateAsset;
-        public BattleActorDefinition battleActorDefinition;
-        public EntityRef attackerEntityRef;
-        public EntityRef defenderEntityRef;
+        [SerializeField] public StatePreviewConfiguration previewConfig;
+        [SerializeField] public HNSFStateSet stateSetAsset;
+        [SerializeField] public HNSFState stateAsset;
+        [SerializeField] public BattleActorDefinition battleActorDefinition;
+        [NonSerialized] public EntityRef attackerEntityRef;
+        [NonSerialized] public EntityRef defenderEntityRef;
         
         unsafe partial void InitializeSimulation();
         unsafe partial void SetStateForPlaybackUser(HNSFState state);
@@ -99,7 +99,7 @@ namespace HnSF
                 runner = null;
             }
             
-            var instance = FindFirstObjectByType<QuantumTaskRunnerJobs>();
+            var instance = FindAnyObjectByType<QuantumTaskRunnerJobs>();
             if (instance) {
                 DestroyImmediate(instance.gameObject);
             }

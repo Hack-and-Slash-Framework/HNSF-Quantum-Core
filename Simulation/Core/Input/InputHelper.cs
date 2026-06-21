@@ -137,10 +137,6 @@ namespace Quantum
         
         public static byte GetButtonHeldTime(ActorInputButtonType inputButtons, ActorHoldInputInfo* actorHoldInputInfo)
         {
-            switch (inputButtons)
-            {
-            }
-
             return 0;
         }
 #endif

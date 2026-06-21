@@ -52,11 +52,29 @@ namespace HnSF.core.GroupControl.Functions
             return default;
         }
     }
-
+    
+    [Serializable]
+    public unsafe partial class GroupControlFunctionByte : GroupControlFunction<byte>
+    {
+        public override byte Execute(Frame frame, EntityRef infoEntityRef)
+        {
+            return 0;
+        }
+    }
+    
     [Serializable]
     public unsafe partial class GroupControlFunctionInt : GroupControlFunction<int>
     {
         public override int Execute(Frame frame, EntityRef infoEntityRef)
+        {
+            return 0;
+        }
+    }
+    
+    [Serializable]
+    public unsafe partial class GroupControlFunctionLong : GroupControlFunction<long>
+    {
+        public override long Execute(Frame frame, EntityRef infoEntityRef)
         {
             return 0;
         }
