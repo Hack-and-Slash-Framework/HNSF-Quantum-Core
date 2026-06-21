@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using HnSF.core.GroupControl.Actions;
+using HnSF.core.GroupControl.Functions;
 using HnSF.core.GroupControl.Grabbers;
 using Unity.GraphToolkit.Editor;
 using UnityEngine;
@@ -14,8 +15,6 @@ namespace HnSF.core.GroupControl.Nodes
     public abstract class ActorGroupControlNode : ControlNodeBase
     {
         public const string EXECUTION_PORT_DEFAULT_NAME = "ExecutionPort";
-        
-        public const string IN_PORT_CONDITIONS = "Conditions";
 
         public const string OPTION_LABEL = "Label";
         
@@ -56,43 +55,6 @@ namespace HnSF.core.GroupControl.Nodes
         public virtual GroupControlAction Convert()
         {
             return null;
-        }
-
-        public virtual void ConvertRuleNodes(GroupControlAction action) 
-        {
-            List<GroupControlRule> rules = new List<GroupControlRule>();
-            var port = GetInputPortByName(IN_PORT_CONDITIONS).FirstConnectedPort;
-            if (port == null)
-            {
-                action.rules = null;
-                return;
-            }
-            var initialRuleNode = port.GetNode() as RuleNodeBase;
-            if (initialRuleNode == null)
-            {
-                action.rules = null;
-                return;
-            }
-            ConvertRuleNodesRecursive(rules, initialRuleNode);
-            rules.Reverse();
-            action.rules = rules.ToArray();
-        }
-
-        private void ConvertRuleNodesRecursive(List<GroupControlRule> rules, RuleNodeBase ruleNode)
-        {
-            rules.Add(ruleNode.Convert());
-
-            var port = ruleNode.GetInputPortByName(RuleNodeBase.EXECUTION_PORT_DEFAULT_NAME).FirstConnectedPort;
-            if (port == null)
-            {
-                return;
-            }
-            var previousNode = port.GetNode() as RuleNodeBase;
-            if (previousNode == null)
-            {
-                return;
-            }
-            ConvertRuleNodesRecursive(rules, previousNode);
         }
     }
 }

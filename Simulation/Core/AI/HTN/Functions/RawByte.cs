@@ -36,30 +36,31 @@ namespace HnSF.core.AI.HTN.Nodes
     [UseWithGraph(typeof(PrimitiveTaskGraph))]
     public unsafe class FunctionRawByte : FunctionBase
     {
-        public const string optionValue = "value";
+        public const string inValue = "Raw";
 
         protected override void OnDefineOptions(IOptionDefinitionContext context)
         {
             base.OnDefineOptions(context);
-            context.AddOption<byte>(optionValue)
-                .WithDisplayName("Value")
-                .Build();
         }
 
         protected override void OnDefinePorts(Node.IPortDefinitionContext context)
         {
             AddInputOutputExecutionPorts(context);
+
+            context.AddInputPort<int>(inValue)
+                .WithDisplayName("Value")
+                .WithDefaultValue(0)
+                .Build();
         }
 
         public override HTNFunction Convert()
         {
             this.GetNodeOptionByName(OPTION_LABEL).TryGetValue<string>(out var label);
-            GetNodeOptionByName(optionValue).TryGetValue<byte>(out var value);
             
             return new Functions.RawByte()
             {
                 Label = label,
-                value = value
+                value = (byte)GetInputPortValue<int>(GetInputPortByName(inValue))
             };
         }
     }

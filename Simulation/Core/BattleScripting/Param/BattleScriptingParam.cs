@@ -1,4 +1,5 @@
 using System;
+using HnSF.core.GroupControl.Functions;
 using HnSF.core.state;
 
 namespace Quantum
@@ -13,17 +14,37 @@ namespace Quantum
     }
     
     [System.Serializable]
-    public abstract unsafe class GroupControlParam<T>
+    public unsafe class BattleScriptingParam<T>
     {
         public HNSFParamSource Source = HNSFParamSource.Value;
         public string Key;
         public T DefaultValue;
-    
-        protected abstract T GetBlackboardValue(BlackboardValue value);
-        protected abstract T GetConfigValue(AIConfigBase.KeyValuePair configPair);
-        protected abstract T GetFunctionValue(Frame frame, EntityRef entity);
-        protected abstract T GetFunctionValue(FrameThreadSafe frame, EntityRef entity);
-    
+        
+        protected virtual T GetBlackboardValue(BlackboardValue value)
+        {
+            return default;
+        }
+
+        protected virtual T GetConfigValue(AIConfigBase.KeyValuePair configPair)
+        {
+            return default;
+        }
+
+        protected virtual T GetFunctionValue(Frame frame, EntityRef entity)
+        {
+            return default;
+        }
+
+        protected virtual T GetFunctionValue(FrameThreadSafe frame, EntityRef entity)
+        {
+            return default;
+        }
+
+        public virtual void SetFunction(GroupControlFunction newFunction)
+        {
+            
+        }
+
         /// <summary>
         /// Use this to solve the AIParam value when the source of the value is unknown
         /// </summary>
@@ -81,7 +102,7 @@ namespace Quantum
             return GetFunctionValue(frame, entity);
         }
 
-        public virtual GroupControlParam<T> Clone()
+        public virtual BattleScriptingParam<T> Clone()
         {
             throw new NotImplementedException();
         }

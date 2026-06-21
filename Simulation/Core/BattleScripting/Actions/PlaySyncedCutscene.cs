@@ -161,13 +161,13 @@ namespace HnSF.core.GroupControl.Nodes
         public override GroupControlAction Convert()
         {
             this.GetNodeOptionByName(OPTION_LABEL).TryGetValue<string>(out var label);
-            var cutsceneSource = ActorGroupScriptDirectorImporter.GetInputPortValue<AssetObject>(this.GetInputPortByName(IN_PORT_Cutscene_Source));
-            var cutsceneTag = ActorGroupScriptDirectorImporter.GetInputPortValue<Tag>(this.GetInputPortByName(IN_PORT_Cutscene_Tag));
-            var autoplay = ActorGroupScriptDirectorImporter.GetInputPortValue<bool>(this.GetInputPortByName(IN_PORT_Autoplay));
-            var autoend = ActorGroupScriptDirectorImporter.GetInputPortValue<bool>(this.GetInputPortByName(IN_PORT_Autoend));
-            var ignoreLdt = ActorGroupScriptDirectorImporter.GetInputPortValue<bool>(this.GetInputPortByName(IN_PORT_IgnoreLdt));
-            var autoendFrame = ActorGroupScriptDirectorImporter.GetInputPortValue<int>(this.GetInputPortByName(IN_PORT_Autoend_Frame));
-            var localOnly = ActorGroupScriptDirectorImporter.GetInputPortValue<bool>(this.GetInputPortByName(IN_PORT_Local_Only));
+            var cutsceneSource = GetInputPortValue<AssetObject>(this.GetInputPortByName(IN_PORT_Cutscene_Source));
+            var cutsceneTag = GetInputPortValue<Tag>(this.GetInputPortByName(IN_PORT_Cutscene_Tag));
+            var autoplay = GetInputPortValue<bool>(this.GetInputPortByName(IN_PORT_Autoplay));
+            var autoend = GetInputPortValue<bool>(this.GetInputPortByName(IN_PORT_Autoend));
+            var ignoreLdt = GetInputPortValue<bool>(this.GetInputPortByName(IN_PORT_IgnoreLdt));
+            var autoendFrame = GetInputPortValue<int>(this.GetInputPortByName(IN_PORT_Autoend_Frame));
+            var localOnly = GetInputPortValue<bool>(this.GetInputPortByName(IN_PORT_Local_Only));
 
             var cutsceneControlledEntities = new List<HnSF.core.GroupControl.Actions.PlaySyncedCutscene.TagToTag>();
             var controlledEntitiesNodePorts = new List<IPort>();

@@ -5,6 +5,7 @@ using Quantum;
 using UnityEngine.Scripting.APIUpdating;
 #endif
 #if UNITY_EDITOR
+using System.Collections.Generic;
 using HnSF.core.GroupControl.Nodes;
 using Unity.GraphToolkit.Editor;
 #endif
@@ -63,29 +64,34 @@ namespace HnSF.core.GroupControl.Nodes
     [UseWithGraph(typeof(ActorGroupScriptGraph))]
     internal class WaitForEndOfStateNode : ActorGroupControlNode
     {
-        public const string IN_PORT_TARGET_TAG = "TargetTag";
+        public const string inPortValidTags = "TargetTag";
         
         protected override void OnDefinePorts(Node.IPortDefinitionContext context)
         {
             AddInputOutputExecutionPorts(context);
 
-            context.AddInputPort<Tag>(IN_PORT_TARGET_TAG)
-                .WithDisplayName("Target")
+            context.AddInputPort<List<AssetRef<Tag>>>(inPortValidTags)
+                .WithDisplayName("Valid State Tags")
                 .Build();
         }
 
         public override GroupControlAction Convert()
         {
-            var targetTag = ActorGroupScriptDirectorImporter.GetInputPortValue<Tag>(this.GetInputPortByName(IN_PORT_TARGET_TAG));
+            var targetTags = GetInputPortValue<List<AssetRef<Tag>>>(GetInputPortByName(inPortValidTags));
+
+            var statesToSet = targetTags == null ? Array.Empty<WaitForEndOfState.TargetAndState>() : new WaitForEndOfState.TargetAndState[targetTags.Count];
+
+            for (int i = 0; i < targetTags.Count; i++)
+            {
+                statesToSet[i] = new WaitForEndOfState.TargetAndState()
+                {
+                    targetTag = targetTags[i],
+                };
+            }
+            
             return new WaitForEndOfState()
             {
-                statesToSet = new []
-                {
-                    new WaitForEndOfState.TargetAndState()
-                    {
-                        targetTag = targetTag
-                    }
-                }
+                statesToSet = statesToSet
             };
         }
     }

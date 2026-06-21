@@ -9,11 +9,11 @@ using UnityEngine;
 namespace Quantum
 {
     [System.Serializable]
-    public unsafe sealed class GroupControlParamFP : GroupControlParam<FP>
+    public unsafe sealed class BattleScriptingParamFP : BattleScriptingParam<FP>
     {
-        public static implicit operator GroupControlParamFP(FP value)
+        public static implicit operator BattleScriptingParamFP(FP value)
         {
-            return new GroupControlParamFP() { DefaultValue = value };
+            return new BattleScriptingParamFP() { DefaultValue = value };
         }
 
 #if QUANTUM_UNITY
@@ -41,9 +41,14 @@ namespace Quantum
             return (FunctionRef as GroupControlFunction<FP>).Execute((Frame)frame, entity);
         }
         
-        public override GroupControlParam<FP> Clone()
+        public override void SetFunction(GroupControlFunction newFunction)
         {
-            return new GroupControlParamFP()
+            FunctionRef = newFunction;
+        }
+        
+        public override BattleScriptingParam<FP> Clone()
+        {
+            return new BattleScriptingParamFP()
             {
                 Source = Source,
                 Key = Key,

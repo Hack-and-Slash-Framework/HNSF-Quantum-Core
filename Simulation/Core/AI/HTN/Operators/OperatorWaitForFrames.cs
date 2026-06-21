@@ -59,7 +59,7 @@ namespace HnSF.core.AI.HTN.Nodes
 
         public override HTNOperatorBase Convert()
         {
-            var frames = ActorGroupScriptDirectorImporter.GetInputPortValue<int>(this.GetInputPortByName(IN_PORT_FRAMES_TO_WAIT));
+            var frames = GetInputPortValue<int>(this.GetInputPortByName(IN_PORT_FRAMES_TO_WAIT));
             return new Operators.OperatorWaitForFrames()
             {
                 framesToWait = frames

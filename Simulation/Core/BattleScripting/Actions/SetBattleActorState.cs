@@ -86,8 +86,8 @@ namespace HnSF.core.GroupControl.Nodes
 
         public override GroupControlAction Convert()
         {
-            var targetTag = ActorGroupScriptDirectorImporter.GetInputPortValue<Tag>(this.GetInputPortByName(IN_PORT_Target_Tag));
-            var state = ActorGroupScriptDirectorImporter.GetInputPortValue<HNSFState>(this.GetInputPortByName(IN_PORT_State));
+            var targetTag = GetInputPortValue<Tag>(this.GetInputPortByName(IN_PORT_Target_Tag));
+            var state = GetInputPortValue<HNSFState>(this.GetInputPortByName(IN_PORT_State));
             return new SetBattleActorState()
             {
                 statesToSet = new []

@@ -112,12 +112,12 @@ namespace HnSF.core.GroupControl.Nodes
 
         public override GroupControlAction Convert()
         {
-            var targetTag = ActorGroupScriptDirectorImporter.GetInputPortValue<Tag>(this.GetInputPortByName(IN_PORT_Target_Tag));
-            var overrideMoveset = ActorGroupScriptDirectorImporter.GetInputPortValue<bool>(this.GetInputPortByName(IN_PORT_Override_Moveset));
-            var movesetTag = ActorGroupScriptDirectorImporter.GetInputPortValue<Tag>(this.GetInputPortByName(IN_PORT_Moveset_Tag));
-            var stateTag = ActorGroupScriptDirectorImporter.GetInputPortValue<Tag>(this.GetInputPortByName(IN_PORT_State_Tag));
-            var toFrame = ActorGroupScriptDirectorImporter.GetInputPortValue<int>(this.GetInputPortByName(IN_PORT_To_Frame));
-            var immediateTransition = ActorGroupScriptDirectorImporter.GetInputPortValue<bool>(this.GetInputPortByName(IN_PORT_Immediate_Transition));
+            var targetTag = GetInputPortValue<Tag>(this.GetInputPortByName(IN_PORT_Target_Tag));
+            var overrideMoveset = GetInputPortValue<bool>(this.GetInputPortByName(IN_PORT_Override_Moveset));
+            var movesetTag = GetInputPortValue<Tag>(this.GetInputPortByName(IN_PORT_Moveset_Tag));
+            var stateTag = GetInputPortValue<Tag>(this.GetInputPortByName(IN_PORT_State_Tag));
+            var toFrame = GetInputPortValue<int>(this.GetInputPortByName(IN_PORT_To_Frame));
+            var immediateTransition = GetInputPortValue<bool>(this.GetInputPortByName(IN_PORT_Immediate_Transition));
             
             return new SetBattleActorStateByTag()
             {

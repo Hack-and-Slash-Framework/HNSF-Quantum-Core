@@ -55,6 +55,7 @@ namespace HnSF.core.AI.HTN.Nodes
             AddInputOutputExecutionPorts(context);
 
             context.AddInputPort(inValidTags)
+                .WithDataType<List<AssetRef<Tag>>>()
                 .WithDisplayName("Tags")
                 .Build();
         }
@@ -62,12 +63,11 @@ namespace HnSF.core.AI.HTN.Nodes
         public override ICondition Convert()
         {
             this.GetNodeOptionByName(OPTION_LABEL).TryGetValue<string>(out var label);
-            //this.GetNodeOptionByName(OPTION_STATE).TryGetValue<StateGroundedType>(out var state);
 
-            return new Conditions.ActorStateGroundedType()
+            return new Conditions.ActorCurrentTaggedState()
             {
                 Label = label,
-                //state = state,
+                validTags = GetInputPortValue<List<AssetRef<Tag>>>(GetInputPortByName(inValidTags))
             };
         }
     }

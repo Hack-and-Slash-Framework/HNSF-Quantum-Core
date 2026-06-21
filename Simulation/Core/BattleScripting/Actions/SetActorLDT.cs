@@ -149,6 +149,7 @@ namespace HnSF.core.GroupControl.Nodes
             
             context.AddInputPort(PORT_TAGGEDENTITIES)
                 .WithDisplayName("Tagged Entities")
+                .WithDataType<List<AssetRef<Tag>>>()
                 .WithConnectorUI(PortConnectorUI.Circle)
                 .Build();
         }
@@ -171,7 +172,8 @@ namespace HnSF.core.GroupControl.Nodes
                 setMultiplier =  setMultiplier,
                 multiplier = multi,
                 setForFrames = setForFrames,
-                resetOnExit = resetOnExit
+                resetOnExit = resetOnExit,
+                actorsToApplyTo = GetInputPortValue<List<AssetRef<Tag>>>(GetInputPortByName(PORT_TAGGEDENTITIES))
             };
         }
     }

@@ -55,7 +55,7 @@ namespace HnSF.core.GroupControl.Nodes
 
         public override GroupControlAction Convert()
         {
-            var soundEntryTag = ActorGroupScriptDirectorImporter.GetInputPortValue<SoundEntry>(this.GetInputPortByName(IN_PORT_SoundEntry_Tag));
+            var soundEntryTag = GetInputPortValue<SoundEntry>(this.GetInputPortByName(IN_PORT_SoundEntry_Tag));
             return new PlaySubtitledSoundEntry()
             {
                 voiceClip = soundEntryTag

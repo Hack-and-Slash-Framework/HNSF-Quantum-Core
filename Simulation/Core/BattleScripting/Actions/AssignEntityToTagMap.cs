@@ -1,5 +1,6 @@
 using System;
 using HnSF.core.GroupControl.Actions;
+using HnSF.core.GroupControl.Functions;
 using Photon.Deterministic;
 using Quantum;
 #if QUANTUM_UNITY
@@ -16,22 +17,21 @@ namespace HnSF.core.GroupControl.Actions
     public unsafe partial class AssignEntityToTagMap : GroupControlAction
     {
         public AssetRef<Tag> tag;
+        public GroupControlFunctionEntityRef entityRefFunction;
+        public bool clearTagIfEntityNotFound;
         
         public override void OnEnter(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
         {
             frame.AddOrGet<TaggedEntityMapping>(infoEntityRef, out var tem);
             var mappingDict = frame.ResolveDictionary(tem->tagToEntityMap);
-            
-            var gamemodeParticipantsGlobal = frame.Unsafe.GetOrAddSingletonPointer<GamemodeParticipantsGlobal>();
-            var participantDataEntities = frame.ResolveDictionary(gamemodeParticipantsGlobal->participantDataEntities);
-            
-            var firstParticipantInfoEntity = participantDataEntities[1];
-            
-            var participantBattleActorEntities = frame.Unsafe.GetPointer<ParticipantDataBattleActorEntities>(firstParticipantInfoEntity);
-            var participantActorEntityList = frame.ResolveList(participantBattleActorEntities->battleActorEntities);
+            var entityRef = entityRefFunction.Execute(frame, infoEntityRef);
+            if (clearTagIfEntityNotFound && (entityRef == EntityRef.None || !frame.Exists(entityRef)))
+            {
+                mappingDict[tag] = EntityRef.None;
+                return;
+            }
 
-            if (participantActorEntityList.Count == 0) return;
-            mappingDict[tag] = participantActorEntityList[0];
+            mappingDict[tag] = entityRef;
         }
         
         public override bool Tick(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
@@ -52,13 +52,14 @@ namespace HnSF.core.GroupControl.Nodes
     [UseWithGraph(typeof(ActorGroupScriptGraph))]
     internal class AssignEntityToTagMap : ActorGroupControlNode
     {
-        public const string OPTION_CAMERA_TAG = "Tag";
+        public const string optionMapTag = "Tag";
+        public const string inFunctionEntityRef = "EntityRefFunction";
 
         protected override void OnDefineOptions(IOptionDefinitionContext context)
         {
             base.OnDefineOptions(context);
 
-            context.AddOption<AssetRef<Tag>>(OPTION_CAMERA_TAG)
+            context.AddOption<AssetRef<Tag>>(optionMapTag)
                 .WithDisplayName("Tag")
                 .Build();
         }
@@ -66,16 +67,21 @@ namespace HnSF.core.GroupControl.Nodes
         protected override void OnDefinePorts(Node.IPortDefinitionContext context)
         {
             AddInputOutputExecutionPorts(context);
+
+            context.AddInputPort(inFunctionEntityRef)
+                .WithDisplayName("Entity Ref Function")
+                .Build();
         }
 
         public override GroupControlAction Convert()
         {
-            this.GetNodeOptionByName(OPTION_CAMERA_TAG).TryGetValue(out AssetRef<Tag> tag);
+            this.GetNodeOptionByName(optionMapTag).TryGetValue(out AssetRef<Tag> tag);
             
             
             return new Actions.AssignEntityToTagMap()
             {
                 tag = tag,
+                entityRefFunction = ConvertFunctionNode<GroupControlFunctionEntityRef>(GetInputPortByName(inFunctionEntityRef))
             };
         }
     }

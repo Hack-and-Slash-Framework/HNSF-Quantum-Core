@@ -1,5 +1,6 @@
 using System;
 using HnSF.core.AI.HTN.Functions;
+using HnSF.core.AI.HTN.Param;
 using Quantum;
 #if QUANTUM_UNITY
 using UnityEngine;
@@ -25,12 +26,12 @@ namespace HnSF.core.AI.HTN.Functions
 #endif
         public HTNFunctionByte inputFunction;
 
-        public byte minClamp;
-        public byte maxClamp;
+        public HTNParamByte minClamp;
+        public HTNParamByte maxClamp;
         
         public override byte Execute(ref HTNAgentContext context)
         {
-            return Math.Clamp(inputFunction.Execute(ref context), minClamp, maxClamp);
+            return Math.Clamp(inputFunction.Execute(ref context), minClamp.Resolve(ref context), maxClamp.Resolve(ref context));
         }
     }
 }
@@ -59,11 +60,11 @@ namespace HnSF.core.AI.HTN.Nodes
                 .WithDisplayName("State ID")
                 .Build();
 
-            context.AddInputPort<byte>(inputMin)
+            context.AddInputPort(inputMin)
                 .WithDisplayName("Min")
                 .Build();
             
-            context.AddInputPort<byte>(inputMax)
+            context.AddInputPort(inputMax)
                 .WithDisplayName("Max")
                 .Build();
         }
@@ -71,15 +72,13 @@ namespace HnSF.core.AI.HTN.Nodes
         public override HTNFunction Convert()
         {
             this.GetNodeOptionByName(OPTION_LABEL).TryGetValue<string>(out var label);
-            GetInputPortByName(inputMin).TryGetValue<byte>(out var min);
-            GetInputPortByName(inputMax).TryGetValue<byte>(out var max);
             
             return new Functions.ClampByte()
             {
                 Label = label,
-                minClamp = min,
-                maxClamp = max,
-                inputFunction = ConvertFunctionNode(GetInputPortByName(inputFunction).FirstConnectedPort.GetNode()) as HTNFunctionByte
+                minClamp = GetInputPortParam<HTNParamByte, byte>(GetInputPortByName(inputMin)),
+                maxClamp = GetInputPortParam<HTNParamByte, byte>(GetInputPortByName(inputMax)),
+                inputFunction = ConvertFunctionNode<HTNFunctionByte>(GetInputPortByName(inputFunction))
             };
         }
     }

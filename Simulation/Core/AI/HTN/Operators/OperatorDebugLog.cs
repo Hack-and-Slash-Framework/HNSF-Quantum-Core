@@ -67,9 +67,9 @@ namespace HnSF.core.AI.HTN.Nodes
         public override HTNOperatorBase Convert()
         {
             this.GetNodeOptionByName(OPTION_LABEL).TryGetValue<string>(out var label);
-            var msgEnter = ActorGroupScriptDirectorImporter.GetInputPortValue<string>(this.GetInputPortByName(IN_PORT_MESSAGE_ENTER));
-            var msgTick = ActorGroupScriptDirectorImporter.GetInputPortValue<string>(this.GetInputPortByName(IN_PORT_MESSAGE_TICK));
-            var msgExit = ActorGroupScriptDirectorImporter.GetInputPortValue<string>(this.GetInputPortByName(IN_PORT_MESSAGE_EXIT));
+            var msgEnter = GetInputPortValue<string>(this.GetInputPortByName(IN_PORT_MESSAGE_ENTER));
+            var msgTick = GetInputPortValue<string>(this.GetInputPortByName(IN_PORT_MESSAGE_TICK));
+            var msgExit = GetInputPortValue<string>(this.GetInputPortByName(IN_PORT_MESSAGE_EXIT));
             return new Operators.OperatorDebugLog()
             {
                 Label = label,
