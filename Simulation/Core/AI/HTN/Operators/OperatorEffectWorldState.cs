@@ -58,7 +58,7 @@ namespace HnSF.core.AI.HTN.Nodes
     public unsafe class OperatorEffectWorldStateNode : OperatorBase
     {
         public const string optionEffectType = "EffectType";
-        public const string optionDirtyWorldState = "DirtyWorldState";
+        public const string inDirtyWorldState = "DirtyWorldState";
         public const string inputStateId = "StateID";
         public const string inputStateValue = "StateValue";
         
@@ -70,17 +70,17 @@ namespace HnSF.core.AI.HTN.Nodes
                 .WithDisplayName("Effect Type")
                 .WithDefaultValue(EffectType.PlanAndExecute)
                 .Build();
-
-            context.AddOption<bool>(optionDirtyWorldState)
-                .WithDisplayName("Dirty World State?")
-                .WithDefaultValue(true)
-                .Build();
         }
 
         protected override void OnDefinePorts(Node.IPortDefinitionContext context)
         {
             AddInputOutputExecutionPorts(context);
 
+            context.AddInputPort<bool>(inDirtyWorldState)
+                .WithDisplayName("Dirty World State?")
+                .WithDefaultValue(true)
+                .Build();
+            
             context.AddInputPort(inputStateId)
                 .WithDisplayName("State ID Function")
                 .Build();
@@ -94,14 +94,12 @@ namespace HnSF.core.AI.HTN.Nodes
         {
             this.GetNodeOptionByName(OPTION_LABEL).TryGetValue<string>(out var label);
             this.GetNodeOptionByName(optionEffectType).TryGetValue<EffectType>(out var effectType);
-            this.GetNodeOptionByName(optionDirtyWorldState).TryGetValue<bool>(out var dirtyWorldState);
-            
             
             return new Operators.OperatorEffectWorldState()
             {
                 Label = label,
                 effectType = effectType,
-                dirtyWorldState = dirtyWorldState,
+                dirtyWorldState = GetInputPortValue<bool>(GetInputPortByName(inDirtyWorldState)),
                 stateID = ConvertFunctionNode<HTNFunctionByte>(GetInputPortByName(inputStateId)),
                 stateValue = ConvertFunctionNode<HTNFunctionByte>(GetInputPortByName(inputStateValue)),
             };

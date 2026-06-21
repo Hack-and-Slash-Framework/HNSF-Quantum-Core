@@ -59,6 +59,22 @@ namespace HnSF.core.AI.HTN.Nodes
             return l;
         }
         
+        protected virtual List<T> ConvertFunctionNodes<T>(IPort gotPort) where T : HTNFunction
+        {
+            var l = new List<T>();
+
+            var portList = new List<IPort>();
+            gotPort.GetConnectedPorts(portList);
+            
+            foreach (var port in portList)
+            {
+                var r = ConvertFunctionNode<T>(port.GetNode());
+                if(r == null) continue;
+                l.Add(r);
+            }
+            return l;
+        }
+        
         public T GetInputPortParam<T, Q>(IPort port) where T : HTNParam<Q>, new()
         {
             var param = new T
