@@ -4,6 +4,7 @@ using HnSF.core.GroupControl.Functions;
 using Photon.Deterministic;
 using Quantum;
 #if QUANTUM_UNITY
+using UnityEngine;
 using UnityEngine.Scripting.APIUpdating;
 #endif
 #if UNITY_EDITOR
@@ -11,12 +12,16 @@ using HnSF.core.GroupControl.Nodes;
 using Unity.GraphToolkit.Editor;
 #endif
 
+
 namespace HnSF.core.GroupControl.Actions
 {
     [Serializable]
     public unsafe partial class AssignEntityToTagMap : GroupControlAction
     {
         public AssetRef<Tag> tag;
+#if QUANTUM_UNITY
+        [SerializeReference, SubclassSelector]
+#endif
         public GroupControlFunctionEntityRef entityRefFunction;
         public bool clearTagIfEntityNotFound;
         

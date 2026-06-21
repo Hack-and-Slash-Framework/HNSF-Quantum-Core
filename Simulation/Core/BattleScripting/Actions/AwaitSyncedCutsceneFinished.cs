@@ -4,6 +4,7 @@ using HnSF.core.GroupControl.Actions;
 using HnSF.core.GroupControl.Functions;
 using Quantum;
 #if QUANTUM_UNITY
+using UnityEngine;
 using UnityEngine.Scripting.APIUpdating;
 #endif
 #if UNITY_EDITOR
@@ -16,6 +17,9 @@ namespace HnSF.core.GroupControl.Actions
     [Serializable]
     public unsafe partial class AwaitSyncedCutsceneFinished : GroupControlAction
     {
+#if QUANTUM_UNITY
+        [SerializeReference, SubclassSelector]
+#endif
         public GroupControlFunctionEntityRef entityRefFunction;
         public int waitForFrame = 0;
         public int timeout;
