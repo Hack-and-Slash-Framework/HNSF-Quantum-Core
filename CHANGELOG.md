@@ -1,3 +1,15 @@
+# [2.0.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.41.0...v2.0.0) (2026-06-21)
+
+
+### Features
+
+* Unity 6.5 support ([45863a9](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/45863a968d6e00383ef49386f9083da44cccd7d1))
+
+
+### BREAKING CHANGES
+
+* Support for 6.5
+
 # [1.41.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v1.40.2...v1.41.0) (2026-06-21)
 
 
