@@ -1,3 +1,10 @@
+# [2.1.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.0.1...v2.1.0) (2026-06-21)
+
+
+### Features
+
+* HTN & Battle Scripting Params ([0afb7fd](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/0afb7fd1bc67dc278967c7251fde29171c34e6a0))
+
 ## [2.0.1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.0.0...v2.0.1) (2026-06-21)
 
 
