@@ -3,13 +3,14 @@ using System;
 using System.Collections.Generic;
 using HnSF.core.AI.HTN.Functions;
 using HnSF.core.AI.HTN.Param;
+using HnSF.Nodes;
 using Unity.GraphToolkit.Editor;
 
 namespace HnSF.core.AI.HTN.Nodes
 {
     [Serializable]
     [UseWithGraph(typeof(PrimitiveTaskGraph))]
-    public abstract class NodeBase : Node
+    public abstract class HTNNodeBase : HnSF.Nodes.NodeBase
     {
         public const string OPTION_LABEL = "Label";
         public const string OPTION_EXECUTE_NODE_TYPE = "ExecuteNodeType";
@@ -26,7 +27,7 @@ namespace HnSF.core.AI.HTN.Nodes
             context.AddOption<string>(OPTION_LABEL).WithDisplayName("Label");
         }
         
-        protected virtual void AddInputOutputExecutionPorts(Unity.GraphToolkit.Editor.Node.IPortDefinitionContext context)
+        protected override void AddInputOutputExecutionPorts(Unity.GraphToolkit.Editor.Node.IPortDefinitionContext context)
         {
             
         }
@@ -75,7 +76,7 @@ namespace HnSF.core.AI.HTN.Nodes
             return l;
         }
         
-        public T GetInputPortParam<T, Q>(IPort port) where T : HTNParam<Q>, new()
+        public virtual T GetInputPortParam<T, Q>(IPort port) where T : HTNParam<Q>, new()
         {
             var param = new T
             {
@@ -98,6 +99,10 @@ namespace HnSF.core.AI.HTN.Nodes
                         param.Source = HTNParamSource.Value;
                         constantNode.TryGetValue(out param.DefaultValue);
                         break;
+                    case IUntypedConversionNode untypedConversionNode:
+                        param.Source = HTNParamSource.Value;
+                        untypedConversionNode.TryGetValue(out param.DefaultValue);
+                        break;
                 }
             }
             else
@@ -107,43 +112,6 @@ namespace HnSF.core.AI.HTN.Nodes
             }
 
             return param;
-        }
-        
-        /// <summary>
-        /// Gets the value of an input port on a node.
-        /// <br/><br/>
-        /// The value is obtained from (in priority order):<br/>
-        /// 1. Connections to the port (variable nodes, constant nodes, wire portals)<br/>
-        /// 2. Embedded value on the port<br/>
-        /// 3. Default value of the port<br/>
-        /// </summary>
-        public T GetInputPortValue<T>(IPort port)
-        {
-            T value = default;
-
-            // If port is connected to another node, get value from connection
-            if (port.IsConnected)
-            {
-                switch (port.FirstConnectedPort.GetNode())
-                {
-                    case IVariableNode variableNode:
-                        variableNode.Variable.TryGetDefaultValue<T>(out value);
-                        return value;
-                    case IConstantNode constantNode:
-                        constantNode.TryGetValue<T>(out value);
-                        return value;
-                    default:
-                        break;
-                }
-            }
-            else
-            {
-                // If port has embedded value, return it.
-                // Otherwise, return the default value of the port
-                port.TryGetValue(out value);
-            }
-
-            return value;
         }
     }
 }

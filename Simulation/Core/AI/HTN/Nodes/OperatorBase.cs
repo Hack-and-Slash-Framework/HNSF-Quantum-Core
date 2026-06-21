@@ -7,13 +7,20 @@ using HnSF.core.GroupControl.Actions;
 using HnSF.core.GroupControl.Grabbers;
 using HnSF.core.GroupControl.Nodes;
 using Unity.GraphToolkit.Editor;
+using UnityEngine;
 
 namespace HnSF.core.AI.HTN.Nodes
 {
     [Serializable]
     [UseWithGraph(typeof(PrimitiveTaskGraph))]
-    public abstract class OperatorBase : NodeBase
+    public abstract class OperatorBase : HTNNodeBase
     {
+        public override void OnEnable()
+        {
+            base.OnEnable();
+            DefaultColor = new Color(0, 0.5f, 0, 1.0f);
+        }
+        
         protected override void OnDefineOptions(IOptionDefinitionContext context)
         {
             base.OnDefineOptions(context);

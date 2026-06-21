@@ -18,8 +18,8 @@ namespace HnSF.core.AI.HTN
     public class PrimitiveTaskGraphImporter : ScriptedImporter
     {
         [NonSerialized] private int indexCounter = 0;
-        [NonSerialized] private Dictionary<NodeBase, int> nodeToIndex = new();
-        [NonSerialized] private Dictionary<int, NodeBase> indexToNode = new();
+        [NonSerialized] private Dictionary<HTNNodeBase, int> nodeToIndex = new();
+        [NonSerialized] private Dictionary<int, HTNNodeBase> indexToNode = new();
         [NonSerialized] private List<HTNOperatorBase> actions = new();
         
         public override void OnImportAsset(AssetImportContext ctx)
@@ -98,7 +98,7 @@ namespace HnSF.core.AI.HTN
                 actions.Add(singleNode);
                 
                 List<IPort> outputPorts = new List<IPort>();
-                var outputPort = currentNode.GetOutputPortByName(Nodes.NodeBase.EXECUTION_PORT_DEFAULT_NAME);
+                var outputPort = currentNode.GetOutputPortByName(Nodes.HTNNodeBase.EXECUTION_PORT_DEFAULT_NAME);
                 outputPort.GetConnectedPorts(outputPorts);
                 if (outputPorts.Count == 0)
                 {
@@ -106,7 +106,7 @@ namespace HnSF.core.AI.HTN
                     continue;
                 }
 
-                currentNode.GetNodeOptionByName(Nodes.NodeBase.OPTION_EXECUTE_NODE_TYPE).TryGetValue<NextExecutedNodeType>(out var nextNodeExecuteType);
+                currentNode.GetNodeOptionByName(Nodes.HTNNodeBase.OPTION_EXECUTE_NODE_TYPE).TryGetValue<NextExecutedNodeType>(out var nextNodeExecuteType);
                 singleNode.nextOperatorSelectionType = nextNodeExecuteType;
                 
                 switch (nextNodeExecuteType)
@@ -137,7 +137,7 @@ namespace HnSF.core.AI.HTN
                                 continue;
                             }
 
-                            on.GetNodeOptionByName(Nodes.NodeBase.OPTION_WEIGHT).TryGetValue<int>(out var weight);
+                            on.GetNodeOptionByName(Nodes.HTNNodeBase.OPTION_WEIGHT).TryGetValue<int>(out var weight);
                             nextNodeIndexes.Add(new WeightedListItem<int>(nodeToIndex[on], weight));
                         }
                         singleNode.nextOperatorsWeighted = new WeightedList<int>(nextNodeIndexes);
@@ -148,7 +148,7 @@ namespace HnSF.core.AI.HTN
 
         private void BuildIndexMapRecursive(INode currentNode, bool skipSelf = false)
         {
-            var n = currentNode as Nodes.NodeBase;
+            var n = currentNode as Nodes.HTNNodeBase;
             if (n == null)
             {
                 Debug.LogError($"Node {currentNode?.GetType()} in graph is not inherited from NodeBase.");
@@ -162,7 +162,7 @@ namespace HnSF.core.AI.HTN
             }
 
             List<IPort> outputPorts = new List<IPort>();
-            var outputPort = currentNode.GetOutputPortByName(NodeBase.EXECUTION_PORT_DEFAULT_NAME);
+            var outputPort = currentNode.GetOutputPortByName(HTNNodeBase.EXECUTION_PORT_DEFAULT_NAME);
             outputPort.GetConnectedPorts(outputPorts);
             if (outputPorts.Count == 0) return;
             

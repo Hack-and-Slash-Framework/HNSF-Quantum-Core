@@ -18,7 +18,7 @@ namespace HnSF.core.GroupControl.Nodes
                 .WithDisplayName("Copy Target")
                 .Build();
         }
-
+        
         /// <summary>
         /// Defines the output for the node.
         /// </summary>

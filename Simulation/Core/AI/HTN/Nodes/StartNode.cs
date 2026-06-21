@@ -7,14 +7,21 @@ using HnSF.core.AI.HTN.Effects;
 using HnSF.core.AI.HTN.Tasks;
 using HnSF.core.GroupControl.Actions;
 using Unity.GraphToolkit.Editor;
+using UnityEngine;
 
 namespace HnSF.core.AI.HTN.Nodes
 {
     [Serializable]
     [UseWithGraph(typeof(PrimitiveTaskGraph))]
-    public class StartNode : NodeBase
+    public class StartNode : HTNNodeBase
     {
         public const string OPTION_CONTROL_SCRIPT_ASSET = "CopyTarget";
+
+        public override void OnEnable()
+        {
+            base.OnEnable();
+            DefaultColor = new Color(0, 1.0f, 0, 1.0f);
+        }
 
         protected override void OnDefineOptions(IOptionDefinitionContext context)
         {

@@ -4,13 +4,20 @@ using HnSF.core.AI.HTN;
 using HnSF.core.AI.HTN.Effects;
 using HnSF.core.GroupControl.Actions;
 using Unity.GraphToolkit.Editor;
+using UnityEngine;
 
 namespace HnSF.core.AI.HTN.Nodes
 {
     [Serializable]
     [UseWithGraph(typeof(PrimitiveTaskGraph))]
-    public abstract class EffectBase : NodeBase
+    public abstract class EffectBase : HTNNodeBase
     {
+        public override void OnEnable()
+        {
+            base.OnEnable();
+            DefaultColor = new Color(0.5f, 0f, 0.5f, 1.0f);
+        }
+        
         protected override void AddInputOutputExecutionPorts(Unity.GraphToolkit.Editor.Node.IPortDefinitionContext context)
         {
             base.AddInputOutputExecutionPorts(context);
