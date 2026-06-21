@@ -1,3 +1,10 @@
+## [2.1.1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.1.0...v2.1.1) (2026-06-21)
+
+
+### Bug Fixes
+
+* Proper ConvertFunctionNodes ([32f8b60](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/32f8b60a737f4d1a5a61fb138ff484c349ff05bb))
+
 # [2.1.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.0.1...v2.1.0) (2026-06-21)
 
 
