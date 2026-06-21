@@ -51,7 +51,7 @@ namespace HnSF.core.AI.HTN.Nodes
         public virtual List<ICondition> ConvertConditionNodes() 
         {
             List<ICondition> conditions = new List<ICondition>();
-            var port = GetInputPortByName(ConditionsPortName).firstConnectedPort;
+            var port = GetInputPortByName(ConditionsPortName).FirstConnectedPort;
             if (port == null)
             {
                 return conditions;
@@ -69,7 +69,7 @@ namespace HnSF.core.AI.HTN.Nodes
         public virtual List<ICondition> ConvertExecutingConditionNodes() 
         {
             List<ICondition> conditions = new List<ICondition>();
-            var port = GetInputPortByName(ExecutingConditionsPortName).firstConnectedPort;
+            var port = GetInputPortByName(ExecutingConditionsPortName).FirstConnectedPort;
             if (port == null)
             {
                 return conditions;
@@ -88,7 +88,7 @@ namespace HnSF.core.AI.HTN.Nodes
         {
             rules.Add(ruleNode.Convert());
 
-            var port = ruleNode.GetInputPortByName(ConditionBase.EXECUTION_PORT_DEFAULT_NAME).firstConnectedPort;
+            var port = ruleNode.GetInputPortByName(ConditionBase.EXECUTION_PORT_DEFAULT_NAME).FirstConnectedPort;
             if (port == null)
             {
                 return;
@@ -104,7 +104,7 @@ namespace HnSF.core.AI.HTN.Nodes
         public virtual List<IEffect> ConvertEffectNodes() 
         {
             List<IEffect> effects = new List<IEffect>();
-            var port = GetInputPortByName(EffectsPortName).firstConnectedPort;
+            var port = GetInputPortByName(EffectsPortName).FirstConnectedPort;
             if (port == null)
             {
                 return effects;
@@ -124,7 +124,7 @@ namespace HnSF.core.AI.HTN.Nodes
         {
             effects.Add(effectNode.Convert());
 
-            var port = effectNode.GetInputPortByName(EffectBase.EXECUTION_PORT_DEFAULT_NAME).firstConnectedPort;
+            var port = effectNode.GetInputPortByName(EffectBase.EXECUTION_PORT_DEFAULT_NAME).FirstConnectedPort;
             if (port == null)
             {
                 return;

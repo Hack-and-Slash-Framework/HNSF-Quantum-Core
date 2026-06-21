@@ -79,7 +79,7 @@ namespace HnSF.core.AI.HTN.Nodes
                 Label = label,
                 minClamp = min,
                 maxClamp = max,
-                inputFunction = ConvertFunctionNode(GetInputPortByName(inputFunction).firstConnectedPort.GetNode()) as HTNFunctionByte
+                inputFunction = ConvertFunctionNode(GetInputPortByName(inputFunction).FirstConnectedPort.GetNode()) as HTNFunctionByte
             };
         }
     }

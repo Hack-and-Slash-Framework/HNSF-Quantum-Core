@@ -211,7 +211,7 @@ namespace HnSF.core.GroupControl.Nodes
         public static INode GetFirstNextNode(INode currentNode)
         {
             var outputPort = currentNode.GetOutputPortByName(ActorGroupControlNode.EXECUTION_PORT_DEFAULT_NAME);
-            var nextNodePort = outputPort.firstConnectedPort;
+            var nextNodePort = outputPort.FirstConnectedPort;
             var nextNode = nextNodePort?.GetNode();
 
             return nextNode;
@@ -230,12 +230,12 @@ namespace HnSF.core.GroupControl.Nodes
             T value = default;
 
             // If port is connected to another node, get value from connection
-            if (port.isConnected)
+            if (port.IsConnected)
             {
-                switch (port.firstConnectedPort.GetNode())
+                switch (port.FirstConnectedPort.GetNode())
                 {
                     case IVariableNode variableNode:
-                        variableNode.variable.TryGetDefaultValue<T>(out value);
+                        variableNode.Variable.TryGetDefaultValue<T>(out value);
                         return value;
                     case IConstantNode constantNode:
                         constantNode.TryGetValue<T>(out value);

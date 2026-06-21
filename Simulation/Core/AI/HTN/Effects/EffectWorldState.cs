@@ -110,8 +110,8 @@ namespace HnSF.core.AI.HTN.Nodes
                 Label = label,
                 EffectType = effectType,
                 dirtyWorldState = dirtyWorldState,
-                stateID = ConvertFunctionNode(GetInputPortByName(inputStateId).firstConnectedPort?.GetNode()) as HTNFunctionByte,
-                stateValue = ConvertFunctionNode(GetInputPortByName(inputStateValue).firstConnectedPort?.GetNode()) as HTNFunctionByte,
+                stateID = ConvertFunctionNode(GetInputPortByName(inputStateId).FirstConnectedPort?.GetNode()) as HTNFunctionByte,
+                stateValue = ConvertFunctionNode(GetInputPortByName(inputStateValue).FirstConnectedPort?.GetNode()) as HTNFunctionByte,
             };
         }
     }

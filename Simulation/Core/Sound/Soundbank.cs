@@ -39,7 +39,7 @@ namespace Quantum
             Undo.RecordObject(this, "Updated Soundbank Entries");
             foreach (var guid in soundEntryGuids)
             {
-                var asset = AssetDatabase.LoadAssetByGUID<SoundEntry>(new GUID(guid));
+                var asset = AssetDatabase.LoadAssetByGUID<SoundEntry>(new UnityEngine.GUID(guid));
                 if (asset == null || !asset.assignedSoundbanks.Contains(tag)) continue;
                 sounds.Add(asset);
             }

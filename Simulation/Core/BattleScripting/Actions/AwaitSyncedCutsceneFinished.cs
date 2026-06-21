@@ -79,7 +79,7 @@ namespace HnSF.core.GroupControl.Nodes
             
             this.GetInputPortByName(IN_PORT_FrameToWaitFor).TryGetValue(out int frameToWaitFor);
             this.GetInputPortByName(IN_PORT_Timeout).TryGetValue(out int timeoutFrame);
-            var portEntityRef = this.GetInputPortByName(IN_PORT_EntityFunction).firstConnectedPort;
+            var portEntityRef = this.GetInputPortByName(IN_PORT_EntityFunction).FirstConnectedPort;
 
             GroupControlFunctionEntityRef entityRefFunction = null;
             

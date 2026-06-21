@@ -61,7 +61,7 @@ namespace HnSF.core.GroupControl.Nodes
         public virtual void ConvertRuleNodes(GroupControlAction action) 
         {
             List<GroupControlRule> rules = new List<GroupControlRule>();
-            var port = GetInputPortByName(IN_PORT_CONDITIONS).firstConnectedPort;
+            var port = GetInputPortByName(IN_PORT_CONDITIONS).FirstConnectedPort;
             if (port == null)
             {
                 action.rules = null;
@@ -82,7 +82,7 @@ namespace HnSF.core.GroupControl.Nodes
         {
             rules.Add(ruleNode.Convert());
 
-            var port = ruleNode.GetInputPortByName(RuleNodeBase.EXECUTION_PORT_DEFAULT_NAME).firstConnectedPort;
+            var port = ruleNode.GetInputPortByName(RuleNodeBase.EXECUTION_PORT_DEFAULT_NAME).FirstConnectedPort;
             if (port == null)
             {
                 return;

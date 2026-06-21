@@ -51,7 +51,7 @@ namespace HnSF.core.AI.HTN.Nodes
         public virtual void ConvertPreconditionNodes(HTNOperatorBase action) 
         {
             List<ICondition> rules = new List<ICondition>();
-            var port = GetInputPortByName(ConditionsPortName).firstConnectedPort;
+            var port = GetInputPortByName(ConditionsPortName).FirstConnectedPort;
             if (port == null)
             {
                 action.preconditions = null;
@@ -72,7 +72,7 @@ namespace HnSF.core.AI.HTN.Nodes
         {
             rules.Add(ruleNode.Convert());
 
-            var port = ruleNode.GetInputPortByName(ConditionBase.EXECUTION_PORT_DEFAULT_NAME).firstConnectedPort;
+            var port = ruleNode.GetInputPortByName(ConditionBase.EXECUTION_PORT_DEFAULT_NAME).FirstConnectedPort;
             if (port == null)
             {
                 return;

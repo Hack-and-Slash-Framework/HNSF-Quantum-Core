@@ -28,7 +28,7 @@ namespace HnSF
                 string guidLine = file.ReadLine();
                 file.Close();
                 string originalGuid = guidLine.Substring(6, guidLine.Length - 6);
-                string newGuid = GUID.Generate().ToString().Replace("-", "");
+                string newGuid = UnityEngine.GUID.Generate().ToString().Replace("-", "");
                 guidTable.Add((originalGuid, newGuid));
                 
                 filePathToNewGuid.Add(Path.ChangeExtension(metaFile, "").Replace(".asset", ""), newGuid);
@@ -60,7 +60,7 @@ namespace HnSF
                 var pathNoExtension = Path.ChangeExtension(nonmetaFile, "");
                 //Debug.Log(pathNoExtension);
                 if (!filePathToNewGuid.TryGetValue(pathNoExtension, out var value)) continue;
-                var newQuantumAssetId = QuantumUnityDBUtilities.GetExpectedAssetGuid(new GUID(value), (long)11400000, out _);
+                var newQuantumAssetId = QuantumUnityDBUtilities.GetExpectedAssetGuid(new UnityEngine.GUID(value), (long)11400000, out _);
                 //Debug.Log($": {oldQuantumAssetId} to {newQuantumAssetId.Value}");
                 
                 quantumIdTable.Add((oldQuantumAssetId, newQuantumAssetId.Value.ToString()));
