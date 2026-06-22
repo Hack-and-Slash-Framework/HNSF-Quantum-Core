@@ -1,10 +1,12 @@
 // https://github.com/SanielX/Timeline-Bindings-Serialization/tree/master
 
+using System;
 using Quantum;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
+using Object = UnityEngine.Object;
 
 namespace HnSF
 {
@@ -24,9 +26,9 @@ namespace HnSF
         #endregion editor
 
         public TimelineAsset timelineAsset;
-        public Object[] Bindings = new Object[0];
-        
+        public Object[] Bindings = Array.Empty<Object>();
         public bool[] Overrides;
+        public bool[] EditorOnly = Array.Empty<bool>();
         
         /// <summary>
         /// Find overrides that correspond to specific timeline
@@ -128,7 +130,7 @@ namespace HnSF
         {
             for (int i = 0; i < Bindings.Length; i++)
             {
-                if ((Overrides != null && !Overrides[i]) || !Bindings[i]) continue;
+                if ((Overrides != null && !Overrides[i]) || !Bindings[i] || (EditorOnly[i] && Application.isPlaying)) continue;
 
                 var track = timelineAsset.GetOutputTrack(i);
                 director.SetGenericBinding(track, Bindings[i]);
@@ -139,8 +141,8 @@ namespace HnSF
         {
             for (int i = 0; i < Bindings.Length; i++)
             {
-                if ((Overrides != null && !Overrides[i]) || !Bindings[i]) continue;
-
+                if ((Overrides != null && !Overrides[i]) || !Bindings[i] || (EditorOnly[i] && Application.isPlaying)) continue;
+                
                 var track = timelineAsset.GetOutputTrack(i);
                 if (track.GetType() == typeof(CinemachineTrack))
                 {

@@ -41,6 +41,7 @@ namespace HnSF
 
             Undo.RecordObject(u.myProperty.serializedObject.targetObject, $"Add Override to {u.myProperty.serializedObject.targetObject.name}");
             u.myTarget.Overrides[(int)u.num] = true;
+            u.myTarget.EditorOnly[(int)u.num] = false;
             Undo.RegisterCompleteObjectUndo(u.myProperty.serializedObject.targetObject, $"Add Override to {u.myProperty.serializedObject.targetObject.name}");
         }
 
@@ -50,6 +51,7 @@ namespace HnSF
 
             Undo.RecordObject(u.myProperty.serializedObject.targetObject, $"Delete Override to {u.myProperty.serializedObject.targetObject.name}");
             u.myTarget.Overrides[(int)u.num] = false;
+            u.myTarget.EditorOnly[(int)u.num] = false;
         }
 
         #endregion Overrides menu
@@ -97,11 +99,21 @@ namespace HnSF
                 myTarget.Overrides = new bool[outputs.Count];
             }
 
+            if (myTarget.EditorOnly.Length != bindingsProperty.arraySize)
+            {
+                myTarget.EditorOnly = new bool[outputs.Count];
+            }
+
             myTarget.oldtimeline = myTarget.timelineAsset;
 
             if (myTarget.Overrides.Length != myTarget.Bindings.Length)
             {
                 property.FindPropertyRelative("Overrides").arraySize = myTarget.Bindings.Length;
+            }
+
+            if (myTarget.EditorOnly.Length != myTarget.Bindings.Length)
+            {
+                property.FindPropertyRelative("EditorOnly").arraySize = myTarget.Bindings.Length;
             }
 
             #region Buttons
@@ -153,9 +165,16 @@ namespace HnSF
                 if (myTarget.Overrides[i])
                 {
                     SerializedProperty element = bindingsProperty.GetArrayElementAtIndex(i);
-
+                    
                     Rect poss = new Rect(pos);
-                    poss.width -= 2;
+
+                    Rect pp =  new Rect(poss);
+                    pp.width = 35;
+                    myTarget.EditorOnly[i] = EditorGUI.ToggleLeft(pp, new GUIContent("", "Is this binding edit-mode only?"), myTarget.EditorOnly[i]);
+
+                    poss.x += 40;
+                    poss.width -= 37;
+                    
                     var referenceValue = element.objectReferenceValue;
                     DrawPropertyOfTimelineType(outputs[i].GetType(), ref referenceValue, poss, i);
                     element.objectReferenceValue = referenceValue;
