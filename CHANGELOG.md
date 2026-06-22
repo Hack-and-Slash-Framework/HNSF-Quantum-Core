@@ -1,3 +1,10 @@
+## [2.4.1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.4.0...v2.4.1) (2026-06-22)
+
+
+### Bug Fixes
+
+* HitInfo OnValidate ([8c85dc8](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/8c85dc8d0176097a3e7c4be0d05388280b2a2342))
+
 # [2.4.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.3.0...v2.4.0) (2026-06-22)
 
 
