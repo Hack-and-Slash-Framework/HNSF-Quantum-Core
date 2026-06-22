@@ -1,3 +1,10 @@
+# [2.4.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.3.0...v2.4.0) (2026-06-22)
+
+
+### Features
+
+* Use Weighted Random for SFX ([ae6aa16](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/ae6aa16cd931bead2699ab6960d422b51c84f623))
+
 # [2.3.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.2.1...v2.3.0) (2026-06-22)
 
 
