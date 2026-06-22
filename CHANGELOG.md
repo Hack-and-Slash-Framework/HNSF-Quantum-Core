@@ -1,3 +1,10 @@
+## [2.5.1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.5.0...v2.5.1) (2026-06-22)
+
+
+### Bug Fixes
+
+* Set source option for StartActorCutscene ([a89e402](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/a89e40257ac8bb131f473c1828a7a5102ddf11e9))
+
 # [2.5.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.4.1...v2.5.0) (2026-06-22)
 
 
