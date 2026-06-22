@@ -17,6 +17,7 @@ namespace HnSF.core.state.actions
             public bool dontControlAnimation;
         }
 
+        public bool playerIsSelf = true;
         public bool ignoreActorLdt = false;
         public bool autoPlay = true;
         public bool autoEnd = false;
@@ -32,7 +33,7 @@ namespace HnSF.core.state.actions
             var sccEntity = frame.Create();
             var scc = new SyncedCutsceneSource()
             {
-                sourcePlayer = entity,
+                sourcePlayer = playerIsSelf ? entity : sccEntity,
                 cutsceneSource = cutsceneSource,
                 cutsceneTag = cutsceneTag,
                 frame = 0,
