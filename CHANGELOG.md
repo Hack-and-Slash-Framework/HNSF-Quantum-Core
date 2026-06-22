@@ -1,3 +1,10 @@
+## [2.5.2](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.5.1...v2.5.2) (2026-06-22)
+
+
+### Bug Fixes
+
+* StopActorCutscene check source player ([fcb1f19](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/fcb1f1942674500996599fe8f98eb81736272f1f))
+
 ## [2.5.1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.5.0...v2.5.1) (2026-06-22)
 
 
