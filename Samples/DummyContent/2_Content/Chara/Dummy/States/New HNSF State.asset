@@ -1,0 +1,139 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d309679561969ab4daff5a4580ba90f3, type: 3}
+  m_Name: New HNSF State
+  m_EditorClassIdentifier: Quantum.Simulation::HnSF.core.state.HNSFState
+  Identifier:
+    Path: HNSF-Quantum-Core/Samples/DummyContent/2_Content/Chara/Dummy/States/New
+      HNSF State
+    Guid:
+      Value: 361292334572208376
+  Label: 
+  displayName: 
+  tags: []
+  useBaseState: 0
+  processBaseStateFirst: 0
+  baseState:
+    Id:
+      Value: 0
+  totalFrames: 10
+  autoIncrement: 1
+  autoLoop: 1
+  autoLoopFrame: 1
+  clearInputBuffer: 0
+  dontClearHitEntities: 0
+  stateType:
+    Id:
+      Value: 0
+  moveHitCounter: 1
+  applyToAllMovesets: 1
+  movesetTags:
+  - Id:
+      Value: 0
+  sharedStateTag:
+    Id:
+      Value: 0
+  initialGroundedState: 0
+  data:
+  - rid: 8275551733476753493
+  countsAsStateForDecay:
+    Id:
+      Value: 0
+  incrementStateCounter: 1
+  conditions: []
+  defaultInputConditions: []
+  ignoredActions: []
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 8275551733476753493
+      type: {class: PlaySound, ns: HnSF.core.state.actions, asm: Quantum.Simulation}
+      data:
+        id: 1
+        Label: 
+        parent:
+          rid: -2
+        children: []
+        frameRanges: []
+        actionDisabled: 0
+        decision: []
+        actionTargetContext:
+          targetType: 0
+          mapTag:
+            Id:
+              Value: 0
+          throweeId: 0
+          entityRefFunction:
+            Label: 
+        playSoundRequestParam:
+          type: 0
+          request:
+            parentedToSelf: 0
+            sounds:
+            - chance: 10
+              soundRef:
+                Id:
+                  Value: 0
+              volume:
+                RawValue: 0
+              minPitch:
+                RawValue: 0
+              maxPitch:
+                RawValue: 0
+            - chance: 5
+              soundRef:
+                Id:
+                  Value: 0
+              volume:
+                RawValue: 0
+              minPitch:
+                RawValue: 0
+              maxPitch:
+                RawValue: 0
+            soundsWeighted:
+              _list: 0000000001000000
+              _weights: 0a00000005000000
+              _probabilities: 0f0000000a000000
+              _alias: 0000000000000000
+              _totalWeight: 15
+              _areAllProbabilitiesIdentical: 0
+              _minWeight: 5
+              _maxWeight: 10
+            audioSourceConfig:
+              Id:
+                Value: 0
+            minDistance:
+              RawValue: 0
+            maxDistance:
+              RawValue: 0
+            positionOffset:
+              X:
+                RawValue: 0
+              Y:
+                RawValue: 0
+              Z:
+                RawValue: 0
+            tag:
+              Id:
+                Value: 0
+            cancelSameSound: 0
+            cancelSameTag: 0
+            ignoreIfSoundPlaying: 0
+            ignoreIfTagPlaying: 0
+            isGlobal: 0
+          externalRequest:
+            Id:
+              Value: 0
+          editorRefresh: 0
+        offsetFromECBCenter: 0

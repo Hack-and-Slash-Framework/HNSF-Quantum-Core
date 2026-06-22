@@ -44,5 +44,11 @@ namespace Quantum
         {
             _externalRequest = null;
         }
+
+        public void OnValidate()
+        {
+            if(type == ParamType.Self)
+                request.OnValidate();
+        }
     }
 }

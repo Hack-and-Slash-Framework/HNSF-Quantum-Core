@@ -1,4 +1,7 @@
-﻿using Photon.Deterministic;
+﻿using System;
+using System.Collections.Generic;
+using HnSF;
+using Photon.Deterministic;
 
 namespace Quantum
 {
@@ -8,7 +11,7 @@ namespace Quantum
         [System.Serializable]
         public struct SoundReference
         {
-            public FP chance;
+            public int chance;
             public AssetRef<SoundEntry> soundRef;
             public FP volume;
             public FP minPitch;
@@ -17,6 +20,7 @@ namespace Quantum
         
         public bool parentedToSelf;
         public SoundReference[] sounds;
+        public WeightedList<int> soundsWeighted;
         public AssetRef<AudioSourceConfig> audioSourceConfig;
         public FP minDistance;
         public FP maxDistance;
@@ -27,8 +31,24 @@ namespace Quantum
         public bool ignoreIfSoundPlaying;
         public bool ignoreIfTagPlaying;
         public bool isGlobal;
-        public FP chance;
 
+        public void OnValidate()
+        {
+            if (sounds == null)
+                sounds = Array.Empty<SoundReference>();
+            if(soundsWeighted == null)
+                soundsWeighted = new WeightedList<int>();
+            soundsWeighted.Clear();
+            
+            var itemsList = new List<WeightedListItem<int>>();
+
+            for (int i = 0; i < sounds.Length; i++)
+            {
+                itemsList.Add(new WeightedListItem<int>(i, sounds[i].chance));
+            }
+            soundsWeighted.Add(itemsList);
+        }
+        
         public SoundReference GetSound()
         {
             return sounds.Length == 0 ? default : sounds[0];
@@ -36,23 +56,14 @@ namespace Quantum
 
         public SoundReference GetRngSound(RNGSession* rngSession)
         {
-            var index = GetRngSoundByIndex(rngSession);
+            var index = soundsWeighted.Next(rngSession);
             return index < 0 ? default : sounds[index];
         }
         
         public int GetRngSoundByIndex(RNGSession* rngSession)
         {
-            if (chance > 0 && chance < 1 && rngSession->NextInclusive() > chance) return -1;
-
-            if (sounds.Length == 1) return sounds.Length - 1;
-            
-            for (int i = 0; i < sounds.Length; i++)
-            {
-                if(rngSession->NextInclusive() >= sounds[i].chance)
-                    continue;
-                return i;
-            }
-            return sounds.Length-1;
+            if (sounds.Length == 0) return -1;
+            return soundsWeighted.Next(rngSession);
         }
     }
 }

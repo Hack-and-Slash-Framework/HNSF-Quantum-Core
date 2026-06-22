@@ -17,7 +17,9 @@ MonoBehaviour:
     Guid:
       Value: 323154442024792637
   Label: 
-  states: []
+  states:
+  - Id:
+      Value: 361292334572208376
   specials: []
   defaultSpecials: []
   template:
@@ -30,4 +32,8 @@ MonoBehaviour:
   previewActor:
     Id:
       Value: 0
-  stateGroups: []
+  stateGroups:
+  - label: 
+    states:
+    - Id:
+        Value: 361292334572208376

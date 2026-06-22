@@ -1,4 +1,8 @@
 using System;
+using HnSF;
+#if QUANTUM_UNITY
+using UnityEngine;
+#endif
 
 namespace Quantum
 {
@@ -9,10 +13,18 @@ namespace Quantum
 
         public ExternalPlaySoundRequest()
         {
+            request.soundsWeighted = new WeightedList<int>();
             request.sounds = Array.Empty<PlaySoundRequest.SoundReference>();
             request.minDistance = 0;
             request.maxDistance = 5;
-            request.chance = 1;
+        }
+
+        private void OnValidate()
+        {
+#if QUANTUM_UNITY
+            //if (Application.isPlaying) return;
+            request.OnValidate();
+#endif
         }
     }
 }

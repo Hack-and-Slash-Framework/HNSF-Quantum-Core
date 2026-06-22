@@ -52,7 +52,7 @@ public class StateActionLabel : VisualElement
         {
             evt.menu.AppendAction("Edit", (x) =>
             {
-                var w = PopUpPropertyInspector.Create(stateAsset, stateSo, stateActionSP);
+                var w = PopUpPropertyInspector.Create(stateAsset, stateAction, stateSo, stateActionSP);
                 //var w = StateTimelineDataEditor.Init(stateTimeline, stateTimeline.data[index].ID);
                 //w.onChanged += id => { UpdateData(stateTimeline, stateTimeline.data[index].ID); };
             });

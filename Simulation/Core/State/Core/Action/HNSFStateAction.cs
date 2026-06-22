@@ -32,6 +32,11 @@ namespace HnSF.core.state.actions
 
         public StateActionTargetContext actionTargetContext;
 
+        public virtual void OnValidate()
+        {
+            
+        }
+        
         public virtual void Initialize()
         {
             
