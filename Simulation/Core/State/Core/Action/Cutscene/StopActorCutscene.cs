@@ -8,6 +8,7 @@ namespace HnSF.core.state.actions
     [AddTypeMenu(menuName: "Cutscene/Stop Actor Cutscene")]
     public unsafe partial class StopActorCutscene : HNSFStateAction
     {
+        public bool sourceMustBeSelf = false;
         public AssetRef cutsceneSource;
         public AssetRef<Tag> cutsceneTag;
         
@@ -20,7 +21,7 @@ namespace HnSF.core.state.actions
             
             while (syncedFilter.NextUnsafe(out var syncedEntity, out var syncedCutsceneSource))
             {
-                if (syncedCutsceneSource->sourcePlayer != entity
+                if ((sourceMustBeSelf && syncedCutsceneSource->sourcePlayer != entity)
                     || syncedCutsceneSource->cutsceneTag != cutsceneTag
                     || syncedCutsceneSource->cutsceneSource != cutsceneSource) continue;
 
