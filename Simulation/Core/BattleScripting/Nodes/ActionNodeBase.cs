@@ -22,6 +22,12 @@ namespace HnSF.core.GroupControl.Nodes
         
         public const string OPTION_EXECUTE_NODE_TYPE = "ExecuteNodeType";
 
+        public override void OnEnable()
+        {
+            base.OnEnable();
+            DefaultColor = new Color(0, 0.5f, 0, 1.0f);
+        }
+        
         protected override void OnDefineOptions(IOptionDefinitionContext context)
         {
             base.OnDefineOptions(context);

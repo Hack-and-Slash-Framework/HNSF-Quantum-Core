@@ -2,6 +2,7 @@
 using System;
 using HnSF.core.GroupControl.Grabbers;
 using Unity.GraphToolkit.Editor;
+using UnityEngine;
 
 namespace HnSF.core.GroupControl.Nodes
 {
@@ -12,6 +13,12 @@ namespace HnSF.core.GroupControl.Nodes
         public const string EXECUTION_PORT_DEFAULT_NAME = "ExecutionPort";
         
         public const string OPTION_LABEL = "Label";
+        
+        public override void OnEnable()
+        {
+            base.OnEnable();
+            DefaultColor = new Color(0.5f, 0f, 0f, 1.0f);
+        }
         
         protected override void OnDefineOptions(IOptionDefinitionContext context)
         {

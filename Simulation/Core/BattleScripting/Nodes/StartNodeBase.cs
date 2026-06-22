@@ -1,6 +1,7 @@
 ﻿#if UNITY_EDITOR
 using System;
 using Unity.GraphToolkit.Editor;
+using UnityEngine;
 
 namespace HnSF.core.GroupControl.Nodes
 {
@@ -10,6 +11,12 @@ namespace HnSF.core.GroupControl.Nodes
     {
         public const string OPTION_CONTROL_SCRIPT_ASSET = "CopyTarget";
 
+        public override void OnEnable()
+        {
+            base.OnEnable();
+            DefaultColor = new Color(0, 1.0f, 0, 1.0f);
+        }
+        
         protected override void OnDefineOptions(IOptionDefinitionContext context)
         {
             base.OnDefineOptions(context);
