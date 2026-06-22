@@ -15,5 +15,10 @@ namespace Quantum
         public bool dontClash;
         public AssetRef<HitInfoBase> counterhitInfo;
         public int hitCount = 1;
+
+        public virtual void OnValidate()
+        {
+            
+        }
     }
 }
