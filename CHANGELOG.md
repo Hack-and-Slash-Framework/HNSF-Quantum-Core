@@ -1,3 +1,10 @@
+## [2.6.1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.6.0...v2.6.1) (2026-06-29)
+
+
+### Bug Fixes
+
+* Fix AssetRefToUntypedNode ([16edd87](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/16edd8713fa65eee39ce1e260f4b0387b90b571c))
+
 # [2.6.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.5.2...v2.6.0) (2026-06-29)
 
 
