@@ -19,18 +19,20 @@ namespace HnSF.Nodes
         public Color DefaultColor { get; set; }
         
         public const string inVariable = "var";
-        
-        protected void OnDefinePorts(Node.IPortDefinitionContext context)
+
+        protected override void OnDefinePorts(IPortDefinitionContext context)
         {
+            base.OnDefinePorts(context);
+            
             context.AddInputPort<AssetRef>(inVariable)
-                .WithDisplayName("")
+                .WithDisplayName("In")
                 .Build();
 
             context.AddOutputPort(inVariable)
-                .WithDisplayName("")
+                .WithDisplayName("Out")
                 .Build();
         }
-
+        
         public bool TryGetValue<T>(out T value)
         {
             value = NodeHelper.GetInputPortValue<T>(GetInputPortByName(inVariable));
