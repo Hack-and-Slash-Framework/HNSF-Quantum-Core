@@ -1,3 +1,10 @@
+# [2.6.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.5.2...v2.6.0) (2026-06-29)
+
+
+### Features
+
+* HTN rewrite & Node improvements ([a0fddd4](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/a0fddd44f91b163ca0e7685d9793f009c2e3095a))
+
 ## [2.5.2](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.5.1...v2.5.2) (2026-06-22)
 
 
