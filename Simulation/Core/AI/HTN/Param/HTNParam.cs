@@ -54,10 +54,10 @@ namespace HnSF.core.AI.HTN.Param
                 /*
                 case HTNParamSource.Blackboard:
                     BlackboardValue blackboardValue = context.blackboard->GetBlackboardValue(frame, Key);
-                    return GetBlackboardValue(blackboardValue);
+                    return GetBlackboardValue(blackboardValue);*/
                 case HTNParamSource.Config:
                     AIConfigBase.KeyValuePair configPair = context.aiConfig?.Get(Key);
-                    return configPair != null ? GetConfigValue(configPair) : DefaultValue;*/
+                    return configPair != null ? GetConfigValue(configPair) : DefaultValue;
                 case HTNParamSource.Function:
                     return GetFunctionValue(ref context);
             }

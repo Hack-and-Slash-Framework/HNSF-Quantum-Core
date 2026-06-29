@@ -1,5 +1,6 @@
 using System;
 using HnSF.core.GroupControl.Actions;
+using HnSF.Nodes;
 using Quantum;
 #if QUANTUM_UNITY
 using UnityEngine.Scripting.APIUpdating;
@@ -70,9 +71,9 @@ namespace HnSF.core.GroupControl.Nodes
         public override GroupControlAction Convert()
         {
             this.GetNodeOptionByName(OPTION_LABEL).TryGetValue<string>(out var label);
-            var msgEnter = GetInputPortValue<string>(GetInputPortByName(IN_PORT_MESSAGE_ENTER));
-            var msgTick = GetInputPortValue<string>(this.GetInputPortByName(IN_PORT_MESSAGE_TICK));
-            var msgExit = GetInputPortValue<string>(this.GetInputPortByName(IN_PORT_MESSAGE_EXIT));
+            var msgEnter = NodeHelper.GetInputPortValue<string>(GetInputPortByName(IN_PORT_MESSAGE_ENTER));
+            var msgTick = NodeHelper.GetInputPortValue<string>(this.GetInputPortByName(IN_PORT_MESSAGE_TICK));
+            var msgExit = NodeHelper.GetInputPortValue<string>(this.GetInputPortByName(IN_PORT_MESSAGE_EXIT));
             return new DebugLog()
             {
                 Label = label,

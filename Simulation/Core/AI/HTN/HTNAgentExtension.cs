@@ -27,7 +27,7 @@ namespace Quantum
 
         public DecompositionStatus FindPlan(ref HTNAgentContext context, out Queue<byte> plan)
         {
-            Log.Debug("Attempting to find plan.");
+            if(context.debug) Log.Debug("Attempting to find plan.");
             context.agent->contextState = HTNContextState.Planning;
             
             plan = null;

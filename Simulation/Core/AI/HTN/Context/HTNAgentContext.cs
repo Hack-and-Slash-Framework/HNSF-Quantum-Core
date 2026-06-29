@@ -8,6 +8,7 @@ namespace Quantum
         public EntityRef agentEntityRef;
         public BattleActorAI* battleActorAI;
         public HTNAgent* agent;
+        public AIConfigBase aiConfig;
         public List<byte> currentMTR;
         public Dictionary<byte, Stack<KeyValuePair<EffectType, byte>>> worldStateChangeStack;
         public bool debug;
@@ -20,6 +21,7 @@ namespace Quantum
             this.battleActorAI = battleActorAI;
             this.currentMTR = null;
             this.worldStateChangeStack = null;
+            aiConfig = frame.FindAsset(agent->config);
             debug = false;
         }
         
@@ -31,6 +33,7 @@ namespace Quantum
             this.battleActorAI = battleActorAI;
             this.currentMTR = currentMTR;
             this.worldStateChangeStack = null;
+            aiConfig = frame.FindAsset(agent->config);
             debug = false;
         }
 
@@ -42,6 +45,7 @@ namespace Quantum
             this.battleActorAI = battleActorAI;
             this.currentMTR = currentMTR;
             this.worldStateChangeStack = worldStateChangeStack;
+            aiConfig = frame.FindAsset(agent->config);
             debug = false;
         }
         

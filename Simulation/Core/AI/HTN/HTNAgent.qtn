@@ -1,5 +1,6 @@
 component HTNAgent{
     asset_ref<HnSF.core.AI.HTN.Tasks.DomainAssetObject> domainAssetRef;
+    asset_ref<AIConfigBase> config;
     HTNActivePlan currentPlan;
     HTNWorldState worldState;
     HTNContextState contextState;

@@ -52,10 +52,11 @@ namespace HnSF.core.GroupControl.Nodes
                 .WithConnectorUI(PortConnectorUI.Arrowhead)
                 .Build();
             
+            /*
             context.AddInputPort(IN_PORT_CONDITIONS)
                 .WithDisplayName("Conditions")
                 .WithConnectorUI(PortConnectorUI.Circle)
-                .Build();
+                .Build();*/
         }
 
         public virtual GroupControlAction Convert()

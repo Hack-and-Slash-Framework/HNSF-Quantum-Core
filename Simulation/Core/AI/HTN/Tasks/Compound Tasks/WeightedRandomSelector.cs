@@ -13,6 +13,7 @@ namespace HnSF.core.AI.HTN.Tasks
         {
             var copy = new WeightedRandomSelector();
             FillOtherWithValues(copy, resourceManager);
+            copy.actionsWeighted = new WeightedList<int>(actionsWeighted);
             return copy;
         }
     }

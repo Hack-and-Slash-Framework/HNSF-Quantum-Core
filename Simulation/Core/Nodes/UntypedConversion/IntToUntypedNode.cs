@@ -8,8 +8,8 @@ using Unity.GraphToolkit.Editor;
 namespace HnSF.Nodes
 {
     [Serializable]
-    [UseWithGraph(typeof(PrimitiveTaskGraph), typeof(ActorGroupScriptGraph))]
-    public class IntToUntypedNode : NodeBase, IUntypedConversionNode
+    [UseWithGraph(typeof(PrimitiveTaskGraph), typeof(ActorGroupScriptGraph), typeof(HTNDomainGraph))]
+    public class IntToUntypedNode : Node, IUntypedConversionNode
     {
         public const string inVariableInt = "intVar";
         
@@ -26,7 +26,7 @@ namespace HnSF.Nodes
 
         public bool TryGetValue<T>(out T value)
         {
-            value = GetInputPortValue<T>(GetInputPortByName(inVariableInt));
+            value = NodeHelper.GetInputPortValue<T>(GetInputPortByName(inVariableInt));
             return true;
         }
     }

@@ -39,11 +39,6 @@ namespace HnSF.core.AI.HTN.Nodes
                 .WithConnectorUI(PortConnectorUI.Arrowhead)
                 .Build();
             
-            context.AddInputPort(ConditionsPortName)
-                .WithDisplayName("Conditions")
-                .WithConnectorUI(PortConnectorUI.Circle)
-                .Build();
-            
             context.AddInputPort(ExecutingConditionsPortName)
                 .WithDisplayName("Executing Conditions")
                 .WithConnectorUI(PortConnectorUI.Circle)
@@ -55,57 +50,14 @@ namespace HnSF.core.AI.HTN.Nodes
                 .Build();
         }
         
-        public virtual List<ICondition> ConvertConditionNodes() 
-        {
-            List<ICondition> conditions = new List<ICondition>();
-            var port = GetInputPortByName(ConditionsPortName).FirstConnectedPort;
-            if (port == null)
-            {
-                return conditions;
-            }
-            var initialConditionNode = port.GetNode() as ConditionBase;
-            if (initialConditionNode == null)
-            {
-                return conditions;
-            }
-            ConvertConditionNodesRecursive(conditions, initialConditionNode);
-            conditions.Reverse();
-            return conditions;
-        }
-        
         public virtual List<ICondition> ConvertExecutingConditionNodes() 
         {
-            List<ICondition> conditions = new List<ICondition>();
-            var port = GetInputPortByName(ExecutingConditionsPortName).FirstConnectedPort;
-            if (port == null)
-            {
-                return conditions;
-            }
-            var initialConditionNode = port.GetNode() as ConditionBase;
-            if (initialConditionNode == null)
-            {
-                return conditions;
-            }
-            ConvertConditionNodesRecursive(conditions, initialConditionNode);
-            conditions.Reverse();
-            return conditions;
-        }
-
-        private void ConvertConditionNodesRecursive(List<ICondition> rules, ConditionBase ruleNode)
-        {
-            rules.Add(ruleNode.Convert());
-
-            var port = ruleNode.GetInputPortByName(ConditionBase.EXECUTION_PORT_DEFAULT_NAME).FirstConnectedPort;
-            if (port == null)
-            {
-                return;
-            }
-            var previousNode = port.GetNode() as ConditionBase;
-            if (previousNode == null)
-            {
-                return;
-            }
-            ConvertConditionNodesRecursive(rules, previousNode);
+            var executingConditionsBlockNode = GetInputPortByName(ExecutingConditionsPortName).FirstConnectedPort?.GetNode();
+            if (executingConditionsBlockNode == null)
+                return new List<ICondition>();
+            if(executingConditionsBlockNode is not ConditionSetNode csn)
+                return new List<ICondition>();
+            return csn.ConvertConditionBlocks();
         }
         
         public virtual List<IEffect> ConvertEffectNodes() 

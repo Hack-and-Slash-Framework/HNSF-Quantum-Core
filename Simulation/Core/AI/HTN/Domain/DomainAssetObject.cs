@@ -24,10 +24,14 @@ namespace HnSF.core.AI.HTN.Tasks
         
         public TaskRoot rootNode = new TaskRoot();
         
+        [NonSerialized] public bool remade = false;
+        [NonSerialized] private IResourceManager cachedResourceManager = null;
+        
         public override void Loaded(IResourceManager resourceManager, Native.Allocator allocator)
         {
             base.Loaded(resourceManager, allocator);
-            if (runtimeRoot == null) BuildRuntimeNodes(resourceManager);
+            cachedResourceManager = resourceManager;
+            BuildRuntimeNodes(resourceManager);
         }
 
         private void BuildRuntimeNodes(IResourceManager resourceManager)
@@ -43,11 +47,13 @@ namespace HnSF.core.AI.HTN.Tasks
         }
 
 #if QUANTUM_UNITY
-        [ContextMenu("Bake")]
+        [ContextMenu("Force Build")]
 #endif
-        public void Bake()
+        public void ForceBuild()
         {
-            
+            runtimeRoot = rootNode.ConvertToRuntimeObject(cachedResourceManager) as TaskRoot;
+            runtimeRoot.RecursivelyAssignIDs(this, ref idCounter);
+            remade = true;
         }
     }
 }

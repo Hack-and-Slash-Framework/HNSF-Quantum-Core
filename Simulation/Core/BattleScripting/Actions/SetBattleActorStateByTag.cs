@@ -1,6 +1,7 @@
 using System;
 using HnSF.core.GroupControl.Actions;
 using HnSF.core.state;
+using HnSF.Nodes;
 using Quantum;
 #if QUANTUM_UNITY
 using UnityEngine.Scripting.APIUpdating;
@@ -112,12 +113,12 @@ namespace HnSF.core.GroupControl.Nodes
 
         public override GroupControlAction Convert()
         {
-            var targetTag = GetInputPortValue<Tag>(this.GetInputPortByName(IN_PORT_Target_Tag));
-            var overrideMoveset = GetInputPortValue<bool>(this.GetInputPortByName(IN_PORT_Override_Moveset));
-            var movesetTag = GetInputPortValue<Tag>(this.GetInputPortByName(IN_PORT_Moveset_Tag));
-            var stateTag = GetInputPortValue<Tag>(this.GetInputPortByName(IN_PORT_State_Tag));
-            var toFrame = GetInputPortValue<int>(this.GetInputPortByName(IN_PORT_To_Frame));
-            var immediateTransition = GetInputPortValue<bool>(this.GetInputPortByName(IN_PORT_Immediate_Transition));
+            var targetTag = NodeHelper.GetInputPortValue<Tag>(this.GetInputPortByName(IN_PORT_Target_Tag));
+            var overrideMoveset = NodeHelper.GetInputPortValue<bool>(this.GetInputPortByName(IN_PORT_Override_Moveset));
+            var movesetTag = NodeHelper.GetInputPortValue<Tag>(this.GetInputPortByName(IN_PORT_Moveset_Tag));
+            var stateTag = NodeHelper.GetInputPortValue<Tag>(this.GetInputPortByName(IN_PORT_State_Tag));
+            var toFrame = NodeHelper.GetInputPortValue<int>(this.GetInputPortByName(IN_PORT_To_Frame));
+            var immediateTransition = NodeHelper.GetInputPortValue<bool>(this.GetInputPortByName(IN_PORT_Immediate_Transition));
             
             return new SetBattleActorStateByTag()
             {

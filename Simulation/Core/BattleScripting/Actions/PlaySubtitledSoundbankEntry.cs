@@ -1,5 +1,6 @@
 using System;
 using HnSF.core.GroupControl.Actions;
+using HnSF.Nodes;
 using Quantum;
 #if QUANTUM_UNITY
 using UnityEngine.Scripting.APIUpdating;
@@ -55,7 +56,7 @@ namespace HnSF.core.GroupControl.Nodes
 
         public override GroupControlAction Convert()
         {
-            var soundEntryTag = GetInputPortValue<Tag>(this.GetInputPortByName(IN_PORT_SoundEntry_Tag));
+            var soundEntryTag = NodeHelper.GetInputPortValue<Tag>(this.GetInputPortByName(IN_PORT_SoundEntry_Tag));
             return new PlaySubtitledSoundbankEntry()
             {
                 voiceClip = soundEntryTag

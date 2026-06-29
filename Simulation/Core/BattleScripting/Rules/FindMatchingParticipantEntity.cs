@@ -92,7 +92,6 @@ namespace HnSF.core.GroupControl.Grabbers
 namespace HnSF.core.GroupControl.Grabbers
 {
     [Serializable]
-    [UseWithGraph(typeof(ActorGroupScriptGraph))]
     internal class FindMatchingParticipantEntityRuleNode : RuleNodeBase
     {
         public const string OPTION_ASSIGNEDTAG = "AssignedTag";

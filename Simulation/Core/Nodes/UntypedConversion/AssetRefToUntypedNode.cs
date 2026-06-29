@@ -10,8 +10,8 @@ using UnityEngine;
 namespace HnSF.Nodes
 {
     [Serializable]
-    [UseWithGraph(typeof(PrimitiveTaskGraph), typeof(ActorGroupScriptGraph))]
-    public class AssetRefToUntypedNode : NodeBase, IUntypedConversionNode
+    [UseWithGraph(typeof(PrimitiveTaskGraph), typeof(ActorGroupScriptGraph), typeof(HTNDomainGraph))]
+    public class AssetRefToUntypedNode : Node, IUntypedConversionNode
     {
         public string Tooltip { get; set; }
         public string Title { get; set; }
@@ -33,7 +33,7 @@ namespace HnSF.Nodes
 
         public bool TryGetValue<T>(out T value)
         {
-            value = GetInputPortValue<T>(GetInputPortByName(inVariable));
+            value = NodeHelper.GetInputPortValue<T>(GetInputPortByName(inVariable));
             return true;
         }
     }

@@ -28,6 +28,18 @@ namespace HnSF
             
         }
 
+        public WeightedList(WeightedList<T> copyList)
+        {
+            if (copyList == null)
+                return;
+            for (int i = 0; i < copyList._list.Count; i++)
+            {
+                _list.Add(copyList._list[i]);
+                _weights.Add(copyList._weights[i]);
+            }
+            Recalculate();
+        }
+
         /// <summary>
         /// Create a WeightedList with the provided items, function to get weight per item.
         /// </summary>
@@ -56,6 +68,24 @@ namespace HnSF
 
         public WeightErrorHandlingType BadWeightErrorHandling { get; set; } = SetWeightToOne;
 
+        public bool TryNext(RNGSession* rngSession, out T result)
+        {
+            if (Count == 0)
+            {
+                result = default;
+                return false;
+            }
+            int nextInt = rngSession->Next(0, Count);
+            if (_areAllProbabilitiesIdentical)
+            {
+                result = _list[nextInt];
+                return true;
+            }
+            int nextProbability = rngSession->Next(0, _totalWeight);
+            result = (nextProbability < _probabilities[nextInt]) ? _list[nextInt] : _list[_alias[nextInt]];
+            return true;
+        }
+        
         public T Next(RNGSession* rngSession)
         {
             if (Count == 0) return default;

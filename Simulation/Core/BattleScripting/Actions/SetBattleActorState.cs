@@ -1,6 +1,7 @@
 using System;
 using HnSF.core.GroupControl.Actions;
 using HnSF.core.state;
+using HnSF.Nodes;
 using Quantum;
 #if QUANTUM_UNITY
 using UnityEngine.Scripting.APIUpdating;
@@ -86,8 +87,8 @@ namespace HnSF.core.GroupControl.Nodes
 
         public override GroupControlAction Convert()
         {
-            var targetTag = GetInputPortValue<Tag>(this.GetInputPortByName(IN_PORT_Target_Tag));
-            var state = GetInputPortValue<HNSFState>(this.GetInputPortByName(IN_PORT_State));
+            var targetTag = NodeHelper.GetInputPortValue<Tag>(this.GetInputPortByName(IN_PORT_Target_Tag));
+            var state = NodeHelper.GetInputPortValue<HNSFState>(this.GetInputPortByName(IN_PORT_State));
             return new SetBattleActorState()
             {
                 statesToSet = new []

@@ -87,5 +87,10 @@ namespace Quantum
                 context.worldStateChangeStack[state].Push(new KeyValuePair<EffectType, byte>(e, value));
             }
         }
+        
+        public static void SetDirty(ref HTNAgentContext context, bool value = true)
+        {
+            context.agent->contextDirty = value; // When a state change during execution, we need to mark the context dirty for replanning!
+        }
     }
 }

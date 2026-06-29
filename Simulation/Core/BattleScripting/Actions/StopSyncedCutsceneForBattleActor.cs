@@ -1,5 +1,6 @@
 using System;
 using HnSF.core.GroupControl.Actions;
+using HnSF.Nodes;
 using Quantum;
 #if QUANTUM_UNITY
 using UnityEngine.Scripting.APIUpdating;
@@ -101,8 +102,8 @@ namespace HnSF.core.GroupControl.Nodes
 
         public override GroupControlAction Convert()
         {
-            var targetTag = GetInputPortValue<Tag>(this.GetInputPortByName(IN_PORT_Target_Tag));
-            var cutsceneTag = GetInputPortValue<Tag>(this.GetInputPortByName(IN_PORT_Cutscene_Tag));
+            var targetTag = NodeHelper.GetInputPortValue<Tag>(this.GetInputPortByName(IN_PORT_Target_Tag));
+            var cutsceneTag = NodeHelper.GetInputPortValue<Tag>(this.GetInputPortByName(IN_PORT_Cutscene_Tag));
             
             return new StopSyncedCutsceneForBattleActor()
             {

@@ -18,6 +18,12 @@ namespace HnSF.core.AI.HTN.Tasks
             set => id = value;
         }
 
+        public int Weight
+        {
+            get => weight;
+            set => weight = value;
+        }
+
         public string Label
         {
             get => label;
@@ -51,6 +57,7 @@ namespace HnSF.core.AI.HTN.Tasks
 
         [SerializeField] private byte id;
         [SerializeField] private string label;
+        [SerializeField] protected int weight = 1;
 #if QUANTUM_UNITY
         [SerializeReference, SubclassSelector]
 #endif
@@ -104,6 +111,7 @@ namespace HnSF.core.AI.HTN.Tasks
         public virtual void FillOtherWithValues(PrimitiveTask other, IResourceManager resourceManager)
         {
             other.Label = Label;
+            other.weight = weight;
             other.conditions = new List<ICondition>(conditions);
             other.executingConditions = new List<ICondition>(executingConditions);
             other.operators = new List<HTNOperatorBase>(operators);

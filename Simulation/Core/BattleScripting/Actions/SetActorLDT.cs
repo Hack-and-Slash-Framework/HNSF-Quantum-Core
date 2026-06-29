@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using HnSF.core.GroupControl.Actions;
 using HnSF.core.GroupControl.Functions;
+using HnSF.Nodes;
 using Photon.Deterministic;
 using Quantum;
 #if QUANTUM_UNITY
@@ -173,7 +174,7 @@ namespace HnSF.core.GroupControl.Nodes
                 multiplier = multi,
                 setForFrames = setForFrames,
                 resetOnExit = resetOnExit,
-                actorsToApplyTo = GetInputPortValue<List<AssetRef<Tag>>>(GetInputPortByName(PORT_TAGGEDENTITIES))
+                actorsToApplyTo = NodeHelper.GetInputPortValue<List<AssetRef<Tag>>>(GetInputPortByName(PORT_TAGGEDENTITIES))
             };
         }
     }

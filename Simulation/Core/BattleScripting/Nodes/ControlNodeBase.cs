@@ -8,6 +8,7 @@ using HnSF.core.GroupControl.Grabbers;
 using HnSF.Nodes;
 using Quantum;
 using Unity.GraphToolkit.Editor;
+using UnityEngine;
 
 namespace HnSF.core.GroupControl.Nodes
 {
@@ -15,43 +16,26 @@ namespace HnSF.core.GroupControl.Nodes
     [UseWithGraph(typeof(ActorGroupScriptGraph))]
     public class ControlNodeBase : HnSF.Nodes.NodeBase
     {
-        public const string IN_PORT_CONDITIONS = "Conditions";
-        
         public virtual void ConvertRuleNodes(GroupControlAction action) 
         {
             List<GroupControlRule> rules = new List<GroupControlRule>();
-            var port = GetInputPortByName(IN_PORT_CONDITIONS).FirstConnectedPort;
-            if (port == null)
+
+            foreach (var blockNode in BlockNodes)
             {
-                action.rules = null;
-                return;
+                var ruleNode = blockNode as RuleNodeBase;
+                if(ruleNode == null)
+                    continue;
+
+                var conversion = ruleNode.Convert();
+                if (conversion == null)
+                {
+                    Debug.LogError($"Got a null condition for node {ruleNode.Title}, skipping.");
+                    continue;
+                }
+                rules.Add(conversion);
             }
-            var initialRuleNode = port.GetNode() as RuleNodeBase;
-            if (initialRuleNode == null)
-            {
-                action.rules = null;
-                return;
-            }
-            ConvertRuleNodesRecursive(rules, initialRuleNode);
-            rules.Reverse();
+
             action.rules = rules.ToArray();
-        }
-
-        private void ConvertRuleNodesRecursive(List<GroupControlRule> rules, RuleNodeBase ruleNode)
-        {
-            rules.Add(ruleNode.Convert());
-
-            var port = ruleNode.GetInputPortByName(RuleNodeBase.EXECUTION_PORT_DEFAULT_NAME).FirstConnectedPort;
-            if (port == null)
-            {
-                return;
-            }
-            var previousNode = port.GetNode() as RuleNodeBase;
-            if (previousNode == null)
-            {
-                return;
-            }
-            ConvertRuleNodesRecursive(rules, previousNode);
         }
         
         protected virtual T ConvertFunctionNode<T>(IPort getPort) where T : GroupControlFunction

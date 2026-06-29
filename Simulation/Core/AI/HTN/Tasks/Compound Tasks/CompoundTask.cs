@@ -11,15 +11,19 @@ namespace HnSF.core.AI.HTN.Tasks
     [Serializable]
     public abstract class CompoundTask : ICompoundTask
     {
-        public string Label
-        {
-            get => label; set => label = value;
-        }
-
+        [field: SerializeField] public string Label { get; set; } = "";
+        
         public byte ID
         {
             get => id; set => id = value;
         }
+
+        public int Weight
+        {
+            get => weight;
+            set => weight = value;
+        }
+
         public ICompoundTask Parent { get; set; }
         public List<ICondition> Conditions
         {
@@ -28,7 +32,7 @@ namespace HnSF.core.AI.HTN.Tasks
         }
 
         [SerializeField] protected byte id;
-        [SerializeField] protected string label;
+        [SerializeField] protected int weight = 1;
 #if QUANTUM_UNITY
         [SerializeReference, SubclassSelector]
 #endif
@@ -36,7 +40,7 @@ namespace HnSF.core.AI.HTN.Tasks
 #if QUANTUM_UNITY
         [SerializeReference, SubclassSelector]
 #endif
-        protected List<ITask> subtasks = new List<ITask>();
+        public List<ITask> subtasks = new List<ITask>();
         
         public virtual bool IsValid(ref HTNAgentContext context)
         {
@@ -88,7 +92,8 @@ namespace HnSF.core.AI.HTN.Tasks
         
         public virtual void FillOtherWithValues(CompoundTask other, IResourceManager resourceManager)
         {
-            other.label = label;
+            other.Label = Label;
+            other.weight = weight;
             other.conditionals = new List<ICondition>(conditionals);
             other.subtasks = new List<ITask>(subtasks);
             for (int i = 0; i < subtasks.Count; i++)

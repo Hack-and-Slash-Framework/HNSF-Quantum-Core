@@ -27,6 +27,16 @@ namespace HnSF.core.AI.HTN
         public int[] nextOperatorsOrdered;
         public WeightedList<int> nextOperatorsWeighted;
 
+        public virtual bool IsValid(ref HTNAgentContext context)
+        {
+            foreach (var precondition in preconditions)
+            {
+                if (!precondition.IsValid(ref context))
+                    return false;
+            }
+            return true;
+        }
+        
         public virtual HTNTaskStatus OnEnter(ref HTNAgentContext context)
         {
             return HTNTaskStatus.Executing;

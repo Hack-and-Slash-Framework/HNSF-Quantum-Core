@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using HnSF.core.GroupControl.Actions;
+using HnSF.Nodes;
 using Quantum;
 #if QUANTUM_UNITY
 using UnityEngine.Scripting.APIUpdating;
@@ -161,13 +162,13 @@ namespace HnSF.core.GroupControl.Nodes
         public override GroupControlAction Convert()
         {
             this.GetNodeOptionByName(OPTION_LABEL).TryGetValue<string>(out var label);
-            var cutsceneSource = GetInputPortValue<AssetObject>(this.GetInputPortByName(IN_PORT_Cutscene_Source));
-            var cutsceneTag = GetInputPortValue<Tag>(this.GetInputPortByName(IN_PORT_Cutscene_Tag));
-            var autoplay = GetInputPortValue<bool>(this.GetInputPortByName(IN_PORT_Autoplay));
-            var autoend = GetInputPortValue<bool>(this.GetInputPortByName(IN_PORT_Autoend));
-            var ignoreLdt = GetInputPortValue<bool>(this.GetInputPortByName(IN_PORT_IgnoreLdt));
-            var autoendFrame = GetInputPortValue<int>(this.GetInputPortByName(IN_PORT_Autoend_Frame));
-            var localOnly = GetInputPortValue<bool>(this.GetInputPortByName(IN_PORT_Local_Only));
+            var cutsceneSource = NodeHelper.GetInputPortValue<AssetObject>(this.GetInputPortByName(IN_PORT_Cutscene_Source));
+            var cutsceneTag = NodeHelper.GetInputPortValue<Tag>(this.GetInputPortByName(IN_PORT_Cutscene_Tag));
+            var autoplay = NodeHelper.GetInputPortValue<bool>(this.GetInputPortByName(IN_PORT_Autoplay));
+            var autoend = NodeHelper.GetInputPortValue<bool>(this.GetInputPortByName(IN_PORT_Autoend));
+            var ignoreLdt = NodeHelper.GetInputPortValue<bool>(this.GetInputPortByName(IN_PORT_IgnoreLdt));
+            var autoendFrame = NodeHelper.GetInputPortValue<int>(this.GetInputPortByName(IN_PORT_Autoend_Frame));
+            var localOnly = NodeHelper.GetInputPortValue<bool>(this.GetInputPortByName(IN_PORT_Local_Only));
 
             var cutsceneControlledEntities = new List<HnSF.core.GroupControl.Actions.PlaySyncedCutscene.TagToTag>();
             var controlledEntitiesNodePorts = new List<IPort>();

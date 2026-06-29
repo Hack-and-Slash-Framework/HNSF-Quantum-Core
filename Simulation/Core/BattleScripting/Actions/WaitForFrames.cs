@@ -1,5 +1,6 @@
 using System;
 using HnSF.core.GroupControl.Actions;
+using HnSF.Nodes;
 using Quantum;
 #if QUANTUM_UNITY
 using UnityEngine.Scripting.APIUpdating;
@@ -59,7 +60,7 @@ namespace HnSF.core.GroupControl.Nodes
 
         public override GroupControlAction Convert()
         {
-            var frames = GetInputPortValue<int>(this.GetInputPortByName(IN_PORT_FRAMES_TO_WAIT));
+            var frames = NodeHelper.GetInputPortValue<int>(this.GetInputPortByName(IN_PORT_FRAMES_TO_WAIT));
             return new WaitForFrames()
             {
                 framesToWait = frames

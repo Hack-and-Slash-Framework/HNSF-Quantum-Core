@@ -11,16 +11,17 @@ using Unity.GraphToolkit.Editor;
 using UnityEditor;
 using UnityEditor.AssetImporters;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace HnSF.core.AI.HTN
 {
     [ScriptedImporter(1, PrimitiveTaskGraph.AssetExtension)]
     public class PrimitiveTaskGraphImporter : ScriptedImporter
     {
-        [NonSerialized] private int indexCounter = 0;
-        [NonSerialized] private Dictionary<HTNNodeBase, int> nodeToIndex = new();
-        [NonSerialized] private Dictionary<int, HTNNodeBase> indexToNode = new();
-        [NonSerialized] private List<HTNOperatorBase> actions = new();
+        [NonSerialized] private static int indexCounter = 0;
+        [NonSerialized] private static Dictionary<HTNNodeBase, int> nodeToIndex = new();
+        [NonSerialized] private static Dictionary<int, HTNNodeBase> indexToNode = new();
+        [NonSerialized] private static List<HTNOperatorBase> actions = new();
         
         public override void OnImportAsset(AssetImportContext ctx)
         {
@@ -47,8 +48,32 @@ namespace HnSF.core.AI.HTN
                 BuildForTarget(startNode, gcScript);
             }
         }
+
+        public static PrimitiveTask ConvertFromAsset(Object asset)
+        {
+            var path = AssetDatabase.GetAssetPath(asset);
+            
+            var graph = GraphDatabase.LoadGraphForImporter<PrimitiveTaskGraph>(path);
+            
+            if (graph == null)
+            {
+                Debug.LogError($"Failed to load Primitive Task graph asset: {path}");
+                return null;
+            }
+
+            var startNodes = graph.GetNodes().OfType<StartNode>().ToList();
+            if (startNodes.Count == 0)
+            {
+                Debug.LogError("Given graph has no start node.");
+                return null;
+            }
+            
+            var pt = new PrimitiveTask();
+            BuildForTarget(startNodes.FirstOrDefault(), pt);
+            return pt;
+        }
         
-        private void BuildForTarget(StartNode startNode, PrimitiveTaskAssetObject gcScript)
+        private static void BuildForTarget(StartNode startNode, PrimitiveTaskAssetObject gcScript)
         {
             actions = new List<HTNOperatorBase>();
             
@@ -60,7 +85,7 @@ namespace HnSF.core.AI.HTN
             
             // Build Map
             BuildActionList();
-            var conditions = startNode.ConvertConditionNodes();
+            var conditions = startNode.ConvertConditionBlocks();
             var executingConditions = startNode.ConvertExecutingConditionNodes();
             var effects = startNode.ConvertEffectNodes();
             
@@ -81,7 +106,32 @@ namespace HnSF.core.AI.HTN
             actions = null;
         }
         
-        private void BuildActionList()
+        private static void BuildForTarget(StartNode startNode, PrimitiveTask pt)
+        {
+            if (startNode == null)
+                return;
+            actions = new List<HTNOperatorBase>();
+            
+            // Build Indexes
+            indexCounter = 0;
+            nodeToIndex.Clear();
+            indexToNode.Clear();
+            BuildIndexMapRecursive(startNode, skipSelf: true);
+            
+            // Build Map
+            BuildActionList();
+            var conditions = startNode.ConvertConditionBlocks();
+            var executingConditions = startNode.ConvertExecutingConditionNodes();
+            var effects = startNode.ConvertEffectNodes();
+            
+            pt.operators = actions;
+            pt.Conditions = conditions;
+            pt.ExecutingConditions = executingConditions;
+            pt.Effects = effects;
+            actions = null;
+        }
+        
+        private static void BuildActionList()
         {
             for (int i = 0; i < indexCounter; i++)
             {
@@ -146,7 +196,7 @@ namespace HnSF.core.AI.HTN
             }
         }
 
-        private void BuildIndexMapRecursive(INode currentNode, bool skipSelf = false)
+        private static void BuildIndexMapRecursive(INode currentNode, bool skipSelf = false)
         {
             var n = currentNode as Nodes.HTNNodeBase;
             if (n == null)
@@ -178,8 +228,12 @@ namespace HnSF.core.AI.HTN
             var returnedNodes = new List<HTNOperatorBase>();
 
             var rv = n.Convert();
-            n.ConvertPreconditionNodes(rv);
-            if (rv != null) returnedNodes.Add(rv);
+            if (rv != null)
+            {
+                rv.preconditions = n.ConvertConditionBlocks();
+                returnedNodes.Add(rv);
+            }
+            
             return returnedNodes;
         }
     }

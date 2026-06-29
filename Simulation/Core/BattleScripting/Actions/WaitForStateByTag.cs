@@ -1,6 +1,7 @@
 using System;
 using HnSF.core.GroupControl.Actions;
 using HnSF.core.GroupControl.Functions;
+using HnSF.Nodes;
 using Quantum;
 #if QUANTUM_UNITY
 using UnityEngine.Scripting.APIUpdating;
@@ -79,7 +80,7 @@ namespace HnSF.core.GroupControl.Nodes
 
         public override GroupControlAction Convert()
         {
-            var targetTags = GetInputPortValue<List<AssetRef<Tag>>>(GetInputPortByName(inPortValidTags));
+            var targetTags = NodeHelper.GetInputPortValue<List<AssetRef<Tag>>>(GetInputPortByName(inPortValidTags));
             
             return new Actions.WaitForStateByTag()
             {

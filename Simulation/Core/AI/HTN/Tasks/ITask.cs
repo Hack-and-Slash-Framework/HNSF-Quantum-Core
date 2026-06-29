@@ -8,6 +8,7 @@ namespace HnSF.core.AI.HTN.Tasks
     {
         string Label { get; set; }
         byte ID { get; set; }
+        int Weight { get; set; }
         ICompoundTask Parent { get; set; }
         List<ICondition> Conditions { get; set; }
         

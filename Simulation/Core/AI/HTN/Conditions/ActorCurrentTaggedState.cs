@@ -27,9 +27,16 @@ namespace HnSF.core.AI.HTN.Conditions
             
             if (!frame.Unsafe.TryGetPointer<BattleActorAI>(context.agentEntityRef, out var battleActorAI)) return false;
 
-            if (frame.Unsafe.TryGetPointer<BattleActorPhysics>(battleActorAI->target, out var physics))
+            if (frame.Unsafe.TryGetPointer<GenericStateMachine>(battleActorAI->target, out var gsm)
+                && frame.TryFindAsset(gsm->stateAgent.stateSet, out var stateSet)
+                && frame.TryFindAsset(gsm->stateAgent.stateData.state, out var currentState))
             {
-                //return physics->currentGroundedState == state;
+                foreach (var tag in validTags)
+                {
+                    if(stateSet.AttemptGetStateByTag(gsm->stateAgent.stateData.moveset, tag) != currentState)
+                        continue;
+                    return true;
+                }
             }
             return false;
         }
@@ -40,7 +47,7 @@ namespace HnSF.core.AI.HTN.Conditions
 namespace HnSF.core.AI.HTN.Nodes
 {
     [Serializable]
-    [UseWithGraph(typeof(PrimitiveTaskGraph))]
+    [UseWithGraph(typeof(PrimitiveTaskGraph), typeof(HTNDomainGraph))]
     public unsafe class ConditionActorCurrentTaggedState : ConditionBase
     {
         public const string inValidTags = "ValidTags";
@@ -52,7 +59,7 @@ namespace HnSF.core.AI.HTN.Nodes
 
         protected override void OnDefinePorts(Node.IPortDefinitionContext context)
         {
-            AddInputOutputExecutionPorts(context);
+            //AddInputOutputExecutionPorts(context);
 
             context.AddInputPort(inValidTags)
                 .WithDataType<List<AssetRef<Tag>>>()
@@ -62,11 +69,11 @@ namespace HnSF.core.AI.HTN.Nodes
 
         public override ICondition Convert()
         {
-            this.GetNodeOptionByName(OPTION_LABEL).TryGetValue<string>(out var label);
+            //this.GetNodeOptionByName(OPTION_LABEL).TryGetValue<string>(out var label);
 
             return new Conditions.ActorCurrentTaggedState()
             {
-                Label = label,
+                //Label = label,
                 validTags = GetInputPortValue<List<AssetRef<Tag>>>(GetInputPortByName(inValidTags))
             };
         }

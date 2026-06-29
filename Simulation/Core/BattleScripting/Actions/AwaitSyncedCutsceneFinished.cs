@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using HnSF.core.GroupControl.Actions;
 using HnSF.core.GroupControl.Functions;
+using HnSF.Nodes;
 using Quantum;
 #if QUANTUM_UNITY
 using UnityEngine;
@@ -85,8 +86,8 @@ namespace HnSF.core.GroupControl.Nodes
             {
                 Label = label,
                 entityRefFunction = ConvertFunctionNode<GroupControlFunctionEntityRef>(GetInputPortByName(IN_PORT_EntityFunction)),
-                waitForFrame = GetInputPortValue<int>(GetInputPortByName(IN_PORT_FrameToWaitFor)),
-                timeout = GetInputPortValue<int>(GetInputPortByName(IN_PORT_Timeout)),
+                waitForFrame = NodeHelper.GetInputPortValue<int>(GetInputPortByName(IN_PORT_FrameToWaitFor)),
+                timeout = NodeHelper.GetInputPortValue<int>(GetInputPortByName(IN_PORT_Timeout)),
             };
         }
     }

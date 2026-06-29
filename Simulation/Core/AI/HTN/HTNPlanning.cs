@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using HnSF;
 using HnSF.core.AI.HTN.Tasks;
 using Quantum.Collections;
 
@@ -6,21 +7,32 @@ namespace Quantum
 {
     public static unsafe partial class HTNPlanning
     {
-        public static void Tick(ref HTNAgentContext context, bool allowImmediateReplanAndExecute = true)
+        public static void Tick(ref HTNAgentContext context, bool allowImmediateReplanAndExecute = false)
         {
             var decompositionStatus = DecompositionStatus.Failed;
             var isTryingToReplacePlan = false;
-
+            
+            #if UNITY_EDITOR
+            if (context.frame.TryFindAsset(context.agent->domainAssetRef, out var domainAsset)
+                && domainAsset.remade)
+            {
+                domainAsset.remade = false;
+                ClearPlanForReplan(ref context);
+            }
+            #endif
+            
             // Check whether state has changed or the current plan has finished running.
             // and if so, try to find a new plan.
             if (ShouldFindNewPlan(ref context))
             {
                 isTryingToReplacePlan = TryFindNewPlan(ref context, out decompositionStatus);
+                //if(context.debug) Log.Debug($"Should find new plan and got result of {isTryingToReplacePlan}");
             }
             
             // If the plan has more tasks, we try to select the next one.
             if (CanSelectNextTaskInPlan(ref context))
             {
+                if(context.debug) Log.Debug("Can select next task in plan.");
                 // Select the next task, but check whether the conditions of the next task failed to validate.
                 if (SelectNextTaskInPlan(ref context) == false)
                     return;
@@ -30,6 +42,7 @@ namespace Quantum
                     if (TryStartPrimitiveTaskOperator(ref context, taskToStart, allowImmediateReplanAndExecute) ==
                         false)
                         return;
+                    if(context.debug) Log.Debug("Started primitive task operator");
                 }
             }
 
@@ -236,23 +249,38 @@ namespace Quantum
             if (task.Operators != null)
             {
                 ctx.agent->currentPlan.currentOperator = 0;
-                
                 ctx.agent->lastStatus = task.Operators[ctx.agent->currentPlan.currentOperator].OnEnter(ref ctx);
-
-                // If the operation finished successfully already on start, we set task to null so that we dequeue the next task in the plan the following tick.
-                if (ctx.agent->lastStatus == HTNTaskStatus.Success)
-                {
-                    // We have to first invoke that the task operator has run its start function successfully, before we report that the operator finished.
-                    //ctx.PlannerState.OnCurrentTaskStarted?.Invoke(task);
-                    
-                    OnOperatorFinishedSuccessfully(ref ctx, task, allowImmediateReplanAndExecute);
-                    return true;
-                }
 
                 if (ctx.agent->lastStatus == HTNTaskStatus.Failure)
                 {
                     FailEntirePlan(ref ctx, task, allowImmediateReplanAndExecute);
                     return true;
+                }
+                
+                if (ctx.agent->lastStatus == HTNTaskStatus.Success ||
+                    ctx.agent->lastStatus == HTNTaskStatus.Success_DelayOneFrame)
+                {
+                    task.Operators[ctx.agent->currentPlan.currentOperator].OnExit(ref ctx);
+                    
+                    SetNextOperator(ref ctx, task);
+                    
+                    // If all operators completed during start, finish the task now.
+                    if (ctx.agent->currentPlan.currentOperator == -1 || ctx.agent->currentPlan.currentOperator >= task.Operators.Count)
+                    {
+                        // We have to first invoke that the task operator has run its start function successfully, before we report that the operator finished.
+                        //ctx.PlannerState.OnCurrentTaskStarted?.Invoke(task);
+                        
+                        OnOperatorsFinishedSuccessfully(ref ctx, task, allowImmediateReplanAndExecute);
+                        return true;
+                    }
+                    
+                    if (ctx.agent->lastStatus == HTNTaskStatus.Success_DelayOneFrame)
+                    {
+                        return true;
+                    }
+
+                    var delayedFrame = false;
+                    if (TryEnterNextOperator(ref ctx, task, ref delayedFrame, allowImmediateReplanAndExecute)) return true;
                 }
 
                 // Otherwise the operation started as expected, and we are ready to start running Update ticks on the operator.
@@ -265,10 +293,53 @@ namespace Quantum
             ctx.agent->currentPlan.currentTask = 0;
             ctx.agent->currentPlan.currentOperator = -1;
             ctx.agent->lastStatus = HTNTaskStatus.Failure;
+            if(ctx.debug) Log.DebugError("Should not happen.");
             return true;
         }
-                
-                /// <summary>
+
+        private static void SetNextOperator(ref HTNAgentContext ctx, IPrimitiveTask task)
+        {
+            var currOperator = ctx.agent->currentPlan.currentOperator;
+
+            if (task.Operators[currOperator].endExecution)
+            {
+                ctx.agent->currentPlan.currentOperator = -1;
+                return;
+            }
+
+            int nextOperator;
+            switch (task.Operators[currOperator].nextOperatorSelectionType)
+            {
+                case NextExecutedNodeType.Ordered:
+                    for (int i = 0; i < task.Operators[currOperator].nextOperatorsOrdered.Length; i++)
+                    {
+                        nextOperator = task.Operators[currOperator].nextOperatorsOrdered[i];
+                        if(nextOperator == -1)
+                            continue;
+                        
+                        if(!task.Operators[nextOperator].IsValid(ref ctx))
+                            continue;
+
+                        ctx.agent->currentPlan.currentOperator = nextOperator;
+                        return;
+                    }
+                    ctx.agent->currentPlan.currentOperator = -1;
+                    return;
+                case NextExecutedNodeType.WeightedRandom:
+                    if (task.Operators[currOperator].nextOperatorsWeighted.TryNext(ctx.frame.RNG, out nextOperator))
+                    {
+                        if (!task.Operators[nextOperator].IsValid(ref ctx))
+                            break;
+                        
+                        ctx.agent->currentPlan.currentOperator = nextOperator;
+                        return;
+                    }
+                    break;
+            }
+            ctx.agent->currentPlan.currentOperator = -1;
+        }
+
+        /// <summary>
         /// While we have a valid primitive task running, we should tick it each tick of the plan execution.
         /// </summary>
         /// <param name="domain"></param>
@@ -280,27 +351,49 @@ namespace Quantum
         {
             if (task.Operators != null)
             {
-                if (IsExecutingConditionsValid(ref ctx, task, allowImmediateReplanAndExecute) == false)
-                    return false;
+                while (true)
+                {
+                    if (!IsExecutingConditionsValid(ref ctx, task, allowImmediateReplanAndExecute))
+                        return false;
+                    
+                    ctx.agent->lastStatus = task.Operators[ctx.agent->currentPlan.currentOperator].Tick(ref ctx);
 
-                ctx.agent->lastStatus = task.Operators[ctx.agent->currentPlan.currentOperator].Tick(ref ctx);
-                
-                // If the operation finished successfully, we set task to null so that we dequeue the next task in the plan the following tick.
-                if (ctx.agent->lastStatus == HTNTaskStatus.Success)
-                {
-                    OnOperatorFinishedSuccessfully(ref ctx, task, allowImmediateReplanAndExecute);
-                    return true;
+                    var delayedFrame = ctx.agent->lastStatus == HTNTaskStatus.Success_DelayOneFrame;
+                    
+                    // If the operation failed to finish, we need to fail the entire plan, so that we will replan the next tick.
+                    if (ctx.agent->lastStatus == HTNTaskStatus.Failure)
+                    {
+                        FailEntirePlan(ref ctx, task, allowImmediateReplanAndExecute);
+                        return true;
+                    }
+                    
+                    if (ctx.agent->lastStatus == HTNTaskStatus.Success || ctx.agent->lastStatus == HTNTaskStatus.Success_DelayOneFrame)
+                    {
+                        task.Operators[ctx.agent->currentPlan.currentOperator].OnExit(ref ctx);
+                        
+                        SetNextOperator(ref ctx, task);
+                        
+                        // All operators finished successfully, we set task to null so that we dequeue the next task in the plan the following tick.
+                        if (ctx.agent->currentPlan.currentOperator == -1 || ctx.agent->currentPlan.currentOperator >= task.Operators.Count)
+                        {
+                            OnOperatorsFinishedSuccessfully(ref ctx, task, allowImmediateReplanAndExecute);
+                            return true;
+                        }
+                        
+                        // Enter next operator.
+                        if (TryEnterNextOperator(ref ctx, task, ref delayedFrame)) return true;
+                    }
+                    else
+                    {
+                        return true;
+                    }
+
+                    if (delayedFrame)
+                        return true;
+
+                    // Otherwise the operation isn't done yet and need to continue.
+                    //ctx.PlannerState.OnCurrentTaskContinues?.Invoke(task);
                 }
-                
-                // If the operation failed to finish, we need to fail the entire plan, so that we will replan the next tick.
-                if (ctx.agent->lastStatus == HTNTaskStatus.Failure)
-                {
-                    FailEntirePlan(ref ctx, task, allowImmediateReplanAndExecute);
-                    return true;
-                }
-                
-                // Otherwise the operation isn't done yet and need to continue.
-                //ctx.PlannerState.OnCurrentTaskContinues?.Invoke(task);
                 return true;
             }
             
@@ -309,9 +402,49 @@ namespace Quantum
             ctx.agent->currentPlan.currentTask = 0;
             ctx.agent->currentPlan.currentOperator = -1;
             ctx.agent->lastStatus = HTNTaskStatus.Failure;
+            if(ctx.debug) Log.DebugError("Should not happen.");
             return true;
         }
-                
+
+        private static bool TryEnterNextOperator(ref HTNAgentContext ctx, IPrimitiveTask task, ref bool delayedFrame, bool allowImmediateReplanAndExecute = false)
+        {
+            while (true)
+            {
+                ctx.agent->lastStatus = task.Operators[ctx.agent->currentPlan.currentOperator]
+                    .OnEnter(ref ctx);
+
+                if (ctx.agent->lastStatus == HTNTaskStatus.Failure)
+                {
+                    FailEntirePlan(ref ctx, task, allowImmediateReplanAndExecute);
+                    return true;
+                }
+                            
+                if (ctx.agent->lastStatus == HTNTaskStatus.Success ||
+                    ctx.agent->lastStatus == HTNTaskStatus.Success_DelayOneFrame)
+                {
+                    task.Operators[ctx.agent->currentPlan.currentOperator].OnExit(ref ctx);
+                    ctx.agent->currentPlan.currentOperator += 1;
+                }
+                else
+                {
+                    return true;
+                }
+
+                if (ctx.agent->lastStatus == HTNTaskStatus.Success_DelayOneFrame)
+                {
+                    delayedFrame = true;
+                    break;
+                }
+                            
+                if (ctx.agent->currentPlan.currentOperator >= task.Operators.Count)
+                {
+                    OnOperatorsFinishedSuccessfully(ref ctx, task, allowImmediateReplanAndExecute);
+                    return true;
+                }
+            }
+            return false;
+        }
+
         /// <summary>
         /// Ensure conditions are valid when a new task is selected from the plan
         /// </summary>
@@ -382,8 +515,9 @@ namespace Quantum
         /// <param name="ctx"></param>
         /// <param name="task"></param>
         /// <param name="allowImmediateReplanAndExecute"></param>
-        private static void OnOperatorFinishedSuccessfully(ref HTNAgentContext ctx, IPrimitiveTask task, bool allowImmediateReplanAndExecute)
+        private static void OnOperatorsFinishedSuccessfully(ref HTNAgentContext ctx, IPrimitiveTask task, bool allowImmediateReplanAndExecute)
         {
+            if(ctx.debug) Log.Debug($"OPERATORS FINISHED SUCCESSFULLY: {ctx.agent->currentPlan.currentTask}, {ctx.agent->currentPlan.currentOperator}, {ctx.agent->lastStatus}");
             //ctx.PlannerState.OnCurrentTaskCompletedSuccessfully?.Invoke(task);
 
             // All effects that is a result of running this task should be applied when the task is a success.
@@ -425,6 +559,7 @@ namespace Quantum
         /// <param name="task"></param>
         private static void FailEntirePlan(ref HTNAgentContext ctx, IPrimitiveTask task, bool allowImmediateReplanAndExecute)
         {
+            if(ctx.debug) Log.Debug($"FAILED ENTIRE PLAN: {ctx.agent->lastStatus}, {ctx.agent->currentPlan.currentOperator}, {ctx.agent->currentPlan.currentTask}");
             //ctx.PlannerState.OnCurrentTaskFailed?.Invoke(task);
 
             task.Abort(ref ctx);
@@ -442,7 +577,9 @@ namespace Quantum
         /// <param name="ctx"></param>
         private static void ClearPlanForReplan(ref HTNAgentContext ctx)
         {
+            if(ctx.debug) Log.Debug("CLEAR PLAN FOR REPLAN.");
             ctx.agent->currentPlan.currentTask = 0;
+            ctx.agent->currentPlan.currentOperator = 0;
             var currentPlan = ctx.frame.ResolveList(ctx.agent->currentPlan.tasksToProcess);
             currentPlan.Clear();
             

@@ -15,12 +15,20 @@ namespace HnSF.core.AI.HTN.Tasks
         }
 
         public byte ID { get; set; }
+        public int Weight
+        {
+            get => weight;
+            set => weight = value;
+        }
+
         public ICompoundTask Parent { get; set; }
         public List<ICondition> Conditions
         {
             get => node.Conditions;
             set => node.Conditions = value;
         }
+
+        [SerializeField] protected int weight = 1;
 
 #if QUANTUM_UNITY
         [SerializeReference, SubclassSelector]

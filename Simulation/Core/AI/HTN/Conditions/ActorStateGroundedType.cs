@@ -39,7 +39,7 @@ namespace HnSF.core.AI.HTN.Conditions
 namespace HnSF.core.AI.HTN.Nodes
 {
     [Serializable]
-    [UseWithGraph(typeof(PrimitiveTaskGraph))]
+    [UseWithGraph(typeof(PrimitiveTaskGraph), typeof(HTNDomainGraph))]
     public unsafe class ConditionActorStateGroundedType : ConditionBase
     {
         public const string OPTION_STATE = "State";
@@ -55,17 +55,17 @@ namespace HnSF.core.AI.HTN.Nodes
 
         protected override void OnDefinePorts(Node.IPortDefinitionContext context)
         {
-            AddInputOutputExecutionPorts(context);
+            //AddInputOutputExecutionPorts(context);
         }
 
         public override ICondition Convert()
         {
-            this.GetNodeOptionByName(OPTION_LABEL).TryGetValue<string>(out var label);
+            //this.GetNodeOptionByName(OPTION_LABEL).TryGetValue<string>(out var label);
             this.GetNodeOptionByName(OPTION_STATE).TryGetValue<StateGroundedType>(out var state);
 
             return new Conditions.ActorStateGroundedType()
             {
-                Label = label,
+                //Label = label,
                 state = state,
             };
         }

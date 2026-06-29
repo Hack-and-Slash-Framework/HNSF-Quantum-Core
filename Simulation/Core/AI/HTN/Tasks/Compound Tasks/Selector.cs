@@ -69,7 +69,7 @@ namespace HnSF.core.AI.HTN.Tasks
             Plan.Clear();
             var lastMTR = context.frame.ResolveList(context.agent->lastMTR);
 
-            if(context.debug) Log.Debug($"Attempting decompose of {label}, {subtasks.Count}, {startIndex}");
+            if(context.debug) Log.Debug($"Attempting decompose of {Label}, {subtasks.Count}, {startIndex}");
             for (var taskIndex = startIndex; taskIndex < subtasks.Count; taskIndex++)
             {
                 if(context.debug) Log.Debug($"{taskIndex}");

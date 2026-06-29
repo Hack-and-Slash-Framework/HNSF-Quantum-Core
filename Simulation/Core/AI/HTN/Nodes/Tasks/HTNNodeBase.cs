@@ -1,10 +1,12 @@
 #if UNITY_EDITOR
 using System;
 using System.Collections.Generic;
+using HnSF.core.AI.HTN.Conditions;
 using HnSF.core.AI.HTN.Functions;
 using HnSF.core.AI.HTN.Param;
 using HnSF.Nodes;
 using Unity.GraphToolkit.Editor;
+using UnityEngine;
 
 namespace HnSF.core.AI.HTN.Nodes
 {
@@ -24,12 +26,36 @@ namespace HnSF.core.AI.HTN.Nodes
         protected override void OnDefineOptions(IOptionDefinitionContext context)
         {
             base.OnDefineOptions(context);
-            context.AddOption<string>(OPTION_LABEL).WithDisplayName("Label");
+            context.AddOption<string>(OPTION_LABEL)
+                .WithDisplayName("Label")
+                .Build();
         }
         
         protected override void AddInputOutputExecutionPorts(Unity.GraphToolkit.Editor.Node.IPortDefinitionContext context)
         {
             
+        }
+        
+        public virtual List<ICondition> ConvertConditionBlocks() 
+        {
+            List<ICondition> foundConditions = new List<ICondition>();
+
+            foreach (var blockNode in BlockNodes)
+            {
+                var ruleNode = blockNode as ConditionBase;
+                if(ruleNode == null)
+                    continue;
+
+                var conversion = ruleNode.Convert();
+                if (conversion == null)
+                {
+                    Debug.LogError($"Got a null condition for node {ruleNode.Title}, skipping.");
+                    continue;
+                }
+                foundConditions.Add(conversion);
+            }
+
+            return foundConditions;
         }
         
         protected virtual T ConvertFunctionNode<T>(IPort getPort) where T : HTNFunction
@@ -74,44 +100,6 @@ namespace HnSF.core.AI.HTN.Nodes
                 l.Add(r);
             }
             return l;
-        }
-        
-        public virtual T GetInputPortParam<T, Q>(IPort port) where T : HTNParam<Q>, new()
-        {
-            var param = new T
-            {
-                Source = HTNParamSource.Value
-            };
-
-            if (port.IsConnected)
-            {
-                switch (port.FirstConnectedPort.GetNode())
-                {
-                    case FunctionBase functionNode:
-                        param.Source = HTNParamSource.Function;
-                        param.SetFunction(functionNode.Convert());
-                        break;
-                    case IVariableNode variableNode:
-                        param.Source = HTNParamSource.Value;
-                        variableNode.Variable.TryGetDefaultValue(out param.DefaultValue);
-                        break;
-                    case IConstantNode constantNode:
-                        param.Source = HTNParamSource.Value;
-                        constantNode.TryGetValue(out param.DefaultValue);
-                        break;
-                    case IUntypedConversionNode untypedConversionNode:
-                        param.Source = HTNParamSource.Value;
-                        untypedConversionNode.TryGetValue(out param.DefaultValue);
-                        break;
-                }
-            }
-            else
-            {
-                param.Source = HTNParamSource.Value;
-                port.TryGetValue(out param.DefaultValue);
-            }
-
-            return param;
         }
     }
 }

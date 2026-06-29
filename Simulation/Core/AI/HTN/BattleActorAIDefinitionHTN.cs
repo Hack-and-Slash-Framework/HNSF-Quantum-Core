@@ -26,6 +26,7 @@ namespace Quantum
             var agent = new HTNAgent()
             {
                 domainAssetRef = startingDomain,
+                config = aiConfig,
                 cooldown = 0,
                 lastStatus = HTNTaskStatus.Uninitialized
             };

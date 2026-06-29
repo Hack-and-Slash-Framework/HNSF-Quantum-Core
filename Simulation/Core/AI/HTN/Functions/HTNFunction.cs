@@ -12,7 +12,6 @@ namespace HnSF.core.AI.HTN.Functions
     [Serializable]
     public unsafe partial class HTNFunction
     {
-        public string label;
         public bool disable;
         
         public virtual HTNFunction Copy()

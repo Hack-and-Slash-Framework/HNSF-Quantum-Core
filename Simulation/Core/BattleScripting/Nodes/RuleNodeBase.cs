@@ -7,11 +7,10 @@ using UnityEngine;
 namespace HnSF.core.GroupControl.Nodes
 {
     [Serializable]
-    [UseWithGraph(typeof(ActorGroupScriptGraph))]
-    public abstract class RuleNodeBase : ControlNodeBase
+    [UseWithContext(typeof(ControlNodeBase))]
+    public abstract class RuleNodeBase : BlockNode
     {
         public const string EXECUTION_PORT_DEFAULT_NAME = "ExecutionPort";
-        
         public const string OPTION_LABEL = "Label";
         
         public override void OnEnable()
@@ -32,15 +31,7 @@ namespace HnSF.core.GroupControl.Nodes
         /// <param name="scope">The scope to define the node.</param>
         protected virtual void AddInputOutputExecutionPorts(Unity.GraphToolkit.Editor.Node.IPortDefinitionContext context)
         {
-            context.AddInputPort(EXECUTION_PORT_DEFAULT_NAME)
-                .WithDisplayName(string.Empty)
-                .WithConnectorUI(PortConnectorUI.Circle)
-                .Build();
-
-            context.AddOutputPort(EXECUTION_PORT_DEFAULT_NAME)
-                .WithDisplayName(string.Empty)
-                .WithConnectorUI(PortConnectorUI.Circle)
-                .Build();
+            
         }
 
         public virtual GroupControlRule Convert()

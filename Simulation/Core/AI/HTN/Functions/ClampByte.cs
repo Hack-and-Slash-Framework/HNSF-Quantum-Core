@@ -1,6 +1,7 @@
 using System;
 using HnSF.core.AI.HTN.Functions;
 using HnSF.core.AI.HTN.Param;
+using HnSF.Nodes;
 using Quantum;
 #if QUANTUM_UNITY
 using UnityEngine;
@@ -15,11 +16,7 @@ namespace HnSF.core.AI.HTN.Functions
     [Serializable]
     public class ClampByte : HTNFunctionByte
     {
-        public string Label
-        {
-            get => label;
-            set => label = value;
-        }
+        [field: SerializeField] public string Label { get; set; } = "";
 
 #if QUANTUM_UNITY
         [SerializeReference, SubclassSelector]
@@ -40,22 +37,17 @@ namespace HnSF.core.AI.HTN.Functions
 namespace HnSF.core.AI.HTN.Nodes
 {
     [Serializable]
-    [UseWithGraph(typeof(PrimitiveTaskGraph))]
+    [UseWithGraph(typeof(PrimitiveTaskGraph), typeof(HTNDomainGraph))]
     public unsafe class FunctionClampByte : FunctionBase
     {
         public const string inputFunction = "InputFunction";
         public const string inputMin = "MinValue";
         public const string inputMax = "MaxValue";
-
-        protected override void OnDefineOptions(IOptionDefinitionContext context)
-        {
-            base.OnDefineOptions(context);
-        }
-
+        
         protected override void OnDefinePorts(Node.IPortDefinitionContext context)
         {
-            AddInputOutputExecutionPorts(context);
-
+            base.OnDefinePorts(context);
+            
             context.AddInputPort(inputFunction)
                 .WithDisplayName("State ID")
                 .Build();
@@ -71,14 +63,14 @@ namespace HnSF.core.AI.HTN.Nodes
 
         public override HTNFunction Convert()
         {
-            this.GetNodeOptionByName(OPTION_LABEL).TryGetValue<string>(out var label);
+            this.GetNodeOptionByName(NodeHelper.OPTION_LABEL).TryGetValue<string>(out var label);
             
             return new Functions.ClampByte()
             {
                 Label = label,
-                minClamp = GetInputPortParam<HTNParamByte, byte>(GetInputPortByName(inputMin)),
-                maxClamp = GetInputPortParam<HTNParamByte, byte>(GetInputPortByName(inputMax)),
-                inputFunction = ConvertFunctionNode<HTNFunctionByte>(GetInputPortByName(inputFunction))
+                minClamp = NodeHelper.GetInputPortParam<HTNParamByte, byte>(GetInputPortByName(inputMin)),
+                maxClamp = NodeHelper.GetInputPortParam<HTNParamByte, byte>(GetInputPortByName(inputMax)),
+                inputFunction = NodeHelper.ConvertFunctionNode<HTNFunctionByte>(GetInputPortByName(inputFunction))
             };
         }
     }
