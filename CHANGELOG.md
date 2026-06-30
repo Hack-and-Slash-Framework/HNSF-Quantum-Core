@@ -1,3 +1,10 @@
+# [2.7.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.6.1...v2.7.0) (2026-06-30)
+
+
+### Features
+
+* HTN Random selectors, battle script changes ([1b07cc7](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/1b07cc7eb24b56055bbfe9c91777482f9347d2ef))
+
 ## [2.6.1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.6.0...v2.6.1) (2026-06-29)
 
 
