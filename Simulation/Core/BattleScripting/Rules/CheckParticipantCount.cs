@@ -25,7 +25,7 @@ namespace HnSF.core.GroupControl.Grabbers
         public ComparisonType comparison;
         public int compareTo;
         
-        public override bool IsValid(Frame frame, EntityRef infoEntityRef)
+        public override bool IsValid(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
         {
             var gamemodeParticipantsGlobal = frame.Unsafe.GetOrAddSingletonPointer<GamemodeParticipantsGlobal>();
             var participantDataEntities = frame.ResolveDictionary(gamemodeParticipantsGlobal->participantDataEntities);

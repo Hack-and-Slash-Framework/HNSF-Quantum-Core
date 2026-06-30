@@ -24,7 +24,7 @@ namespace HnSF.core.GroupControl.Grabbers
         public bool ignoreIfInTaggedEntityMap;
         public bool clearMappingFirst = true;
         
-        public override bool IsValid(Frame frame, EntityRef infoEntityRef)
+        public override bool IsValid(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
         {
             frame.AddOrGet<TaggedEntityMapping>(infoEntityRef, out var tem);
             var mappingDict = frame.ResolveDictionary(tem->tagToEntityMap);
@@ -103,11 +103,11 @@ namespace HnSF.core.GroupControl.Grabbers
         protected override void OnDefineOptions(IOptionDefinitionContext context)
         {
             base.OnDefineOptions(context);
-            context.AddOption<Tag>(OPTION_ASSIGNEDTAG);
-            context.AddOption<BattleActorDefinition>(OPTION_BATTLEACTOR);
-            context.AddOption<FindMatchingParticipantEntity.TeamFilterType>(OPTION_TEAMFILTER);
-            context.AddOption<bool>(OPTION_IGNORE).WithDisplayName("Ignore If In TaggedEntityMap?");
-            context.AddOption<bool>(OPTION_CLEARMAPPINGS).WithDisplayName("Clear Mapping First?").WithDefaultValue(true);
+            context.AddOption<Tag>(OPTION_ASSIGNEDTAG).Build();
+            context.AddOption<BattleActorDefinition>(OPTION_BATTLEACTOR).Build();
+            context.AddOption<FindMatchingParticipantEntity.TeamFilterType>(OPTION_TEAMFILTER).Build();
+            context.AddOption<bool>(OPTION_IGNORE).WithDisplayName("Ignore If In TaggedEntityMap?").Build();
+            context.AddOption<bool>(OPTION_CLEARMAPPINGS).WithDisplayName("Clear Mapping First?").WithDefaultValue(true).Build();
         }
 
         protected override void OnDefinePorts(Node.IPortDefinitionContext context)

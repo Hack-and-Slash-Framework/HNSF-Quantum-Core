@@ -9,7 +9,7 @@ namespace HnSF.core.GroupControl.Grabbers
         public string Label;
         public bool disable;
 
-        public virtual bool IsValid(Frame frame, EntityRef infoEntityRef)
+        public virtual bool IsValid(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
         {
             return true;
         }

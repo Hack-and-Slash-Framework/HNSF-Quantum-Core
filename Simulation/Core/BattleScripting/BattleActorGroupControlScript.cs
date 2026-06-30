@@ -6,6 +6,7 @@ using HnSF.core.state.actions;
 using HnSF.core.state.decisions;
 using Photon.Deterministic;
 using Quantum;
+using UnityEngine.Serialization;
 #if QUANTUM_UNITY
 using UnityEngine;
 using UnityEngine.Scripting.APIUpdating;
@@ -20,20 +21,20 @@ namespace HnSF.core.GroupControl
         public AssetRef<BattleActorDefinition> vsTarget;
         
 #if QUANTUM_UNITY
-        [SerializeReference, SubclassSelector]
+        [FormerlySerializedAs("entityGrabActions")] [SerializeReference, SubclassSelector]
 #endif
-        public GroupControlRule[] entityGrabActions = Array.Empty<GroupControlRule>();
+        public GroupControlRule[] conditions = Array.Empty<GroupControlRule>();
         
 #if QUANTUM_UNITY
         [SerializeReference, SubclassSelector]
 #endif
         public List<GroupControlAction> actions = new List<GroupControlAction>();
         
-        public virtual bool RulesValid(Frame frame, EntityRef infoEntityRef)
+        public virtual bool RulesValid(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
         {
-            foreach (var r in entityGrabActions)
+            foreach (var r in conditions)
             {
-                if (!r.IsValid(frame, infoEntityRef)) return false;
+                if (!r.IsValid(frame, infoEntityRef, ref context)) return false;
             }
             return true;
         }
