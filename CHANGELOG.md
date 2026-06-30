@@ -1,3 +1,10 @@
+# [2.8.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.7.1...v2.8.0) (2026-06-30)
+
+
+### Features
+
+* Battle scripting Node helpers ([2d43ca8](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/2d43ca82d0b89941b5a13a07b0af17afa4807228))
+
 ## [2.7.1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.7.0...v2.7.1) (2026-06-30)
 
 
