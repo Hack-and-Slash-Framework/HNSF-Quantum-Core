@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using HnSF.core.AI.HTN.Functions;
 using HnSF.core.AI.HTN.Nodes;
 using HnSF.core.AI.HTN.Param;
+using HnSF.core.GroupControl.Nodes;
+using Quantum;
 using Unity.GraphToolkit.Editor;
 
 namespace HnSF.Nodes
@@ -99,6 +101,44 @@ namespace HnSF.Nodes
             }
 
             return value;
+        }
+        
+        public static T GetInputPortBattleScriptingParam<T, Q>(IPort port) where T : BattleScriptingParam<Q>, new()
+        {
+            var param = new T
+            {
+                Source = HNSFParamSource.Value
+            };
+
+            if (port.IsConnected)
+            {
+                switch (port.FirstConnectedPort.GetNode())
+                {
+                    case FunctionNodeBase functionNode:
+                        param.Source = HNSFParamSource.Function;
+                        param.SetFunction(functionNode.Convert());
+                        break;
+                    case IVariableNode variableNode:
+                        param.Source = HNSFParamSource.Value;
+                        variableNode.Variable.TryGetDefaultValue(out param.DefaultValue);
+                        break;
+                    case IConstantNode constantNode:
+                        param.Source = HNSFParamSource.Value;
+                        constantNode.TryGetValue(out param.DefaultValue);
+                        break;
+                    case IUntypedConversionNode untypedConversionNode:
+                        param.Source = HNSFParamSource.Value;
+                        untypedConversionNode.TryGetValue(out param.DefaultValue);
+                        break;
+                }
+            }
+            else
+            {
+                param.Source = HNSFParamSource.Value;
+                port.TryGetValue(out param.DefaultValue);
+            }
+
+            return param;
         }
         
         public static T GetInputPortParam<T, Q>(IPort port) where T : HTNParam<Q>, new()
