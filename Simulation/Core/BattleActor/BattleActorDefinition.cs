@@ -24,6 +24,7 @@ namespace Quantum
 #endif
         
         public AssetRef<BattleActorGroupControlScript>[] introScripts = Array.Empty<AssetRef<BattleActorGroupControlScript>>();
+        public AssetRef<BattleActorGroupControlScript>[] comboScripts = Array.Empty<AssetRef<BattleActorGroupControlScript>>();
         
         public AssetRef<BattleActorAIDefinition>[] aiDefinitions = Array.Empty<AssetRef<BattleActorAIDefinition>>();
 

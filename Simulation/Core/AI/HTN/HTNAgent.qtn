@@ -1,6 +1,9 @@
 component HTNAgent{
     asset_ref<HnSF.core.AI.HTN.Tasks.DomainAssetObject> domainAssetRef;
     asset_ref<AIConfigBase> config;
+    asset_ref<AIBlackboardInitializer> blackboardInitializer;
+    AIBlackboardComponent blackboard;
+    
     HTNActivePlan currentPlan;
     HTNWorldState worldState;
     HTNContextState contextState;

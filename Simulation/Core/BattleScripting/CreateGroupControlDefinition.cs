@@ -35,7 +35,7 @@ namespace Quantum
             return conditionsValid != false;
         }
 
-        public bool TryCreateController(Frame frame, EntityRef sourceEntity)
+        public bool TryCreateController(Frame frame, EntityRef sourceEntity, bool autoDestroy = true)
         {
             if(!ConditionsValid(frame, sourceEntity)) return false;
             
@@ -51,7 +51,8 @@ namespace Quantum
                 {
                     script = controlScript,
                     currentAction = 0
-                }
+                },
+                autoDestroy = autoDestroy
             }, out var ggc);
 
             var groupControlContext = new BattleScriptContext();

@@ -1,3 +1,4 @@
 component GenericGroupControl{
     GroupControlStateData data;
+    bool autoDestroy;
 }

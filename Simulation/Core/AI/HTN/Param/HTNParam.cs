@@ -51,10 +51,9 @@ namespace HnSF.core.AI.HTN.Param
 
             switch (Source)
             {
-                /*
                 case HTNParamSource.Blackboard:
-                    BlackboardValue blackboardValue = context.blackboard->GetBlackboardValue(frame, Key);
-                    return GetBlackboardValue(blackboardValue);*/
+                    BlackboardValue blackboardValue = context.agent->blackboard.GetBlackboardValue(context.frame, Key);
+                    return GetBlackboardValue(blackboardValue);
                 case HTNParamSource.Config:
                     AIConfigBase.KeyValuePair configPair = context.aiConfig?.Get(Key);
                     return configPair != null ? GetConfigValue(configPair) : DefaultValue;

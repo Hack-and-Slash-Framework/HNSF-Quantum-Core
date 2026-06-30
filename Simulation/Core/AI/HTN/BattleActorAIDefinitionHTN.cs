@@ -27,6 +27,7 @@ namespace Quantum
             {
                 domainAssetRef = startingDomain,
                 config = aiConfig,
+                blackboardInitializer = blackboardInitRef,
                 cooldown = 0,
                 lastStatus = HTNTaskStatus.Uninitialized
             };

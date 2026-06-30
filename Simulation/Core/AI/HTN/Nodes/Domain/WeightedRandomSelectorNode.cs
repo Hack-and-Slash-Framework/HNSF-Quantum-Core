@@ -49,6 +49,7 @@ namespace HnSF.core.AI.HTN.Domain
                 weightedItems.Add(new WeightedListItem<int>(subtasks.Count-1, conversion.Weight));
             }
 
+            task.Conditions = ConvertConditionBlocks();
             task.subtasks = subtasks;
             task.actionsWeighted = new WeightedList<int>(weightedItems);
             return task;
