@@ -1,3 +1,10 @@
+## [2.8.1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.8.0...v2.8.1) (2026-07-01)
+
+
+### Bug Fixes
+
+* Fix battle scripts not checking next node logic, cleanup ([6adb53d](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/6adb53d1895d855901e53e352e4e052f303627da))
+
 # [2.8.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.7.1...v2.8.0) (2026-06-30)
 
 
