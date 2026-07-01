@@ -1,3 +1,10 @@
+# [2.9.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.8.1...v2.9.0) (2026-07-01)
+
+
+### Features
+
+* Improved cutscene source logic ([0958ca2](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/0958ca24f1449ca46635e7a33a9b08c918d98701))
+
 ## [2.8.1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.8.0...v2.8.1) (2026-07-01)
 
 
