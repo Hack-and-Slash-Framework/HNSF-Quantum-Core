@@ -27,6 +27,16 @@ namespace HnSF.core.GroupControl.Actions
         public int[] nextNodesOrdered;
         public WeightedList<int> nextNodesWeighted;
 
+        public virtual bool IsValid(Frame frame, EntityRef entityRef, ref BattleScriptContext battleScriptContext)
+        {
+            foreach (var rule in rules)
+            {
+                if (!rule.IsValid(frame, entityRef, ref battleScriptContext))
+                    return false;
+            }
+            return true;
+        }
+        
         public virtual void OnEnter(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
         {
             
