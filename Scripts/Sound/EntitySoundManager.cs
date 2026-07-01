@@ -104,6 +104,7 @@ namespace HnSF
             if (!currentlyPlayingSoundTypes.ContainsKey(soundEntry))
                 currentlyPlayingSoundTypes.Add(soundEntry, new List<GameAudioSource>());
 
+            audioSource.audioSource.Stop();
             audioSource.audioSource.clip = soundEntry.clip;
             audioSource.audioSource.volume = soundEntry.baseVolume * volume;
             audioSource.audioSource.time = time;

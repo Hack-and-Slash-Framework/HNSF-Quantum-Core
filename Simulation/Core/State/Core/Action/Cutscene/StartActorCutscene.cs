@@ -33,7 +33,8 @@ namespace HnSF.core.state.actions
             var sccEntity = frame.Create();
             var scc = new SyncedCutsceneSource()
             {
-                sourcePlayer = playerIsSelf ? entity : sccEntity,
+                //sourcePlayer = playerIsSelf ? entity : sccEntity,
+                sourcePlayer = sccEntity,
                 cutsceneSource = cutsceneSource,
                 cutsceneTag = cutsceneTag,
                 frame = 0,
@@ -72,6 +73,7 @@ namespace HnSF.core.state.actions
         public override HNSFStateAction CopyTo(HNSFStateAction target)
         {
             var t = target as StartActorCutscene;
+            t.playerIsSelf = playerIsSelf;
             t.autoPlay = autoPlay;
             t.autoEnd = autoEnd;
             t.ignoreActorLdt = ignoreActorLdt;

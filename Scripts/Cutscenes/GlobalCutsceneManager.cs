@@ -207,8 +207,8 @@ namespace HnSF
                     continue;
                 }
 
-                var playingEntityRef = syncedCutsceneGroup.currentSource.sourcePlayer;
-                var actorEntityView = viewUpdater.GetView(playingEntityRef);
+                var playingEntityRef = syncedCutsceneGroup.currentSource.sourcePlayer; 
+                //var actorEntityView = viewUpdater.GetView(playingEntityRef);
 
                 LocalDeltaTime* ldt = null;
                 var hasLdt = frame.Exists(playingEntityRef)
@@ -254,7 +254,8 @@ namespace HnSF
                 }
                 
                 // Ticking.
-                gcp.playingEntityView = actorEntityView;
+                gcp.game = callback.Game;
+                gcp.sourceEntityRef = playingEntityRef;
                 gcp.autoUpdatePlayRate = false;
                 if (gcp.director.state != PlayState.Playing)
                     gcp.PlayCutscene(callback.Game, playerCutsceneGrouping.bindingSource, DirectorUpdateMode.Manual);

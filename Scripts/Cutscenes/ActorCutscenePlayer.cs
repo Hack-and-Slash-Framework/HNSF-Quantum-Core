@@ -42,7 +42,9 @@ namespace HnSF
         public bool autoUpdatePlayRate = true;
         public bool takeExclusiveControl = false;
         
-        public QuantumEntityView playingEntityView;
+        //public QuantumEntityView playingEntityView;
+        [NonSerialized] public QuantumGame game;
+        [NonSerialized] public EntityRef sourceEntityRef;
         
         public GameObject[] objectsDisabledOnCutsceneEnd;
 
@@ -75,11 +77,11 @@ namespace HnSF
             
             if (director.state == PlayState.Playing)
             {
-                if (autoUpdatePlayRate && playingEntityView)
+                if (autoUpdatePlayRate && sourceEntityRef != EntityRef.None)
                 {
-                    var frame = playingEntityView.Game.Frames.Predicted;
+                    var frame = game.Frames.Predicted;
                     
-                    var hasLdt = frame.Unsafe.TryGetPointer<LocalDeltaTime>(playingEntityView.EntityRef, out var ldt);
+                    var hasLdt = frame.Unsafe.TryGetPointer<LocalDeltaTime>(sourceEntityRef, out var ldt);
                     
                     if(hasLdt) SetTimeScale(ldt->multiplier.AsFloat);
                 }

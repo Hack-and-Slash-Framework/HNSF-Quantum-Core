@@ -4,6 +4,7 @@ using HnSF.core.GroupControl.Functions;
 using HnSF.Nodes;
 using Quantum;
 #if QUANTUM_UNITY
+using UnityEngine;
 using UnityEngine.Scripting.APIUpdating;
 #endif
 #if UNITY_EDITOR
@@ -17,6 +18,9 @@ namespace HnSF.core.GroupControl.Actions
     [Serializable]
     public unsafe partial class WaitForStateByTag : GroupControlAction
     {
+#if QUANTUM_UNITY
+        [SerializeReference, SubclassSelector]
+#endif
         public GroupControlFunctionEntityRef[] entitiesToWaitFor = Array.Empty<GroupControlFunctionEntityRef>();
         public AssetRef<Tag>[] stateTagsToWaitFor = Array.Empty<AssetRef<Tag>>();
         

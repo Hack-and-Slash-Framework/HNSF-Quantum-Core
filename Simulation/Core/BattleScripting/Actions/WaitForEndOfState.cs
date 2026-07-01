@@ -3,6 +3,7 @@ using HnSF.core.GroupControl.Actions;
 using HnSF.core.GroupControl.Functions;
 using Quantum;
 #if QUANTUM_UNITY
+using UnityEngine;
 using UnityEngine.Scripting.APIUpdating;
 #endif
 #if UNITY_EDITOR
@@ -16,6 +17,9 @@ namespace HnSF.core.GroupControl.Actions
     [Serializable]
     public unsafe partial class WaitForEndOfState : GroupControlAction
     {
+#if QUANTUM_UNITY
+        [SerializeReference, SubclassSelector]
+#endif
         public GroupControlFunctionEntityRef[] entitiesToWaitFor = Array.Empty<GroupControlFunctionEntityRef>();
         
         public override void OnEnter(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
