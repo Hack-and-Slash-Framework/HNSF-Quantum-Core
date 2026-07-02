@@ -1,3 +1,10 @@
+## [2.9.2](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.9.1...v2.9.2) (2026-07-02)
+
+
+### Bug Fixes
+
+* Fix play sfx/vfx cloning ([05743c2](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/05743c28e882bf78620ed7123a332c30c7f38e27))
+
 ## [2.9.1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.9.0...v2.9.1) (2026-07-02)
 
 
