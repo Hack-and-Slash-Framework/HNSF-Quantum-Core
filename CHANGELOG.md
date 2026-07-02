@@ -1,3 +1,10 @@
+## [2.9.1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.9.0...v2.9.1) (2026-07-02)
+
+
+### Bug Fixes
+
+* Fix PlaySoundRequest cloning ([8a7a5e6](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/8a7a5e6a889ce81f50a0218eab4ef9bf364884b9))
+
 # [2.9.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.8.1...v2.9.0) (2026-07-01)
 
 
