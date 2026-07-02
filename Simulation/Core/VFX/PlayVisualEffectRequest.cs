@@ -11,6 +11,15 @@ namespace Quantum
         {
             public FP chance;
             public AssetRef<VisualEffectEntry> vfxReference;
+
+            public VFXReference Clone()
+            {
+                return new VFXReference()
+                {
+                    chance = chance,
+                    vfxReference = vfxReference
+                };
+            }
         }
         
         public VFXReference[] visualEffects;
@@ -55,7 +64,11 @@ namespace Quantum
         public PlayVisualEffectRequest Clone()
         {
             var clone = this;
-            clone.visualEffects = visualEffects?.ToArray();
+            clone.visualEffects = new VFXReference[visualEffects.Length];
+            for (int i = 0; i < clone.visualEffects.Length; i++)
+            {
+                clone.visualEffects[i] = visualEffects[i].Clone();
+            }
             return clone;
         }
     }

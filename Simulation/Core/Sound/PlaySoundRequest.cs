@@ -16,6 +16,18 @@ namespace Quantum
             public FP volume;
             public FP minPitch;
             public FP maxPitch;
+
+            public SoundReference Clone()
+            {
+                return new SoundReference()
+                {
+                    chance = chance,
+                    soundRef = soundRef,
+                    volume = volume,
+                    minPitch = minPitch,
+                    maxPitch = maxPitch,
+                };
+            }
         }
         
         public bool parentedToSelf;
@@ -71,10 +83,12 @@ namespace Quantum
             var clone = this;
             
             clone.sounds = new SoundReference[sounds.Length];
-            Array.Copy(sounds, clone.sounds, sounds.Length);
+            for (int i = 0; i < sounds.Length; i++)
+            {
+                clone.sounds[i] = sounds[i].Clone();
+            }
             clone.soundsWeighted = new WeightedList<int>();
             clone.OnValidate();
-            
             return clone;
         }
     }
