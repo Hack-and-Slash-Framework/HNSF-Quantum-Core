@@ -65,5 +65,17 @@ namespace Quantum
             if (sounds.Length == 0) return -1;
             return soundsWeighted.Next(rngSession);
         }
+
+        public PlaySoundRequest Clone()
+        {
+            var clone = this;
+            
+            clone.sounds = new SoundReference[sounds.Length];
+            Array.Copy(sounds, clone.sounds, sounds.Length);
+            clone.soundsWeighted = new WeightedList<int>();
+            clone.OnValidate();
+            
+            return clone;
+        }
     }
 }

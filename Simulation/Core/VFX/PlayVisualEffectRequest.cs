@@ -54,18 +54,8 @@ namespace Quantum
 
         public PlayVisualEffectRequest Clone()
         {
-            var clone = new PlayVisualEffectRequest();
+            var clone = this;
             clone.visualEffects = visualEffects?.ToArray();
-            clone.chance = chance;
-            clone.parentedToSelf = parentedToSelf;
-            clone.parentBoneTag = parentBoneTag;
-            clone.pauseDuringHitstop = pauseDuringHitstop;
-            clone.positionAsOffset = positionAsOffset;
-            clone.positionOffset = positionOffset;
-            clone.rotationAsOffset = rotationAsOffset;
-            clone.rotationOffset = rotationOffset;
-            clone.rotateToMoveForce = rotateToMoveForce;
-            clone.forwardOffset = forwardOffset;
             return clone;
         }
     }

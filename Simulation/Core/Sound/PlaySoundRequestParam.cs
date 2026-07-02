@@ -50,5 +50,16 @@ namespace Quantum
             if(type == ParamType.Self)
                 request.OnValidate();
         }
+
+        public PlaySoundRequestParam Clone()
+        {
+            var clone = new PlaySoundRequestParam()
+            {
+                type = type,
+                request = request.Clone(),
+                externalRequest = externalRequest
+            };
+            return clone;
+        }
     }
 }
