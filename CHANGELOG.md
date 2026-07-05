@@ -1,3 +1,10 @@
+# [2.10.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.9.2...v2.10.0) (2026-07-05)
+
+
+### Features
+
+* Improve screenshake request ([1e0c70f](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/1e0c70f976ea304297af328681b58d43b3245e6d))
+
 ## [2.9.2](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.9.1...v2.9.2) (2026-07-02)
 
 
