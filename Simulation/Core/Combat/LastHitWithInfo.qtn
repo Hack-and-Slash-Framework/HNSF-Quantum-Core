@@ -17,7 +17,7 @@ struct DataLastHitWithHitInfo
     int lastHitstopAmount;
     int lastHitstunAmount;
     int lastBlockstunAmount;
-    HitReactionResultData lastReceivedHitReaction;
+    int lastReceivedHitReaction;
 }
 
 struct DataLastHitWithThrowInfo
