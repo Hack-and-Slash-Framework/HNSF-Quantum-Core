@@ -1,3 +1,10 @@
+# [2.11.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.10.0...v2.11.0) (2026-07-05)
+
+
+### Features
+
+* Improved HitReactionResultData ([3ce9a8e](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/3ce9a8e2ddb215b2c72fbcb9980c1285a98ed96e))
+
 # [2.10.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.9.2...v2.10.0) (2026-07-05)
 
 
