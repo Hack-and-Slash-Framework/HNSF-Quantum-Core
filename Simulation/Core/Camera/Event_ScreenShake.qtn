@@ -3,7 +3,8 @@ event CauseScreenShake
     int shakeType;
     bool isGlobal;
     FPVector3 origin;
-    FPVector3 shakeStrength;
+    FPVector3 shakeAmount;
+    FPVector3 shakeSpeed;
     int shakeFrames;
     int shakeInterval;
     entity_ref onlyFor;

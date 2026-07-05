@@ -22,8 +22,9 @@ namespace HnSF.core.state.actions
                     shakeType: shakeRequest.shakeType,
                     isGlobal: false,
                     origin: transform->Position.XYO,
-                    shakeStrength: shakeRequest.cameraShakeStrength,
-                    shakeFrames: shakeRequest.cameraShakeFrames,
+                    shakeAmount: shakeRequest.cameraShakeAmount,
+                    shakeSpeed: shakeRequest.cameraShakeSpeed,
+                    shakeFrames: shakeEvent is { type: ScreenShakeRequestParam.ParamType.External, screenShakeFramesOverride: > 0 } ? shakeEvent.screenShakeFramesOverride : shakeRequest.cameraShakeFrames,
                     shakeInterval: shakeRequest.shakeInterval,
                     onlyFor: EntityRef.None);
             }

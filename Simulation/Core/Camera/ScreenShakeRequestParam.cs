@@ -13,8 +13,12 @@ namespace Quantum
         }
 
         public ParamType type;
+        [DrawIf("type", (int)ParamType.Self)]
         public ScreenShakeRequest request;
+        [DrawIf("type", (int)ParamType.External)]
         public AssetRef<ExternalScreenShakeRequest> externalRequest;
+        [DrawIf("type", (int)ParamType.External)]
+        public int screenShakeFramesOverride;
         
         [NonSerialized] private ExternalScreenShakeRequest _externalRequest;
         
