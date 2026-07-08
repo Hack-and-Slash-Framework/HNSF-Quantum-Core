@@ -296,9 +296,10 @@ namespace HnSF
 
         private float GetFadeTimeFor(AssetRef<AnimationEntry> lastEntry, AssetRef<AnimationEntry> entry)
         {
-            if (!QuantumUnityDB.TryGetGlobalAsset(lastEntry, out var lastEntryAsset))
+            if (!QuantumUnityDB.TryGetGlobalAsset(lastEntry, out var lastEntryAsset)
+                || !QuantumUnityDB.TryGetGlobalAsset(entry, out var entryAsset))
                 return 0;
-            return lastEntryAsset.GetFade(entry);
+            return entryAsset.overrideAllFadeIns ? entryAsset.overridenFadeInTime : lastEntryAsset.GetFadeOutDuration(entry);
         }
 
         private void SetLayerWeight(int layer, float weight)

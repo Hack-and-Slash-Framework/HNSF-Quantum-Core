@@ -47,6 +47,9 @@ namespace Quantum
         public float mixerSmoothing = 0;
         public float playRate = 1;
         [FormerlySerializedAs("fadeOutTime")] public float defaultFadeOutTime = 0.1f;
+        public bool overrideAllFadeIns = false;
+        [DrawIf(nameof(overrideAllFadeIns), true)]
+        public float overridenFadeInTime = 0;
         public EntityAnimationBlendTable fadeOutDurations = new EntityAnimationBlendTable();
         
         public AnimWithTargetEntry[] animsTargets;
@@ -56,7 +59,7 @@ namespace Quantum
             fadeOutDurations.BuildDictionary();
         }
 
-        public float GetFade(AssetRef<AnimationEntry> toTarget)
+        public float GetFadeOutDuration(AssetRef<AnimationEntry> toTarget)
         {
             return fadeOutDurations.blends.GetValueOrDefault(toTarget, defaultFadeOutTime);
         }
