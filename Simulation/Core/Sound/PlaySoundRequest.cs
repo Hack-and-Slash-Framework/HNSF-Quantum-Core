@@ -69,7 +69,7 @@ namespace Quantum
         public SoundReference GetRngSound(RNGSession* rngSession)
         {
             var index = soundsWeighted.Next(rngSession);
-            return index < 0 ? default : sounds[index];
+            return (index < 0 || index == sounds.Length) ? default : sounds[index];
         }
         
         public int GetRngSoundByIndex(RNGSession* rngSession)
