@@ -21,7 +21,7 @@
     dictionary<int, int> hitReactionCounters;
     
     // When we are hit.
-    asset_ref<HnSF.core.state.functions.HNSFStateFunctionExternal> whenHitReactionFunction;
+    asset_ref<HnSF.core.HitResolvePairAction> defendingResolveAction;
     // When we hit someone and they return their reaction.
-    asset_ref<HnSF.core.state.actions.HNSFStateActionExternal> whenGotHitReactionAction;
+    asset_ref<HnSF.core.HitResolvePairAction> attackingResolveAction;
 }
