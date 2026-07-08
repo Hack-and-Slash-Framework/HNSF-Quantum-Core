@@ -1,3 +1,10 @@
+## [2.12.1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.12.0...v2.12.1) (2026-07-08)
+
+
+### Bug Fixes
+
+* Fix RNGSound error with empty list ([1c95ed1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/1c95ed19c92de8e7552390cd409aa26b372638e6))
+
 # [2.12.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.11.0...v2.12.0) (2026-07-08)
 
 
