@@ -1,3 +1,10 @@
+# [2.13.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.12.1...v2.13.0) (2026-07-08)
+
+
+### Features
+
+* Optional fade in overriding ([ecb77b6](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/ecb77b6e351deb2bac00674f0036cbbf229daaa0))
+
 ## [2.12.1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.12.0...v2.12.1) (2026-07-08)
 
 
