@@ -1,3 +1,10 @@
+# [2.12.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.11.0...v2.12.0) (2026-07-08)
+
+
+### Features
+
+* Improved hit resolving logic ([b42163a](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/b42163ace5c0bd4b9c9f3d77d0d642f666b51f54))
+
 # [2.11.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.10.0...v2.11.0) (2026-07-05)
 
 
