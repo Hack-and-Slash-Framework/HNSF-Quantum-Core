@@ -1,3 +1,10 @@
+# [2.14.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.13.0...v2.14.0) (2026-07-10)
+
+
+### Features
+
+* Helpers for clip import settings ([9723160](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/972316099854aedc7c515f5ce5b163dd4275597b))
+
 # [2.13.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.12.1...v2.13.0) (2026-07-08)
 
 
