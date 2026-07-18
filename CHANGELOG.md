@@ -1,3 +1,10 @@
+## [2.14.1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.14.0...v2.14.1) (2026-07-18)
+
+
+### Bug Fixes
+
+* Fix LateUpdate call in state preview ([1ea9a1e](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/1ea9a1e47d438fd24723814e24d6423d0d3eca30))
+
 # [2.14.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.13.0...v2.14.0) (2026-07-10)
 
 
