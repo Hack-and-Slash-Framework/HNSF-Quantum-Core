@@ -7,5 +7,5 @@ event CauseScreenShake
     FPVector3 shakeSpeed;
     int shakeFrames;
     int shakeInterval;
-    entity_ref onlyFor;
+    player_ref onlyFor;
 }

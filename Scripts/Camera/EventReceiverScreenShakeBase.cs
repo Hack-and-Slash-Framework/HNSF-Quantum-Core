@@ -7,7 +7,7 @@ namespace HnSF
     [Serializable]
     public class EventReceiverScreenShakeBase
     {
-        private List<IDisposable> _disposableCallbacks = new List<IDisposable>();
+        protected List<IDisposable> _disposableCallbacks = new List<IDisposable>();
         
         public virtual void Initialize()
         {
