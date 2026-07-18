@@ -1,3 +1,10 @@
+# [2.15.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.14.1...v2.15.0) (2026-07-18)
+
+
+### Features
+
+* Improved screen shake player filtering ([45417ea](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/45417ea263d59c9ced10242dfdaade928c0a9abd))
+
 ## [2.14.1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.14.0...v2.14.1) (2026-07-18)
 
 
