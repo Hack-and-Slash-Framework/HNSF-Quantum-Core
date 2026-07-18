@@ -1,3 +1,10 @@
+# [2.16.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.15.0...v2.16.0) (2026-07-18)
+
+
+### Features
+
+* PlayerLink helpers ([9dd8bfc](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/9dd8bfce8234bd9984618dc760e08b47819f7cd0))
+
 # [2.15.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.14.1...v2.15.0) (2026-07-18)
 
 
