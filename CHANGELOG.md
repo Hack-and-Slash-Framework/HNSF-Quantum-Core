@@ -1,3 +1,10 @@
+## [2.16.1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.16.0...v2.16.1) (2026-07-24)
+
+
+### Bug Fixes
+
+* Move CauseScreenShake to 3d/2d ([4191e5f](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/4191e5f3ad96eb7ffb609c352d6677deb2a70d01))
+
 # [2.16.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.15.0...v2.16.0) (2026-07-18)
 
 
