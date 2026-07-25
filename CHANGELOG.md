@@ -1,3 +1,10 @@
+## [2.16.2](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.16.1...v2.16.2) (2026-07-25)
+
+
+### Bug Fixes
+
+* Sample fixes for input update ([3becd9a](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/3becd9a69c1d7223c2fc18e4d99e4d07438c34f5))
+
 ## [2.16.1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.16.0...v2.16.1) (2026-07-24)
 
 
