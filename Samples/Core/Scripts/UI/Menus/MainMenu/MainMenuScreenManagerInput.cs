@@ -51,7 +51,8 @@ namespace HnSF.ui.menus.examples.mainmenu
             var inputManager = InputManager.instance;
             if (inputManager == null) return;
 
-            foreach (var player in inputManager.playerInputManagers)
+            var inputPlayers = inputManager.GetPlayers(includeSystemPlayer: false);
+            foreach (var player in inputPlayers)
             {
                 RegisterInputs(player);
             }

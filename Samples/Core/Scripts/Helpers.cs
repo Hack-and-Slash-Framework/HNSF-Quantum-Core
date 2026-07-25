@@ -28,12 +28,14 @@ namespace HnSF.BaseExample
 
             inputManager.SetPlayerCount(players.Count);
             inputManager.ReturnAllDevicesToSystem();
+
+            var playerInputManagers = inputManager.GetPlayers(includeSystemPlayer: false);
+            
             for (int i = 0; i < players.Count; i++)
             {
-                inputManager.AssignDevicesToPlayer(players[i].ToArray(), i + 1);
-                (inputManager.playerInputManagers[i + 1] as InputPlayerManager).SwitchToPlayerMap();
+                inputManager.AssignDevicesToPlayer(players[i].ToArray(), playerInputManagers[i].Id);
+                playerInputManagers[i].SwitchToPlayerMap();
             }
-
             return true;
         }
     }
