@@ -1,3 +1,10 @@
+# [2.18.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.17.0...v2.18.0) (2026-07-29)
+
+
+### Features
+
+* List params & untyped battle script nodes ([8234a0e](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/8234a0e913ee6b7f487f9e4708f52e9f618e2e21))
+
 # [2.17.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.16.2...v2.17.0) (2026-07-29)
 
 
