@@ -1,3 +1,10 @@
+# [2.17.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.16.2...v2.17.0) (2026-07-29)
+
+
+### Features
+
+* BattleScripting actions ([6c69dc5](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/6c69dc539ad6cd38070bc9faba0892c8d0dfe6af))
+
 ## [2.16.2](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.16.1...v2.16.2) (2026-07-25)
 
 
