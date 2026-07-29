@@ -10,7 +10,7 @@ using UnityEngine;
 namespace Quantum
 {
     [System.Serializable]
-    public unsafe sealed class BattleScriptingParamFPVector3 : BattleScriptingParam<FPVector3>
+    public sealed unsafe class BattleScriptingParamFPVector3 : BattleScriptingParam<FPVector3>
     {
         public static implicit operator BattleScriptingParamFPVector3(FPVector3 value)
         {
