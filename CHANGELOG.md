@@ -1,3 +1,10 @@
+## [2.19.1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.19.0...v2.19.1) (2026-07-31)
+
+
+### Bug Fixes
+
+* Fix mixer parameter setting. ([6df8717](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/6df8717e0a6fe883abb60dc4401a3b68539b36bd))
+
 # [2.19.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.18.0...v2.19.0) (2026-07-31)
 
 
