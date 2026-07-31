@@ -294,7 +294,7 @@ namespace HnSF
             }
         }
 
-        private float GetFadeTimeFor(AssetRef<AnimationEntry> lastEntry, AssetRef<AnimationEntry> entry)
+        protected virtual float GetFadeTimeFor(AssetRef<AnimationEntry> lastEntry, AssetRef<AnimationEntry> entry)
         {
             if (!QuantumUnityDB.TryGetGlobalAsset(lastEntry, out var lastEntryAsset)
                 || !QuantumUnityDB.TryGetGlobalAsset(entry, out var entryAsset))
@@ -302,7 +302,7 @@ namespace HnSF
             return entryAsset.overrideAllFadeIns ? entryAsset.overridenFadeInTime : lastEntryAsset.GetFadeOutDuration(entry);
         }
 
-        private void SetLayerWeight(int layer, float weight)
+        protected virtual void SetLayerWeight(int layer, float weight)
         {
             foreach (var group in animatorInfoGroups)
             {
@@ -310,26 +310,24 @@ namespace HnSF
             }
         }
 
-        private void UpdateMixers(int layer, Vector2 mixerParameter)
+        protected virtual void UpdateMixers(int layer, Vector2 mixerParameter)
         {
             foreach (var group in animatorInfoGroups)
             {
-                switch (group.Value.layerMixerType[layer])
+                if(group.Value.states[layer] is LinearMixerState lms)
                 {
-                    case AnimationEntry.MixerType.Linear:
-                        (group.Value.states[layer] as LinearMixerState).Parameter = mixerParameter.x;
-                        break;
-                    case AnimationEntry.MixerType.Cartesian:
-                        (group.Value.states[layer] as CartesianMixerState).Parameter = mixerParameter;
-                        break;
-                    case AnimationEntry.MixerType.Directional:
-                        (group.Value.states[layer] as DirectionalMixerState).Parameter = mixerParameter;
-                        break;
+                    lms.Parameter = mixerParameter.x;
+                }else if (group.Value.states[layer] is CartesianMixerState cms)
+                {
+                    cms.Parameter = mixerParameter;
+                }else if (group.Value.states[layer] is DirectionalMixerState dms)
+                {
+                    dms.Parameter = mixerParameter;
                 }
             }
         }
 
-        private void PauseAnimators()
+        protected virtual void PauseAnimators()
         {
             foreach (var group in animatorInfoGroups)
             {
@@ -337,7 +335,7 @@ namespace HnSF
             }
         }
 
-        private void EvaluateAnimators(float deltaTime)
+        protected virtual void EvaluateAnimators(float deltaTime)
         {
             foreach (var group in animatorInfoGroups)
             {
