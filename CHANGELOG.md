@@ -1,3 +1,10 @@
+# [2.19.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.18.0...v2.19.0) (2026-07-31)
+
+
+### Features
+
+* Various HTN functions ([eb596fe](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/eb596fe8d3078e1951b5a4fb00a1cb86cf456b02))
+
 # [2.18.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.17.0...v2.18.0) (2026-07-29)
 
 
