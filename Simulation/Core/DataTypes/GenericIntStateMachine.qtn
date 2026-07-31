@@ -1,0 +1,4 @@
+component GenericIntStateMachine
+{
+    GenericIntStateData data;
+}

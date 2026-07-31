@@ -1,0 +1,4 @@
+component GenericEntityList{
+    [AllocateOnComponentAdded, FreeOnComponentRemoved]
+    list<entity_ref> entityRefs;
+}

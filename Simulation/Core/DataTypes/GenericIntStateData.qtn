@@ -1,0 +1,7 @@
+struct GenericIntStateData
+{
+    FP delayedStateTimer;
+    int delayedState;
+    int currentState;
+    int previousState;
+}

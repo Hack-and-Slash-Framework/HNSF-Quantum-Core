@@ -1,0 +1,3 @@
+component EntityTargeting{
+    entity_ref target;
+}

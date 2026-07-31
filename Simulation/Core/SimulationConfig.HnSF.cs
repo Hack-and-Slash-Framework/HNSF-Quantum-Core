@@ -7,6 +7,11 @@ namespace Quantum
     public partial class SimulationConfig : AssetObject
     {
 #if QUANTUM_UNITY
+        [Header("Layers")]
+#endif
+        public LayerMask layerMaskWarningbox;
+        
+#if QUANTUM_UNITY
         [Header("Tags")]
 #endif
         public AssetRef<Tag> tag_AttackAttribute_Strike_Head;
