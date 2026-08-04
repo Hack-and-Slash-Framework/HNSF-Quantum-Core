@@ -7,7 +7,7 @@ namespace Quantum
 {
     public static unsafe partial class HTNPlanning
     {
-        public static void Tick(ref HTNAgentContext context, bool allowImmediateReplanAndExecute = false)
+        public static void Tick(ref HTNAgentContext context, bool attemptFindPlan = true, bool allowImmediateReplanAndExecute = false)
         {
             var decompositionStatus = DecompositionStatus.Failed;
             var isTryingToReplacePlan = false;
@@ -20,29 +20,32 @@ namespace Quantum
                 ClearPlanForReplan(ref context);
             }
             #endif
-            
-            // Check whether state has changed or the current plan has finished running.
-            // and if so, try to find a new plan.
-            if (ShouldFindNewPlan(ref context))
-            {
-                isTryingToReplacePlan = TryFindNewPlan(ref context, out decompositionStatus);
-                //if(context.debug) Log.Debug($"Should find new plan and got result of {isTryingToReplacePlan}");
-            }
-            
-            // If the plan has more tasks, we try to select the next one.
-            if (CanSelectNextTaskInPlan(ref context))
-            {
-                if(context.debug) Log.Debug("Can select next task in plan.");
-                // Select the next task, but check whether the conditions of the next task failed to validate.
-                if (SelectNextTaskInPlan(ref context) == false)
-                    return;
 
-                if (context.agent->CurrentTask(ref context) is IPrimitiveTask taskToStart)
+            if (attemptFindPlan)
+            {
+                // Check whether state has changed or the current plan has finished running.
+                // and if so, try to find a new plan.
+                if (ShouldFindNewPlan(ref context))
                 {
-                    if (TryStartPrimitiveTaskOperator(ref context, taskToStart, allowImmediateReplanAndExecute) ==
-                        false)
+                    isTryingToReplacePlan = TryFindNewPlan(ref context, out decompositionStatus);
+                    //if(context.debug) Log.Debug($"Should find new plan and got result of {isTryingToReplacePlan}");
+                }
+
+                // If the plan has more tasks, we try to select the next one.
+                if (CanSelectNextTaskInPlan(ref context))
+                {
+                    if (context.debug) Log.Debug("Can select next task in plan.");
+                    // Select the next task, but check whether the conditions of the next task failed to validate.
+                    if (SelectNextTaskInPlan(ref context) == false)
                         return;
-                    if(context.debug) Log.Debug("Started primitive task operator");
+
+                    if (context.agent->CurrentTask(ref context) is IPrimitiveTask taskToStart)
+                    {
+                        if (TryStartPrimitiveTaskOperator(ref context, taskToStart, allowImmediateReplanAndExecute) ==
+                            false)
+                            return;
+                        if (context.debug) Log.Debug("Started primitive task operator");
+                    }
                 }
             }
 
