@@ -1,3 +1,10 @@
+# [2.21.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.20.0...v2.21.0) (2026-08-04)
+
+
+### Features
+
+* HTN optionally find plan on Tick ([f2511c7](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/f2511c7f069b81962f5f309aa470187e4b1ebc5d))
+
 # [2.20.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.19.1...v2.20.0) (2026-08-04)
 
 
