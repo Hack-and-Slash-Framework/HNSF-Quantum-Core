@@ -1,3 +1,10 @@
+# [2.20.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.19.1...v2.20.0) (2026-08-04)
+
+
+### Features
+
+* HTN SensorGroups ([f99ac9e](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/f99ac9ea08504c773b15343bdb5bdb3113257252))
+
 ## [2.19.1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.19.0...v2.19.1) (2026-07-31)
 
 
