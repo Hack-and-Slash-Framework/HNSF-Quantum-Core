@@ -1,4 +1,5 @@
 
+using HnSF.core.AI.HTN.Sensors;
 using HnSF.core.AI.HTN.Tasks;
 #if QUANTUM_UNITY
 using UnityEngine.Scripting.APIUpdating;
@@ -18,7 +19,8 @@ namespace Quantum
         public AssetRef<DomainAssetObject> startingDomain;
         public AssetRef<AIConfigBase> aiConfig;
         public AssetRef<AIBlackboardInitializer> blackboardInitRef;
-
+        public AssetRef<SensorGroup> sensorGroup;
+        
         public override void Setup(Frame frame, EntityRef aiEntityRef, bool debug = false)
         {
             base.Setup(frame, aiEntityRef, debug);
@@ -26,6 +28,7 @@ namespace Quantum
             var agent = new HTNAgent()
             {
                 domainAssetRef = startingDomain,
+                sensorGroupAssetRef = sensorGroup,
                 config = aiConfig,
                 blackboardInitializer = blackboardInitRef,
                 cooldown = 0,
