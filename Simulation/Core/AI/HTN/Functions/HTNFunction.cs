@@ -96,4 +96,13 @@ namespace HnSF.core.AI.HTN.Functions
             return FPVector3.Zero;
         }
     }
+    
+    [Serializable]
+    public unsafe partial class HTNFunctionString : HTNFunction<string>
+    {
+        public override string Execute(ref HTNAgentContext context)
+        {
+            return String.Empty;
+        }
+    }
 }
