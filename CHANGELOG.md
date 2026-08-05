@@ -1,3 +1,10 @@
+# [2.22.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.21.0...v2.22.0) (2026-08-05)
+
+
+### Features
+
+* htn strings ([caa9ea4](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/caa9ea4404d90a41fae62dc7657865e87c32a1d8))
+
 # [2.21.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.20.0...v2.21.0) (2026-08-04)
 
 
