@@ -10,7 +10,7 @@ using UnityEngine;
 namespace HnSF.core.AI.HTN.Tasks
 {
     [Serializable]
-    public partial class PrimitiveTask : IPrimitiveTask
+    public unsafe partial class PrimitiveTask : IPrimitiveTask
     {
         public byte ID
         {
@@ -128,12 +128,20 @@ namespace HnSF.core.AI.HTN.Tasks
 
         public void Stop(ref HTNAgentContext context)
         {
-            // Operator.Stop(ref context);
+            if (context.agent->currentPlan.currentOperator < 0
+                || context.agent->currentPlan.currentOperator >= Operators.Count)
+                return;
+            
+            Operators[context.agent->currentPlan.currentOperator].OnExit(ref context);
         }
 
         public void Abort(ref HTNAgentContext context)
         {
-            // Operator.Abort(ref context);
+            if (context.agent->currentPlan.currentOperator < 0
+                || context.agent->currentPlan.currentOperator >= Operators.Count)
+                return;
+            
+            Operators[context.agent->currentPlan.currentOperator].OnAbort(ref context);
         }
     }
 }
