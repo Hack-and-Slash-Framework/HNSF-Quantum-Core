@@ -1,3 +1,10 @@
+## [2.22.2](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.22.1...v2.22.2) (2026-08-07)
+
+
+### Bug Fixes
+
+* Clear current MTR instead of last ([4a50e90](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/4a50e90496cde4b29d7ff52b884d97da64f8e87c))
+
 ## [2.22.1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.22.0...v2.22.1) (2026-08-07)
 
 
