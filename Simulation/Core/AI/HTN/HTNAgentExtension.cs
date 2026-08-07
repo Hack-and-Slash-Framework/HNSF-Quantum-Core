@@ -119,13 +119,18 @@ namespace Quantum
             ctx.Factory.FreeQueue(ref lastPartialPlanQueue);
         }*/
         
-        public void ClearMethodTraversalRecord(Frame frame)
+        public void ClearLastMethodTraversalRecord(Frame frame)
         {
             var mtrList = frame.ResolveList(lastMTR);
             mtrList.Clear();
         }
-        
+
         private void ClearMethodTraversalRecord(ref HTNAgentContext context)
+        {
+            context.currentMTR.Clear();
+        }
+        
+        private void ClearLastMethodTraversalRecord(ref HTNAgentContext context)
         {
             var mtrList = context.frame.ResolveList(context.agent->lastMTR);
             mtrList.Clear();
