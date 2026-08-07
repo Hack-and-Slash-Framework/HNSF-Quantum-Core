@@ -1,3 +1,10 @@
+## [2.22.1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.22.0...v2.22.1) (2026-08-07)
+
+
+### Bug Fixes
+
+* Fixed HTN stop & abort calls ([dd2c0d2](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/dd2c0d278d88e35d0b4c39923184f7ac57a2a8db))
+
 # [2.22.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.21.0...v2.22.0) (2026-08-05)
 
 
