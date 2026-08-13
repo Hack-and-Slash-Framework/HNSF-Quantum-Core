@@ -1,3 +1,10 @@
+# [2.23.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.22.2...v2.23.0) (2026-08-13)
+
+
+### Features
+
+* Improved warningbox info ([d85547a](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/d85547a211f08c70e3a4503d5ce7154c175e4948))
+
 ## [2.22.2](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.22.1...v2.22.2) (2026-08-07)
 
 
