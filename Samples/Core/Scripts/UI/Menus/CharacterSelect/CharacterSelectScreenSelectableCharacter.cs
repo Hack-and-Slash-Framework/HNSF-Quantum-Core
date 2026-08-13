@@ -13,7 +13,7 @@ namespace HnSF.ui.menus
         {
             var hnsfManagers = HnSFManagersContainer.instance;
 
-            if (characterAssetHandle.IsValid() == false)
+            if (characterAssetHandle.IsValid())
             {
                 return true;
             }

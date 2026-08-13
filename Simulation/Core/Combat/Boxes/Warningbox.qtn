@@ -5,4 +5,9 @@ component Warningbox
     entity_ref owner;
     asset_ref damageSourceInfoRef;
     bool isThrow;
+    
+    int activeAt;
+    int inactiveAt;
+    byte dangerLevel;
+    byte responseDifficulty;
 }
