@@ -1,3 +1,10 @@
+# [2.24.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.23.0...v2.24.0) (2026-08-13)
+
+
+### Features
+
+* Wartningbox layer constant ([54ab86b](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/54ab86bbcc0db734d9803678c1a3edb301427eb8))
+
 # [2.23.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.22.2...v2.23.0) (2026-08-13)
 
 
