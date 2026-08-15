@@ -7,6 +7,7 @@ event PlayVisualEffectAtLocation3D
     nothashed FPVector3 position;
     nothashed bool rotationAsOffset;
     nothashed FPVector3 rotation;
+    nothashed FPVector3 scale;
     bool atClosestBodyPosition;
     FPVector3 sourcePosition;
     bool setRotationToForceDir;

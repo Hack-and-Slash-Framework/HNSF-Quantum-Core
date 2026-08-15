@@ -33,6 +33,7 @@ namespace Quantum
         public bool rotationAsOffset;
         public FPVector3 rotationOffset;
         public bool rotateToMoveForce;
+        public FPVector3 scale;
         public FP forwardOffset;
         
         public VFXReference GetVFX()
