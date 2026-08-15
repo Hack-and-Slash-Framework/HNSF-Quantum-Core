@@ -1,3 +1,10 @@
+# [2.25.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.24.0...v2.25.0) (2026-08-15)
+
+
+### Features
+
+* VFX Scaling ([e17cd7f](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/e17cd7ffb7ee0949bc4a8324c0e9a14ee8bc4ffe))
+
 # [2.24.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.23.0...v2.24.0) (2026-08-13)
 
 
