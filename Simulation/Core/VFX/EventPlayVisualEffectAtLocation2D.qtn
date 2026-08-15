@@ -8,6 +8,7 @@ event PlayVisualEffectAtLocation2D
     nothashed bool rotationAsOffset;
     nothashed FP rotation;
     nothashed bool flipped;
+    nothashed FPVector3 scale;
     bool atClosestBodyPosition;
     FPVector2 sourcePosition;
     bool setRotationToForceDir;
