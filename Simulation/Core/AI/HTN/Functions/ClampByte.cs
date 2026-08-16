@@ -1,13 +1,12 @@
 using System;
 using HnSF.core.AI.HTN.Functions;
 using HnSF.core.AI.HTN.Param;
-using HnSF.Nodes;
 using Quantum;
 #if QUANTUM_UNITY
 using UnityEngine;
 #endif
 #if UNITY_EDITOR
-using HnSF.core.AI.HTN.Effects;
+using HnSF.Nodes;
 using Unity.GraphToolkit.Editor;
 #endif
 

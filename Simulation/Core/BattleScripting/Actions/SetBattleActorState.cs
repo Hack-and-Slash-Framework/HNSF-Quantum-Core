@@ -1,13 +1,12 @@
 using System;
 using HnSF.core.GroupControl.Actions;
 using HnSF.core.state;
-using HnSF.Nodes;
 using Quantum;
 #if QUANTUM_UNITY
 using UnityEngine.Scripting.APIUpdating;
 #endif
 #if UNITY_EDITOR
-using HnSF.core.GroupControl.Nodes;
+using HnSF.Nodes;
 using Unity.GraphToolkit.Editor;
 #endif
 

@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using System.Collections.Generic;
 using HnSF.core.AI.HTN.Functions;
 using HnSF.core.AI.HTN.Nodes;
@@ -188,3 +189,4 @@ namespace HnSF.Nodes
         }
     }
 }
+#endif

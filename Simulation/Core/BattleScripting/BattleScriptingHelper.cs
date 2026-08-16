@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using System;
 using HnSF.core.GroupControl.Actions;
 using HnSF.core.GroupControl.Functions;
@@ -25,3 +26,4 @@ namespace Quantum
         }
     }
 }
+#endif

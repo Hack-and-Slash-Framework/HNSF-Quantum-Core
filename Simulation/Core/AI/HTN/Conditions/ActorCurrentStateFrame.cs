@@ -1,13 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using HnSF.core.AI.HTN.Conditions;
 using HnSF.core.AI.HTN.Param;
-using HnSF.Nodes;
 using Quantum;
 #if QUANTUM_UNITY
 using UnityEngine;
 #endif
 #if UNITY_EDITOR
+using HnSF.Nodes;
 using Unity.GraphToolkit.Editor;
 #endif
 
