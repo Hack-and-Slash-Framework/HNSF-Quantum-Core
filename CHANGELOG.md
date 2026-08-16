@@ -1,3 +1,10 @@
+## [2.26.1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.26.0...v2.26.1) (2026-08-16)
+
+
+### Bug Fixes
+
+* Fix build errors ([5628af2](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/5628af290c8ddbe5926f4b879fb58ed9e303cfc3))
+
 # [2.26.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.25.0...v2.26.0) (2026-08-15)
 
 
