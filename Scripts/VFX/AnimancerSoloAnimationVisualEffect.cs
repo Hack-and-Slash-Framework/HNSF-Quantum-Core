@@ -1,4 +1,4 @@
-#if HNSF_ANIMANCER
+#if ENABLE_ANIMANCER
 using Animancer;
 using UnityEngine;
 

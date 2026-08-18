@@ -36,7 +36,7 @@
         {
             "name": "com.kybernetik.animancer",
             "expression": "0.0.0",
-            "define": "HNSF_ANIMANCER"
+            "define": "ENABLE_ANIMANCER"
         },
         {
             "name": "com.playeveryware.eos",

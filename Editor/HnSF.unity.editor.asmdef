@@ -11,8 +11,6 @@
         "GUID:3dc2666f1394e2c48a30ea492efb1717",
         "GUID:4c25c05f410a3a447a75c3b0909152ef",
         "GUID:f06555f75b070af458a003d92f9efb00",
-        "GUID:70ef9a24f4cfc4aec911c1414e3f90ad",
-        "GUID:d1e08c06f8f9473888c892637c83c913",
         "GUID:c45bcd05427ac6d4887a3549019d911f",
         "GUID:49b49c76ee64f6b41bf28ef951cb0e50",
         "GUID:69448af7b92c7f342b298e06a37122aa"
@@ -26,6 +24,12 @@
     "precompiledReferences": [],
     "autoReferenced": true,
     "defineConstraints": [],
-    "versionDefines": [],
+    "versionDefines": [
+        {
+            "name": "com.kybernetik.animancer",
+            "expression": "0.0.1",
+            "define": "ENABLE_ANIMANCER"
+        }
+    ],
     "noEngineReferences": false
 }
