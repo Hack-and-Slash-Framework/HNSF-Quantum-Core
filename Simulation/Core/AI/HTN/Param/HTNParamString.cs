@@ -25,7 +25,7 @@ namespace HnSF.core.AI.HTN.Param
             throw new NotSupportedException("Blackboard variables as strings are not supported.");
         }
 
-        protected override string GetConfigValue(AIConfigBase.KeyValuePair configPair)
+        protected override string GetConfigValue(AIConfig.KeyValuePair configPair)
         {
             return configPair.Value.String;
         }

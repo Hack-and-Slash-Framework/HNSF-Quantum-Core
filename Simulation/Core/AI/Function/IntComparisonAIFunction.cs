@@ -1,7 +1,7 @@
 namespace Quantum
 {
     [System.Serializable]
-    public unsafe class IntComparisonAIFunction : AIFunctionBase<bool>
+    public unsafe class IntComparisonAIFunction : AIFunction<bool>
     {
         public AIParamInt paramA;
         public EValueComparison comparison = EValueComparison.MoreThan;

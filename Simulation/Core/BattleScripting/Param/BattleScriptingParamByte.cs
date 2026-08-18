@@ -27,7 +27,7 @@ namespace Quantum
             return *value.ByteValue;
         }
 
-        protected override byte GetConfigValue(AIConfigBase.KeyValuePair configPair)
+        protected override byte GetConfigValue(AIConfig.KeyValuePair configPair)
         {
             return configPair.Value.Byte;
         }

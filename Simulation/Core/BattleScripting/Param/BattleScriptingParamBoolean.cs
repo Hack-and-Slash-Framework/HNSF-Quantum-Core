@@ -27,7 +27,7 @@ namespace Quantum
             return *value.BooleanValue;
         }
 
-        protected override bool GetConfigValue(AIConfigBase.KeyValuePair configPair)
+        protected override bool GetConfigValue(AIConfig.KeyValuePair configPair)
         {
             return configPair.Value.Boolean;
         }

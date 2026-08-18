@@ -9,7 +9,7 @@ namespace HnSF.core.state
         public static unsafe partial class Generic
         {
             public static void UpdateState(Frame frame, HNSFStateAgentData* agentData, EntityRef entity, 
-                AIBlackboardComponent* blackboard, AIConfigBase aiConfig)
+                AIBlackboardComponent* blackboard, AIConfig aiConfig)
             {
                 if (!frame.TryFindAsset<HNSFState>(agentData->state.Id, out var currentState)) return;
                 
@@ -44,7 +44,7 @@ namespace HnSF.core.state
             }
             
             public static void UpdateGenericStateMachine(Frame frame, EntityRef entity, GenericStateMachine* genericStateAgent,
-                AIConfigBase config, bool checkForTransitions = true)
+                AIConfig config, bool checkForTransitions = true)
             {
                 UpdateState(frame,
                     &genericStateAgent->stateAgent.stateData,
@@ -63,7 +63,7 @@ namespace HnSF.core.state
             }
             
             public static void CheckForStateChange(Frame frame, EntityRef entity, GenericStateMachine* stateAgent,
-                AIConfigBase config)
+                AIConfig config)
             {
                 // GENERAL STATE STUFF
                 var wasStateChanged = CheckForStateChange(frame, entity,
@@ -84,7 +84,7 @@ namespace HnSF.core.state
             }
 
             private static bool CheckForStateChange(Frame frame, EntityRef entity, HNSFStateAgentData* stateData, 
-                AIBlackboardComponent* blackboard, AIConfigBase config, bool cleanup = false)
+                AIBlackboardComponent* blackboard, AIConfig config, bool cleanup = false)
             {
                 if (stateData->toStateRequested)
                 {
@@ -95,7 +95,7 @@ namespace HnSF.core.state
             }
         
             private static void ChangeState(Frame frame, HNSFStateAgentData* stateData, 
-                EntityRef entity, AIBlackboardComponent* blackboard, AIConfigBase config, bool cleanup = false)
+                EntityRef entity, AIBlackboardComponent* blackboard, AIConfig config, bool cleanup = false)
             {
                 HNSFStateContext stateContext = new HNSFStateContext(
                     stateData,
@@ -137,7 +137,7 @@ namespace HnSF.core.state
                 }
             }
             
-            public static bool ChangeStateByTag(Frame frame, EntityRef entityRef, GenericStateMachine* csm, AIConfigBase config, AssetRef<Tag> stateTag, bool immediateTransition = false)
+            public static bool ChangeStateByTag(Frame frame, EntityRef entityRef, GenericStateMachine* csm, AIConfig config, AssetRef<Tag> stateTag, bool immediateTransition = false)
             {
                 if(!frame.TryFindAsset(csm->stateAgent.stateSet, out var stateSet)) return false;
                 if (!stateSet.AttemptGetStateByTag(csm->stateAgent.stateData.moveset, stateTag, out var toStateRef)) return false;

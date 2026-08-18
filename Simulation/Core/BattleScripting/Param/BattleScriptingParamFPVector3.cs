@@ -27,7 +27,7 @@ namespace Quantum
             return *value.FPVector3Value;
         }
 
-        protected override FPVector3 GetConfigValue(AIConfigBase.KeyValuePair configPair)
+        protected override FPVector3 GetConfigValue(AIConfig.KeyValuePair configPair)
         {
             return configPair.Value.FPVector3;
         }

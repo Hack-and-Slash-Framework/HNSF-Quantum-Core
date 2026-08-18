@@ -10,7 +10,7 @@ namespace Quantum
 #if QUANTUM_UNITY
         [Header("Agent Info")]
 #endif
-        public AssetRef<AIConfigBase> aiConfig;
+        public AssetRef<AIConfig> aiConfig;
         public AssetRef<UTRoot> root;
         public AssetRef<AIBlackboardInitializer> blackboardInitRef;
         
@@ -27,7 +27,7 @@ namespace Quantum
             
             var agent = new UTAgent()
             {
-                Config = aiConfig,
+                Config = aiConfig.Id,
                 UtilityReasoner = new UtilityReasoner()
                 {
                     UTRoot = root

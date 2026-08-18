@@ -16,7 +16,7 @@ namespace Quantum
         public ActorInputButtonType input;
         
         public override void ConditionalExecute(Frame frame, EntityRef entity, ref AIContext aiContext, AIContextUser* user,
-            AIConfigBase aiConfig)
+            AIConfig aiConfig)
         {
             /*
             if (!frame.Unsafe.TryGetPointer<DummyConfiguration>(entity, out var dummyConfig)) return;

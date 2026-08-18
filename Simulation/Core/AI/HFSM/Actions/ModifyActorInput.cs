@@ -16,7 +16,7 @@ namespace Quantum.HFSM.Actions
         public ActorInputButtonType input;
         public int modifyEvery = 0;
         
-        public override void ConditionalExecute(Frame frame, EntityRef entity, ref AIContext aiContext, AIContextUser* user, AIConfigBase aiConfig)
+        public override void ConditionalExecute(Frame frame, EntityRef entity, ref AIContext aiContext, AIContextUser* user, AIConfig aiConfig)
         {
             if (modifyEvery > 0 && frame.Number % modifyEvery != 0) return;
             if (!frame.Unsafe.TryGetPointer<BattleActorAI>(entity, out var battleActorAI)

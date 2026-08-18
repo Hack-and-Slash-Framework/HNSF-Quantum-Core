@@ -8,7 +8,7 @@ namespace Quantum
         public EntityRef agentEntityRef;
         public BattleActorAI* battleActorAI;
         public HTNAgent* agent;
-        public AIConfigBase aiConfig;
+        public AIConfig aiConfig;
         public List<byte> currentMTR;
         public Dictionary<byte, Stack<KeyValuePair<EffectType, byte>>> worldStateChangeStack;
         public bool debug;

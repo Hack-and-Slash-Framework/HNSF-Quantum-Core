@@ -12,7 +12,7 @@ namespace Quantum.HFSM.Actions.Compound
             if (!frame.Unsafe.TryGetPointer<HFSMCompoundAgent>(entity, out var compoundAgent)) return;
             var userData = (AIContextUser*)aiContext.UserData;
             
-            frame.TryFindAsset(userData->HFSMAgent->Config.Id, out AIConfigBase aiConfig);
+            frame.TryFindAsset(userData->HFSMAgent->Config.Id, out AIConfig aiConfig);
             frame.TryFindAsset(hfsmAction.Resolve(frame, entity, userData->Blackboard, aiConfig, ref aiContext), out HFSMRoot hfsmRoot);
 
             var actionContext = aiContext;

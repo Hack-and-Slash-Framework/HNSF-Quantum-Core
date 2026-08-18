@@ -10,7 +10,7 @@ namespace Quantum
 #if QUANTUM_UNITY
         [Header("Agent Info")]
 #endif
-        public AssetRef<AIConfigBase> aiConfig;
+        public AssetRef<AIConfig> aiConfig;
         
         public AssetRef<HFSMRoot> brain;
         
@@ -29,7 +29,7 @@ namespace Quantum
             
             var agent = new HFSMAgent()
             {
-                Config = aiConfig,
+                Config = aiConfig.Id,
                 Data = new HFSMData()
                 {
                     Root = brain

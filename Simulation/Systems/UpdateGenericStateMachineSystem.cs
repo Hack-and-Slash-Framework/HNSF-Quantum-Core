@@ -22,7 +22,7 @@ namespace HnSF.core.systems
                 || (hasLdt && ldt->updatesThisTick == 0))
                 return;
 
-            frame.TryFindAsset(filter.stateAgent->config, out AIConfigBase config);
+            frame.TryFindAsset(filter.stateAgent->config, out AIConfig config);
             
             int updatesThisTick = 1;
 

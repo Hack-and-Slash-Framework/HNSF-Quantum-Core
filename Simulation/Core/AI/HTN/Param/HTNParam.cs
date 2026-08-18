@@ -26,7 +26,7 @@ namespace HnSF.core.AI.HTN.Param
             return default;
         }
 
-        protected virtual T GetConfigValue(AIConfigBase.KeyValuePair configPair)
+        protected virtual T GetConfigValue(AIConfig.KeyValuePair configPair)
         {
             return default;
         }
@@ -55,7 +55,7 @@ namespace HnSF.core.AI.HTN.Param
                     BlackboardValue blackboardValue = context.agent->blackboard.GetBlackboardValue(context.frame, Key);
                     return GetBlackboardValue(blackboardValue);
                 case HTNParamSource.Config:
-                    AIConfigBase.KeyValuePair configPair = context.aiConfig?.Get(Key);
+                    AIConfig.KeyValuePair configPair = context.aiConfig?.Get(Key);
                     return configPair != null ? GetConfigValue(configPair) : DefaultValue;
                 case HTNParamSource.Function:
                     return GetFunctionValue(ref context);

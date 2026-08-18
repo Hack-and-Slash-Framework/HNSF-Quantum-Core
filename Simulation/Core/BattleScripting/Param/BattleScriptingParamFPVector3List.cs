@@ -28,7 +28,7 @@ namespace Quantum
             return new List<FPVector3>(){ *value.FPVector3Value };
         }
 
-        protected override List<FPVector3> GetConfigValue(AIConfigBase.KeyValuePair configPair)
+        protected override List<FPVector3> GetConfigValue(AIConfig.KeyValuePair configPair)
         {
             return new List<FPVector3>(){ configPair.Value.FPVector3 };
         }

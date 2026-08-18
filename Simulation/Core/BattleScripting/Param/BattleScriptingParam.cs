@@ -26,7 +26,7 @@ namespace Quantum
             return default;
         }
 
-        protected virtual T GetConfigValue(AIConfigBase.KeyValuePair configPair)
+        protected virtual T GetConfigValue(AIConfig.KeyValuePair configPair)
         {
             return default;
         }
@@ -61,7 +61,7 @@ namespace Quantum
                     BlackboardValue blackboardValue = context.blackboard->GetBlackboardValue(frame, Key);
                     return GetBlackboardValue(blackboardValue);
                 case HNSFParamSource.Config:
-                    AIConfigBase.KeyValuePair configPair = context.aiConfig?.Get(Key);
+                    AIConfig.KeyValuePair configPair = context.aiConfig?.Get(Key);
                     return configPair != null ? GetConfigValue(configPair) : DefaultValue;*/
                 case HNSFParamSource.Function:
                     return GetFunctionValue(frame, entity, ref context);

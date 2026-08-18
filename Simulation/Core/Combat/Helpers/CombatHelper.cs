@@ -37,7 +37,7 @@ namespace HnSF.core
         {
             if (f.Unsafe.TryGetPointer<GenericStateMachine>(entityRef, out var genericStateAgent))
             {
-                if (!f.TryFindAsset<AIConfigBase>(genericStateAgent->config.Id, out var attackerAiConfig)) return;
+                if (!f.TryFindAsset<AIConfig>(genericStateAgent->config.Id, out var attackerAiConfig)) return;
                 HNSFStateContext genericContext = new HNSFStateContext(
                     &genericStateAgent->stateAgent.stateData,
                     &genericStateAgent->blackboard,
@@ -66,7 +66,7 @@ namespace HnSF.core
         { 
             if (f.Unsafe.TryGetPointer<GenericStateMachine>(entityRef, out var genericStateAgent))
             {
-                if (!f.TryFindAsset<AIConfigBase>(genericStateAgent->config.Id, out var attackerAiConfig)) return;
+                if (!f.TryFindAsset<AIConfig>(genericStateAgent->config.Id, out var attackerAiConfig)) return;
                 HNSFStateContext genericContext = new HNSFStateContext(
                     &genericStateAgent->stateAgent.stateData,
                     &genericStateAgent->blackboard,

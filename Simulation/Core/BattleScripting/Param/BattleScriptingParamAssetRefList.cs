@@ -25,7 +25,7 @@ namespace Quantum
             return new List<AssetRef>() { *value.AssetRefValue };
         }
 
-        protected override List<AssetRef> GetConfigValue(AIConfigBase.KeyValuePair configPair)
+        protected override List<AssetRef> GetConfigValue(AIConfig.KeyValuePair configPair)
         {
             return new List<AssetRef>() { configPair.Value.AssetRef };
         }

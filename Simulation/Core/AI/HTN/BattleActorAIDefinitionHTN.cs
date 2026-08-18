@@ -17,7 +17,7 @@ namespace Quantum
         [Header("Agent Info")]
 #endif
         public AssetRef<DomainAssetObject> startingDomain;
-        public AssetRef<AIConfigBase> aiConfig;
+        public AssetRef<AIConfig> aiConfig;
         public AssetRef<AIBlackboardInitializer> blackboardInitRef;
         public AssetRef<SensorGroup> sensorGroup;
         

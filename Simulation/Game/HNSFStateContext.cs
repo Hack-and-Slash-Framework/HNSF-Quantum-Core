@@ -6,7 +6,7 @@ namespace HnSF.core.state
     {
         public readonly HNSFStateAgentData* agentData;
         public readonly AIBlackboardComponent* blackboard;
-        public readonly AIConfigBase aiConfig;
+        public readonly AIConfig aiConfig;
         public AssetRef<HNSFState> workingState;
         public int stateFrame;
         public int realStateFrame;
@@ -34,7 +34,7 @@ namespace HnSF.core.state
             uniqueStateId = stateMachine->stateAgent.stateData.uniqueStateId;
         }
         
-        public HNSFStateContext(HNSFStateAgentData* agentData, AIBlackboardComponent* blackboard, AIConfigBase aiConfig, int stateFrame)
+        public HNSFStateContext(HNSFStateAgentData* agentData, AIBlackboardComponent* blackboard, AIConfig aiConfig, int stateFrame)
         {
             this.agentData = agentData;
             this.blackboard = blackboard;
@@ -45,7 +45,7 @@ namespace HnSF.core.state
             this.uniqueStateId = agentData->uniqueStateId;
         }
     
-        public HNSFStateContext(HNSFStateAgentData* agentData, AIBlackboardComponent* blackboard, AIConfigBase aiConfig, AssetRef<HNSFState> workingState, int stateFrame)
+        public HNSFStateContext(HNSFStateAgentData* agentData, AIBlackboardComponent* blackboard, AIConfig aiConfig, AssetRef<HNSFState> workingState, int stateFrame)
         {
             this.agentData = agentData;
             this.blackboard = blackboard;

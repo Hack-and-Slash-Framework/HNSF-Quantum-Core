@@ -25,7 +25,7 @@ namespace Quantum
             return *value.IntegerValue;
         }
 
-        protected override int GetConfigValue(AIConfigBase.KeyValuePair configPair)
+        protected override int GetConfigValue(AIConfig.KeyValuePair configPair)
         {
             return configPair.Value.Integer;
         }

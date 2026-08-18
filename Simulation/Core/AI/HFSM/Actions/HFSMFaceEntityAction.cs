@@ -9,7 +9,7 @@ namespace Quantum
         public AIParamEntityRef entityRef;
         
         public override void ConditionalExecute(Frame frame, EntityRef entity, ref AIContext aiContext, AIContextUser* user,
-            AIConfigBase aiConfig)
+            AIConfig aiConfig)
         {
             var facetoEntityRef = entityRef.Resolve(frame,entity, user->Blackboard, aiConfig);
             

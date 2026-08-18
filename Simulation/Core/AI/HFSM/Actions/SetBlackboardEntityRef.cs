@@ -13,7 +13,7 @@ namespace Quantum.HFSM.Actions
         public override void Execute(Frame frame, EntityRef entity, ref AIContext aiContext)
         {
             var aiContextUser = ((AIContextUser*)aiContext.UserData);
-            AIConfigBase aiConfig = frame.FindAsset(aiContextUser->HFSMAgent->Config);
+            var aiConfig = frame.FindAsset(aiContextUser->HFSMAgent->Config);
 
             var val = Value.Resolve(frame, entity, aiContextUser->Blackboard, aiConfig, ref aiContext);
             aiContextUser->Blackboard->Set(frame, Key.Key, val);

@@ -1,7 +1,7 @@
 namespace Quantum
 {
     [System.Serializable]
-    public unsafe class CheckStateMachineCurrentStateByTagFunction : AIFunctionBase<bool>
+    public unsafe class CheckStateMachineCurrentStateByTagFunction : AIFunction<bool>
     {
         public AssetRef<Tag> stateTag;
         

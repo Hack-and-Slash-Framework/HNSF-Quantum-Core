@@ -10,7 +10,7 @@
         {
             var aiContextUser = ((AIContextUser*)aiContext.UserData);
 
-            AIConfigBase aiConfig = frame.FindAsset(aiContextUser->HFSMAgent->Config);
+            var aiConfig = frame.FindAsset(aiContextUser->HFSMAgent->Config);
             var entityRef = entityRefParam.Resolve(frame, entity, aiContextUser->Blackboard, aiConfig, ref aiContext);
             
             var result = frame.Exists(entityRef);

@@ -4,5 +4,5 @@ component GenericStateMachine
     HNSFStateAgent stateAgent;
     AIBlackboardComponent blackboard;
     asset_ref<AIBlackboardInitializer> blackboardInitializer;
-    asset_ref<AIConfigBase> config;
+    asset_ref<AIConfig> config;
 }

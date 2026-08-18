@@ -24,7 +24,7 @@ namespace Quantum
             return *value.EntityRefValue;
         }
 
-        protected override EntityRef GetConfigValue(AIConfigBase.KeyValuePair configPair)
+        protected override EntityRef GetConfigValue(AIConfig.KeyValuePair configPair)
         {
             return configPair.Value.EntityRef;
         }

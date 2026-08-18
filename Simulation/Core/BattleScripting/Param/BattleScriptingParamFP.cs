@@ -27,7 +27,7 @@ namespace Quantum
             return *value.FPValue;
         }
 
-        protected override FP GetConfigValue(AIConfigBase.KeyValuePair configPair)
+        protected override FP GetConfigValue(AIConfig.KeyValuePair configPair)
         {
             return configPair.Value.FP;
         }
