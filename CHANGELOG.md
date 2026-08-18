@@ -1,3 +1,10 @@
+# [2.27.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.26.1...v2.27.0) (2026-08-18)
+
+
+### Features
+
+* upgrade to Quantum 3.1 ([d8391df](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/d8391df8499d309cf60b9e4dd84a62b207af2605))
+
 ## [2.26.1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.26.0...v2.26.1) (2026-08-16)
 
 
