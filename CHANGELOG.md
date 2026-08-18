@@ -1,3 +1,10 @@
+## [2.27.1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.27.0...v2.27.1) (2026-08-18)
+
+
+### Bug Fixes
+
+* Fix Animancer imports ([53ae4ee](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/53ae4ee6f0d73553fe03a90922f2e1b59c8a6e1a))
+
 # [2.27.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.26.1...v2.27.0) (2026-08-18)
 
 
