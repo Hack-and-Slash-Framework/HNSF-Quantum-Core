@@ -1,3 +1,10 @@
+## [2.27.2](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.27.1...v2.27.2) (2026-08-19)
+
+
+### Bug Fixes
+
+* Upgrade MenuNav implementation ([bb91a84](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/bb91a8465803c5adcd63cf1c5d9672e7365cbfa4))
+
 ## [2.27.1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.27.0...v2.27.1) (2026-08-18)
 
 
