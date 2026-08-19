@@ -1,3 +1,10 @@
+## [2.27.3](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.27.2...v2.27.3) (2026-08-19)
+
+
+### Bug Fixes
+
+* Only execute SensorGroup while Executing ([04d6f22](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/04d6f2215005bd3be8459e4a7f54a73e51ab0014))
+
 ## [2.27.2](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.27.1...v2.27.2) (2026-08-19)
 
 
