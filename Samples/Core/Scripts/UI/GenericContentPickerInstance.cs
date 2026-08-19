@@ -10,7 +10,7 @@ using UnityEngine.UI;
 
 namespace HnSF.ui
 {
-    public class GenericContentPickerInstance : MenuPage, IMenuInputOnPressedConfirm, IMenuInputOnPressedBack, IMenuInputOnNavigateRaw
+    public class GenericContentPickerInstance : MenuPage, IMenuInputOnConfirm, IMenuInputOnBack, IMenuInputOnNavigateRaw
     {
         public UnityEvent<GenericContentPickerInstance> onContentPicked = new UnityEvent<GenericContentPickerInstance>();
         public UnityEvent<GenericContentPickerInstance> onCancel = new UnityEvent<GenericContentPickerInstance>();
@@ -35,22 +35,23 @@ namespace HnSF.ui
         public TextMeshProUGUI contentTitleText;
         public TextMeshProUGUI contentDescriptionText;
 
-        public override UniTask<bool> TryOpenAsync(MenuNavDirection direction, int pageCount)
+        public override UniTask<bool> TryOpenAsync(MenuNavContext context)
         {
-            PageState = MenuPageState.Opening;
+            PageState = MenuViewState.Opening;
+            SetDepth(context.Depth);
             buttonConfirmSelection.interactable = false;
             currentSelectedContentIndex = -1;
             gameObject.SetActive(true);
-            PageState = MenuPageState.Opened;
+            PageState = MenuViewState.Opened;
 
-            currentManager.SetCurrentSelectedGameObject(null);
+            currentManager.SetCurrentSelectedGameObject(null, 1);
             return new UniTask<bool>(true);
         }
 
-        public override UniTask<bool> TryCloseAsync(MenuNavDirection direction)
+        public override UniTask<bool> TryCloseAsync(MenuNavContext context)
         {
-            if(direction == MenuNavDirection.Back) Uninitialize();
-            return base.TryCloseAsync(direction);
+            if(context.Direction == MenuNavDirection.Back) Uninitialize();
+            return base.TryCloseAsync(context);
         }
         
         public virtual void Initialize<T>() where T : IContentDefinition
@@ -156,7 +157,7 @@ namespace HnSF.ui
                 uiContentItem.button.onClick.AddListener(() => { OnSelectContentItem(index); });
 
                 if (i == 0 && uiContentItem != null)
-                    currentManager.SetCurrentSelectedGameObject(uiContentItem.gameObject);
+                    currentManager.SetCurrentSelectedGameObject(uiContentItem.gameObject, 1);
             }
         }
 
@@ -181,25 +182,27 @@ namespace HnSF.ui
             onContentPicked.Invoke(this);
         }
         
-        public void OnInputConfirmPressed(int playerID, BaseEventData eventData)
+        public void OnInputConfirmPressed(MenuInputButtonPhase buttonPhase, MenuInputContext context)
         {
+            if (buttonPhase != MenuInputButtonPhase.Pressed) return;
             if (currentSelectedContentIndex == -1) return;
             onContentPicked.Invoke(this);
         }
 
-        public void OnInputBackPressed(int playerID, BaseEventData eventData)
+        public void OnInputBackPressed(MenuInputButtonPhase buttonPhase, MenuInputContext context)
         {
+            if (buttonPhase != MenuInputButtonPhase.Pressed) return;
             onCancel.Invoke(this);
         }
 
-        public void OnNavigateRaw(Vector2 navInput, int playerID, BaseEventData eventData)
+        public void OnNavigateRaw(Vector2 navInput, MenuInputContext context)
         {
-            if (currentManager.GetCurrentSelectedGameObject() == null)
+            if (currentManager.GetCurrentSelectedGameObject(context.PlayerId) == null)
             {
                 if (contentScrollRect.content.transform.childCount <= 0) return;
                 var cTransform = contentScrollRect.content.transform.GetChild(0);
                 if (cTransform == null) return;
-                currentManager.SetCurrentSelectedGameObject(cTransform.gameObject);
+                currentManager.SetCurrentSelectedGameObject(cTransform.gameObject, context.PlayerId);
             }
         }
     }

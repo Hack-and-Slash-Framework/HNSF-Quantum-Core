@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using CT.MenuNav;
 using CT.LocalInputManagement;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -99,23 +100,24 @@ namespace HnSF.ui.menus.examples.mainmenu
 
         private void WhenNavigate(InputAction.CallbackContext callbackContext, int id)
         {
-            screenManager.OnNavigate(callbackContext.ReadValue<Vector2>(), id, null);
-            screenManager.OnNavigateRaw(callbackContext.ReadValue<Vector2>(), id, null);
+            var context = new MenuInputContext(id);
+            screenManager.OnNavigate(callbackContext.ReadValue<Vector2>(), context);
+            screenManager.OnNavigateRaw(callbackContext.ReadValue<Vector2>(), context);
         }
 
         private void WhenInputSubmit(InputAction.CallbackContext callbackContext, int id)
         {
-            screenManager.OnInputConfirmPressed(id, null);
+            screenManager.OnInputConfirmPressed(MenuInputButtonPhase.Pressed, new MenuInputContext(id));
         }
 
         private void WhenInputCancel(InputAction.CallbackContext callbackContext, int id)
         {
-            screenManager.OnInputBackPressed(id, null);
+            screenManager.OnInputBackPressed(MenuInputButtonPhase.Pressed, new MenuInputContext(id));
         }
 
         private void WhenInputPause(InputAction.CallbackContext callbackContext, int id)
         {
-            screenManager.OnInputStartPressed(id, null);
+            screenManager.OnInputStartPressed(MenuInputButtonPhase.Pressed, new MenuInputContext(id));
         }
 
         private void DeregisterInputs(InputPlayerManager inputPlayerManager)

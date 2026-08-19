@@ -22,10 +22,10 @@ namespace HnSF.ui.menus.traditionallobby
         
         public Dictionary<string, ConfigurableValueUIItemBase> configItems = new Dictionary<string, ConfigurableValueUIItemBase>();
 
-        public override async UniTask<bool> TryOpenAsync(MenuNavDirection direction, int pageCount)
+        public override async UniTask<bool> TryOpenAsync(MenuNavContext context)
         {
             await AttemptInitialize();
-            return await base.TryOpenAsync(direction, pageCount);
+            return await base.TryOpenAsync(context);
         }
         
         public async UniTask AttemptInitialize()

@@ -14,11 +14,11 @@ namespace HnSF.ui.menus.examples.mainmenu
 
         [FormerlySerializedAs("mainMenuScreenHandler")] public MainMenuHelper mainMenuHelper;
 
-        public override UniTask<bool> TryOpenAsync(MenuNavDirection direction, int pageCount)
+        public override UniTask<bool> TryOpenAsync(MenuNavContext context)
         {
             attemptingConnection = false;
             inputFieldDirectConnection.text = "localhost";
-            return base.TryOpenAsync(direction, pageCount);
+            return base.TryOpenAsync(context);
         }
         
         private bool attemptingConnection;

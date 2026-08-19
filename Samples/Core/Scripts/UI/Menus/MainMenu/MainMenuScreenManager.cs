@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 
 namespace HnSF.ui.menus.examples.mainmenu
 {
-    public class MainMenuScreenManager : MenuManager, IMenuInputOnPressedConfirm, IMenuInputOnPressedBack, IMenuInputOnPressedStart, IMenuInputOnNavigate
+    public class MainMenuScreenManager : MenuManager, IMenuInputOnConfirm, IMenuInputOnBack, IMenuInputOnStart, IMenuInputOnNavigate
     {
         public MainMenuHelper mainMenuScreen;
         public QuickMatchScreenHandler quickMatchScreen;
@@ -21,7 +21,7 @@ namespace HnSF.ui.menus.examples.mainmenu
                 assignedPages.Add(cc);
 
             foreach (var page in assignedPages)
-                _ = page.TryCloseAsync(MenuNavDirection.Back_FORCED);
+                _ = page.TryCloseAsync(new MenuNavContext(MenuNavDirection.Back, isForced: true));
             
             
             _ = TryForwardPageAsync(mainMenuScreen.pageMainMenu);
@@ -41,39 +41,39 @@ namespace HnSF.ui.menus.examples.mainmenu
             await TryForwardPageAsync(lobbyScreen.pageLobbyMainMenu);
         }
 
-        public void OnInputConfirmPressed(int playerID, BaseEventData eventData)
+        public void OnInputConfirmPressed(MenuInputButtonPhase buttonPhase, MenuInputContext context)
         {
-            if (Breadcrumb.Count == 0 || Breadcrumb.Peek() is not IMenuInputOnPressedConfirm cMenu)
+            if (Breadcrumb.Count == 0 || Breadcrumb.Current is not IMenuInputOnConfirm cMenu)
                 return;
-            cMenu.OnInputConfirmPressed(playerID, eventData);
+            cMenu.OnInputConfirmPressed(buttonPhase, context);
         }
 
-        public void OnInputBackPressed(int playerID, BaseEventData eventData)
+        public void OnInputBackPressed(MenuInputButtonPhase buttonPhase, MenuInputContext context)
         {
-            if (Breadcrumb.Count == 0 || Breadcrumb.Peek() is not IMenuInputOnPressedBack cMenu)
+            if (Breadcrumb.Count == 0 || Breadcrumb.Current is not IMenuInputOnBack cMenu)
                 return;
-            cMenu.OnInputBackPressed(playerID, eventData);
+            cMenu.OnInputBackPressed(buttonPhase, context);
         }
 
-        public void OnInputStartPressed(int playerID, BaseEventData eventData)
+        public void OnInputStartPressed(MenuInputButtonPhase buttonPhase, MenuInputContext context)
         {
-            if (Breadcrumb.Count == 0 || Breadcrumb.Peek() is not IMenuInputOnPressedStart cMenu)
+            if (Breadcrumb.Count == 0 || Breadcrumb.Current is not IMenuInputOnStart cMenu)
                 return;
-            cMenu.OnInputStartPressed(playerID, eventData);
+            cMenu.OnInputStartPressed(buttonPhase, context);
         }
 
-        public void OnNavigate(Vector2 navInput, int playerID, BaseEventData eventData)
+        public void OnNavigate(Vector2 navInput, MenuInputContext context)
         {
-            if (Breadcrumb.Count == 0 || Breadcrumb.Peek() is not IMenuInputOnNavigate cMenu)
+            if (Breadcrumb.Count == 0 || Breadcrumb.Current is not IMenuInputOnNavigate cMenu)
                 return;
-            cMenu.OnNavigate(navInput, playerID, eventData);
+            cMenu.OnNavigate(navInput, context);
         }
         
-        public void OnNavigateRaw(Vector2 navInput, int playerID, BaseEventData eventData)
+        public void OnNavigateRaw(Vector2 navInput, MenuInputContext context)
         {
-            if (Breadcrumb.Count == 0 || Breadcrumb.Peek() is not IMenuInputOnNavigateRaw cMenu)
+            if (Breadcrumb.Count == 0 || Breadcrumb.Current is not IMenuInputOnNavigateRaw cMenu)
                 return;
-            cMenu.OnNavigateRaw(navInput, playerID, eventData);
+            cMenu.OnNavigateRaw(navInput, context);
         }
     }
 }

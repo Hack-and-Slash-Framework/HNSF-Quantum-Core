@@ -8,7 +8,7 @@ using UnityEngine.EventSystems;
 
 namespace HnSF.ui.menus
 {
-    public class GenericPageCharacterSelect : MenuPage, IMenuInputOnPressedConfirm, IMenuInputOnPressedBack, IMenuInputOnPressedStart, IMenuInputOnNavigateRaw
+    public class GenericPageCharacterSelect : MenuPage, IMenuInputOnConfirm, IMenuInputOnBack, IMenuInputOnStart, IMenuInputOnNavigateRaw
     {
         public enum CssStates
         {
@@ -47,18 +47,18 @@ namespace HnSF.ui.menus
 
         public CSSCustomCharacterSelectWidget[] customCharacterSelectWidgets = new CSSCustomCharacterSelectWidget[4];
 
-        public override UniTask<bool> TryOpenAsync(MenuNavDirection direction, int pageCount)
+        public override UniTask<bool> TryOpenAsync(MenuNavContext context)
         {
             allCharacterUiItems = gameObject.GetComponentsInChildren<CharacterSelectScreenSelectable>();
             foreach (var widget in customCharacterSelectWidgets) widget.gameObject.SetActive(false);
             foreach (var cuiItem in allCharacterUiItems) cuiItem.UpdateUi();
-            return base.TryOpenAsync(direction, pageCount);
+            return base.TryOpenAsync(context);
         }
 
-        public override UniTask<bool> TryCloseAsync(MenuNavDirection direction)
+        public override UniTask<bool> TryCloseAsync(MenuNavContext context)
         {
             Teardown();
-            return base.TryCloseAsync(direction);
+            return base.TryCloseAsync(context);
         }
         
         public async UniTask<bool> Initialize(int playerAmount, int wantedFighters = 1)
@@ -85,7 +85,7 @@ namespace HnSF.ui.menus
                 UpdateCurrentSelection(i, defaultCharacterSelections[i]);
             }
             
-            currentManager.SetCurrentSelectedGameObject(null);
+            currentManager.SetCurrentSelectedGameObject(null, 1);
             return true;
         }
 
@@ -204,8 +204,10 @@ namespace HnSF.ui.menus
             playerCssStates[playerIndex] = PlayerCssStates.CharacterSelect;
         }
 
-        public virtual void OnInputConfirmPressed(int playerID, BaseEventData eventData)
+        public virtual void OnInputConfirmPressed(MenuInputButtonPhase buttonPhase, MenuInputContext context)
         {
+            if (buttonPhase != MenuInputButtonPhase.Pressed) return;
+            var playerID = context.PlayerId;
             var index = playerID - 1;
             if (index < 0 || index >= playerCount) return;
             
@@ -223,13 +225,15 @@ namespace HnSF.ui.menus
                         playerSelections[index][^1].Submit(index);
                     break;
                 case PlayerCssStates.CustomCharacterSelect:
-                    customCharacterSelectWidgets[index].OnInputConfirmPressed(playerID, eventData);
+                    customCharacterSelectWidgets[index].OnInputConfirmPressed(playerID, context.EventData);
                     break;
             }
         }
 
-        public virtual void OnInputBackPressed(int playerID, BaseEventData eventData)
+        public virtual void OnInputBackPressed(MenuInputButtonPhase buttonPhase, MenuInputContext context)
         {
+            if (buttonPhase != MenuInputButtonPhase.Pressed) return;
+            var playerID = context.PlayerId;
             var index = playerID - 1;
             if (index < 0 || index >= playerCount) return;
             
@@ -252,13 +256,15 @@ namespace HnSF.ui.menus
                     UpdateCssState(CssStates.CharacterSelect);
                     break;
                 case PlayerCssStates.CustomCharacterSelect:
-                    customCharacterSelectWidgets[index].OnInputBackPressed(playerID, eventData);
+                    customCharacterSelectWidgets[index].OnInputBackPressed(playerID, context.EventData);
                     break;
             }
         }
 
-        public virtual void OnInputStartPressed(int playerID, BaseEventData eventData)
+        public virtual void OnInputStartPressed(MenuInputButtonPhase buttonPhase, MenuInputContext context)
         {
+            if (buttonPhase != MenuInputButtonPhase.Pressed) return;
+            var playerID = context.PlayerId;
             var index = playerID - 1;
             if (index < 0 || index >= playerCount) return;
             
@@ -279,8 +285,9 @@ namespace HnSF.ui.menus
             }
         }
 
-        public virtual void OnNavigateRaw(Vector2 navInput, int playerID, BaseEventData eventData)
+        public virtual void OnNavigateRaw(Vector2 navInput, MenuInputContext context)
         {
+            var playerID = context.PlayerId;
             var playerIndex = playerID - 1;
             if (currentCssState != CssStates.CharacterSelect || playerIndex < 0 || playerIndex >= playerCount) return;
             
@@ -322,7 +329,7 @@ namespace HnSF.ui.menus
 
                     break;
                 case PlayerCssStates.CustomCharacterSelect:
-                    customCharacterSelectWidgets[playerIndex].OnInputNavigateRaw(navInput, playerID, eventData);
+                    customCharacterSelectWidgets[playerIndex].OnInputNavigateRaw(navInput, playerID, context.EventData);
                     break;
             }
         }

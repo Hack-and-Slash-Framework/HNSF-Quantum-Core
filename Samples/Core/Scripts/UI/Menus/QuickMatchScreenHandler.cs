@@ -72,7 +72,7 @@ namespace HnSF.ui.menus
 
         public SessionHandlerQuickMatchPhotonRealtime sessionHandlerPrefab;
 
-        public override UniTask<bool> TryOpenAsync(MenuNavDirection direction, int pageCount)
+        public override UniTask<bool> TryOpenAsync(MenuNavContext context)
         {
             playerIdToScreenInstance.Clear();
             localPlayersInfo.Clear();
@@ -95,10 +95,10 @@ namespace HnSF.ui.menus
             }
             */
             
-            return base.TryOpenAsync(direction, pageCount);
+            return base.TryOpenAsync(context);
         }
 
-        public override UniTask<bool> TryCloseAsync(MenuNavDirection direction)
+        public override UniTask<bool> TryCloseAsync(MenuNavContext context)
         {
             foreach (var playerScreenInstance in playerIdToScreenInstance.Values)
             {
@@ -109,7 +109,7 @@ namespace HnSF.ui.menus
             
             playerIdToScreenInstance.Clear();
             
-            return base.TryCloseAsync(direction);
+            return base.TryCloseAsync(context);
         }
         
         private void WhenLocalPlayerInfoUpdated(QuickMatchLocalPlayerInfo arg0)

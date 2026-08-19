@@ -35,18 +35,18 @@ namespace HnSF.ui.menus.traditionallobby
         public LoadedAssetHandleWrapper gamemodeAssetHandle;
         public LoadedAssetHandleWrapper mapAssetHandle;
 
-        public override UniTask<bool> TryOpenAsync(MenuNavDirection direction, int pageCount)
+        public override UniTask<bool> TryOpenAsync(MenuNavContext context)
         {
             playerListItemPrefab.gameObject.SetActive(false);
             RegisterInputEvents();
             AssignRoom(roomId);
-            return base.TryOpenAsync(direction, pageCount);
+            return base.TryOpenAsync(context);
         }
 
-        public override UniTask<bool> TryCloseAsync(MenuNavDirection direction)
+        public override UniTask<bool> TryCloseAsync(MenuNavContext context)
         {
             UnregisterInputEvents();
-            return base.TryCloseAsync(direction);
+            return base.TryCloseAsync(context);
         }
         
 

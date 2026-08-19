@@ -18,17 +18,17 @@ namespace HnSF.ui.menus.traditionallobby
         public Button createRoomButton;
         public Button cancelButton;
 
-        public override UniTask<bool> TryOpenAsync(MenuNavDirection direction, int pageCount)
+        public override UniTask<bool> TryOpenAsync(MenuNavContext context)
         {
             gamemodeSettingsButton.interactable = false;
             createRoomButton.interactable = false;
             CheckButtonInteractable();
-            return base.TryOpenAsync(direction, pageCount);
+            return base.TryOpenAsync(context);
         }
 
-        public override UniTask<bool> TryCloseAsync(MenuNavDirection direction)
+        public override UniTask<bool> TryCloseAsync(MenuNavContext context)
         {
-            return base.TryCloseAsync(direction);
+            return base.TryCloseAsync(context);
         }
         
         public void CheckButtonInteractable()

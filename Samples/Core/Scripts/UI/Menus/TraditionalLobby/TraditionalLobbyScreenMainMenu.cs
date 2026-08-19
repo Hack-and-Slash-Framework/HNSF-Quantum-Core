@@ -18,7 +18,7 @@ namespace HnSF.ui.menus.traditionallobby
 
         public GameObject roomRectViewItem;
 
-        public override UniTask<bool> TryOpenAsync(MenuNavDirection direction, int pageCount)
+        public override UniTask<bool> TryOpenAsync(MenuNavContext context)
         {
             roomRectViewItem.gameObject.SetActive(false);
 
@@ -26,12 +26,12 @@ namespace HnSF.ui.menus.traditionallobby
             screenInstance.lobbyRepresentation.onRoomOpened.AddListener(UpdateRoomList);
             screenInstance.lobbyRepresentation.onRoomClosed.AddListener(UpdateRoomList);
             UpdateRoomList(-1);
-            return base.TryOpenAsync(direction, pageCount);
+            return base.TryOpenAsync(context);
         }
 
-        public override UniTask<bool> TryCloseAsync(MenuNavDirection direction)
+        public override UniTask<bool> TryCloseAsync(MenuNavContext context)
         {
-            return base.TryCloseAsync(direction);
+            return base.TryCloseAsync(context);
         }
         
         private void UpdateRoomList(int arg0)

@@ -19,17 +19,17 @@ namespace HnSF.ui.menus
         public TMP_InputField usernameInputField;
         public TextMeshProUGUI modIdText;
 
-        public override UniTask<bool> TryOpenAsync(MenuNavDirection direction, int pageCount)
+        public override UniTask<bool> TryOpenAsync(MenuNavContext context)
         {
             canvas.worldCamera = quickMatchScreenInstance.instanceCamera;
             usernameInputField.onEndEdit.AddListener(WhenUsernameSubmitted);
             UpdateReadyUpButtonState();
-            return base.TryOpenAsync(direction, pageCount);
+            return base.TryOpenAsync(context);
         }
 
-        public override UniTask<bool> TryCloseAsync(MenuNavDirection direction)
+        public override UniTask<bool> TryCloseAsync(MenuNavContext context)
         {
-            return base.TryCloseAsync(direction);
+            return base.TryCloseAsync(context);
         }
         
         private void UpdateReadyUpButtonState()

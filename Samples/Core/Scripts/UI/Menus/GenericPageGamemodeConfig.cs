@@ -31,14 +31,14 @@ namespace HnSF.ui.menus
 
         public InputPlayerManager inputPlayer;
 
-        public override UniTask<bool> TryOpenAsync(MenuNavDirection direction, int pageCount)
+        public override UniTask<bool> TryOpenAsync(MenuNavContext context)
         {
-            return base.TryOpenAsync(direction, pageCount);
+            return base.TryOpenAsync(context);
         }
 
-        public override UniTask<bool> TryCloseAsync(MenuNavDirection direction)
+        public override UniTask<bool> TryCloseAsync(MenuNavContext context)
         {
-            return base.TryCloseAsync(direction);
+            return base.TryCloseAsync(context);
         }
         
         public async UniTask Initialize(ModAssetSoftReference gamemodeReference)
