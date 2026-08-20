@@ -80,7 +80,11 @@ namespace HnSF.sessionhandling.handlers
 
         public override void Teardown()
         {
+            if (TornDown)
+                return;
+            
             if (HnSFManagersContainer.instance == null) return;
+            
             var contentManager = HnSFManagersContainer.instance.contentManager;
             
             if (matchSessionHandler)
@@ -109,6 +113,8 @@ namespace HnSF.sessionhandling.handlers
             
             quantumClient?.Disconnect();
             quantumClient = null;
+            
+            base.Teardown();
         }
         
         private void OnDestroy()

@@ -34,10 +34,10 @@ namespace HnSF.ui.menus.examples.mainmenu
 
         public async void ReturnToLobbyScreen()
         {
-            var sessionHandler = HnSFManagersContainer.instance.sessionHandlerManager.sessionHandlers["onlineroom"];
+            var sessionHandler = HnSFManagersContainer.instance.sessionHandlerManager.GetSessionHandler<SessionHandlerTraditionalLobby>("onlineroom");
 
             await TryForwardPageAsync(mainMenuScreen.pageMainMenu);
-            lobbyScreen.roomSessionHandler = sessionHandler as SessionHandlerTraditionalLobby;
+            lobbyScreen.roomSessionHandler = sessionHandler;
             await TryForwardPageAsync(lobbyScreen.pageLobbyMainMenu);
         }
 

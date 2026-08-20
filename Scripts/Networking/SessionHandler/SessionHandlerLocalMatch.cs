@@ -48,8 +48,9 @@ namespace HnSF.sessionhandling.handlers
 
         public override void Teardown()
         {
-            base.Teardown();
-
+            if (TornDown)
+                return;
+            
             if (HnSFManagersContainer.instance != null)
             {
                 if (builtSystemConfig)
@@ -77,6 +78,8 @@ namespace HnSF.sessionhandling.handlers
             {
                 gamemodeMatchHandlerInstance.Teardown();
             }
+            
+            base.Teardown();
         }
         
         public async UniTask<bool> PrepareForMatchAndStart(QuantumMatchContentBundle matchContentBundle)

@@ -62,6 +62,9 @@ namespace HnSF.sessionhandling.handlers
         public override void Teardown()
         {
             if (HnSFManagersContainer.instance == null) return;
+            if (TornDown)
+                return;
+            
             var contentManager = HnSFManagersContainer.instance.contentManager;
 
             if (builtSystemConfig)
@@ -96,6 +99,8 @@ namespace HnSF.sessionhandling.handlers
             
             quantumClient?.Disconnect();
             quantumClient = null;
+            
+            base.Teardown();
         }
 
         public void ForceQuit()

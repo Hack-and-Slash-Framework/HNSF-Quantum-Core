@@ -6,7 +6,7 @@ namespace HnSF.sessionhandling
 {
     public class SessionHandlerManager : MonoBehaviour
     {
-        public Dictionary<string, SessionHandlerBase> sessionHandlers = new Dictionary<string, SessionHandlerBase>();
+        protected Dictionary<string, SessionHandlerBase> sessionHandlers = new Dictionary<string, SessionHandlerBase>();
 
         [Header("Prefabs")]
         public SessionHandlerLocalMatch localMatchSessionHandlerPrefab;
@@ -21,7 +21,7 @@ namespace HnSF.sessionhandling
             sessionHandlers.Add(sessionID, g);
             return g as T;
         }
-
+        
         public void DestroySessionHandler(string sessionID, bool teardown = true)
         {
             if (!sessionHandlers.TryGetValue(sessionID, out var handler)) return;
@@ -29,10 +29,27 @@ namespace HnSF.sessionhandling
             GameObject.Destroy(handler.gameObject);
             sessionHandlers.Remove(sessionID);
         }
-
-        public bool TryGetSessionHandler(string sessionID, out SessionHandlerBase sessionHandler)
+        
+        public bool SessionHandlerExists(string sessionID)
         {
-            return sessionHandlers.TryGetValue(sessionID, out sessionHandler);
+            return sessionHandlers.ContainsKey(sessionID);
+        }
+
+        public T GetSessionHandler<T>(string sessionID) where T : SessionHandlerBase
+        {
+            return sessionHandlers.TryGetValue(sessionID, out var handler) ? (T)handler : null;
+        }
+
+        
+        public bool TryGetSessionHandler<T>(string sessionID, out T sessionHandler) where T : SessionHandlerBase
+        {
+            sessionHandler = null;
+            if (sessionHandlers.TryGetValue(sessionID, out var handler))
+            {
+                sessionHandler = (T)handler;
+                return true;
+            }
+            return false;
         }
     }
 }

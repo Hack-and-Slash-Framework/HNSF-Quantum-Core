@@ -22,12 +22,16 @@ namespace HnSF.sessionhandling.handlers
 
         public override void Teardown()
         {
-            base.Teardown();
+            if (TornDown)
+                return;
+            
             if (matchHandlerInstance)
             {
                 matchHandlerInstance.Teardown();
                 Destroy(matchHandlerInstance);
             }
+            
+            base.Teardown();
         }
         
         public void InitMatch()
