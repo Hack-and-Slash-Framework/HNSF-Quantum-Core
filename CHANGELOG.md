@@ -1,3 +1,10 @@
+# [2.28.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.27.3...v2.28.0) (2026-08-20)
+
+
+### Features
+
+* Improved SessionHandler ([e343790](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/e343790a7874018096c0e674d0c020ca4cceac63))
+
 ## [2.27.3](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.27.2...v2.27.3) (2026-08-19)
 
 
