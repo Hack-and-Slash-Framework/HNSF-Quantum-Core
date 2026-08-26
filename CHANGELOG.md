@@ -1,3 +1,10 @@
+## [2.28.1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.28.0...v2.28.1) (2026-08-26)
+
+
+### Bug Fixes
+
+* Fix gamemode settings, animation updater ([e7464c6](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/e7464c6e4f47568d15a9536ccd0c269689e9d625))
+
 # [2.28.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.27.3...v2.28.0) (2026-08-20)
 
 
