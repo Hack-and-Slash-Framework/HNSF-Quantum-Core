@@ -272,24 +272,10 @@ namespace HnSF
                 
                 group.Value.layerMixerType[layer] = animEntry.mixer;
 
-                switch (animEntry.mixer)
-                {
-                    case AnimationEntry.MixerType.none:
-                        var blp = group.Value.layers[layer].Play(anims, wantedFadeDuration);
-                        blp.Speed = animEntry.playRate;
-                        group.Value.states[layer] = blp;
-                        break;
-                    case AnimationEntry.MixerType.Cartesian:
-                    case AnimationEntry.MixerType.Directional:
-                        group.Value.states[layer] =
-                            group.Value.layers[layer].Play(group.Value.mixers[animEntry], wantedFadeDuration);
-                        break;
-                    case AnimationEntry.MixerType.Linear:
-                        group.Value.states[layer] =
-                            group.Value.layers[layer].Play(group.Value.lMixers[animEntry], wantedFadeDuration);
-                        break;
-                }
-
+                var blp = group.Value.layers[layer].Play(anims, wantedFadeDuration);
+                blp.Speed = animEntry.playRate;
+                group.Value.states[layer] = blp;
+                
                 if (avatarMask != group.Value.layers[layer].Mask) group.Value.layers[layer].Mask = avatarMask;
             }
         }

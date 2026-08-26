@@ -39,22 +39,22 @@ namespace Quantum
             return asset;
         }
 
-        public virtual void FillBaseSettings(GamemodeSettingsBase asset)
+        public virtual void FillBaseSettings(GamemodeSettingsBase assetToWriteTo)
         {
-            asset.teamRules = new GamemodeTeamRule[teamRules.Length];
-            Array.Copy(teamRules, asset.teamRules, teamRules.Length);
-            asset.teamConfigs = new GamemodeTeamConfig[teamConfigs.Length];
-            Array.Copy(teamConfigs, asset.teamConfigs, teamConfigs.Length);
-            asset.fightersPerPlayer = fightersPerPlayer;
-            asset.initialParticipantsInfo = new MatchParticipantInitialData[initialParticipantsInfo.Length];
-            Array.Copy(initialParticipantsInfo, asset.initialParticipantsInfo, initialParticipantsInfo.Length);
+            assetToWriteTo.teamRules = new GamemodeTeamRule[teamRules.Length];
+            Array.Copy(teamRules, assetToWriteTo.teamRules, teamRules.Length);
+            assetToWriteTo.teamConfigs = new GamemodeTeamConfig[teamConfigs.Length];
+            Array.Copy(teamConfigs, assetToWriteTo.teamConfigs, teamConfigs.Length);
+            assetToWriteTo.fightersPerPlayer = fightersPerPlayer;
+            assetToWriteTo.initialParticipantsInfo = new MatchParticipantInitialData[initialParticipantsInfo.Length];
+            Array.Copy(initialParticipantsInfo, assetToWriteTo.initialParticipantsInfo, initialParticipantsInfo.Length);
         }
 
         public virtual GamemodeSettingsBase GetInstance()
         {
 #if QUANTUM_UNITY
             var instance = ScriptableObject.CreateInstance<GamemodeSettingsBase>();
-            instance.FillBaseSettings(this);
+            FillBaseSettings(instance);
             return instance;
 #else
             return null;
