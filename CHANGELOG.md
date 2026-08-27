@@ -1,3 +1,10 @@
+## [2.28.2](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.28.1...v2.28.2) (2026-08-27)
+
+
+### Bug Fixes
+
+* Move layer masks to simulation config ([c994ccb](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/c994ccb075906b7ebe52c9913530233a8da8d85c))
+
 ## [2.28.1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.28.0...v2.28.1) (2026-08-26)
 
 
