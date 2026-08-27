@@ -10,6 +10,10 @@ namespace Quantum
         [Header("Layers")]
 #endif
         public LayerMask layerMaskWarningbox;
+        public Quantum.LayerMask layerMaskHitbox;
+        public Quantum.LayerMask layerMaskHurtbox;
+        public Quantum.LayerMask layerMaskCollisionbox;
+        public Quantum.LayerMask layerMaskThrowbox;
         
 #if QUANTUM_UNITY
         [Header("Tags")]
