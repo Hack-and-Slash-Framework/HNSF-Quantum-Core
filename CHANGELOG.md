@@ -1,3 +1,10 @@
+# [2.29.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.28.2...v2.29.0) (2026-08-28)
+
+
+### Features
+
+* add isProjectile to warningbox ([effc48a](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/effc48a12e2937d5502444d6eb2d50d5441b1388))
+
 ## [2.28.2](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.28.1...v2.28.2) (2026-08-27)
 
 
