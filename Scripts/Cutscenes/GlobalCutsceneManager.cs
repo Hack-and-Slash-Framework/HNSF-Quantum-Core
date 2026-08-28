@@ -32,6 +32,7 @@ namespace HnSF
         {
             matchHandler = mHandler;
             globalBindingSource = bindingSource ?? new CutsceneBindingSource();
+            _disposableCallbacks = new List<IDisposable>();
             _disposableCallbacks.Add(
                 QuantumCallback.SubscribeManual((CallbackEventCanceled c) => WhenEventCanceled(c)));
             _disposableCallbacks.Add(
@@ -49,11 +50,15 @@ namespace HnSF
         
         public virtual void Teardown()
         {
-            for (int i = 0; i < _disposableCallbacks.Count; i++)
+            if (_disposableCallbacks != null)
             {
-                _disposableCallbacks[i].Dispose();
+                for (int i = 0; i < _disposableCallbacks.Count; i++)
+                {
+                    _disposableCallbacks[i]?.Dispose();
+                }
+
+                _disposableCallbacks.Clear();
             }
-            _disposableCallbacks.Clear();
             _disposableCallbacks = null;
             globalBindingSource = null;
             matchHandler = null;

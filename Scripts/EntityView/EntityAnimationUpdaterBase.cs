@@ -49,6 +49,16 @@ namespace HnSF
             entityView.OnEntityDestroyed.AddListener(WhenEntityDestroyed);
         }
 
+        public virtual void OnDestroy()
+        {
+            Cleanup();
+        }
+
+        protected virtual void Cleanup()
+        {
+            EntityAnimationGlobalUpdaterBase.UnregisterAnimator(this);
+        }
+
         protected virtual void WhenEntityInstantiated(QuantumGame arg0)
         {
             Reset();
@@ -60,7 +70,7 @@ namespace HnSF
 
         protected virtual void WhenEntityDestroyed(QuantumGame arg0)
         {
-            EntityAnimationGlobalUpdaterBase.UnregisterAnimator(this);
+            Cleanup();
             Reset();
         }
 
