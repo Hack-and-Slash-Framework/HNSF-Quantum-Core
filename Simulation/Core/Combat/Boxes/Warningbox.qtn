@@ -5,6 +5,7 @@ component Warningbox
     entity_ref owner;
     asset_ref damageSourceInfoRef;
     bool isThrow;
+    bool isProjectile;
     
     int activeAt;
     int inactiveAt;
