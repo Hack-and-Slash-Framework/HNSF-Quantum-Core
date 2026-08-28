@@ -1,3 +1,10 @@
+## [2.29.1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.29.0...v2.29.1) (2026-08-28)
+
+
+### Bug Fixes
+
+* Cleanup animatgion updater & cutscene manager ([cbb2291](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/cbb229104822cf7ddb9838657226f25ca3a21837))
+
 # [2.29.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.28.2...v2.29.0) (2026-08-28)
 
 
