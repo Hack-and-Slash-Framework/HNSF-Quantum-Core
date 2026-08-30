@@ -22,8 +22,8 @@ namespace HnSF.core.AI.HTN.Conditions
         {
             var frame = context.frame;
             if (!frame.Unsafe.TryGetPointer<BattleActorAI>(context.agentEntityRef, out var battleActorAI)
-                || !frame.Unsafe.TryGetPointer<EntityTargeting>(battleActorAI->target, out var targeting)) return false;
-            var result = targeting->target != default && frame.Exists(battleActorAI->target);
+                || !frame.Unsafe.TryGetPointer<EntityTargeting>(battleActorAI->aiActorRef, out var targeting)) return false;
+            var result = targeting->target != default && frame.Exists(battleActorAI->aiActorRef);
             if (inverse) result = !result;
             return result;
         }

@@ -1,4 +1,10 @@
+struct ScriptsControllingEntity{
+    list<entity_ref> scriptEntityList;
+}
+
 singleton component GenericGroupControlManager{
     [AllocateOnComponentAdded, FreeOnComponentRemoved] 
-    dictionary<asset_ref, entity_ref> controlInfoEntityMap;
+    dictionary<entity_ref, ScriptsControllingEntity> controlInfoEntityMap;
+    [AllocateOnComponentAdded, FreeOnComponentRemoved] 
+    dictionary<asset_ref, ScriptsControllingEntity> controlInfoEntityAssetRefMap;
 }

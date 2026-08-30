@@ -15,4 +15,7 @@ component HTNAgent{
     
     bool uninterruptible;
     FP cooldown;
+    
+    uint pendingReplanReasons;
+    byte pendingReplanUrgency;
 }

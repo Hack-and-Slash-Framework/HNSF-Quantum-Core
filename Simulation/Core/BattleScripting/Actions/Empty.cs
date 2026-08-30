@@ -14,19 +14,6 @@ namespace HnSF.core.GroupControl.Actions
     [Serializable]
     public unsafe partial class Empty : GroupControlAction
     {
-        
-        public override void OnEnter(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
-        {
-        }
-
-        public override bool Tick(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
-        {
-            return true;
-        }
-
-        public override void OnExit(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
-        {
-        }
     }
 }
 

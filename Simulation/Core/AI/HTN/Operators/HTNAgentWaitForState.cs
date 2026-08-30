@@ -33,7 +33,7 @@ namespace HnSF.core.AI.HTN.Operators
             var frame = context.frame;
             
             if (!frame.Unsafe.TryGetPointer<BattleActorAI>(context.agentEntityRef, out var battleActorAI)
-                || !frame.Unsafe.TryGetPointer<GenericStateMachine>(battleActorAI->target, out var gsm))
+                || !frame.Unsafe.TryGetPointer<GenericStateMachine>(battleActorAI->aiActorRef, out var gsm))
             {
                 return HTNTaskStatus.Failure;
             }

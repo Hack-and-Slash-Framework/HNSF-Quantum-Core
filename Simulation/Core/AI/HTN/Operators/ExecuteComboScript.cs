@@ -23,7 +23,7 @@ namespace HnSF.core.AI.HTN.Operators
         public override HTNTaskStatus OnEnter(ref HTNAgentContext context)
         {
             if (!context.frame.Unsafe.TryGetPointer(context.agentEntityRef, out BattleActorAI* battleActorAI)
-                || !context.frame.Unsafe.TryGetPointer<BattleActorLink>(battleActorAI->target, out var battleActorLink)
+                || !context.frame.Unsafe.TryGetPointer<BattleActorLink>(battleActorAI->aiActorRef, out var battleActorLink)
                 || !context.frame.TryFindAsset(battleActorLink->battleActorDefinition, out var bad))
                 return HTNTaskStatus.Failure;
 
@@ -33,63 +33,46 @@ namespace HnSF.core.AI.HTN.Operators
                 return HTNTaskStatus.Failure;
 
             var genericControlManager = context.frame.GetOrAddSingleton<GenericGroupControlManager>();
-            var infoEntityMap = context.frame.ResolveDictionary(genericControlManager.controlInfoEntityMap);
+
+            var infoEntityRef = context.frame.Create();
             
-            context.frame.AddOrGet(context.agentEntityRef, out TaggedEntityMapping* tagMapping);
+            context.frame.AddOrGet(infoEntityRef, out TaggedEntityMapping* tagMapping);
             var tagMap = context.frame.ResolveDictionary(tagMapping->tagToEntityMap);
-            if (tagMap.ContainsKey(context.frame.SimulationConfig.tag_self))
-                tagMap[context.frame.SimulationConfig.tag_self] = battleActorAI->target;
-            else 
-                tagMap.Add(context.frame.SimulationConfig.tag_self, battleActorAI->target);
+            tagMap[context.frame.SimulationConfig.tag_self] = battleActorAI->aiActorRef;
             
-            context.frame.AddOrGet(context.agentEntityRef, out GenericGroupControl* ggc);
-            ggc->autoDestroy = false;
+            context.frame.AddOrGet(infoEntityRef, out GenericGroupControl* ggc);
+            ggc->autoDestroy = true;
             
             var basc = new BattleScriptContext();
-            basc.SetScriptEntityAndBlackboard(context.frame, context.agentEntityRef, null);
+            basc.SetScriptEntityAndBlackboard(context.frame, infoEntityRef, null);
             
             ggc->data.SetData(comboScript);
-            ggc->data.Initialize(context.frame, context.agentEntityRef, ref basc);
-            
-            infoEntityMap.Add(new AssetRef((long)context.agentEntityRef.GetHashCode()), context.agentEntityRef);
+            ggc->data.Initialize(context.frame, infoEntityRef, ref basc);
+
+            genericControlManager.Add(context.frame, EntityRef.None, infoEntityRef);
+
+            context.frame.AddOrGet(context.agentEntityRef, out ExecutingBattleScriptEntityReference* bser);
+            bser->entityRef = infoEntityRef;
             return base.OnEnter(ref context);
         }
         
         public override HTNTaskStatus Tick(ref HTNAgentContext context)
         {
             var frame = context.frame;
-            
-            if (!frame.Unsafe.TryGetPointer<BattleActorAI>(context.agentEntityRef, out var battleActorAI)
-                || !frame.Unsafe.TryGetPointer<GenericGroupControl>(context.agentEntityRef, out var groupController))
-            {
+            if (!frame.Unsafe.TryGetPointer<ExecutingBattleScriptEntityReference>(context.agentEntityRef, out var bser))
                 return HTNTaskStatus.Failure;
-            }
             
-            /*
-            var groupControlContext = new BattleScriptContext();
-            groupControlContext.SetScriptEntityAndBlackboard(frame, context.agentEntityRef, null);
-
-            if (groupController->data.IsEnd(frame, ref groupControlContext)) return HTNTaskStatus.Success;
-                
-            if (groupController->data.Tick(frame, context.agentEntityRef, ref groupControlContext))
-            {
-                if (groupController->data.IsEnd(frame, ref groupControlContext))
-                {
-                    groupController->data.currentAction = -1;
-                    return HTNTaskStatus.Success;
-                }
-            }*/
-
-            return groupController->data.currentAction == -1 ? HTNTaskStatus.Success : HTNTaskStatus.Executing;
+            return frame.Exists(bser->entityRef) ? HTNTaskStatus.Executing : HTNTaskStatus.Success;
         }
         
         public override void OnExit(ref HTNAgentContext context)
         {
-            context.frame.Remove<GenericGroupControl>(context.agentEntityRef);
+            if (!context.frame.Unsafe.TryGetPointer<ExecutingBattleScriptEntityReference>(context.agentEntityRef,
+                    out var bser))
+                return;
             
-            var genericControlManager = context.frame.GetOrAddSingleton<GenericGroupControlManager>();
-            var infoEntityMap = context.frame.ResolveDictionary(genericControlManager.controlInfoEntityMap);
-            infoEntityMap.Remove(new AssetRef((long)context.agentEntityRef.GetHashCode()));
+            bser->Cleanup(context.frame, EntityRef.None, true);
+            context.frame.Remove<ExecutingBattleScriptEntityReference>(context.agentEntityRef);
         }
     }
 }

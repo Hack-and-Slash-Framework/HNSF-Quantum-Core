@@ -22,26 +22,18 @@ namespace HnSF.core.GroupControl.Actions
         public int waitForFrame = 0;
         public int timeout;
         
-        public override void OnEnter(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
-        {
-        }
-        
-        public override bool Tick(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
+        public override BattleScriptResult Tick(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
         {
             var syncedSourceEntityRef = entityRefFunction == null ? infoEntityRef : entityRefFunction.Execute(frame, infoEntityRef, ref context);
             if (syncedSourceEntityRef == default || !frame.Exists(syncedSourceEntityRef))
-                return true;
+                return BattleScriptResult.Failed;
             if (!frame.Unsafe.TryGetPointer<SyncedCutsceneSource>(syncedSourceEntityRef, out var scs))
-                return true;
+                return BattleScriptResult.Failed;
 
             if (waitForFrame > 0)
-                return scs->frame >= waitForFrame;
+                return scs->frame >= waitForFrame ? BattleScriptResult.Succeeded : BattleScriptResult.Running;
             
-            return scs->frame >= scs->endFrame;
-        }
-
-        public override void OnExit(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
-        {
+            return scs->frame >= scs->endFrame ? BattleScriptResult.Succeeded :  BattleScriptResult.Running;
         }
     }
 }

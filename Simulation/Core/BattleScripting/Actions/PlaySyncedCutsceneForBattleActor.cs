@@ -44,7 +44,7 @@ namespace HnSF.core.GroupControl.Actions
 
         public TargetAndState[] statesToSet = Array.Empty<TargetAndState>();
         
-        public override void OnEnter(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
+        public override BattleScriptResult OnEnter(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
         {
             foreach (var state in statesToSet)
             {
@@ -57,6 +57,8 @@ namespace HnSF.core.GroupControl.Actions
                 
                 PlaySyncedCutsceneFor(frame, targetEntity, state);
             }
+
+            return BattleScriptResult.Succeeded;
         }
 
         private void PlaySyncedCutsceneFor(Frame frame, EntityRef battleActorRef, TargetAndState tas)
@@ -101,15 +103,6 @@ namespace HnSF.core.GroupControl.Actions
                     controlAnimation = !cce.dontControlAnimation,
                 };
             }
-        }
-
-        public override bool Tick(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
-        {
-            return true;
-        }
-
-        public override void OnExit(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
-        {
         }
     }
 }

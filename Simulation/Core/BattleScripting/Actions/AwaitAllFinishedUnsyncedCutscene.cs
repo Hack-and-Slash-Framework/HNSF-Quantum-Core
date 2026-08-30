@@ -19,7 +19,7 @@ namespace HnSF.core.GroupControl.Actions
         public AssetRef<Tag> cutsceneTag;
         public int maxWaitFrames;
         
-        public override void OnEnter(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
+        public override BattleScriptResult OnEnter(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
         {
             frame.AddOrGet(infoEntityRef, out PlayerReadyMap* prm);
             prm->ClearMap(frame);
@@ -30,12 +30,16 @@ namespace HnSF.core.GroupControl.Actions
                 gt->countingType = TimerCountingType.CountUp;
                 gt->value = 0;
             }
+
+            return BattleScriptResult.Running;
         }
         
-        public override bool Tick(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
+        public override BattleScriptResult Tick(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
         {
             var prm = frame.Unsafe.GetPointer<PlayerReadyMap>(infoEntityRef);
-            return prm->CheckForAllFinishedWithUnsyncedCutscene(frame, cutsceneSourceTag, cutsceneTag);
+            if (prm->CheckForAllFinishedWithUnsyncedCutscene(frame, cutsceneSourceTag, cutsceneTag))
+                return BattleScriptResult.Succeeded;
+            return BattleScriptResult.Running;
         }
         
         public override void OnExit(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)

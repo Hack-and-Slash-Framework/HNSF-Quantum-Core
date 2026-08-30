@@ -24,7 +24,7 @@ namespace HnSF.core.GroupControl.Actions
         public int setForFrames;
         public bool resetOnExit = true;
         
-        public override void OnEnter(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
+        public override BattleScriptResult OnEnter(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
         {
             if (setForFrames > 0)
             {
@@ -32,9 +32,11 @@ namespace HnSF.core.GroupControl.Actions
                 gt->countingType = TimerCountingType.CountDown;
                 gt->value = setForFrames;
             }
+
+            return base.OnEnter(frame, infoEntityRef, ref context);
         }
         
-        public override bool Tick(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
+        public override BattleScriptResult Tick(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
         {
             if (applyToAll)
             {
@@ -56,9 +58,9 @@ namespace HnSF.core.GroupControl.Actions
             if (setForFrames > 0
                 && frame.Unsafe.TryGetPointer<GenericTimer>(infoEntityRef, out var gt)
                 && gt->value > 0)
-                return false;
+                return BattleScriptResult.Running;
 
-            return true;
+            return BattleScriptResult.Succeeded;
         }
         
         public override void OnExit(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)

@@ -37,19 +37,24 @@ namespace HnSF.core.GroupControl.Actions
             return true;
         }
         
-        public virtual void OnEnter(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
+        public virtual BattleScriptResult OnEnter(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
         {
-            
+            return BattleScriptResult.Running;
         }
         
-        public virtual bool Tick(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
+        public virtual BattleScriptResult Tick(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
         {
-            return false;
+            return BattleScriptResult.Succeeded;
         }
         
         public virtual void OnExit(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
         {
             
+        }
+
+        public virtual void OnAbort(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
+        {
+            OnExit(frame, infoEntityRef, ref context);
         }
     }
 }

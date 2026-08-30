@@ -26,7 +26,7 @@ namespace HnSF.core.AI.HTN.Conditions
             
             if (!frame.Unsafe.TryGetPointer<BattleActorAI>(context.agentEntityRef, out var battleActorAI)) return false;
 
-            if (frame.Unsafe.TryGetPointer<BattleActorPhysics>(battleActorAI->target, out var physics))
+            if (frame.Unsafe.TryGetPointer<BattleActorPhysics>(battleActorAI->aiActorRef, out var physics))
             {
                 return physics->currentGroundedState == state;
             }

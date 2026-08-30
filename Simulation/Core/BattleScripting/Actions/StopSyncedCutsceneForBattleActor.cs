@@ -33,7 +33,7 @@ namespace HnSF.core.GroupControl.Actions
 
         public TargetAndState[] statesToSet = Array.Empty<TargetAndState>();
         
-        public override void OnEnter(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
+        public override BattleScriptResult OnEnter(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
         {
             foreach (var state in statesToSet)
             {
@@ -45,6 +45,7 @@ namespace HnSF.core.GroupControl.Actions
                 if (targetEntity == EntityRef.None) continue;
                 StopSyncedCutsceneFor(frame, targetEntity, state.cutsceneTag);
             }
+            return BattleScriptResult.Succeeded;
         }
 
         private void StopSyncedCutsceneFor(Frame frame, EntityRef battleActorRef, AssetRef<Tag> cutsceneTag)
@@ -63,15 +64,6 @@ namespace HnSF.core.GroupControl.Actions
             }
             if (entityToRemove == default) return;
             frame.Destroy(entityToRemove);
-        }
-
-        public override bool Tick(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
-        {
-            return true;
-        }
-
-        public override void OnExit(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
-        {
         }
     }
 }

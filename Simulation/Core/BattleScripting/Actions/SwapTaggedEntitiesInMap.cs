@@ -19,30 +19,22 @@ namespace HnSF.core.GroupControl.Actions
         public AssetRef<Tag> entityATag;
         public AssetRef<Tag> entityBTag;
         
-        public override void OnEnter(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
+        public override BattleScriptResult OnEnter(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
         {
             if (!frame.Unsafe.TryGetPointer<TaggedEntityMapping>(infoEntityRef, out var taggedEntityMap))
             {
-                return;
+                return BattleScriptResult.Failed;
             }
             var mappingDict = frame.ResolveDictionary(taggedEntityMap->tagToEntityMap);
             
             if(!mappingDict.TryGetValue(entityATag, out var entityARef) || !mappingDict.TryGetValue(entityBTag, out var entityBRef))
             {
-                return;
+                return BattleScriptResult.Failed;
             }
             
             mappingDict[entityATag] = entityBRef;
             mappingDict[entityBTag] = entityARef;
-        }
-        
-        public override bool Tick(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
-        {
-            return true;
-        }
-        
-        public override void OnExit(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
-        {
+            return BattleScriptResult.Succeeded;
         }
     }
 }

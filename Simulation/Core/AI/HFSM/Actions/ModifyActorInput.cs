@@ -20,7 +20,7 @@ namespace Quantum.HFSM.Actions
         {
             if (modifyEvery > 0 && frame.Number % modifyEvery != 0) return;
             if (!frame.Unsafe.TryGetPointer<BattleActorAI>(entity, out var battleActorAI)
-                || !frame.Unsafe.TryGetPointer<FakeInput>(battleActorAI->target, out var fakeInput)) return;
+                || !frame.Unsafe.TryGetPointer<FakeInput>(battleActorAI->aiActorRef, out var fakeInput)) return;
             
             switch (modifyType)
             {

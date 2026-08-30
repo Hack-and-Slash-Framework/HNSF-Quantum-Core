@@ -1,5 +1,5 @@
 component BattleActorAI
 {
-    entity_ref target;
+    entity_ref aiActorRef;
     byte updateInterval;
 }

@@ -19,17 +19,18 @@ namespace HnSF.core.GroupControl.Actions
     {
         public int framesToWait = 60;
         
-        public override void OnEnter(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
+        public override BattleScriptResult OnEnter(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
         {
             frame.AddOrGet(infoEntityRef, out GenericTimer* gt);
             gt->countingType = TimerCountingType.CountDown;
             gt->value = framesToWait;
+            return base.OnEnter(frame, infoEntityRef, ref context);
         }
 
-        public override bool Tick(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
+        public override BattleScriptResult Tick(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
         {
             var gt = frame.Unsafe.GetPointer<GenericTimer>(infoEntityRef);
-            return gt->value <= 0;
+            return gt->value <= 0 ? BattleScriptResult.Succeeded : BattleScriptResult.Running;
         }
 
         public override void OnExit(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)

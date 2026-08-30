@@ -25,7 +25,7 @@ namespace HnSF.core.GroupControl.Actions
         public GroupControlFunctionEntityRef entityRefFunction;
         public bool clearTagIfEntityNotFound;
         
-        public override void OnEnter(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
+        public override BattleScriptResult OnEnter(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
         {
             frame.AddOrGet<TaggedEntityMapping>(infoEntityRef, out var tem);
             var mappingDict = frame.ResolveDictionary(tem->tagToEntityMap);
@@ -33,19 +33,11 @@ namespace HnSF.core.GroupControl.Actions
             if (clearTagIfEntityNotFound && (entityRef == EntityRef.None || !frame.Exists(entityRef)))
             {
                 mappingDict[tag] = EntityRef.None;
-                return;
+                return BattleScriptResult.Succeeded;
             }
 
             mappingDict[tag] = entityRef;
-        }
-        
-        public override bool Tick(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
-        {
-            return true;
-        }
-        
-        public override void OnExit(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
-        {
+            return BattleScriptResult.Succeeded;
         }
     }
 }

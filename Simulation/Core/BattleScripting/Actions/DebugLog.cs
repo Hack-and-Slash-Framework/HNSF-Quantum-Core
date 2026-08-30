@@ -21,15 +21,16 @@ namespace HnSF.core.GroupControl.Actions
         public string tickString;
         public string exitString;
         
-        public override void OnEnter(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
+        public override BattleScriptResult OnEnter(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
         {
             if(!string.IsNullOrEmpty(enterString)) Log.Debug(enterString);
+            return BattleScriptResult.Running;
         }
 
-        public override bool Tick(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
+        public override BattleScriptResult Tick(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
         {
             if(!string.IsNullOrEmpty(tickString)) Log.Debug(tickString);
-            return true;
+            return BattleScriptResult.Succeeded;
         }
 
         public override void OnExit(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)

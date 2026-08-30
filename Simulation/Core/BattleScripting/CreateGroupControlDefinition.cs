@@ -40,9 +40,8 @@ namespace Quantum
             if(!ConditionsValid(frame, sourceEntity)) return false;
             
             var genericControlManager = frame.GetOrAddSingleton<GenericGroupControlManager>();
-            var infoEntityMap = frame.ResolveDictionary(genericControlManager.controlInfoEntityMap);
-
-            if (infoEntityMap.ContainsKey(identifier)) return false;
+            if (genericControlManager.ContainsKey(frame, identifier))
+                return false;
             
             var gcEntityRef = frame.Create();
             frame.Add(gcEntityRef, new GenericGroupControl()
@@ -61,8 +60,7 @@ namespace Quantum
             ggc->data.SetData(controlScript);
             ggc->data.Initialize(frame, gcEntityRef, ref groupControlContext);
 
-            infoEntityMap.Add(identifier, gcEntityRef);
-            
+            genericControlManager.Add(frame, identifier, gcEntityRef);
             return true;
         }
     }

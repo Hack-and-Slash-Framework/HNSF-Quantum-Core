@@ -18,22 +18,14 @@ namespace HnSF.core.GroupControl.Actions
         public AssetRef<Tag> cutsceneSourceTag;
         public AssetRef<Tag> cutsceneTag;
         
-        public override void OnEnter(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
-        {
-        }
-        
-        public override bool Tick(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
+        public override BattleScriptResult Tick(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
         {
             frame.Events.StopCutsceneUnsynced(
                 cutsceneSource: default,
                 cutsceneSourceTag: cutsceneSourceTag,
                 cutsceneTag: cutsceneTag,
                 onlyPlayOnPlayerLocalMachine: false);
-            return true;
-        }
-        
-        public override void OnExit(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
-        {
+            return BattleScriptResult.Succeeded;
         }
     }
 }

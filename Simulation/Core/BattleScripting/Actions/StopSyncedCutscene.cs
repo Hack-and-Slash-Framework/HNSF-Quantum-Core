@@ -29,26 +29,19 @@ namespace HnSF.core.GroupControl.Actions
 
         public TargetAndState[] statesToSet = Array.Empty<TargetAndState>();
         
-        public override void OnEnter(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
+        public override BattleScriptResult OnEnter(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
         {
             foreach (var state in statesToSet)
             {
                 StopSyncedCutsceneFor(frame, infoEntityRef, state.cutsceneTag);
             }
+
+            return BattleScriptResult.Succeeded;
         }
 
         private void StopSyncedCutsceneFor(Frame frame, EntityRef battleActorRef, AssetRef<Tag> cutsceneTag)
         {
             frame.Remove<SyncedCutsceneSource>(battleActorRef);
-        }
-
-        public override bool Tick(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
-        {
-            return true;
-        }
-
-        public override void OnExit(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
-        {
         }
     }
 }

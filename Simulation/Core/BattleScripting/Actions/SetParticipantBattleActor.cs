@@ -21,7 +21,7 @@ namespace HnSF.core.GroupControl.Actions
         public int participantId = 1;
         public List<AssetRef<BattleActorDefinition>> battleActorDefinitions;
         
-        public override void OnEnter(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
+        public override BattleScriptResult OnEnter(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
         {
             var gamemodeParticipantsGlobal = frame.Unsafe.GetOrAddSingletonPointer<GamemodeParticipantsGlobal>();
             var participantDataEntities = frame.ResolveDictionary(gamemodeParticipantsGlobal->participantDataEntities);
@@ -43,15 +43,8 @@ namespace HnSF.core.GroupControl.Actions
                     actorDataList.Add(actorData);
                 }
             }
-        }
-        
-        public override bool Tick(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
-        {
-            return true;
-        }
-        
-        public override void OnExit(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
-        {
+
+            return BattleScriptResult.Succeeded;
         }
     }
 }

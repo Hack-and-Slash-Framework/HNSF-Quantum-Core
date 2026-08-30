@@ -22,20 +22,16 @@ namespace HnSF.core.GroupControl.Actions
         public GroupControlFunctionEntityRef[] entitiesToWaitFor = Array.Empty<GroupControlFunctionEntityRef>();
         public AssetRef<Tag>[] stateTagsToWaitFor = Array.Empty<AssetRef<Tag>>();
         
-        public override void OnEnter(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
-        {
-        }
-        
-        public override bool Tick(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
+        public override BattleScriptResult Tick(Frame frame, EntityRef infoEntityRef, ref BattleScriptContext context)
         {
             foreach (var entityFunction in entitiesToWaitFor)
             {
                 var targetEntity = entityFunction.Execute(frame, infoEntityRef, ref context);
                 if(targetEntity == EntityRef.None || !frame.Exists(targetEntity))
                     continue;
-                if (!CheckStateTag(frame, targetEntity)) return false;
+                if (!CheckStateTag(frame, targetEntity)) return BattleScriptResult.Running;
             }
-            return true;
+            return BattleScriptResult.Succeeded;
         }
         
         private bool CheckStateTag(Frame frame, EntityRef battleActorRef)

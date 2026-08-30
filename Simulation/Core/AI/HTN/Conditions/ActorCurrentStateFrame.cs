@@ -30,7 +30,7 @@ namespace HnSF.core.AI.HTN.Conditions
             
             if (!frame.Unsafe.TryGetPointer<BattleActorAI>(context.agentEntityRef, out var battleActorAI)) return false;
 
-            if (!frame.Unsafe.TryGetPointer<GenericStateMachine>(battleActorAI->target, out var gsm))
+            if (!frame.Unsafe.TryGetPointer<GenericStateMachine>(battleActorAI->aiActorRef, out var gsm))
                 return false;
 
             var min = minParam.Resolve(ref context);
