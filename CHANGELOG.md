@@ -1,3 +1,10 @@
+# [2.30.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.29.1...v2.30.0) (2026-08-30)
+
+
+### Features
+
+* Improved battle script handling ([d2cc284](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/d2cc2842fd7893269ffb34dc51426b518148703b))
+
 ## [2.29.1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.29.0...v2.29.1) (2026-08-28)
 
 
