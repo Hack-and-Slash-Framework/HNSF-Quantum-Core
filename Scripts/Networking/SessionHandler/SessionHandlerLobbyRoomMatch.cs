@@ -79,13 +79,13 @@ namespace HnSF.sessionhandling.handlers
                 Destroy(settingsAssetInstance);
             }
             
-            if(selectedGamemodeDefinition.IsValid()) contentManager.ReleaseAssetFromMod(selectedGamemodeDefinition);
-            if(selectedMapDefinition.IsValid()) contentManager.ReleaseAssetFromMod(selectedMapDefinition);
-            if(selectedSongDefinition.IsValid()) contentManager.ReleaseAssetFromMod(selectedSongDefinition);
+            selectedGamemodeDefinition?.Dispose();
+            selectedMapDefinition?.Dispose();
+            selectedSongDefinition?.Dispose();
 
-            selectedGamemodeDefinition = default;
-            selectedMapDefinition = default;
-            selectedSongDefinition = default;
+            selectedGamemodeDefinition = null;
+            selectedMapDefinition = null;
+            selectedSongDefinition = null;
             
             if (matchHandlerInstance != null)
             {
@@ -128,11 +128,8 @@ namespace HnSF.sessionhandling.handlers
             Debug.Log("Preparing for match.");
             var contentManager = HnSFManagersContainer.instance.contentManager;
             
-            var gamemodeLoadResult = await contentManager.LoadAssetFromModAsync(matchContentBundle.gamemodeReference);
-            this.selectedGamemodeDefinition = gamemodeLoadResult.handle;
-            
-            var mapLoadResult = await contentManager.LoadAssetFromModAsync(matchContentBundle.mapReference);
-            this.selectedMapDefinition = mapLoadResult.handle;
+            this.selectedGamemodeDefinition = await contentManager.LoadAssetFromModAsync(matchContentBundle.gamemodeReference);
+            this.selectedMapDefinition = await contentManager.LoadAssetFromModAsync(matchContentBundle.mapReference);
 
             this.expectedClientCount = matchContentBundle.clientCount;
             this.expectedPlayerCount = matchContentBundle.playerCount;

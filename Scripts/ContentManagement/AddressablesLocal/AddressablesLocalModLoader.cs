@@ -45,12 +45,15 @@ namespace HnSF
             if (handle.Status == AsyncOperationStatus.Failed)
             {
                 Debug.LogError($"Loading local mod failed! {handle.OperationException}");
+                if(handle.IsValid())
+                    Addressables.Release(handle);
                 return null;
             }
 
             var lmd = new AddressablesLocalLoadedModDefinition()
             {
                 information = modDefinition,
+                modAssetHandle = handle,
                 modAsset = handle.Result,
                 resourceLocator = localResourceLocator
             };
@@ -61,9 +64,9 @@ namespace HnSF
             return lmd;
         }
 
-        public override bool TryUnloadMod(ModManager modManager, LoadedModDefinition modLoadedDefinition)
+        public override UniTask<bool> TryUnloadMod(ModManager modManager, LoadedModDefinition modLoadedDefinition)
         {
-            return false;
+            return UniTask.FromResult(false);
         }
     }
 }

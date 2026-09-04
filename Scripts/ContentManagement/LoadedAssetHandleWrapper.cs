@@ -6,88 +6,115 @@ using UMod;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using Object = UnityEngine.Object;
 
-[System.Serializable]
-public struct LoadedAssetHandleWrapper : IEquatable<LoadedAssetHandleWrapper>
+public sealed class LoadedAssetHandleWrapper : IDisposable
 {
-    public AssetHandleType handleType;
-    public ModAssetSoftReference assetReference;
-    // Addressables
-    public AsyncOperationHandle addressablesHandle;
+    private readonly ILoadedAssetHandleOwner _owner;
+    private bool _isReleased;
+
+    public AssetHandleType HandleType { get; }
+    public ModAssetSoftReference AssetReference { get; }
+
+    internal AsyncOperationHandle AddressablesHandle { get; }
+
 #if HNSF_UMOD
-    // UMod
-    public ModAsyncOperation umodHandle;
+    internal ModAsyncOperation UModHandle { get; }
 #endif
+
+    public bool IsReleased => _isReleased;
+
+    public bool IsValid
+    {
+        get
+        {
+            if (_isReleased)
+                return false;
+
+            return HandleType switch
+            {
+                AssetHandleType.Addressables =>
+                    AddressablesHandle.IsValid(),
+#if HNSF_UMOD
+                AssetHandleType.UMod =>
+                    UModHandle != null,
+#endif
+                _ => false
+            };
+        }
+    }
+
+    public LoadedAssetHandleWrapper(
+        ILoadedAssetHandleOwner owner,
+        ModAssetSoftReference assetReference,
+        AsyncOperationHandle addressablesHandle)
+    {
+        _owner = owner ?? throw new ArgumentNullException(nameof(owner));
+        HandleType = AssetHandleType.Addressables;
+        AssetReference = assetReference;
+        AddressablesHandle = addressablesHandle;
+
+#if HNSF_UMOD
+        UModHandle = null;
+#endif
+    }
+
+#if HNSF_UMOD
+    public LoadedAssetHandleWrapper(
+        ILoadedAssetHandleOwner owner,
+        ModAssetSoftReference assetReference,
+        ModAsyncOperation umodHandle)
+    {
+        _owner = owner ?? throw new ArgumentNullException(nameof(owner));
+        HandleType = AssetHandleType.UMod;
+        AssetReference = assetReference;
+        UModHandle = umodHandle;
+        AddressablesHandle = default;
+    }
+#endif
+
+    public Object GetAsset()
+    {
+        if (!IsValid)
+            return null;
+
+        return HandleType switch
+        {
+            AssetHandleType.Addressables =>
+                AddressablesHandle.Result as Object,
+#if HNSF_UMOD
+            AssetHandleType.UMod =>
+                UModHandle.Result as Object,
+#endif
+            _ => null
+        };
+    }
 
     public T GetAsset<T>() where T : Object
     {
-        switch (handleType)
-        {
-            case AssetHandleType.Addressables:
-                return addressablesHandle.Result as T;
-#if HNSF_UMOD
-            case AssetHandleType.UMod:
-                return umodHandle.Result as T;
-#endif
-        }
-        return null;
+        return GetAsset() as T;
+    }
+
+    public bool TryGetAsset<T>(out T asset) where T : Object
+    {
+        asset = GetAsset<T>();
+        return asset != null;
     }
 
     public void Release()
     {
-        if (HnSFManagersContainer.instance == null || handleType == AssetHandleType.None) return;
-        HnSFManagersContainer.instance.contentManager.ReleaseAssetFromMod(this);
-        handleType = AssetHandleType.None;
-        assetReference = default;
-        addressablesHandle = default;
-#if HNSF_UMOD
-        umodHandle = default;
-#endif
+        Dispose();
     }
 
-    public void Teardown(bool releaseAsset = true)
+    public void Dispose()
     {
-        if (HnSFManagersContainer.instance == null || handleType == AssetHandleType.None) return;
-        if(releaseAsset) HnSFManagersContainer.instance.contentManager.ReleaseAssetFromMod(this);
-        handleType = AssetHandleType.None;
-        assetReference = default;
-        addressablesHandle = default;
-#if HNSF_UMOD
-        umodHandle = default;
-#endif
-    }
+        if (_isReleased)
+            return;
 
-    public bool IsValid()
-    {
-        return handleType != AssetHandleType.None;
-    }
-
-    public bool Equals(LoadedAssetHandleWrapper other)
-    {
-        return handleType == other.handleType && assetReference == other.assetReference && addressablesHandle.Equals(other.addressablesHandle) 
-#if HNSF_UMOD
-               && Equals(umodHandle, other.umodHandle);
-#else
-               ;
-#endif
-    }
-
-    public override bool Equals(object obj)
-    {
-        return obj is LoadedAssetHandleWrapper other && Equals(other);
-    }
-
-    public override int GetHashCode()
-    {
-        return HashCode.Combine((int)handleType, assetReference, addressablesHandle
-#if HNSF_UMOD
-            , umodHandle);
-#else
-            );
-#endif
+        _isReleased = true;
+        _owner.Release(this);
     }
 
     public override string ToString()
     {
-        return $"{assetReference.ToString()} ({handleType.ToString()})";
+        return $"{AssetReference} ({HandleType}, {(_isReleased ? "released" : "active")})";
     }
 }

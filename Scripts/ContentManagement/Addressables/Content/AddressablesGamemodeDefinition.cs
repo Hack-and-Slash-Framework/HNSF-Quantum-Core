@@ -116,15 +116,17 @@ namespace HnSF
 
         public override void UnloadAssets()
         {
-            if (gamemodeMatchHandlerHandle.IsValid() &&
-                gamemodeMatchHandlerHandle.Status == AsyncOperationStatus.Succeeded)
+            if (gamemodeMatchHandlerHandle.IsValid())
                 Addressables.Release(gamemodeMatchHandlerHandle);
+            gamemodeMatchHandlerHandle = default;
 
-            if (contentsHandle.IsValid() && contentsHandle.Status == AsyncOperationStatus.Succeeded)
+            if (contentsHandle.IsValid())
                 Addressables.Release(contentsHandle);
+            contentsHandle = default;
 
-            if (gamemodeSettingsHandle.IsValid() && gamemodeSettingsHandle.Status == AsyncOperationStatus.Succeeded)
+            if (gamemodeSettingsHandle.IsValid())
                 Addressables.Release(gamemodeSettingsHandle);
+            gamemodeSettingsHandle = default;
         }
     }
 }

@@ -48,12 +48,12 @@ namespace HnSF
             return new UniTask<LoadedModDefinition>(null);
         }
 
-        public override bool TryUnloadMod(ModManager modManager, LoadedModDefinition modLoadedDefinition)
+        public override UniTask<bool> TryUnloadMod(ModManager modManager, LoadedModDefinition modLoadedDefinition)
         {
             var lmd = modLoadedDefinition as UModLoadedModDefinition;
             (lmd.modAsset as UModModInfoAsset).OnUnload();
             lmd.modHost.UnloadMod(true);
-            return true;
+            return UniTask.FromResult(true);
         }
     }
 }

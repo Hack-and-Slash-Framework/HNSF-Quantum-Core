@@ -93,12 +93,12 @@ namespace HnSF.sessionhandling.handlers
                 matchSessionHandler = null;
             }
             
-            if(selectedGamemodeDefinition.IsValid()) contentManager.ReleaseAssetFromMod(selectedGamemodeDefinition);
-            if(selectedMapDefinition.IsValid()) contentManager.ReleaseAssetFromMod(selectedMapDefinition);
+            selectedGamemodeDefinition?.Release();
+            selectedMapDefinition?.Release();
             //if(selectedSongDefinition.IsValid()) contentManager.ReleaseAssetFromMod(selectedSongDefinition);
 
-            selectedGamemodeDefinition = default;
-            selectedMapDefinition = default;
+            selectedGamemodeDefinition = null;
+            selectedMapDefinition = null;
             //selectedSongDefinition = default;
             
             if (matchHandlerInstance != null)
@@ -259,7 +259,7 @@ namespace HnSF.sessionhandling.handlers
             string sqlLobbyFilter =
                 $"{MOD_GUID_PROP_KEY} = '{localModGuid}' " +
                 $"AND {PLAYER_COUNT_PROP_KEY} <= {maxPlayerCount - localPlayerContentBundles.Count} " +
-                $"AND {GAME_MODE_PROP_KEY} = '{selectedGamemodeDefinition.assetReference.ToString()}'";
+                $"AND {GAME_MODE_PROP_KEY} = '{selectedGamemodeDefinition.AssetReference.ToString()}'";
             var opJoinRandomRoomParams = new JoinRandomRoomArgs();
             opJoinRandomRoomParams.MatchingType = MatchmakingMode.FillRoom;
             opJoinRandomRoomParams.Lobby = sqlLobby;
@@ -278,13 +278,13 @@ namespace HnSF.sessionhandling.handlers
             }
 
             var contentMananger = HnSFManagersContainer.instance.contentManager;
-            var loadResult = await contentMananger.LoadAssetFromModAsync(mapPicker.currentAssetList[0]);
-            if (loadResult.result == false)
+            var mapLoadedAssetHandle = await contentMananger.LoadAssetFromModAsync(mapPicker.currentAssetList[0]);
+            if (mapLoadedAssetHandle == null)
             {
                 Debug.Log("Could not load map.");
                 return false;
             }
-            selectedMapDefinition = loadResult.handle;
+            selectedMapDefinition = mapLoadedAssetHandle;
 
             await selectedMapDefinition.GetAsset<IMapDefinition>().LoadAssets();
             
@@ -300,9 +300,9 @@ namespace HnSF.sessionhandling.handlers
             roomOptions.CustomRoomProperties = new PhotonHashtable()
             {
                 { MOD_GUID_PROP_KEY, localModGuid },
-                { GAME_MODE_PROP_KEY, selectedGamemodeDefinition.assetReference.ToString() },
+                { GAME_MODE_PROP_KEY, selectedGamemodeDefinition.AssetReference.ToString() },
                 { PLAYER_COUNT_PROP_KEY, currentRealPlayerCount },
-                { MAP_PROP_KEY, selectedMapDefinition.assetReference.ToString() },
+                { MAP_PROP_KEY, selectedMapDefinition.AssetReference.ToString() },
                 { "HIDE-ROOM", false },
                 { "STARTED", false }
             };

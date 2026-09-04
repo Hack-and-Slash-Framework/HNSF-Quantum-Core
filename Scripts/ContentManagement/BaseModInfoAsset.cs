@@ -95,7 +95,7 @@ public class BaseModInfoAsset : ScriptableObject
     /// </summary>
     /// <param name="id">The ID of the asset.</param>
     /// <returns>True if the asset was loaded; otherwise false.</returns>
-    public virtual AssetLoadResult LoadAssetByID(string id)
+    public virtual LoadedAssetHandleWrapper LoadAssetByID(string id)
     {
         return default;
     }
@@ -105,7 +105,7 @@ public class BaseModInfoAsset : ScriptableObject
     /// </summary>
     /// <param name="id">The ID of the asset.</param>
     /// <returns>True if the asset was loaded; otherwise false.</returns>
-    public virtual AssetLoadResult LoadAssetByID<T>(string id) where T : UnityEngine.Object
+    public virtual LoadedAssetHandleWrapper LoadAssetByID<T>(string id) where T : UnityEngine.Object
     {
         return default;
     }
@@ -115,9 +115,9 @@ public class BaseModInfoAsset : ScriptableObject
     /// </summary>
     /// <param name="id">The ID of the asset.</param>
     /// <returns>True if the asset was loaded; otherwise false.</returns>
-    public virtual UniTask<AssetLoadResult> LoadAssetByIDAsync(string id)
+    public virtual UniTask<LoadedAssetHandleWrapper> LoadAssetByIDAsync(string id)
     {
-        return new UniTask<AssetLoadResult>();
+        return new UniTask<LoadedAssetHandleWrapper>();
     }
     
     /// <summary>
@@ -125,9 +125,9 @@ public class BaseModInfoAsset : ScriptableObject
     /// </summary>
     /// <param name="id">The ID of the asset.</param>
     /// <returns>True if the asset was loaded; otherwise false.</returns>
-    public virtual UniTask<AssetLoadResult> LoadAssetByIDAsync<T>(string id) where T : UnityEngine.Object
+    public virtual UniTask<LoadedAssetHandleWrapper> LoadAssetByIDAsync<T>(string id) where T : UnityEngine.Object
     {
-        return new UniTask<AssetLoadResult>();
+        return new UniTask<LoadedAssetHandleWrapper>();
     }
     
     /// <summary>

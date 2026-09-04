@@ -17,5 +17,5 @@ component HTNAgent{
     FP cooldown;
     
     uint pendingReplanReasons;
-    byte pendingReplanUrgency;
+    bool immediateReplanRequested;
 }

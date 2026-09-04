@@ -45,15 +45,16 @@ namespace HnSF.ui.menus
         {
             initialized = false;
             var result = await HnSFManagersContainer.instance.contentManager.LoadAssetFromModAsync(gamemodeReference);
-            if (result.result == false)
+            if (result is null)
             {
                 OnConfigurationCanceled?.Invoke();
                 return;
             }
 
-            if(gamemodeAssetHandle.IsValid()) HnSFManagersContainer.instance.contentManager.ReleaseAssetFromMod(gamemodeAssetHandle);
+            if(gamemodeAssetHandle is {IsValid: true})
+                gamemodeAssetHandle.Release();
             
-            gamemodeAssetHandle = result.handle;
+            gamemodeAssetHandle = result;
             
             var ass = gamemodeAssetHandle.GetAsset<BaseGamemodeDefinition>();
             

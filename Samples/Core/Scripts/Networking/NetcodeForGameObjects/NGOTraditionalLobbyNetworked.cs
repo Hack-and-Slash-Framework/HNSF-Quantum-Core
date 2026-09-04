@@ -25,7 +25,7 @@ namespace HnSF.sessionhandling.handlers.NGO
 
         public NetworkVariableRoomPlayerList players = new();
         
-        public HashSet<ulong> registeredPlayers = new HashSet<ulong>();
+        [NonSerialized] public HashSet<ulong> registeredPlayers = new HashSet<ulong>();
 
         public int roomIdCounter = 0;
         public int playerIdCounter = 0;

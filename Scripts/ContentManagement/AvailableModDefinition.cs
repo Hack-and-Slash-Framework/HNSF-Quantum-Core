@@ -1,4 +1,5 @@
 using System;
+using HnSF;
 
 [System.Serializable]
 public class AvailableModDefinition
@@ -13,6 +14,7 @@ public class AvailableModDefinition
     public int loader = (int)KnownModLoaderTypes.UMOD;
     public string path;
     public bool requiresReload;
+    [NonSerialized] public ModLifecycleState currentLifecycle;
     [NonSerialized] public LoadedModDefinition loadedDefinition;
 
     public Guid GetGuid()

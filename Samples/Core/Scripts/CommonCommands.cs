@@ -55,15 +55,14 @@ namespace HnSF.commands
 
                 for (int w = 0; w < selectedCharacters[i].Count; w++)
                 {
-                    var charaAssetHandle =
-                        await gameManager.contentManager.LoadAssetFromModAsync(selectedCharacters[i][w]);
-                    if (charaAssetHandle.result == false)
+                    var charaAssetHandle = await gameManager.contentManager.LoadAssetFromModAsync(selectedCharacters[i][w]);
+                    if (charaAssetHandle == null)
                     {
                         characterLoadFailed = true;
                         break;
                     }
 
-                    charaList.Add(charaAssetHandle.handle);
+                    charaList.Add(charaAssetHandle);
                 }
 
                 if (characterLoadFailed) break;

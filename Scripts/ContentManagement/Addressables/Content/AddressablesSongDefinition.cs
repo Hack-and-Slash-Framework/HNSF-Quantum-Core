@@ -45,12 +45,9 @@ namespace HnSF
 
         public override void UnloadAssets()
         {
-            if(songAudioHandle.IsValid() && songAudioHandle.Status == AsyncOperationStatus.Succeeded)
+            if(songAudioHandle.IsValid())
                 Addressables.Release(songAudioHandle);
-        }
-
-        public override void Unload()
-        {
+            songAudioHandle = default;
         }
     }
 }

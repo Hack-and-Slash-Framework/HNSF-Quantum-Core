@@ -55,12 +55,9 @@ namespace HnSF
 
         public override void UnloadAssets()
         {
-            if(assetHandle.IsValid() && assetHandle.Status == AsyncOperationStatus.Succeeded)
+            if(assetHandle.IsValid())
                 Addressables.Release(assetHandle);
-        }
-
-        public override void Unload()
-        {
+            assetHandle = default;
         }
     }
 }

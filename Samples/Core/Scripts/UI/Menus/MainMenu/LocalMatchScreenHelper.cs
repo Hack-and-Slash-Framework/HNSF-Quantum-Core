@@ -53,8 +53,8 @@ namespace HnSF.ui.menus.examples.mainmenu
             var gameManager = HnSFManagersContainer.instance;
             if (gameManager == null) return;
             
-            if(gamemodeAssetHandle.IsValid()) gameManager.contentManager.ReleaseAssetFromMod(gamemodeAssetHandle);
-            if(mapAssetHandle.IsValid()) gameManager.contentManager.ReleaseAssetFromMod(mapAssetHandle);
+            if(gamemodeAssetHandle is {IsValid: true}) gameManager.contentManager.ReleaseAssetFromMod(gamemodeAssetHandle);
+            if(mapAssetHandle is {IsValid: true}) gameManager.contentManager.ReleaseAssetFromMod(mapAssetHandle);
 
             for (int i = 0; i < selectedCharacters.Count; i++)
             {
@@ -91,9 +91,9 @@ namespace HnSF.ui.menus.examples.mainmenu
             pageContentPicking.onContentPicked.RemoveListener(OnGamemodePicked);
             pageContentPicking.onContentPicked.RemoveListener(OnGamemodePickCanceled);
             
-            if (gamemodeAssetHandle.IsValid())
+            if (gamemodeAssetHandle is {IsValid: true})
             {
-                HnSFManagersContainer.instance.contentManager.ReleaseAssetFromMod(gamemodeAssetHandle);
+                gamemodeAssetHandle.Release();
             }
             gamemodeAssetHandle = pageContentPicking.ConfirmWantedContentAndRemoveFromList();
             pageContentPicking.Uninitialize();
@@ -127,7 +127,7 @@ namespace HnSF.ui.menus.examples.mainmenu
             if(sectionGamemodeConfig == null) sectionGamemodeConfig = GameObject.Instantiate(gamemodeConfigPagePrefab, transform, false);
             sectionGamemodeConfig.OnConfigurationCanceled.AddListener(WhenConfigurationCanceled);
             sectionGamemodeConfig.OnConfigurationConfirmed.AddListener(WhenConfigurationConfirmed);
-            _ = sectionGamemodeConfig.Initialize(gamemodeAssetHandle.assetReference);
+            _ = sectionGamemodeConfig.Initialize(gamemodeAssetHandle.AssetReference);
         }
 
         private void WhenConfigurationCanceled()
@@ -191,12 +191,12 @@ namespace HnSF.ui.menus.examples.mainmenu
                 for (int w = 0; w < charactersPicked[i].Count; w++)
                 {
                     var loadResults = await contentManager.LoadAssetFromModAsync(charactersPicked[i][w]);
-                    if (loadResults.result == false)
+                    if (loadResults == null)
                     {
                         successfulLoad = false;
                         break;
                     }
-                    selectedCharacters[i].Add(loadResults.handle);
+                    selectedCharacters[i].Add(loadResults);
                 }
 
                 if (successfulLoad == false) break;
@@ -238,7 +238,7 @@ namespace HnSF.ui.menus.examples.mainmenu
         {
             TeardownMapPick();
             
-            if (mapAssetHandle.IsValid())
+            if (mapAssetHandle is {IsValid: true})
             {
                 HnSFManagersContainer.instance.contentManager.ReleaseAssetFromMod(mapAssetHandle);
             }
@@ -258,8 +258,8 @@ namespace HnSF.ui.menus.examples.mainmenu
             BeforeLocalMatchHandlerStart(localMatchSessionHandler, contentBundles);
             _ = (localMatchSessionHandler as SessionHandlerLocalMatch).PrepareForMatchAndStart(new QuantumMatchContentBundle()
             {
-                gamemodeReference = gamemodeAssetHandle.assetReference,
-                mapReference = mapAssetHandle.assetReference,
+                gamemodeReference = gamemodeAssetHandle.AssetReference,
+                mapReference = mapAssetHandle.AssetReference,
                 localPlayerBundles = contentBundles,
                 playerCount = selectedCharacters.Count
             });

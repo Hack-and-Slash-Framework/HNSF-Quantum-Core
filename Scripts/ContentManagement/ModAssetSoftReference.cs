@@ -40,6 +40,11 @@ public struct ModAssetSoftReference : IEquatable<ModAssetSoftReference>
         return (string.IsNullOrEmpty(mod) || string.IsNullOrEmpty(assetID)) ? string.Empty : $"{mod}:{assetID}";
     }
 
+    public bool IsValid()
+    {
+        return !string.IsNullOrEmpty(mod) && !string.IsNullOrEmpty(assetID);
+    }
+
     public bool Equals(ModAssetSoftReference other)
     {
         return mod == other.mod && assetID == other.assetID && isFolder == other.isFolder;

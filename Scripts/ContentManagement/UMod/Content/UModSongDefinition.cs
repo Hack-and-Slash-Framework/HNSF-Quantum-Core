@@ -24,14 +24,14 @@ namespace HnSF
         
         public override async UniTask<bool> LoadAssets()
         {
-            if (_songAudioHandle.IsValid()) return true;
+            if (_songAudioHandle.IsValid) return true;
             var contentManager = HnSFManagersContainer.instance.contentManager;
             
             try
             {
                 var crefLoadResult = await contentManager.LoadAssetFromModAsync(songAudioRef);
-                if (!crefLoadResult.result) throw new Exception($"Failed to load content reference. {songAudioRef.ToString()}");
-                _songAudioHandle = crefLoadResult.handle;
+                if (crefLoadResult == null) throw new Exception($"Failed to load content reference. {songAudioRef.ToString()}");
+                _songAudioHandle = crefLoadResult;
             }
             catch (Exception e)
             {
@@ -44,12 +44,12 @@ namespace HnSF
 
         public override SongAudio GetSong()
         {
-            return _songAudioHandle.umodHandle.Result as SongAudio;
+            return _songAudioHandle.GetAsset<SongAudio>();
         }
 
         public override void UnloadAssets()
         {
-            _songAudioHandle = default;
+            _songAudioHandle = null;
         }
 
         public override void Unload()

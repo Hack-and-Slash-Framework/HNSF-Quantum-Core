@@ -6,7 +6,6 @@ using Quantum;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
-using UnityEngine.Scripting.APIUpdating;
 using Object = UnityEngine.Object;
 
 namespace HnSF
@@ -45,13 +44,15 @@ namespace HnSF
         {
             await base.Load(id);
 
-            if (commandList.IsValid() && !commandListHandle.IsValid())
+            if (commandList.IsValid())
             {
                 commandListHandle = Addressables.LoadAssetAsync<BaseCommandListDefinition>(commandList);
                 await commandListHandle;
                 if (commandListHandle.Status != AsyncOperationStatus.Succeeded)
                 {
                     Debug.LogError($"Couldn't load command list definition for fighter {id}.");
+                    Addressables.Release(commandListHandle);
+                    commandListHandle = default;
                     return false;
                 }
             }
@@ -154,20 +155,26 @@ namespace HnSF
 
         public override void UnloadAssets()
         {
-            if (quantumDefinitionHandle.IsValid() && quantumDefinitionHandle.Status == AsyncOperationStatus.Succeeded)
+            if (quantumDefinitionHandle.IsValid())
                 Addressables.Release(quantumDefinitionHandle);
+            quantumDefinitionHandle = default;
 
-            if (fighterHandle.IsValid() && fighterHandle.Status == AsyncOperationStatus.Succeeded)
+            if (fighterHandle.IsValid())
                 Addressables.Release(fighterHandle);
+            fighterHandle = default;
 
-            if (contentsHandle.IsValid() && contentsHandle.Status == AsyncOperationStatus.Succeeded)
+            if (contentsHandle.IsValid())
                 Addressables.Release(contentsHandle);
+            contentsHandle = default;
         }
 
         public override void Unload()
         {
-            if (commandListHandle.IsValid() && commandListHandle.Status == AsyncOperationStatus.Succeeded)
+            base.Unload();
+            
+            if (commandListHandle.IsValid())
                 Addressables.Release(commandListHandle);
+            commandListHandle = default;
         }
     }
 }

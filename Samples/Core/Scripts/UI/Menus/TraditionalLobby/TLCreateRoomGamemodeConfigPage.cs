@@ -30,7 +30,7 @@ namespace HnSF.ui.menus.traditionallobby
         
         public async UniTask AttemptInitialize()
         {
-            if (!helper.gamemodeHandle.IsValid())
+            if (helper.gamemodeHandle is null or {IsValid: false})
             {
                 await helper.screenManager.TryBackPageAsync();
                 return;

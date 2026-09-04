@@ -234,14 +234,16 @@ namespace HnSF
             return folderPath.Length < assetPath.Length && assetPath.StartsWith(folderPath);
         }
         
-        public override AssetLoadResult LoadAssetByID(string id)
+        public override LoadedAssetHandleWrapper LoadAssetByID(string id)
         {
+            return null;
+            /*
             var loadResult = new AssetLoadResult(false, default);
             loadResult.handle.handleType = AssetHandleType.UMod;
-            
+
             var assetPath = ConvertIDToAssetPath(id);
             var modHostAssets = _modDefinition.modHost.Assets;
-            
+
             if (PathIsFolder(assetPath))
             {
                 var assetsInFolder = modHostAssets.FindAllInFolder(assetPath);
@@ -250,18 +252,18 @@ namespace HnSF
                 {
                     var folderAssetPath = folderAsset.RelativeName + folderAsset.Extension;
                     if (_loadedAssetList.ContainsKey(folderAssetPath)) continue;
-                    
+
                     var loadOperation = folderAsset.LoadWithSubAssets(allowCaching: true);
                     if (loadOperation == null || loadOperation.Length == 0) continue;
                     var assetObject = modHostAssets.Find(folderAsset.RelativeName).AssetObject;
                     _ = RegisterLoadedAsset(folderAssetPath, assetObject);
                 }
-                
+
                 loadResult.result = true;
                 // TODO: Handles.
                 return loadResult;
             }
-            
+
             if (_loadedAssetList.ContainsKey(assetPath))
             {
                 // TODO: Handles.
@@ -272,7 +274,7 @@ namespace HnSF
                 };
                 return loadResult;
             }
-            
+
             var op = modHostAssets.Load(assetPath);
             if (op == null)
             {
@@ -280,20 +282,22 @@ namespace HnSF
                 return loadResult;
             }
             _ = RegisterLoadedAsset(assetPath, modHostAssets.Find(assetPath).AssetObject);
-            
-            
+
+
             loadResult.handle.assetReference = new ModAssetSoftReference(modID, id, false);
-            
-            return loadResult;
+
+            return loadResult;*/
         }
 
-        public override async UniTask<AssetLoadResult> LoadAssetByIDAsync(string id)
+        public override async UniTask<LoadedAssetHandleWrapper> LoadAssetByIDAsync(string id)
         {
+            return null;
+            /*
             var loadResult = new AssetLoadResult(false, default);
             loadResult.handle.handleType = AssetHandleType.UMod;
             var assetPath = ConvertIDToAssetPath(id);
             var modHostAssets = _modDefinition.modHost.Assets;
-            
+
             if (PathIsFolder(assetPath))
             {
                 var assetsInFolder = modHostAssets.FindAllInFolder(assetPath);
@@ -302,7 +306,7 @@ namespace HnSF
                 {
                     var folderAssetPath = folderAsset.RelativeName + folderAsset.Extension;
                     if (_loadedAssetList.ContainsKey(folderAssetPath)) continue;
-                    
+
                     var loadOperation = folderAsset.LoadWithSubAssetsAsync(allowCaching: true);
                     await loadOperation;
                     if (!loadOperation.IsSuccessful) continue;
@@ -334,9 +338,9 @@ namespace HnSF
 
             loadResult.handle.umodHandle = op;
             loadResult.handle.assetReference = new ModAssetSoftReference(modID, id, false);
-            
+
             await RegisterLoadedAsset(assetPath, modHostAssets.Find(assetPath).AssetObject);
-            return loadResult;
+            return loadResult;*/
         }
 
         public override T GetAssetByID<T>(string id, bool autoLoad = false)
@@ -351,7 +355,7 @@ namespace HnSF
             if (autoLoad)
             {
                 var loadResult = LoadAssetByID(assetPath);
-                if (!loadResult.result) return null;
+                if (loadResult == null) return null;
             }
             return _loadedAssetList.GetValueOrDefault(assetPath);
         }

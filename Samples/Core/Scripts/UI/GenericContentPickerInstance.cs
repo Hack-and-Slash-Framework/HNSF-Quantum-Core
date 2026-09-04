@@ -87,7 +87,7 @@ namespace HnSF.ui
         public virtual ModAssetSoftReference ConfirmWantedContent()
         {
             if (currentSelectedContentIndex == -1) return default;
-            return loadedAssets[currentSelectedContentIndex].assetReference;
+            return loadedAssets[currentSelectedContentIndex].AssetReference;
         }
         
         public virtual LoadedAssetHandleWrapper ConfirmWantedContentAndRemoveFromList()
@@ -124,8 +124,8 @@ namespace HnSF.ui
             foreach (var assetRef in contentListingUtility.currentAssetList)
             {
                 var loadResult = await contentManager.LoadAssetFromModAsync(assetRef);
-                if (loadResult.result == false) continue;
-                loadedAssets.Add(loadResult.handle);
+                if (loadResult == null) continue;
+                loadedAssets.Add(loadResult);
             }
             changeContentListLockout = false;
             
@@ -146,7 +146,7 @@ namespace HnSF.ui
                 
                 var index = i;
                 var uiContentItem = GameObject.Instantiate(contentItemPrefab, contentScrollRect.content.transform, false);
-                uiContentItem.assetNameText.text = $"{loadedAssets[i].assetReference.ToString()}";
+                uiContentItem.assetNameText.text = $"{loadedAssets[i].AssetReference.ToString()}";
                 
                 var itemAsContentDefinition = loadedAssets[i].GetAsset<IContentDefinition>();
                 if (itemAsContentDefinition != null)

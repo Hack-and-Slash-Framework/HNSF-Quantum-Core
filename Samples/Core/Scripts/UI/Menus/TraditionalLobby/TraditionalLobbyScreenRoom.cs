@@ -75,7 +75,7 @@ namespace HnSF.ui.menus.traditionallobby
 
         private void PageTeamLeft(InputAction.CallbackContext obj)
         {
-            if (!gamemodeAssetHandle.IsValid()) return;
+            if (gamemodeAssetHandle is null or {IsValid: false}) return;
             var gamemodeDefinition = gamemodeAssetHandle.GetAsset<BaseGamemodeDefinition>();
             if (gamemodeDefinition == null) return;
 
@@ -104,7 +104,7 @@ namespace HnSF.ui.menus.traditionallobby
         
         private void PageTeamRight(InputAction.CallbackContext obj)
         {
-            if (!gamemodeAssetHandle.IsValid()) return;
+            if (gamemodeAssetHandle is null or {IsValid: false}) return;
             var gamemodeDefinition = gamemodeAssetHandle.GetAsset<BaseGamemodeDefinition>();
             if (gamemodeDefinition == null) return;
 
@@ -172,7 +172,7 @@ namespace HnSF.ui.menus.traditionallobby
             var contentManager = HnSFManagersContainer.instance.contentManager;
             
             var tempGamemodeAssetHandle = arg0.ConfirmWantedContentAndRemoveFromList();
-            ModAssetSoftReference gamemodeReference = tempGamemodeAssetHandle.assetReference;
+            ModAssetSoftReference gamemodeReference = tempGamemodeAssetHandle.AssetReference;
             contentManager.ReleaseAssetFromMod(tempGamemodeAssetHandle);
             helper.screenContentPicker.Uninitialize();
             await helper.screenManager.TryBackPageAsync();
@@ -206,7 +206,7 @@ namespace HnSF.ui.menus.traditionallobby
             var contentManager = HnSFManagersContainer.instance.contentManager;
             
             var tempAssetHandle = arg0.ConfirmWantedContentAndRemoveFromList();
-            ModAssetSoftReference mapReference = tempAssetHandle.assetReference;
+            ModAssetSoftReference mapReference = tempAssetHandle.AssetReference;
             contentManager.ReleaseAssetFromMod(tempAssetHandle);
             helper.screenContentPicker.Uninitialize();
             await helper.screenManager.TryBackPageAsync();
@@ -231,7 +231,8 @@ namespace HnSF.ui.menus.traditionallobby
             await helper.screenManager.TryForwardPageAsync(helper.screenContentPicker);
             helper.screenContentPicker.SetCameraTarget(helper.instanceCamera);
 
-            LoadedAssetHandleWrapper? fighterPickResult = null;
+            bool fighterPicked = false;
+            LoadedAssetHandleWrapper fighterPickResult = null;
             LoadedAssetHandleWrapper[] fightersPicked = new LoadedAssetHandleWrapper[fightersToSet];
             ModAssetSoftReference[] fightersPickedReferences = new ModAssetSoftReference[fightersToSet];
             int i = 0;
@@ -244,15 +245,15 @@ namespace HnSF.ui.menus.traditionallobby
                 fighterPickResult = null;
                 helper.screenContentPicker.Initialize<IFighterDefinition>();
                 
-                await UniTask.WaitUntil(() => fighterPickResult.HasValue);
+                await UniTask.WaitUntil(() => fighterPicked);
 
-                if (fighterPickResult.HasValue == false || fighterPickResult.Value.IsValid() == false)
+                if (fighterPickResult is null or {IsValid: false})
                 {
                     // Unload the fighters
                     return;
                 }
-                fightersPicked[i] = fighterPickResult.Value;
-                fightersPickedReferences[i] = fighterPickResult.Value.assetReference;
+                fightersPicked[i] = fighterPickResult;
+                fightersPickedReferences[i] = fighterPickResult.AssetReference;
                 
                 helper.screenContentPicker.Uninitialize();
             }
@@ -266,11 +267,13 @@ namespace HnSF.ui.menus.traditionallobby
             void WhenFighterSubmitted(GenericContentPickerInstance arg0)
             {
                 fighterPickResult = arg0.ConfirmWantedContentAndRemoveFromList();
+                fighterPicked = true;
             }
             
             void WhenCancelFighterPick(GenericContentPickerInstance arg0)
             {
-                fighterPickResult = new LoadedAssetHandleWrapper();
+                fighterPickResult = null;
+                fighterPicked = true;
             }
         }
 
@@ -366,31 +369,36 @@ namespace HnSF.ui.menus.traditionallobby
             {
                 if (string.IsNullOrEmpty(assetReference))
                 {
-                    if (handle.IsValid())
+                    if (handle is {IsValid: true})
                     {
-                        contentManager.ReleaseAssetFromMod(handle);
+                        handle.Release();
                     }
-                    return default;
+                    handle = null;
+                    return null;
                 }
-                else if (handle.IsValid() && handle.assetReference.ToString() != assetReference)
+                
+                
+                
+                if (handle is {IsValid: true} && handle.AssetReference.ToString() != assetReference)
                 {
                     contentManager.ReleaseAssetFromMod(handle);
                     var loadResult = await contentManager.LoadAssetFromModAsync(new ModAssetSoftReference(assetReference));
-                    if (loadResult.result)
+                    if (loadResult != null)
                     {
-                        handle = loadResult.handle;
+                        handle = loadResult;
                         return handle;
                     }
-                    return default;
-                }else if (handle.IsValid() == false)
+
+                    return null;
+                }else if (handle is {IsValid: false})
                 {
                     var loadResult = await contentManager.LoadAssetFromModAsync(new ModAssetSoftReference(assetReference));
-                    if (loadResult.result)
+                    if (loadResult != null)
                     {
-                        handle = loadResult.handle;
+                        handle = loadResult;
                         return handle;
                     }
-                    return default;
+                    return null;
                 }
 
                 return handle;
@@ -407,8 +415,8 @@ namespace HnSF.ui.menus.traditionallobby
             UpdatePlayerList();
             UpdateButtons();
             
-            gamemodeNameText.text = gamemodeAssetHandle.IsValid() ? gamemodeAssetHandle.GetAsset<BaseGamemodeDefinition>().Name : "?";
-            mapNameText.text = mapAssetHandle.IsValid() ? mapAssetHandle.GetAsset<IMapDefinition>().Name : "?";
+            gamemodeNameText.text = gamemodeAssetHandle is {IsValid: true} ? gamemodeAssetHandle.GetAsset<BaseGamemodeDefinition>().Name : "?";
+            mapNameText.text = mapAssetHandle is {IsValid: true} ? mapAssetHandle.GetAsset<IMapDefinition>().Name : "?";
         }
         
         public void UpdatePlayerList()

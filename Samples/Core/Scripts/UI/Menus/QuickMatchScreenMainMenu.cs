@@ -36,8 +36,8 @@ namespace HnSF.ui.menus
         {
             buttonReadyUp.interactable = false;
 
-            if (quickMatchScreenInstance.playerInfo.assetHandleCharacter.IsValid() == false
-                || quickMatchScreenInstance.instanceHandler.selectedGamemodeDefinition.IsValid() == false)
+            if (quickMatchScreenInstance.playerInfo.assetHandleCharacter == null
+                || quickMatchScreenInstance.instanceHandler.selectedGamemodeDefinition == null)
             {
                 return;
             }
@@ -73,10 +73,8 @@ namespace HnSF.ui.menus
             var contentManager = HnSFManagersContainer.instance.contentManager;
             
             var characterAssetHandle = arg0.ConfirmWantedContentAndRemoveFromList();
-            if (quickMatchScreenInstance.playerInfo.assetHandleCharacter.IsValid())
-            {
-                contentManager.ReleaseAssetFromMod(quickMatchScreenInstance.playerInfo.assetHandleCharacter);
-            }
+            quickMatchScreenInstance.playerInfo.assetHandleCharacter?.Release();
+            quickMatchScreenInstance.playerInfo.assetHandleCharacter = null;
             quickMatchScreenInstance.playerInfo.SetCharacterAssetHandle(characterAssetHandle);
             _ = quickMatchScreenInstance.TryBackPageAsync();
         }
@@ -104,7 +102,7 @@ namespace HnSF.ui.menus
             var contentManager = HnSFManagersContainer.instance.contentManager;
             
             var gamemodeAssetHandle = arg0.ConfirmWantedContentAndRemoveFromList();
-            if (quickMatchScreenInstance.instanceHandler.selectedGamemodeDefinition.IsValid())
+            if (quickMatchScreenInstance.instanceHandler.selectedGamemodeDefinition != null)
             {
                 contentManager.ReleaseAssetFromMod(quickMatchScreenInstance.instanceHandler.selectedGamemodeDefinition);
             }

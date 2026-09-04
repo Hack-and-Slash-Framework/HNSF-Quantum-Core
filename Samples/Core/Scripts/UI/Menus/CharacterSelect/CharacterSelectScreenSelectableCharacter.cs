@@ -13,19 +13,20 @@ namespace HnSF.ui.menus
         {
             var hnsfManagers = HnSFManagersContainer.instance;
 
-            if (characterAssetHandle.IsValid())
+            if (characterAssetHandle is {IsValid: true})
             {
                 return true;
             }
             var loadResult = await hnsfManagers.contentManager.LoadAssetFromModAsync(characterReference.reference);
-            if (loadResult.result == false) return false;
-            characterAssetHandle = loadResult.handle;
+            if (loadResult == null) return false;
+            characterAssetHandle = loadResult;
             return true;
         }
 
         public override void UnloadAssets()
         {
-            characterAssetHandle.Teardown(releaseAsset: true);
+            characterAssetHandle.Release();
+            characterAssetHandle = null;
         }
 
         public override void Submit(int playerIndex)

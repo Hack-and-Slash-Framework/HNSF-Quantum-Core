@@ -644,5 +644,15 @@ namespace Quantum
 
             ClearPlanForReplan(ref ctx);
         }
+
+        public static void RequestReplan(ref HTNAgentContext ctx, bool replanUrgency, uint replanReasons)
+        {
+            ctx.agent->pendingReplanReasons |= replanReasons;
+            
+            if (replanUrgency)
+                ctx.agent->immediateReplanRequested = true;
+            
+            ctx.agent->contextDirty = true;
+        }
     }
 }

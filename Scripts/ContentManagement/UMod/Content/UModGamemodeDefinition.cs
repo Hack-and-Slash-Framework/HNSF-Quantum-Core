@@ -24,9 +24,9 @@ namespace HnSF
         [field: SerializeField] public override int MinimumPlayers { get; protected set; } = 1;
         [field: SerializeField] public override int MaximumPlayers { get; protected set; } = 16;
         
-        [NonSerialized] private AssetLoadResult gamemodeMatchHandlerHandle;
-        [NonSerialized] private AssetLoadResult quantumAssetHandle;
-        [NonSerialized] private List<AssetLoadResult> contentsHandle;
+        [NonSerialized] private LoadedAssetHandleWrapper gamemodeMatchHandlerHandle;
+        [NonSerialized] private LoadedAssetHandleWrapper quantumAssetHandle;
+        [NonSerialized] private List<LoadedAssetHandleWrapper> contentsHandle;
 
         public override GamemodeTeamRule[] GetTeamRules()
         {
@@ -60,7 +60,7 @@ namespace HnSF
                 foreach (var cref in contentReferencesForLoading)
                 {
                     var crefLoadResult = await contentManager.LoadAssetFromModAsync(cref.reference);
-                    if (!crefLoadResult.result)
+                    if (crefLoadResult == null)
                         throw new Exception($"Failed to load content reference. {cref.reference.ToString()}");
                     contentsHandle.Add(crefLoadResult);
                 }
@@ -74,7 +74,7 @@ namespace HnSF
             try
             {
                 var quantumAssetLoadResult = await contentManager.LoadAssetFromModAsync(quantumAsset.reference);
-                if (!quantumAssetLoadResult.result)
+                if (quantumAssetLoadResult == null)
                     throw new Exception($"Failed to load fighter. {quantumAsset.reference.ToString()}");
                 quantumAssetHandle = quantumAssetLoadResult;
             }
@@ -88,7 +88,7 @@ namespace HnSF
             {
                 var matchHandlerLoadResult =
                     await contentManager.LoadAssetFromModAsync(gamemodeMatchHandler.reference);
-                if (!matchHandlerLoadResult.result)
+                if (matchHandlerLoadResult == null)
                     throw new Exception($"Failed to load fighter. {gamemodeMatchHandler.reference.ToString()}");
                 gamemodeMatchHandlerHandle = matchHandlerLoadResult;
             }
@@ -102,7 +102,7 @@ namespace HnSF
         }
         public override GameObject GetMatchHandler()
         {
-            return gamemodeMatchHandlerHandle.handle.umodHandle.Result as GameObject;
+            return gamemodeMatchHandlerHandle.GetAsset<GameObject>();
         }
 
         public override void UnloadAssets()

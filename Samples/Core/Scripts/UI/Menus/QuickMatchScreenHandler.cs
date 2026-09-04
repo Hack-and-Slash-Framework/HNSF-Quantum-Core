@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using CT.MenuNav;
 using Cysharp.Threading.Tasks;
@@ -45,7 +46,7 @@ namespace HnSF.ui.menus
             protected string playerName;
             protected bool ready;
 
-            public LoadedAssetHandleWrapper assetHandleCharacter;
+            [NonSerialized] public LoadedAssetHandleWrapper assetHandleCharacter = null;
 
             public void SetCharacterAssetHandle(LoadedAssetHandleWrapper characterAssetHandle)
             {

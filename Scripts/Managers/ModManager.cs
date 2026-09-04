@@ -56,12 +56,7 @@ namespace HnSF
             Debug.Log($"ModString: {modGuid}");
             Debug.Log($"Loaded Mod List (GUID):\n{String.Join("\n", GetModListByGuidAsStringsWithName())}");
         }
-
-        public void OnDestroy()
-        {
-            UnloadAllMods();
-        }
-
+        
         private void GetModLoaders()
         {
             List<string> modLoaderNames = new();
@@ -111,7 +106,7 @@ namespace HnSF
 
             foreach (var invalidPath in currentAvailbleModPaths)
             {
-                RemoveAvailableMod(PathToAvailableMod[invalidPath]);
+                await RemoveAvailableMod(PathToAvailableMod[invalidPath]);
             }
         }
 
@@ -200,6 +195,12 @@ namespace HnSF
                 foundPaths.Add(path);
             }
 
+            foreach (var k in gotHandles)
+            {
+                Addressables.Release(k);
+            }
+            gotHandles.Clear();
+
             return foundPaths;
         }
 
@@ -211,26 +212,60 @@ namespace HnSF
             return true;
         }
 
-        private void RemoveAvailableMod(AvailableModDefinition modDefinition)
+        private async UniTask RemoveAvailableMod(AvailableModDefinition modDefinition)
         {
-            UnloadMod(modDefinition.loadedDefinition);
+            await UnloadMod(modDefinition.loadedDefinition);
             IdentifierToAvailableMod.Remove(modDefinition.identifier);
             PathToAvailableMod.Remove(modDefinition.path);
             availableMods.Remove(modDefinition);
         }
 
-        public async UniTask<bool> LoadMod(AvailableModDefinition modDefinition)
+        private Dictionary<AvailableModDefinition, UniTaskCompletionSource<bool>> currentlyLoading = new();
+        public UniTask<bool> LoadMod(AvailableModDefinition modDefinition)
         {
-            if (!modLoaders.ContainsKey(modDefinition.loader)) return false;
-            var lmd = await modLoaders[modDefinition.loader].TryLoadMod(this, modDefinition);
-            if (lmd != null)
-            {
-                modDefinition.loadedDefinition = lmd;
-                currentlyLoadedMods.Add(lmd);
-                return true;
-            }
+            if (modDefinition.currentLifecycle == ModLifecycleState.Loaded) return new UniTask<bool>(true);
+            if (!modLoaders.ContainsKey(modDefinition.loader)
+                || modDefinition.currentLifecycle == ModLifecycleState.Unloading) return new UniTask<bool>(false);
+            
+            if (currentlyLoading.TryGetValue(modDefinition, out var completionTask))
+                return completionTask.Task;
+            
+            completionTask = new UniTaskCompletionSource<bool>();
+            currentlyLoading.Add(modDefinition, completionTask);
+            LoadModInternal(modDefinition).Forget();
+            return completionTask.Task;
+        }
 
-            return false;
+        private async UniTask LoadModInternal(AvailableModDefinition modDefinition)
+        {
+            if (!currentlyLoading.TryGetValue(modDefinition, out var completionTask))
+            {
+                Debug.LogError($"Could not get completion task for {modDefinition?.name}");
+                return;
+            }
+            
+            try
+            {
+                var lmd = await modLoaders[modDefinition.loader].TryLoadMod(this, modDefinition);
+                if (lmd != null)
+                {
+                    modDefinition.loadedDefinition = lmd;
+                    currentlyLoadedMods.Add(lmd);
+                    completionTask.TrySetResult(true);
+                    return;
+                }
+
+                completionTask.TrySetResult(false);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"Exception while loading mod {modDefinition?.name}");
+                completionTask.TrySetException(e);
+            }
+            finally
+            {
+                currentlyLoading.Remove(modDefinition);
+            }
         }
 
         public async UniTask<bool> LoadModByPath(string path)
@@ -256,20 +291,28 @@ namespace HnSF
             }
         }
 
-        public bool UnloadMod(LoadedModDefinition loadedModDefinition)
+        public async UniTask<bool> UnloadMod(LoadedModDefinition loadedModDefinition)
         {
             if(loadedModDefinition == null) return false;
             if (!modLoaders.ContainsKey(loadedModDefinition.information.loader)) return false;
-            return modLoaders[loadedModDefinition.information.loader].TryUnloadMod(this, loadedModDefinition);
+            var unloaded = await modLoaders[loadedModDefinition.information.loader]
+                .TryUnloadMod(this, loadedModDefinition);
+            if (!unloaded) return false;
+
+            currentlyLoadedMods.Remove(loadedModDefinition);
+            if (loadedModDefinition.information.loadedDefinition == loadedModDefinition)
+                loadedModDefinition.information.loadedDefinition = null;
+
+            return true;
         }
 
-        public void UnloadMods(string[] modIdentifiers)
+        public async UniTask UnloadMods(string[] modIdentifiers)
         {
             foreach (var md in modIdentifiers)
             {
                 if (!IdentifierToAvailableMod.ContainsKey(md)
                     || IdentifierToAvailableMod[md].loadedDefinition == null) continue;
-                UnloadMod(IdentifierToAvailableMod[md].loadedDefinition);
+                await UnloadMod(IdentifierToAvailableMod[md].loadedDefinition);
             }
         }
 
@@ -281,14 +324,14 @@ namespace HnSF
             }
         }
 
-        public void UnloadAllMods(string[] modsToExcludeByIdentifier = null)
+        public async UniTask UnloadAllMods(string[] modsToExcludeByIdentifier = null)
         {
-            foreach (var lmd in currentlyLoadedMods)
+            foreach (var lmd in currentlyLoadedMods.ToArray())
             {
                 if (lmd.information.loader == (int)KnownModLoaderTypes.ADDRESSABLES_LOCAL) continue;
                 if (modsToExcludeByIdentifier != null
                     && modsToExcludeByIdentifier.Contains(lmd.information.identifier)) continue;
-                UnloadMod(lmd);
+                await UnloadMod(lmd);
             }
         }
 
@@ -311,7 +354,7 @@ namespace HnSF
         
         public async UniTask ApplyModProfile(ModProfile modProfile)
         {
-            UnloadAllMods(modProfile.modsByIdentifiers.ToArray());
+            await UnloadAllMods(modProfile.modsByIdentifiers.ToArray());
             await LoadMods(modProfile.modsByIdentifiers.ToArray());
             currentModProfileIndex = modProfiles.IndexOf(modProfile);
         }

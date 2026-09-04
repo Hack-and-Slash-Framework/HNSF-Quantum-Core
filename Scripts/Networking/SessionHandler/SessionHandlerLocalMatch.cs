@@ -88,11 +88,8 @@ namespace HnSF.sessionhandling.handlers
             Debug.Log("Preparing for match.");
             var contentManager = HnSFManagersContainer.instance.contentManager;
             
-            var gamemodeLoadResult = await contentManager.LoadAssetFromModAsync(matchContentBundle.gamemodeReference);
-            this.gamemodeAssetHandle = gamemodeLoadResult.handle;
-            
-            var mapLoadResult = await contentManager.LoadAssetFromModAsync(matchContentBundle.mapReference);
-            this.mapAssetHandle = mapLoadResult.handle;
+            this.gamemodeAssetHandle = await contentManager.LoadAssetFromModAsync(matchContentBundle.gamemodeReference);
+            this.mapAssetHandle = await contentManager.LoadAssetFromModAsync(matchContentBundle.mapReference);
 
             expectedPlayerCount = matchContentBundle.playerCount;
             

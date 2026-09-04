@@ -13,9 +13,9 @@ namespace HnSF
             return null;
         }
 
-        public virtual bool TryUnloadMod(ModManager modManager, LoadedModDefinition modLoadedDefinition)
+        public virtual UniTask<bool> TryUnloadMod(ModManager modManager, LoadedModDefinition modLoadedDefinition)
         {
-            return false;
+            return UniTask.FromResult(false);
         }
     }
 }

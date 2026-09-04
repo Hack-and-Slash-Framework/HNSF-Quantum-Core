@@ -46,10 +46,10 @@ namespace HnSF
             fighterAssetRefs = new LoadedAssetHandleWrapper[fighterReferences.Length];
             for (int i = 0; i < fighterReferences.Length; i++)
             {
-                var fResult = await HnSFManagersContainer.instance.contentManager.LoadAssetFromModAsync(new ModAssetSoftReference(fighterReferences[i]));
-                if (fResult.result == false) return false;
-                fighterAssetRefs[i] = fResult.handle;
-                await fResult.handle.GetAsset<IFighterDefinition>().LoadAssets();
+                var loadedAssetHandle = await HnSFManagersContainer.instance.contentManager.LoadAssetFromModAsync(new ModAssetSoftReference(fighterReferences[i]));
+                if (loadedAssetHandle == null) return false;
+                fighterAssetRefs[i] = loadedAssetHandle;
+                await loadedAssetHandle.GetAsset<IFighterDefinition>().LoadAssets();
             }
             
             return true;
@@ -62,10 +62,10 @@ namespace HnSF
             fighterAssetRefs = new LoadedAssetHandleWrapper[fighterReferences.Length];
             for (int i = 0; i < fighterReferences.Length; i++)
             {
-                var fResult = await HnSFManagersContainer.instance.contentManager.LoadAssetFromModAsync(fighterReferences[i]);
-                if (fResult.result == false) return false;
-                fighterAssetRefs[i] = fResult.handle;
-                await fResult.handle.GetAsset<IFighterDefinition>().LoadAssets();
+                var loadedAssetHandle = await HnSFManagersContainer.instance.contentManager.LoadAssetFromModAsync(fighterReferences[i]);
+                if (loadedAssetHandle == null) return false;
+                fighterAssetRefs[i] = loadedAssetHandle;
+                await loadedAssetHandle.GetAsset<IFighterDefinition>().LoadAssets();
             }
             
             return true;
@@ -78,10 +78,10 @@ namespace HnSF
             fighterAssetRefs = new LoadedAssetHandleWrapper[fighterReferences.Count];
             for (int i = 0; i < fighterReferences.Count; i++)
             {
-                var lResult =
-                    await HnSFManagersContainer.instance.contentManager.LoadAssetFromModAsync(fighterReferences[i].assetReference);
-                if (lResult.result == false) return false;
-                fighterAssetRefs[i] = lResult.handle;
+                var loadedAssetHandle =
+                    await HnSFManagersContainer.instance.contentManager.LoadAssetFromModAsync(fighterReferences[i].AssetReference);
+                if (loadedAssetHandle == null) return false;
+                fighterAssetRefs[i] = loadedAssetHandle;
                 await fighterAssetRefs[i].GetAsset<IFighterDefinition>().LoadAssets();
             }
             return true;
@@ -91,8 +91,8 @@ namespace HnSF
         {
             for (int i = 0; i < fighterAssetRefs.Length; i++)
             {
-                fighterAssetRefs[i].Teardown();
-                fighterAssetRefs[i] = default;
+                fighterAssetRefs[i]?.Dispose();
+                fighterAssetRefs[i] = null;
             }
         }
 

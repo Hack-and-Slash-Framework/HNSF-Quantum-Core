@@ -185,76 +185,97 @@ namespace HnSF
             return loadedAssetList;
         }
 
-        public async UniTask<bool> LoadAllAssetsFromModAsync(LoadedModDefinition loadedModDefinition)
+        public async UniTask<List<LoadedAssetHandleWrapper>> LoadAllAssetsFromModAsync(LoadedModDefinition loadedModDefinition)
         {
             var modAssetList = loadedModDefinition.modAsset?.GetAssetList();
-            if (modAssetList == null) return false;
+            if (modAssetList == null) return null;
 
+            var l = new List<LoadedAssetHandleWrapper>();
+            
             foreach (var modAssetRef in modAssetList)
             {
-                await loadedModDefinition.modAsset.LoadAssetByIDAsync(modAssetRef);
+                var handle = await loadedModDefinition.modAsset.LoadAssetByIDAsync(modAssetRef);
+                if(handle != null)
+                    l.Add(handle);
             }
-
-            return true;
+            
+            return l;
         }
 
-        public async UniTask LoadAllAssetsByTypeAsync<T>() where T : UnityEngine.Object
+        public async UniTask<List<LoadedAssetHandleWrapper>> LoadAllAssetsByTypeAsync<T>() where T : UnityEngine.Object
         {
+            var l = new List<LoadedAssetHandleWrapper>();
+            
             foreach (var loadedModDefinition in modManager.currentlyLoadedMods)
             {
-                var modAssetList = loadedModDefinition.modAsset?.GetLoadedAssetListByType<T>();
+                var modAssetList = loadedModDefinition.modAsset?.GetAssetListByType<T>();
                 if (modAssetList == null) continue;
 
                 foreach (var modAssetRef in modAssetList)
                 {
-                    await loadedModDefinition.modAsset.LoadAssetByIDAsync(modAssetRef);
+                    var handle = await loadedModDefinition.modAsset.LoadAssetByIDAsync(modAssetRef);
+                    if(handle != null)
+                        l.Add(handle);
                 }
             }
+
+            return l;
         }
 
-        public async UniTask LoadAllAssetsFromModByTypeAsync<T>(LoadedModDefinition loadedModDefinition)
-            where T : UnityEngine.Object
+        public async UniTask<List<LoadedAssetHandleWrapper>> LoadAllAssetsFromModByTypeAsync<T>(LoadedModDefinition loadedModDefinition) where T : UnityEngine.Object
         {
-            var modAssetList = loadedModDefinition.modAsset?.GetLoadedAssetListByType<T>();
-            if (modAssetList == null) return;
+            var modAssetList = loadedModDefinition.modAsset?.GetAssetListByType<T>();
+            if (modAssetList == null) return null;
 
+            var l = new List<LoadedAssetHandleWrapper>();
+            
             foreach (var modAssetRef in modAssetList)
             {
-                await loadedModDefinition.modAsset.LoadAssetByIDAsync(modAssetRef);
+                var handle = await loadedModDefinition.modAsset.LoadAssetByIDAsync(modAssetRef);
+                if(handle != null)
+                    l.Add(handle);
             }
+
+            return l;
         }
 
-        public async UniTask<AssetLoadResult> LoadAssetFromModAsync(ModAssetSoftReference loadedModDefinition)
+        public async UniTask<LoadedAssetHandleWrapper> LoadAssetFromModAsync(ModAssetSoftReference loadedModDefinition)
         {
             return await LoadAssetFromModAsync(loadedModDefinition.mod, loadedModDefinition.assetID);
         }
 
-        public async UniTask<AssetLoadResult> LoadAssetFromModAsync(LoadedModDefinition loadedModDefinition,
+        public async UniTask<LoadedAssetHandleWrapper> LoadAssetFromModAsync(LoadedModDefinition loadedModDefinition,
             string assetID)
         {
-            if (loadedModDefinition.modAsset == null) return new AssetLoadResult(false, default);
+            if (loadedModDefinition.modAsset == null) return null;
             return await loadedModDefinition.modAsset.LoadAssetByIDAsync(assetID);
         }
 
-        public async UniTask<AssetLoadResult> LoadAssetFromModAsync(string modID, string assetID)
+        public async UniTask<LoadedAssetHandleWrapper> LoadAssetFromModAsync(string modID, string assetID)
         {
             var modDefinition = modManager.GetMod(modID);
             if (modDefinition?.loadedDefinition == null
                 || modDefinition.loadedDefinition.modAsset == null)
             {
                 Debug.LogError("Mod Asset Not Loaded.");
-                return default;
+                return null;
             }
 
             return await modDefinition.loadedDefinition.modAsset.LoadAssetByIDAsync(assetID);
         }
 
-        public async UniTask LoadAssetFromModsAsync(string assetID)
+        public async UniTask<List<LoadedAssetHandleWrapper>> LoadAssetFromModsAsync(string assetID)
         {
+            var l = new List<LoadedAssetHandleWrapper>();
+            
             foreach (var loadedModDefinition in modManager.currentlyLoadedMods)
             {
-                await LoadAssetFromModAsync(loadedModDefinition, assetID);
+                var handle = await LoadAssetFromModAsync(loadedModDefinition, assetID);
+                if(handle != null)
+                    l.Add(handle);
             }
+
+            return l;
         }
 
         public UnityEngine.Object GetAssetFromMod(ModAssetSoftReference softReference, bool autoLoad = false)
@@ -302,57 +323,10 @@ namespace HnSF
 
             return assets;
         }
-
-        /*
-        public void UnloadAllAssetsFromMod(LoadedModDefinition loadedModDefinition)
-        {
-            if (loadedModDefinition.modAsset == null) return;
-            var loadedContentList = loadedModDefinition.modAsset.GetLoadedAssetList();
-
-            foreach (var loadedAssetRef in loadedContentList)
-            {
-                //loadedModDefinition.modAsset.UnloadAssetByID(loadedAssetRef);
-            }
-        }
-
-        public void UnloadAllAssetsByType<T>() where T : UnityEngine.Object
-        {
-            foreach (var loadedModDefinition in modManager.currentlyLoadedMods)
-            {
-                if (loadedModDefinition.modAsset == null) continue;
-                //loadedModDefinition.modAsset.UnloadAssetsByType<T>();
-            }
-        }*/
-
+        
         public void ReleaseAssetFromMod(LoadedAssetHandleWrapper assetHandle)
         {
-            var modDefinition = modManager.GetMod(assetHandle.assetReference.mod);
-            if (modDefinition?.loadedDefinition == null || modDefinition.loadedDefinition.modAsset == null)
-            {
-                Debug.LogWarning($"Mod Asset {assetHandle.ToString()} is not loaded. Ignoring release request.");
-                return;
-            }
-
-            modDefinition.loadedDefinition.modAsset.ReleaseAsset(assetHandle);
-        }
-        
-        public void ReleaseAssetFromMod(ref LoadedAssetHandleWrapper assetHandle)
-        {
-            var modDefinition = modManager.GetMod(assetHandle.assetReference.mod);
-            if (modDefinition?.loadedDefinition == null || modDefinition.loadedDefinition.modAsset == null)
-            {
-                Debug.LogWarning($"Mod Asset {assetHandle.ToString()} is not loaded. Ignoring release request.");
-                return;
-            }
-
-            modDefinition.loadedDefinition.modAsset.ReleaseAsset(assetHandle);
-            assetHandle.Teardown(releaseAsset: false);
-        }
-
-        public void ReleaseAssetFromMod(LoadedModDefinition loadedModDefinition, LoadedAssetHandleWrapper assetHandle)
-        {
-            if (loadedModDefinition.modAsset == null) return;
-            loadedModDefinition.modAsset.ReleaseAsset(assetHandle);
+            assetHandle?.Dispose();
         }
     }
 }

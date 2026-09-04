@@ -55,19 +55,29 @@ namespace HnSF
         {
             sceneHandle = Addressables.LoadSceneAsync(_sceneReference, loadMode);
             await sceneHandle;
+            if (sceneHandle.IsValid() && sceneHandle.Status != AsyncOperationStatus.Succeeded)
+            {
+                Addressables.Release(sceneHandle);
+                sceneHandle = default;
+                return false;
+            }
             return sceneHandle.Status == AsyncOperationStatus.Succeeded;
         }
 
         public override async UniTask UnloadMap()
         {
-            if (!sceneHandle.IsValid() || sceneHandle.Status != AsyncOperationStatus.Succeeded) return;
-            await Addressables.UnloadSceneAsync(sceneHandle);
+            if (sceneHandle.IsValid())
+                await Addressables.UnloadSceneAsync(sceneHandle);
+            sceneHandle = default;
         }
 
         public override void Unload()
         {
-            if (!sceneHandle.IsValid() || sceneHandle.Status != AsyncOperationStatus.Succeeded) return;
-            Addressables.Release(sceneHandle);
+            base.Unload();
+            
+            if (sceneHandle.IsValid()) 
+                Addressables.Release(sceneHandle);
+            sceneHandle = default;
         }
     }
 }

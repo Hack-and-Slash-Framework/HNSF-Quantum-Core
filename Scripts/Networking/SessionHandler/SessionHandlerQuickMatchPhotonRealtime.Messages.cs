@@ -32,18 +32,17 @@ namespace HnSF.sessionhandling.handlers
                     return;
                 }
 
-                if (sessionHandler.selectedMapDefinition.IsValid() == false)
+                if (sessionHandler.selectedMapDefinition.IsValid == false)
                 {
-                    var mapDefinitionLoadResult =
-                        await HnSFManagersContainer.instance.contentManager.LoadAssetFromModAsync(new ModAssetSoftReference(mapAssetRef as string));
-                    if (mapDefinitionLoadResult.result == false)
+                    var mapLoadedAssetHandle = await HnSFManagersContainer.instance.contentManager.LoadAssetFromModAsync(new ModAssetSoftReference(mapAssetRef as string));
+                    if (mapLoadedAssetHandle == null)
                     {
                         Debug.LogError($"Failed to load map asset [{mapAssetRef as string}].");
                         quantumClient?.Disconnect();
                         return;
                     }
 
-                    sessionHandler.selectedMapDefinition = mapDefinitionLoadResult.handle;
+                    sessionHandler.selectedMapDefinition = mapLoadedAssetHandle;
 
                     await sessionHandler.selectedMapDefinition.GetAsset<IMapDefinition>().LoadAssets();
                 }

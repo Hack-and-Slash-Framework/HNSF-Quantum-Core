@@ -57,7 +57,7 @@ namespace HnSF.ui.menus
 
         public ModAssetSoftReference GetSelectedAssetReference()
         {
-            return loadedAssets[items[currentlySelectedItemIndex].fighterIndex].assetReference;
+            return loadedAssets[items[currentlySelectedItemIndex].fighterIndex].AssetReference;
         }
         
         private void UpdateSelection(int requestedIndex)
@@ -96,8 +96,8 @@ namespace HnSF.ui.menus
             foreach (var assetRef in contentListingUtility.currentAssetList)
             {
                 var loadResult = await contentManager.LoadAssetFromModAsync(assetRef);
-                if (loadResult.result == false) continue;
-                loadedAssets.Add(loadResult.handle);
+                if (loadResult == null) continue;
+                loadedAssets.Add(loadResult);
             }
             
             BuildUIContentList();

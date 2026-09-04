@@ -375,9 +375,9 @@ namespace HnSF.sessionhandling.handlers.NGO
                 title = string.IsNullOrEmpty(title) ? $"Random Room {Random.Range(0, 10000)}" : title,
                 minimumPlayers = Mathf.Max(2, minimumPlayers),
                 maximumPlayers = Mathf.Max(minimumPlayers, maximumPlayers),
-                gamemode = gamemodeHandle.assetReference.ToString(),
+                gamemode = gamemodeHandle.AssetReference.ToString(),
                 gamemodeSettings = string.IsNullOrEmpty(gamemodeSettingsAsJson) ? string.Empty : gamemodeSettingsAsJson,
-                map = mapHandle.assetReference.ToString()
+                map = mapHandle.AssetReference.ToString()
             });
 
             await UniTask.WaitUntil(() => gottenRoomId.HasValue);

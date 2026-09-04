@@ -33,9 +33,9 @@ namespace HnSF.ui.menus.traditionallobby
         
         public void CheckButtonInteractable()
         {
-            gamemodeSettingsButton.interactable = helper.gamemodeHandle.IsValid();
+            gamemodeSettingsButton.interactable = helper.gamemodeHandle is { IsValid: true };
 
-            createRoomButton.interactable = helper.gamemodeHandle.IsValid() && helper.mapHandle.IsValid() && !string.IsNullOrEmpty(helper.gamemodeSettings);
+            createRoomButton.interactable = helper.gamemodeHandle is {IsValid: true} && helper.mapHandle is {IsValid: true} && !string.IsNullOrEmpty(helper.gamemodeSettings);
         }
         
         public async void BUTTON_Gamemode()
@@ -54,7 +54,7 @@ namespace HnSF.ui.menus.traditionallobby
 
         private void OnGamemodePicked(GenericContentPickerInstance arg0)
         {
-            if (helper.gamemodeHandle.IsValid())
+            if (helper.gamemodeHandle is {IsValid: true})
             {
                 HnSFManagersContainer.instance.contentManager.ReleaseAssetFromMod(helper.gamemodeHandle);
             }
@@ -78,7 +78,7 @@ namespace HnSF.ui.menus.traditionallobby
         
         private void OnMapPicked(GenericContentPickerInstance arg0)
         {
-            if (helper.mapHandle.IsValid())
+            if (helper.mapHandle is {IsValid: true})
             {
                 HnSFManagersContainer.instance.contentManager.ReleaseAssetFromMod(helper.mapHandle);
             }
