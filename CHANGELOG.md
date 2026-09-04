@@ -1,3 +1,15 @@
+# [3.0.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.30.0...v3.0.0) (2026-09-04)
+
+
+### Features
+
+* Improved asset management ([b38f200](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/b38f2009070500b274ca27d641b25211d6272056))
+
+
+### BREAKING CHANGES
+
+* Change asset handle to a class, and improved mod lifetime management.
+
 # [2.30.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.29.1...v2.30.0) (2026-08-30)
 
 
