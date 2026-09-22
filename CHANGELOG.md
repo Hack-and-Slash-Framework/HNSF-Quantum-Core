@@ -1,3 +1,10 @@
+# [3.1.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v3.0.0...v3.1.0) (2026-09-22)
+
+
+### Features
+
+* AI Combos, improved asset definition loading logic ([ce39d8e](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/ce39d8ea768b3ff0f08c83e175d24db5e22a3ad5))
+
 # [3.0.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v2.30.0...v3.0.0) (2026-09-04)
 
 
