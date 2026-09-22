@@ -46,53 +46,32 @@ namespace HnSF
             return defaultTeamConfig;
         }
 
-        public override async UniTask<bool> LoadAssets()
+        protected override async UniTask LoadAssetsInternal()
         {
             try
             {
                 if (labelsForLoading != null && labelsForLoading.Length > 0)
                 {
-                    if (!contentsHandle.IsValid())
-                        contentsHandle = Addressables.LoadAssetsAsync<Object>(
+                    contentsHandle = Addressables.LoadAssetsAsync<Object>(
                             labelsForLoading,
                             addressable => { },
                             Addressables.MergeMode.Union,
                             true);
                     await contentsHandle;
                 }
-            }
-            catch (Exception e)
-            {
-                Debug.LogError($"Exception thrown while loading gamemode {gamemodeName} contents: {e}");
-                return false;
-            }
 
-            try
-            {
-                if (!gamemodeMatchHandlerHandle.IsValid())
-                    gamemodeMatchHandlerHandle = Addressables.LoadAssetAsync<GameObject>(gamemodeMatchHandler);
+                gamemodeMatchHandlerHandle = Addressables.LoadAssetAsync<GameObject>(gamemodeMatchHandler);
                 await gamemodeMatchHandlerHandle;
-            }
-            catch (Exception e)
-            {
-                Debug.LogError($"Exception thrown while loading gamemode {gamemodeName}: {e}");
-                return false;
-            }
 
-            try
-            {
-                if (!gamemodeSettingsHandle.IsValid())
-                    gamemodeSettingsHandle =
-                        Addressables.LoadAssetAsync<GamemodeSettingsBase>(gamemodeSettingsReference);
+                gamemodeSettingsHandle = Addressables.LoadAssetAsync<GamemodeSettingsBase>(gamemodeSettingsReference);
                 await gamemodeSettingsHandle;
+                
+                ReportAssetsLoadResult(true);
             }
             catch (Exception e)
             {
-                Debug.LogError($"Exception thrown while loading gamemode {gamemodeName}'s settings asset: {e}");
-                return false;
+                ReportAssetsLoadResult(false);
             }
-
-            return true;
         }
 
         public override GameObject GetMatchHandler()
@@ -102,14 +81,14 @@ namespace HnSF
 
         public override GamemodeSettingsBase GetDefaultGamemodeSettings()
         {
-            if (gamemodeSettingsHandle.IsValid() == false ||
+            if (!gamemodeSettingsHandle.IsValid() ||
                 gamemodeSettingsHandle.Status != AsyncOperationStatus.Succeeded) return null;
             return gamemodeSettingsHandle.Result;
         }
 
         public override GamemodeSettingsBase GetGamemodeSettingsInstance()
         {
-            if (gamemodeSettingsHandle.IsValid() == false ||
+            if (!gamemodeSettingsHandle.IsValid() ||
                 gamemodeSettingsHandle.Status != AsyncOperationStatus.Succeeded) return null;
             return gamemodeSettingsHandle.Result.GetInstance();
         }

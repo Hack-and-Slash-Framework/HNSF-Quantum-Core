@@ -58,6 +58,7 @@ namespace HnSF.core.AI.HTN.Tasks
 
         public void Abort(ref HTNAgentContext context)
         {
+            Log.Debug("ABORT");
         }
     }
 }

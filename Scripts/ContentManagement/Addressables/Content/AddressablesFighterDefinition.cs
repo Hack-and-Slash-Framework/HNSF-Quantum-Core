@@ -60,43 +60,38 @@ namespace HnSF
             return true;
         }
 
-        public override async UniTask<bool> LoadAssets()
+        protected override async UniTask LoadAssetsInternal()
         {
-            if (labelsForLoading != null && labelsForLoading.Length > 0)
-            {
-                try
-                {
-                    if (!contentsHandle.IsValid())
-                        contentsHandle = Addressables.LoadAssetsAsync<Object>(
-                            labelsForLoading,
-                            addressable => { },
-                            Addressables.MergeMode.Union,
-                            true);
-                    await contentsHandle;
-                }
-                catch (Exception e)
-                {
-                    Debug.LogError($"Exception thrown while loading fighter {fighterName} contents: {e}");
-                    return false;
-                }
-            }
-
-            if (!fighterHandle.IsValid()) fighterHandle = Addressables.LoadAssetAsync<GameObject>(fighterReference);
-            await fighterHandle;
-
             try
             {
-                if (!quantumDefinitionHandle.IsValid())
-                    quantumDefinitionHandle = Addressables.LoadAssetAsync<BattleActorDefinition>(quantumDefinition);
+                if (labelsForLoading != null && labelsForLoading.Length > 0)
+                {
+                    contentsHandle = Addressables.LoadAssetsAsync<Object>(
+                        labelsForLoading,
+                        addressable => { },
+                        Addressables.MergeMode.Union,
+                        true);
+                    await contentsHandle;
+                }
+
+                fighterHandle = Addressables.LoadAssetAsync<GameObject>(fighterReference);
+                await fighterHandle;
+                
+                quantumDefinitionHandle = Addressables.LoadAssetAsync<BattleActorDefinition>(quantumDefinition);
                 await quantumDefinitionHandle;
+                
+                ReportAssetsLoadResult(true);
             }
             catch (Exception e)
             {
-                Debug.LogError($"Exception thrown while loading fighter {fighterName} quantum definition: {e}");
-                return false;
+                Debug.LogError("Could not load fighter.");
+                Debug.LogException(e);
+                ReportAssetsLoadResult(false);
             }
-
-            return true;
+            finally
+            {
+                loadAssetsCompletionSource = null;
+            }
         }
 
         public override async UniTask<bool> LoadVisualRepresentation()
@@ -123,7 +118,7 @@ namespace HnSF
 
         public override void UnloadVisualRepresentation()
         {
-            if (menuVisualHandle.IsValid() && menuVisualHandle.Status == AsyncOperationStatus.Succeeded)
+            if (menuVisualHandle.IsValid())
                 Addressables.Release(menuVisualHandle);
             menuVisualHandle = default;
         }

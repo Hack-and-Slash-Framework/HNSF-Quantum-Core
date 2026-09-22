@@ -42,17 +42,7 @@ namespace HnSF.core.AI.HTN.Operators
                     worldState: ref worldState
                 );
             }
-            
             return HTNTaskStatus.Success;
-        }
-
-        public override HTNTaskStatus Tick(ref HTNAgentContext context)
-        {
-            return HTNTaskStatus.Success;
-        }
-
-        public override void OnExit(ref HTNAgentContext context)
-        {
         }
     }
 }
@@ -127,7 +117,7 @@ namespace HnSF.core.AI.HTN.Nodes
         protected override void OnDefinePorts(Node.IPortDefinitionContext context)
         {
             AddInputOutputExecutionPorts(context);
-
+            
             context.AddInputPort<bool>(inDirtyWorldState)
                 .WithDisplayName("Dirty World State?")
                 .WithDefaultValue(true)

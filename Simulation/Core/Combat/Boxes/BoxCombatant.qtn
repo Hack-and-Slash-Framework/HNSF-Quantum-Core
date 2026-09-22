@@ -18,6 +18,7 @@
     
     [AllocateOnComponentAdded, FreeOnComponentRemoved]
     list<EntityHitDefinition> entitiesHit;
+    [AllocateOnComponentAdded, FreeOnComponentRemoved]
     dictionary<int, int> hitReactionCounters;
     
     // When we are hit.

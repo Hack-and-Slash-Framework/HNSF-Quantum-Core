@@ -30,13 +30,14 @@ namespace HnSF.core.AI.HTN.Conditions
 #endif
         public HTNParamByte stateValueMax;
         public ComparisonType comparisonType = ComparisonType.Equals;
+        public bool resultIfMissing;
         
         public bool IsValid(ref HTNAgentContext context)
         {
             var currentWorldState = context.frame.ResolveDictionary(context.agent->worldState.current);
 
             if (!currentWorldState.TryGetValue(stateID.Resolve(ref context), out var stateValue))
-                return false;
+                return resultIfMissing;
 
             var min = stateValueMin.Resolve(ref context);
             var max = min;
@@ -70,6 +71,7 @@ namespace HnSF.core.AI.HTN.Nodes
     public unsafe class ConditionCheckWorldState : ConditionBase
     {
         public const string optionComparisonType = "ComparisonType";
+        public const string optionResultOnMissing = "ResultOnMissing";
         public const string inFunctionStateID = "StateID";
         public const string inFunctionStateValueMin = "ValueMin";
         public const string inFunctionStateValueMax = "ValueMax";
@@ -81,6 +83,11 @@ namespace HnSF.core.AI.HTN.Nodes
             context.AddOption<ComparisonType>(optionComparisonType)
                 .WithDisplayName("Comparison")
                 .WithDefaultValue(ComparisonType.Equals)
+                .Build();
+            
+            context.AddOption<bool>(optionResultOnMissing)
+                .WithDisplayName("Result If Key Missing")
+                .WithDefaultValue(false)
                 .Build();
         }
 
@@ -103,13 +110,14 @@ namespace HnSF.core.AI.HTN.Nodes
 
         public override ICondition Convert()
         {
-            //this.GetNodeOptionByName(OPTION_LABEL).TryGetValue<string>(out var label);
             this.GetNodeOptionByName(optionComparisonType).TryGetValue<ComparisonType>(out var comparisonType);
-
+            this.GetNodeOptionByName(optionResultOnMissing).TryGetValue<bool>(out var resultOnMissing);
+            
             return new Conditions.CheckWorldState()
             {
                 //Label = label,
                 comparisonType = comparisonType,
+                resultIfMissing = resultOnMissing,
                 stateID = NodeHelper.GetInputPortParam<HTNParamByte, byte>(GetInputPortByName(inFunctionStateID)),
                 stateValueMin = NodeHelper.GetInputPortParam<HTNParamByte, byte>(GetInputPortByName(inFunctionStateValueMin)),
                 stateValueMax = NodeHelper.GetInputPortParam<HTNParamByte, byte>(GetInputPortByName(inFunctionStateValueMax)),

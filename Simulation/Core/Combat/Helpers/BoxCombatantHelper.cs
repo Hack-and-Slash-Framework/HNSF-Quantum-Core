@@ -83,6 +83,7 @@ namespace Quantum
             HurtboxHelper.CleanupHurtboxes(frame, boxCombatant);
             CollisionboxHelper.CleanupCollisionboxes(frame, boxCombatant);
             ThrowboxHelper.CleanupThrowboxes(frame, boxCombatant);
+            WarningboxHelper.CleanupWarningboxes(frame, boxCombatant);
         }
     }
 }

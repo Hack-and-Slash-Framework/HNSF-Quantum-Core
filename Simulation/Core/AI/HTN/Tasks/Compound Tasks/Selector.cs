@@ -86,7 +86,7 @@ namespace HnSF.core.AI.HTN.Tasks
                             context.currentMTR.Add(0);
 
                             result = null;
-                            Log.Debug("Did not beat lastMTR.");
+                            if(context.debug) Log.Debug("Did not beat lastMTR.");
                             return DecompositionStatus.Rejected;
                         }
                     }

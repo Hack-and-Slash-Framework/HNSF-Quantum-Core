@@ -40,5 +40,18 @@ namespace Quantum
         /// Transforms a direction from local space to world space. <see cref="F:Quantum.Transform3D.Rotation" /> is expected to be normalized.
         /// </summary>
         public static FPVector3 TransformDirection(this FPVector3 direction, FPQuaternion lookDir) => lookDir * direction;
+        
+        /// <summary>
+        /// Transforms a position from world space to local space. <see cref="F:Quantum.Transform3D.Rotation" /> is expected to be normalized.
+        /// </summary>
+        public static FPVector3 InverseTransformPoint(FPQuaternion rotation, FPVector3 originPosition, FPVector3 position)
+        {
+            return rotation.Conjugated * (position - originPosition);
+        }
+
+        /// <summary>
+        /// Transforms a position from local space to world space. <see cref="F:Quantum.Transform3D.Rotation" /> is expected to be normalized.
+        /// </summary>
+        public static FPVector3 TransformPoint(FPQuaternion rotation, FPVector3 originPosition, FPVector3 position) => rotation * position + originPosition;
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using HnSF.core.GroupControl;
 using HnSF.core.GroupControl.Actions;
+using HnSF.core.GroupControl.Combo;
 using HnSF.core.state;
 using Photon.Deterministic;
 using Quantum;
@@ -24,14 +25,53 @@ namespace HnSF.core.AI.HTN.Operators
         {
             if (!context.frame.Unsafe.TryGetPointer(context.agentEntityRef, out BattleActorAI* battleActorAI)
                 || !context.frame.Unsafe.TryGetPointer<BattleActorLink>(battleActorAI->aiActorRef, out var battleActorLink)
-                || !context.frame.TryFindAsset(battleActorLink->battleActorDefinition, out var bad))
+                || !context.frame.TryFindAsset(battleActorLink->battleActorDefinition, out var bad)
+                || !context.frame.TryFindAsset(bad.comboListings[0], out var comboScriptListing))
                 return HTNTaskStatus.Failure;
-
-            var gotScriptAssetRef = bad.comboScripts[context.frame.RNG->Next(0, bad.comboScripts.Length)];
-
-            if (!context.frame.TryFindAsset(gotScriptAssetRef, out var comboScript))
+            
+            context.frame.AddOrGet(context.agentEntityRef, out AIComboMemory* comboMemory);
+            
+            if(context.frame.Number < comboMemory->nextAttackDecisionFrame)
                 return HTNTaskStatus.Failure;
+            
+            context.frame.AddOrGet(context.agentEntityRef, out TaggedEntityMapping* agentTagMapping);
+            var agentTagMap = context.frame.ResolveDictionary(agentTagMapping->tagToEntityMap);
+            agentTagMap[context.frame.SimulationConfig.tag_self] = battleActorAI->aiActorRef;
+            
+            var ctx = new BattleScriptContext();
+            ctx.SetScriptEntityAndBlackboard(context.frame, battleActorAI->aiActorRef, null);
+            
+            var nextComboIndex = AIComboSelector.SelectCombo(context.frame, context.agentEntityRef, ref ctx,
+                comboScriptListing.comboScripts, AIComboSelector.SelectWeighted);
 
+            if (nextComboIndex < 0
+                || !context.frame.TryFindAsset(comboScriptListing.comboScripts[nextComboIndex], out var nextCombo))
+            {
+                return HTNTaskStatus.Failure;
+            }
+
+            comboMemory->nextAttackDecisionFrame = context.frame.Number + context.frame.RNG->Next(nextCombo.minimumNextAttackDelayFrames, nextCombo.maximumNextAttackDelayFrames);
+            if (nextCombo.cooldownFrames > 0)
+            {
+                var cooldownDict = context.frame.ResolveDictionary(comboMemory->perMoveCooldowns);
+                cooldownDict[(byte)nextComboIndex] = context.frame.Number + nextCombo.cooldownFrames;
+            }
+
+            var comboHistory = context.frame.ResolveList(comboMemory->history);
+            if (comboHistory.Count >= 3)
+            {
+                for (int i = comboHistory.Count - 2; i >= 0; i--)
+                {
+                    comboHistory[i] = comboHistory[i + 1];
+                }
+
+                comboHistory[^1] = (byte)nextComboIndex;
+            }
+            else
+            {
+                comboHistory.Add((byte)nextComboIndex);
+            }
+            
             var genericControlManager = context.frame.GetOrAddSingleton<GenericGroupControlManager>();
 
             var infoEntityRef = context.frame.Create();
@@ -46,7 +86,7 @@ namespace HnSF.core.AI.HTN.Operators
             var basc = new BattleScriptContext();
             basc.SetScriptEntityAndBlackboard(context.frame, infoEntityRef, null);
             
-            ggc->data.SetData(comboScript);
+            ggc->data.SetData(nextCombo);
             ggc->data.Initialize(context.frame, infoEntityRef, ref basc);
 
             genericControlManager.Add(context.frame, EntityRef.None, infoEntityRef);

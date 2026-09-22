@@ -22,22 +22,28 @@ namespace HnSF
             return new UniTask<bool>(true);
         }
 
-        public override async UniTask<bool> LoadAssets()
+        protected override async UniTask LoadAssetsInternal()
         {
             try
             {
                 for (int i = 0; i < handles.Length; i++)
                 {
-                    if(!handles[i].IsValid()) handles[i] = Addressables.LoadAssetAsync<BaseCommandListMovesetDefinition>(movesetRootEntries[i]);
+                    handles[i] = Addressables.LoadAssetAsync<BaseCommandListMovesetDefinition>(movesetRootEntries[i]);
                     await handles[i];
                 }
+                
+                ReportAssetsLoadResult(true);
             }
             catch (Exception e)
             {
-                Debug.LogError($"Error loading command list ({name}). {e}");
-                return false;
+                Debug.LogError($"Error loading command list ({name}).");
+                Debug.LogException(e);
+                ReportAssetsLoadResult(false);
             }
-            return true;
+            finally
+            {
+                loadAssetsCompletionSource = null;
+            }
         }
         
         public override BaseCommandListMovesetDefinition[] GetMovesets()

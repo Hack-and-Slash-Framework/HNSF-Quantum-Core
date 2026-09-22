@@ -48,7 +48,7 @@ namespace HnSF
             return null;
         }
 
-        public override async UniTask<bool> LoadAssets()
+        protected override async UniTask LoadAssetsInternal()
         {
             var contentManager = HnSFManagersContainer.instance.contentManager;
 
@@ -68,7 +68,8 @@ namespace HnSF
             catch (Exception e)
             {
                 Debug.LogError($"Exception thrown while loading gamemode {gamemodeName} contents: {e}");
-                return false;
+                ReportAssetsLoadResult(false);
+                return;
             }
 
             try
@@ -81,7 +82,8 @@ namespace HnSF
             catch (Exception e)
             {
                 Debug.LogError($"Exception thrown while loading gamemode {gamemodeName} quantum definition: {e}");
-                return false;
+                ReportAssetsLoadResult(false);
+                return;
             }
 
             try
@@ -95,10 +97,11 @@ namespace HnSF
             catch (Exception e)
             {
                 Debug.LogError($"Exception thrown while loading gamemode {gamemodeName}: {e}");
-                return false;
+                ReportAssetsLoadResult(false);
+                return;
             }
 
-            return true;
+            ReportAssetsLoadResult(true);
         }
         public override GameObject GetMatchHandler()
         {

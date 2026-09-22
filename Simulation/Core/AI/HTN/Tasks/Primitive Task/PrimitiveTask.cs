@@ -73,6 +73,10 @@ namespace HnSF.core.AI.HTN.Tasks
 #if QUANTUM_UNITY
         [SerializeReference, SubclassSelector]
 #endif
+        public List<HTNOperatorBase> onTerminateOperators = new List<HTNOperatorBase>();
+#if QUANTUM_UNITY
+        [SerializeReference, SubclassSelector]
+#endif
         public List<IEffect> effects = new List<IEffect>();
 
         public DecompositionStatus OnIsValidFailed(ref HTNAgentContext context)
@@ -116,6 +120,7 @@ namespace HnSF.core.AI.HTN.Tasks
             other.executingConditions = new List<ICondition>(executingConditions);
             other.operators = new List<HTNOperatorBase>(operators);
             other.effects = new List<IEffect>(effects);
+            other.onTerminateOperators = new List<HTNOperatorBase>(onTerminateOperators);
         }
 
         public void ApplyEffects(ref HTNAgentContext context)
@@ -128,6 +133,8 @@ namespace HnSF.core.AI.HTN.Tasks
 
         public void Stop(ref HTNAgentContext context)
         {
+            ExecuteOnTerminateOperators(ref context);
+            
             if (context.agent->currentPlan.currentOperator < 0
                 || context.agent->currentPlan.currentOperator >= Operators.Count)
                 return;
@@ -137,11 +144,22 @@ namespace HnSF.core.AI.HTN.Tasks
 
         public void Abort(ref HTNAgentContext context)
         {
+            ExecuteOnTerminateOperators(ref context);
+            
             if (context.agent->currentPlan.currentOperator < 0
                 || context.agent->currentPlan.currentOperator >= Operators.Count)
                 return;
             
             Operators[context.agent->currentPlan.currentOperator].OnAbort(ref context);
+        }
+
+        protected void ExecuteOnTerminateOperators(ref HTNAgentContext context)
+        {
+            
+            for (int i = 0; i < onTerminateOperators.Count; i++)
+            {
+                onTerminateOperators[i].OnEnter(ref context);
+            }
         }
     }
 }

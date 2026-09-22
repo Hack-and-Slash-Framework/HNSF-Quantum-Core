@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using HnSF;
 using HnSF.core.GroupControl;
 using HnSF.core.state;
 #if QUANTUM_UNITY
@@ -24,11 +25,8 @@ namespace Quantum
 #endif
         
         public AssetRef<BattleActorGroupControlScript>[] introScripts = Array.Empty<AssetRef<BattleActorGroupControlScript>>();
-        public AssetRef<BattleActorGroupControlScript>[] comboScripts = Array.Empty<AssetRef<BattleActorGroupControlScript>>();
+        public AssetRef<ComboScriptListing>[] comboListings = Array.Empty<AssetRef<ComboScriptListing>>();
         
         public AssetRef<BattleActorAIDefinition>[] aiDefinitions = Array.Empty<AssetRef<BattleActorAIDefinition>>();
-
-        public AssetRef<SystemsConfig> customSystems;
-        public AssetRef<ExternalSystem>[] externalSystems = Array.Empty<AssetRef<ExternalSystem>>();
     }
 }

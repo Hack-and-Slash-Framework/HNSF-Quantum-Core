@@ -25,22 +25,21 @@ namespace HnSF
         
         [NonSerialized] protected AsyncOperationHandle<GameObject> assetHandle;
 
-        public override async UniTask<bool> LoadAssets()
+        protected override async UniTask LoadAssetsInternal()
         {
-            if (assetHandle.IsValid() && assetHandle.Status == AsyncOperationStatus.Succeeded) return true;
-            
             try
             {
-                if (!assetHandle.IsValid()) assetHandle = Addressables.LoadAssetAsync<GameObject>(hudElementReference);
+                assetHandle = Addressables.LoadAssetAsync<GameObject>(hudElementReference);
                 await assetHandle;
+                
+                ReportAssetsLoadResult(true);
             }
             catch (Exception e)
             {
-                Debug.LogError($"Error loading HUD Element {label} ({name}). {e}");
-                return false;
+                Debug.LogError($"Error loading HUD Element {label} ({name})");
+                Debug.LogException(e);
+                ReportAssetsLoadResult(false);
             }
-            
-            return true;
         }
 
         public override HudElementContainer GetElementContainer()

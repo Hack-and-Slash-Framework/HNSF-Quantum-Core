@@ -1,0 +1,8 @@
+component AIComboMemory{
+    asset_ref<HnSF.ComboScriptListing> scriptListingAsset;
+    [AllocateOnComponentAdded, FreeOnComponentRemoved]
+    dictionary<byte, int> perMoveCooldowns;
+    [AllocateOnComponentAdded, FreeOnComponentRemoved]
+    list<byte> history;
+    int nextAttackDecisionFrame;
+}

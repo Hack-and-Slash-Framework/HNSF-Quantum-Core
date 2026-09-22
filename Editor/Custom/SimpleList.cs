@@ -171,6 +171,9 @@ namespace HnSF
                 style.height = Source.Count * fixedItemHeight;
             }
 
+            if (!ReferenceEquals(itemsSource, Source))
+                itemsSource = Source;
+            
             Rebuild();
             SelectInitial();
             UpdateSelection();

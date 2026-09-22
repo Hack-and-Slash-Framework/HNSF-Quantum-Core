@@ -18,21 +18,24 @@ namespace HnSF
         [SerializeField] private AssetReferenceT<VideoClip> demonstrationVideoClip;
         [NonSerialized] private AsyncOperationHandle<VideoClip> videoClipHandle;
 
-        public override async UniTask<bool> LoadAssets()
+        protected override async UniTask LoadAssetsInternal()
         {
             try
             {
-                if (!videoClipHandle.IsValid())
-                    videoClipHandle = Addressables.LoadAssetAsync<VideoClip>(demonstrationVideoClip);
+                videoClipHandle = Addressables.LoadAssetAsync<VideoClip>(demonstrationVideoClip);
                 await videoClipHandle;
+
+                ReportAssetsLoadResult(true);
             }
             catch (Exception e)
             {
                 Debug.LogError($"Error loading command list entry's video clip ({name}). {e}");
-                return false;
+                ReportAssetsLoadResult(false);
             }
-            
-            return true;
+            finally
+            {
+                loadAssetsCompletionSource = null;
+            }
         }
 
         public override Sprite GetImage()
@@ -47,8 +50,9 @@ namespace HnSF
         
         public override void UnloadAssets()
         {
-            if(videoClipHandle.IsValid() && videoClipHandle.Status == AsyncOperationStatus.Succeeded)
+            if(videoClipHandle.IsValid())
                 Addressables.Release(videoClipHandle);
+            videoClipHandle = default;
         }
     }
 }

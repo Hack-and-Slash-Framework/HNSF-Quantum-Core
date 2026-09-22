@@ -21,21 +21,25 @@ namespace HnSF
         
         [NonSerialized] protected AsyncOperationHandle<SongAudio> songAudioHandle;
 
-        public override async UniTask<bool> LoadAssets()
+        protected override async UniTask LoadAssetsInternal()
         {
             try
             {
-                if (!songAudioHandle.IsValid())
-                    songAudioHandle = Addressables.LoadAssetAsync<SongAudio>(songAudioReference);
+                songAudioHandle = Addressables.LoadAssetAsync<SongAudio>(songAudioReference);
                 await songAudioHandle;
+                
+                ReportAssetsLoadResult(true);
             }
             catch (Exception e)
             {
-                Debug.LogError($"Error loading Song {songName} ({name}). {e}");
-                return false;
+                Debug.LogError($"Error loading Song {songName} ({name}).");
+                Debug.LogException(e);
+                ReportAssetsLoadResult(false);
             }
-            
-            return true;
+            finally
+            {
+                loadAssetsCompletionSource = null;
+            }
         }
 
         public override SongAudio GetSong()

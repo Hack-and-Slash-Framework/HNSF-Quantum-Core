@@ -1,5 +1,7 @@
 using System;
 using HnSF.core.AI.HTN.Functions;
+using HnSF.core.AI.HTN.Param;
+using HnSF.Nodes;
 using Quantum;
 #if QUANTUM_UNITY
 using UnityEngine;
@@ -39,19 +41,19 @@ namespace HnSF.core.AI.HTN.Effects
 #if QUANTUM_UNITY
         [SerializeReference, SubclassSelector]
 #endif
-        public HTNFunctionByte stateID;
+        public HTNParamByte stateID;
 #if QUANTUM_UNITY
         [SerializeReference, SubclassSelector]
 #endif
-        public HTNFunctionByte stateValue;
+        public HTNParamByte stateValue;
         public bool dirtyWorldState = true;
 
         public virtual void Apply(ref HTNAgentContext context)
         {
             HTNWorldState.SetState(
                 context: ref context,
-                state: stateID.Execute(ref context),
-                value: stateValue.Execute(ref context),
+                state: stateID.Resolve(ref context),
+                value: stateValue.Resolve(ref context),
                 setAsDirty: dirtyWorldState,
                 e: effectType
             );
@@ -91,11 +93,11 @@ namespace HnSF.core.AI.HTN.Nodes
             AddInputOutputExecutionPorts(context);
 
             context.AddInputPort(inputStateId)
-                .WithDisplayName("State ID Function")
+                .WithDisplayName("State ID")
                 .Build();
 
             context.AddInputPort(inputStateValue)
-                .WithDisplayName("State Value Function")
+                .WithDisplayName("State Value")
                 .Build();
         }
 
@@ -110,8 +112,8 @@ namespace HnSF.core.AI.HTN.Nodes
                 Label = label,
                 EffectType = effectType,
                 dirtyWorldState = dirtyWorldState,
-                stateID = ConvertFunctionNode<HTNFunctionByte>(GetInputPortByName(inputStateId)),
-                stateValue = ConvertFunctionNode<HTNFunctionByte>(GetInputPortByName(inputStateValue)),
+                stateID = NodeHelper.GetInputPortParam<HTNParamByte, byte>(GetInputPortByName(inputStateId)),
+                stateValue = NodeHelper.GetInputPortParam<HTNParamByte, byte>(GetInputPortByName(inputStateValue)),
             };
         }
     }

@@ -22,12 +22,8 @@ namespace HnSF
         
         [NonSerialized] protected ModAsyncOperation assetHandle;
 
-        public override async UniTask<bool> LoadAssets()
+        protected override async UniTask LoadAssetsInternal()
         {
-            if (assetHandle.IsDone && assetHandle.IsSuccessful) return true;
-            
-            var contentManager = HnSFManagersContainer.instance.contentManager;
-
             var modHost = (modDefinition as UModLoadedModDefinition).modHost;
             var modInfo = (modDefinition.modAsset as UModModInfoAsset);
             
@@ -37,15 +33,14 @@ namespace HnSF
                 await assetHandle;
                 if(!assetHandle.Result) throw new Exception($"Failed to load Hud Element Gameobject. {hudElementReference.reference.ToString()}");
                 
+                ReportAssetsLoadResult(true);
             }
             catch (Exception e)
             {
-                assetHandle = default;
-                Debug.LogError($"Error loading HUD Element {label} ({name}). {e}");
-                return false;
+                Debug.LogError($"Error loading HUD Element {label} ({name})");
+                Debug.LogException(e);
+                ReportAssetsLoadResult(false);
             }
-            
-            return true;
         }
 
         public override HudElementContainer GetElementContainer()
@@ -60,11 +55,7 @@ namespace HnSF
 
         public override void UnloadAssets()
         {
-            
-        }
-
-        public override void Unload()
-        {
+            assetHandle = null;
         }
     }
 }

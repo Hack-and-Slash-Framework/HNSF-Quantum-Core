@@ -22,9 +22,8 @@ namespace HnSF
             songAudioRef = songAudioReference ? songAudioReference.reference : default;
         }
         
-        public override async UniTask<bool> LoadAssets()
+        protected override async UniTask LoadAssetsInternal()
         {
-            if (_songAudioHandle.IsValid) return true;
             var contentManager = HnSFManagersContainer.instance.contentManager;
             
             try
@@ -32,14 +31,15 @@ namespace HnSF
                 var crefLoadResult = await contentManager.LoadAssetFromModAsync(songAudioRef);
                 if (crefLoadResult == null) throw new Exception($"Failed to load content reference. {songAudioRef.ToString()}");
                 _songAudioHandle = crefLoadResult;
+                
+                ReportAssetsLoadResult(true);
             }
             catch (Exception e)
             {
-                Debug.LogError($"Error loading Song {songName} ({name}). {e}");
-                return false;
+                Debug.LogError($"Error loading Song {songName} ({name})");
+                Debug.LogException(e);
+                ReportAssetsLoadResult(false);
             }
-            
-            return true;
         }
 
         public override SongAudio GetSong()
@@ -49,6 +49,7 @@ namespace HnSF
 
         public override void UnloadAssets()
         {
+            _songAudioHandle?.Release();
             _songAudioHandle = null;
         }
 

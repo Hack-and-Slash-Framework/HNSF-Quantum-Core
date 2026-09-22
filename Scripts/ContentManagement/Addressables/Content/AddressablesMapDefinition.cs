@@ -35,11 +35,6 @@ namespace HnSF
             return new UniTask<bool>(true);
         }
 
-        public override UniTask<bool> LoadAssets()
-        {
-            return new UniTask<bool>(true);
-        }
-
         public override Quantum.Map GetMapAsset()
         {
             return mapAsset;

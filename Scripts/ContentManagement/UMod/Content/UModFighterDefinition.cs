@@ -71,7 +71,7 @@ namespace HnSF
             return true;
         }
 
-        public override async UniTask<bool> LoadAssets()
+        protected override async UniTask LoadAssetsInternal()
         {
             var modAsset = modDefinition.modAsset as UModModInfoAsset;
             var modHost = (modAsset.ModDefinition as UModLoadedModDefinition).modHost;
@@ -101,14 +101,14 @@ namespace HnSF
                 if (!fighterQuantumLoadHandle.IsSuccessful)
                     throw new Exception($"Failed to load quantum fighter. {fighterQuantumRef.ToString()}");
                 quantumDefinitionHandle = fighterQuantumLoadHandle;
+                
+                ReportAssetsLoadResult(true);
             }
             catch (Exception e)
             {
                 Debug.LogError($"Exception thrown while loading Fighter {fighterName}: {e}");
-                return false;
+                ReportAssetsLoadResult(false);
             }
-
-            return true;
         }
 
         public override UniTask<bool> LoadVisualRepresentation()
