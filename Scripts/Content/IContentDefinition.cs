@@ -34,6 +34,8 @@ public abstract partial class IContentDefinition : ScriptableObject
     public virtual UniTask<bool> Load(string id)
     {
         _id = id;
+        areAssetsLoaded = false;
+        loadAssetsCompletionSource = null;
         return new UniTask<bool>(true);
     }
 
