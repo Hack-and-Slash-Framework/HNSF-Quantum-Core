@@ -1,3 +1,10 @@
+## [3.1.1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v3.1.0...v3.1.1) (2026-10-01)
+
+
+### Bug Fixes
+
+* Reset variables on content load ([6debf45](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/6debf45341882cbae549e6261dbaa98aa3079d65))
+
 # [3.1.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v3.0.0...v3.1.0) (2026-09-22)
 
 
