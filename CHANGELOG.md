@@ -1,3 +1,10 @@
+## [3.1.4](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v3.1.3...v3.1.4) (2026-10-02)
+
+
+### Bug Fixes
+
+* Fix NGO error ([a20e362](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/a20e362f84879466f425cefe08a5fcb90a557545))
+
 ## [3.1.3](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v3.1.2...v3.1.3) (2026-10-02)
 
 
