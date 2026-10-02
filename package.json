@@ -6,9 +6,9 @@
 	"unity": "6000.3",
 	"samples": [
 		{
-			"displayName": "Core Content",
-			"description": "Core HnSF content.",
-			"path": "Samples~/Core"
+			"displayName": "Kickstarter",
+			"description": "A collection of UI screens & prefabs to for initial prototyping.",
+			"path": "Samples~/Kickstarter"
 		},
 		{
 			"displayName": "Stats",
