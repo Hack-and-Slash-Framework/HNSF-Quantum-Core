@@ -1,3 +1,10 @@
+## [3.1.2](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v3.1.1...v3.1.2) (2026-10-02)
+
+
+### Bug Fixes
+
+* Move scripts into proper place, sample reorg ([b8a45fb](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/b8a45fb5666f1474875278b80f279040be1ee07b))
+
 ## [3.1.1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v3.1.0...v3.1.1) (2026-10-01)
 
 
