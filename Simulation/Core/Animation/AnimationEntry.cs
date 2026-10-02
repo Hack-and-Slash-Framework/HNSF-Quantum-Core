@@ -4,7 +4,7 @@ using UnityEngine.Serialization;
 #if QUANTUM_UNITY
 using UnityEngine;
 #endif
-#if ENABLE_ANIMANCER
+#if HNSF_ANIMANCER
 using Animancer;
 #endif
 
@@ -28,7 +28,7 @@ namespace Quantum
         {
             public AssetRef<Tag> animTargetTag;
             public AnimEntry[] anims;
-#if ENABLE_ANIMANCER
+#if HNSF_ANIMANCER
             [SerializeReference]
             public ITransition animancerTransition;
 #endif
@@ -87,7 +87,7 @@ namespace Quantum
             return null;
         }
         
-#if ENABLE_ANIMANCER
+#if HNSF_ANIMANCER
         public ITransition GetAnimancerTransitionForTarget(AssetRef<Tag> targetTag)
         {
             foreach (var v in animsTargets)

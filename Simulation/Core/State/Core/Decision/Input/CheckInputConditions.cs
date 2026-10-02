@@ -24,7 +24,7 @@ namespace HnSF.core.state.decisions
             if (charaInputs->ignoreButtons == (ActorInputButtonType)~0) return false;
             if (offset >= Constants.INPUT_BUFFER_SIZE)
             {
-                Log.DebugWarn($"Offset is larger or equal to the input buffer size ({Constants.INPUT_BUFFER_SIZE}), which is not allowed.");
+                Log.Warn($"Offset is larger or equal to the input buffer size ({Constants.INPUT_BUFFER_SIZE}), which is not allowed.");
                 return false;
             }
             

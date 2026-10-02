@@ -1,4 +1,4 @@
-#if ENABLE_ANIMANCER
+#if HNSF_ANIMANCER
 using System.Collections;
 using System.Collections.Generic;
 using Animancer;

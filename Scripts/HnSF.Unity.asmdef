@@ -34,11 +34,6 @@
     "defineConstraints": [],
     "versionDefines": [
         {
-            "name": "com.kybernetik.animancer",
-            "expression": "0.0.0",
-            "define": "ENABLE_ANIMANCER"
-        },
-        {
             "name": "com.playeveryware.eos",
             "expression": "1.0.0",
             "define": "HNSF_PEW_EOS"

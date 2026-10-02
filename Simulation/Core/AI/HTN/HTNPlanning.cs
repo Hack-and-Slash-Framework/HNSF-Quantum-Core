@@ -296,7 +296,7 @@ namespace Quantum
             ctx.agent->currentPlan.currentTask = 0;
             ctx.agent->currentPlan.currentOperator = -1;
             ctx.agent->lastStatus = HTNTaskStatus.Failure;
-            if(ctx.debug) Log.DebugError("Should not happen.");
+            Log.Error("Should not happen.");
             return true;
         }
 
@@ -405,7 +405,7 @@ namespace Quantum
             ctx.agent->currentPlan.currentTask = 0;
             ctx.agent->currentPlan.currentOperator = -1;
             ctx.agent->lastStatus = HTNTaskStatus.Failure;
-            if(ctx.debug) Log.DebugError("Should not happen.");
+            Log.Error("Should not happen.");
             return true;
         }
 

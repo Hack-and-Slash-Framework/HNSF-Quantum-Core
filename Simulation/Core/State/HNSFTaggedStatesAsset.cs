@@ -54,7 +54,7 @@ namespace HnSF.core.state
                     (ts.tag == null || tagToState.TryAdd(ts.tag, ts.state))
                     && (ts.state == null || stateToTag.TryAdd(ts.state, ts.tag))
                     ) continue;
-                Log.DebugError($"{name} already registered tag (index {index}).");
+                Log.Error($"{name} already registered tag (index {index}).");
             }
         }
     }
