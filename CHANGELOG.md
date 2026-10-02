@@ -1,3 +1,10 @@
+## [3.1.3](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v3.1.2...v3.1.3) (2026-10-02)
+
+
+### Bug Fixes
+
+* Update logging ([8304b0a](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/8304b0af2f47e84d58c515578c3fcada9188a745))
+
 ## [3.1.2](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v3.1.1...v3.1.2) (2026-10-02)
 
 
