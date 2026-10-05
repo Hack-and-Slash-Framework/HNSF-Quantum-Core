@@ -1,3 +1,10 @@
+# [3.2.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v3.1.4...v3.2.0) (2026-10-05)
+
+
+### Features
+
+* PostLoaded & PostUnloaded for content definitions ([bd05390](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/bd053903063312981ca2556a3097e0a7771a91ef))
+
 ## [3.1.4](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v3.1.3...v3.1.4) (2026-10-02)
 
 
