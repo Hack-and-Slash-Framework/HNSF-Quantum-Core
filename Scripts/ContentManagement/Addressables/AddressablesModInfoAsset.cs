@@ -353,6 +353,8 @@ public class AddressablesModInfoAsset : BaseModInfoAsset, ILoadedAssetHandleOwne
                     succeeded = false;
                     return false;
                 }
+                
+                definition.PostLoaded();
             }
             else
             {
@@ -364,7 +366,7 @@ public class AddressablesModInfoAsset : BaseModInfoAsset, ILoadedAssetHandleOwne
                 succeeded = false;
                 return false;
             }
-
+            
             loadedAssetList.TryAdd(canonicalKey, new HashSet<LoadedAssetHandleWrapper>());
             return true;
         }
@@ -375,6 +377,7 @@ public class AddressablesModInfoAsset : BaseModInfoAsset, ILoadedAssetHandleOwne
                 try
                 {
                     definition.Unload();
+                    definition.PostUnloaded();
                 }
                 catch (Exception unloadException)
                 {
@@ -450,6 +453,7 @@ public class AddressablesModInfoAsset : BaseModInfoAsset, ILoadedAssetHandleOwne
             if (wasLastLease && lease.AddressablesHandle.Result is IContentDefinition definition)
             {
                 definition.Unload();
+                definition.PostUnloaded();
             }
         }
         finally

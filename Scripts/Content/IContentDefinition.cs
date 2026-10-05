@@ -38,6 +38,11 @@ public abstract partial class IContentDefinition : ScriptableObject
         loadAssetsCompletionSource = null;
         return new UniTask<bool>(true);
     }
+    
+    public virtual void PostLoaded()
+    {
+        
+    }
 
     public UniTask<bool> LoadAssets()
     {
@@ -85,6 +90,11 @@ public abstract partial class IContentDefinition : ScriptableObject
     public virtual void Unload()
     {
         UnloadAssets();
+    }
+
+    public virtual void PostUnloaded()
+    {
+        
     }
 
     public ModAssetSoftReference GetAssetSoftReference()
