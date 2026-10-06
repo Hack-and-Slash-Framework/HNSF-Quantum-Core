@@ -35,6 +35,12 @@ namespace HnSF
             return new UniTask<bool>(true);
         }
 
+        public override void PostLoaded()
+        {
+            base.PostLoaded();
+            MapRegister.Register(this, mapAsset);
+        }
+
         public override Quantum.Map GetMapAsset()
         {
             return mapAsset;
@@ -73,6 +79,12 @@ namespace HnSF
             if (sceneHandle.IsValid()) 
                 Addressables.Release(sceneHandle);
             sceneHandle = default;
+        }
+
+        public override void PostUnloaded()
+        {
+            base.PostUnloaded();
+            MapRegister.Deregister(this, mapAsset);
         }
     }
 }

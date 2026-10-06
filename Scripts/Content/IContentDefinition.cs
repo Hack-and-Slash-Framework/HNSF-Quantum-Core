@@ -43,7 +43,7 @@ public abstract partial class IContentDefinition : ScriptableObject
     {
         
     }
-
+    
     public UniTask<bool> LoadAssets()
     {
         if (areAssetsLoaded)
