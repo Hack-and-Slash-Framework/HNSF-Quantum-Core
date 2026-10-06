@@ -1,3 +1,10 @@
+# [3.3.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v3.2.0...v3.3.0) (2026-10-06)
+
+
+### Features
+
+* Register map definitions ([0e08985](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/0e089851d09f1b9054b1b1e4c72df121097a72a4))
+
 # [3.2.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v3.1.4...v3.2.0) (2026-10-05)
 
 
