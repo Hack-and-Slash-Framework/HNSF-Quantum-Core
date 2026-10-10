@@ -25,7 +25,7 @@ namespace HnSF.ui.menus
 
         public override void UnloadAssets()
         {
-            characterAssetHandle.Release();
+            characterAssetHandle?.Release();
             characterAssetHandle = null;
         }
 
