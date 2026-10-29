@@ -1,3 +1,10 @@
+# [3.4.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v3.3.1...v3.4.0) (2026-10-29)
+
+
+### Features
+
+* Add support for Quantum game tags ([9737687](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/973768770f5d56ff78850d695aa3d23ae3a8f69c))
+
 ## [3.3.1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v3.3.0...v3.3.1) (2026-10-10)
 
 
