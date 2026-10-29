@@ -5,6 +5,7 @@ using System.Linq;
 using HnSF.core.state.actions;
 using HnSF.core.state.decisions;
 using Quantum;
+using Quantum.Addons.GameTags;
 #if QUANTUM_UNITY
 using UnityEngine;
 #endif
@@ -18,6 +19,7 @@ namespace HnSF.core.state
         public string Label;
         public string displayName;
         public AssetRef<Tag>[] tags = Array.Empty<AssetRef<Tag>>();
+        public GameTagCollection gameTags = new GameTagCollection();
         public bool useBaseState;
         public bool processBaseStateFirst;
         public AssetRef<HNSFState> baseState;
