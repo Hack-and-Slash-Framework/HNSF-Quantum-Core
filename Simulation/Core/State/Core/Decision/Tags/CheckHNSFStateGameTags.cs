@@ -26,9 +26,9 @@ namespace HnSF.core.state.decisions
             if (!frame.TryFindAsset(hnsfStateAgent->stateAgent.stateData.state, out var currentStateAsset))
                 return false;
             
-            if (!currentStateAsset.gameTags.ContainsAll(frame, mustHaveTags))
+            if (!currentStateAsset.allGameTags.ContainsAll(frame, mustHaveTags))
                 return false;
-            return !currentStateAsset.gameTags.ContainsAny(frame, mustNotHaveTags);
+            return !currentStateAsset.allGameTags.ContainsAny(frame, mustNotHaveTags);
         }
 
         public override HNSFStateDecision Copy()

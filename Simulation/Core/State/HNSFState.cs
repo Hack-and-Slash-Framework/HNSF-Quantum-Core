@@ -58,6 +58,7 @@ namespace HnSF.core.state
         // Realtime Data
         [NonSerialized] public Dictionary<AssetRef<HNSFState>, HashSet<int>> ignoredActionsDictionary = new Dictionary<AssetRef<HNSFState>, HashSet<int>>();
         [NonSerialized] public HashSet<AssetRef<Tag>> allTags = new HashSet<AssetRef<Tag>>();
+        [NonSerialized] public GameTagCollection allGameTags = new GameTagCollection();
         [NonSerialized] public AssetRef<Tag> realSharedStateTag;
         
         public override void Loaded(IResourceManager resourceManager, Native.Allocator allocator)
@@ -66,10 +67,12 @@ namespace HnSF.core.state
             ignoredActionsDictionary.Clear();
             BuildIgnoreDictionary(resourceManager, ignoredActionsDictionary);
             allTags.Clear();
+            allGameTags = new GameTagCollection();
             CollectAllTags(resourceManager, allTags);
+            CollectAllGameTags(resourceManager, allGameTags);
             GetRealSharedStateTagRecursive(resourceManager, out realSharedStateTag);
         }
-        
+
         private void GetRealSharedStateTagRecursive(IResourceManager resourceManager, out AssetRef<Tag> gotRealSharedStateTag)
         {
             gotRealSharedStateTag = sharedStateTag;
@@ -87,6 +90,16 @@ namespace HnSF.core.state
         {
             foreach(var t in tags) tagSet.Add(t);
             if(useBaseState && resourceManager.TryGetAsset(baseState, out var baseStateAsset)) baseStateAsset.CollectAllTags(resourceManager, tagSet);
+        }
+        
+        private void CollectAllGameTags(IResourceManager resourceManager, GameTagCollection gameTagCollection)
+        {
+            foreach (var t in gameTags.Tags)
+            {
+                if(!gameTagCollection.Tags.Contains(t)) 
+                    gameTagCollection.Tags.Add(t);
+            }
+            if(useBaseState && resourceManager.TryGetAsset(baseState, out var baseStateAsset)) baseStateAsset.CollectAllGameTags(resourceManager, gameTagCollection);
         }
         
         protected virtual void BuildIgnoreDictionary(IResourceManager resourceManager, Dictionary<AssetRef<HNSFState>, HashSet<int>> dict)
@@ -185,6 +198,10 @@ namespace HnSF.core.state
             target.displayName = displayName;
             target.tags = new AssetRef<Tag>[tags.Length];
             Array.Copy(tags, target.tags, tags.Length);
+            target.gameTags = new GameTagCollection
+            {
+                Tags = gameTags.Tags.ToList()
+            };
             target.useBaseState = useBaseState;
             target.processBaseStateFirst = processBaseStateFirst;
             target.baseState = baseState;

@@ -42,10 +42,10 @@ namespace HnSF.StatusEffects.Components
             if (!frame.TryFindAsset(hnsfStateAgent->stateAgent.stateData.state, out var currentStateAsset))
                 return false;
 
-            if (!currentStateAsset.gameTags.ContainsAll(frame, requirements.mustHaveTags))
+            if (!currentStateAsset.allGameTags.ContainsAll(frame, requirements.mustHaveTags))
                 return false;
 
-            return !currentStateAsset.gameTags.ContainsAny(frame, requirements.mustNotHaveTags);
+            return !currentStateAsset.allGameTags.ContainsAny(frame, requirements.mustNotHaveTags);
         }
     }
 }
