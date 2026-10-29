@@ -1,3 +1,10 @@
+## [3.4.1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v3.4.0...v3.4.1) (2026-10-29)
+
+
+### Bug Fixes
+
+* State GameTags fixes ([d68ddc6](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/d68ddc66849d421b0120bb866e2149542aa2a3ad))
+
 # [3.4.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v3.3.1...v3.4.0) (2026-10-29)
 
 
