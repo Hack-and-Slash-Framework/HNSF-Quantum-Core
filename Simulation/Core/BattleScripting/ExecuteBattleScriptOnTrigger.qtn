@@ -1,0 +1,8 @@
+flags BattleScriptTriggerFlags{
+    SingleInstance, OneInstancePerTarget
+}
+
+component ExecuteBattleScriptOnTrigger{
+    BattleScriptTriggerFlags triggerFlags;
+    asset_ref<HnSF.core.GroupControl.BattleActorGroupControlScript> battleScript;
+}
