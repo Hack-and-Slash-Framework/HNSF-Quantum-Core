@@ -1,3 +1,10 @@
+# [3.5.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v3.4.1...v3.5.0) (2026-10-30)
+
+
+### Features
+
+* Battle Script on trigger component ([0c0d2a0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/0c0d2a007e78577de236a00b89f5a5dc6f9bd7be))
+
 ## [3.4.1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v3.4.0...v3.4.1) (2026-10-29)
 
 
