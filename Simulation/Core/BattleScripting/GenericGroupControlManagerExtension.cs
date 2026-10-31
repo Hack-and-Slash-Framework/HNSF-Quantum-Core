@@ -1,3 +1,5 @@
+using HnSF.core.GroupControl;
+
 namespace Quantum
 {
     public unsafe partial struct GenericGroupControlManager
@@ -92,6 +94,25 @@ namespace Quantum
         {
             var dict = frame.ResolveDictionary(controlInfoEntityMap);
             return dict.ContainsKey(keyEntityRef);
+        }
+        
+        public bool IsGroupExecutingScript(Frame frame, EntityRef keyEntityRef,
+            AssetRef<BattleActorGroupControlScript> scriptAssetRef)
+        {
+            var dict = frame.ResolveDictionary(controlInfoEntityMap);
+            if (!dict.TryGetValuePointer(keyEntityRef, out var sce))
+                return false;
+            var sList = frame.ResolveList(sce->scriptEntityList);
+
+            foreach (var se in sList)
+            {
+                if(!frame.Unsafe.TryGetPointer(se, out GenericGroupControl* ggc))
+                    continue;
+                if(ggc->data.script != scriptAssetRef)
+                    continue;
+                return true;
+            }
+            return false;
         }
     }
 }

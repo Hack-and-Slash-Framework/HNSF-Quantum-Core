@@ -1,5 +1,5 @@
 flags BattleScriptTriggerFlags{
-    SingleInstance, OneInstancePerTarget
+    SingleInstance, OneInstancePerTarget, DestroyTriggerOnSuccess
 }
 
 component ExecuteBattleScriptOnTrigger{
