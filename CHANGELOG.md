@@ -1,3 +1,10 @@
+# [3.6.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v3.5.0...v3.6.0) (2026-10-31)
+
+
+### Features
+
+* Destroying battle script trigger on success ([7701a9b](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/7701a9bec77799fe14a6ef6a517ae634f9256ec6))
+
 # [3.5.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v3.4.1...v3.5.0) (2026-10-30)
 
 
