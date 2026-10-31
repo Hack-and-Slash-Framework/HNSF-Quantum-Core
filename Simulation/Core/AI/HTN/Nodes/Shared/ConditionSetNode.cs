@@ -1,12 +1,7 @@
 #if UNITY_EDITOR
 using System;
 using System.Collections.Generic;
-using HnSF.core.AI.HTN;
 using HnSF.core.AI.HTN.Conditions;
-using HnSF.core.AI.HTN.Functions;
-using HnSF.core.AI.HTN.Nodes;
-using HnSF.core.AI.HTN.Param;
-using HnSF.Nodes;
 using Unity.GraphToolkit.Editor;
 using UnityEngine;
 
