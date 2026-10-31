@@ -9,7 +9,9 @@ namespace Quantum
         /// </summary>
         public static FPVector2 InverseTransformDirection(this FPVector2 direction, FP rotation)
         {
-            FPMath.SinCosRaw(rotation, out var sinRaw, out var cosRaw);
+            FPMath.SinCos(rotation, out var sin, out var cos);
+            var sinRaw = sin.RawValue;
+            var cosRaw = cos.RawValue;
             FPVector2 fpVector2;
             fpVector2.X.RawValue = (direction.X.RawValue * cosRaw + 32768L /*0x8000*/ >> 16 /*0x10*/) + (direction.Y.RawValue * sinRaw + 32768L /*0x8000*/ >> 16 /*0x10*/);
             fpVector2.Y.RawValue = (direction.Y.RawValue * cosRaw + 32768L /*0x8000*/ >> 16 /*0x10*/) - (direction.X.RawValue * sinRaw + 32768L /*0x8000*/ >> 16 /*0x10*/);
@@ -21,7 +23,9 @@ namespace Quantum
         /// </summary>
         public static FPVector2 TransformDirection(this FPVector2 direction, FP rotation)
         {
-            FPMath.SinCosRaw(rotation, out var sinRaw, out var cosRaw);
+            FPMath.SinCos(rotation, out var sin, out var cos);
+            var sinRaw = sin.RawValue;
+            var cosRaw = cos.RawValue;
             FPVector2 fpVector2;
             fpVector2.X.RawValue = (direction.X.RawValue * cosRaw + 32768L /*0x8000*/ >> 16 /*0x10*/) - (direction.Y.RawValue * sinRaw + 32768L /*0x8000*/ >> 16 /*0x10*/);
             fpVector2.Y.RawValue = (direction.X.RawValue * sinRaw + 32768L /*0x8000*/ >> 16 /*0x10*/) + (direction.Y.RawValue * cosRaw + 32768L /*0x8000*/ >> 16 /*0x10*/);
