@@ -1,3 +1,10 @@
+# [3.7.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v3.6.2...v3.7.0) (2026-11-12)
+
+
+### Features
+
+* State Cancel Listing ([e90111f](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/e90111f81166f7526c31524e6927e8ea8bba3601))
+
 ## [3.6.2](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v3.6.1...v3.6.2) (2026-10-31)
 
 
