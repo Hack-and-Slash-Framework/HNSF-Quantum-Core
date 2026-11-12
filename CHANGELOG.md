@@ -1,3 +1,10 @@
+# [3.8.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v3.7.2...v3.8.0) (2026-11-12)
+
+
+### Features
+
+* Cancel list grouping ([0e9823d](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/0e9823dda92a8735c716104978671c3bc1e9c6af))
+
 ## [3.7.2](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v3.7.1...v3.7.2) (2026-11-12)
 
 
