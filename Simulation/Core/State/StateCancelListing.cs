@@ -48,7 +48,7 @@ namespace Quantum
         public List<StateCancelListEntry> entries = new List<StateCancelListEntry>();
         public bool overrideCurrentStateRequest;
         
-        public int AttemptCancel(Frame frame, EntityRef entity, ref HNSFStateContext stateContext)
+        public int AttemptCancel(Frame frame, EntityRef entity, ref HNSFStateContext stateContext, bool ignoreInputRequirements = false)
         {
             var savedWorkingState = stateContext.workingState;
 
@@ -100,7 +100,8 @@ namespace Quantum
                 
                 if (stateAsset.CheckConditions(frame, entity, ref stateContext) == false) continue;
                         
-                if (stateAsset.defaultInputConditions.Length > 0 
+                if (!ignoreInputRequirements
+                    && stateAsset.defaultInputConditions.Length > 0 
                     && frame.Unsafe.TryGetPointer<ActorInputBuffer>(entity, out var actorInputInfo) )
                 {
                     var gotValidInput = false;
