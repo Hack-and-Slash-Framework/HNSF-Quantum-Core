@@ -1,5 +1,10 @@
+using System;
 using System.Collections.Generic;
 using HnSF.core.state;
+using HnSF.core.state.decisions;
+#if QUANTUM_UNITY
+using UnityEngine;
+#endif
 
 namespace Quantum
 {
@@ -27,11 +32,22 @@ namespace Quantum
 
         public string label;
         
+#if QUANTUM_UNITY
+        [SerializeReference, SubclassSelector]
+#endif
+        public HNSFStateDecision[] conditions = Array.Empty<HNSFStateDecision>();
+        
         public List<StateCancelListEntry> entries = new List<StateCancelListEntry>();
         
         public int AttemptCancel(Frame frame, EntityRef entity, ref HNSFStateContext stateContext)
         {
             var savedWorkingState = stateContext.workingState;
+            
+            foreach (var d in conditions)
+            {
+                if (d.Decide(frame, entity, ref stateContext) == false)
+                    return -1;
+            }
             
             for (int i = 0; i < entries.Count; i++)
             {
@@ -81,6 +97,8 @@ namespace Quantum
                 
                 // Success, cleanup.
                 stateContext.workingState = savedWorkingState;
+
+                return i;
             }
             return -1;
         }
