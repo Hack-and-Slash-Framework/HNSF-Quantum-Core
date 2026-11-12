@@ -123,13 +123,13 @@ namespace HnSF.core.state
         /// <param name="whitelist"></param>
         /// <param name="blacklist"></param>
         /// <returns>If a transition occurs, returns True.</returns>
-        public Boolean Execute(ref FrameThreadSafe frame, FP deltaTime, HNSFStateAgentData* hnsfData, EntityRef entity,
+        public virtual Boolean Execute(ref FrameThreadSafe frame, FP deltaTime, HNSFStateAgentData* hnsfData, EntityRef entity,
             ref HNSFStateContext context)
         {
             return Execute(ref frame, deltaTime, hnsfData, entity, ref context, ignoredActionsDictionary);
         }
         
-        public Boolean Execute(ref FrameThreadSafe frame, FP deltaTime, HNSFStateAgentData* hnsfData, EntityRef entity, ref HNSFStateContext context, Dictionary<AssetRef<HNSFState>, HashSet<int>> ignored)
+        public virtual Boolean Execute(ref FrameThreadSafe frame, FP deltaTime, HNSFStateAgentData* hnsfData, EntityRef entity, ref HNSFStateContext context, Dictionary<AssetRef<HNSFState>, HashSet<int>> ignored)
         {
             if (useBaseState && processBaseStateFirst)
             {
@@ -151,7 +151,7 @@ namespace HnSF.core.state
             return false;
         }
 
-        public bool CheckConditions(Frame frame, EntityRef entity, ref HNSFStateContext stateContext)
+        public virtual bool CheckConditions(Frame frame, EntityRef entity, ref HNSFStateContext stateContext)
         {
             if (conditions == null || conditions.Length == 0) return true;
             foreach (var d in conditions)
@@ -161,7 +161,7 @@ namespace HnSF.core.state
             return true;
         }
         
-        public HNSFStateAction GetStateActionById(int id)
+        public virtual HNSFStateAction GetStateActionById(int id)
         {
             foreach (var t in data)
             {
@@ -171,7 +171,7 @@ namespace HnSF.core.state
             return default;
         }
 
-        public int GetStateActionIndexById(int id)
+        public virtual int GetStateActionIndexById(int id)
         {
             for (int i = 0; i < data.Length; i++)
             {

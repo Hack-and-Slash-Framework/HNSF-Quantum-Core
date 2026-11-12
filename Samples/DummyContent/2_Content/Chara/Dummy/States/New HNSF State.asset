@@ -13,13 +13,14 @@ MonoBehaviour:
   m_Name: New HNSF State
   m_EditorClassIdentifier: Quantum.Simulation::HnSF.core.state.HNSFState
   Identifier:
-    Path: HNSF-Quantum-Core/Samples/DummyContent/2_Content/Chara/Dummy/States/New
-      HNSF State
+    Path: HNSF-Quantum-Core/Samples/DummyContent/2_Content/Chara/Dummy/States/New HNSF State
     Guid:
       Value: 361292334572208376
   Label: 
   displayName: 
   tags: []
+  gameTags:
+    Tags: []
   useBaseState: 0
   processBaseStateFirst: 0
   baseState:
@@ -102,10 +103,10 @@ MonoBehaviour:
               maxPitch:
                 RawValue: 0
             soundsWeighted:
-              _list: 0000000001000000
-              _weights: 0a00000005000000
-              _probabilities: 0f0000000a000000
-              _alias: 0000000000000000
+              _list: 0000000001000000i
+              _weights: 0a00000005000000i
+              _probabilities: 0f0000000a000000i
+              _alias: 0000000000000000i
               _totalWeight: 15
               _areAllProbabilitiesIdentical: 0
               _minWeight: 5
