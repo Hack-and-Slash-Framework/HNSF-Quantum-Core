@@ -17,6 +17,13 @@ namespace Quantum
             StateByTag,
             StateByAsset
         }
+
+        [System.Serializable]
+        public enum ConditionsExecuteOnType
+        {
+            Once,
+            PerState
+        }
         
         [System.Serializable]
         public class StateCancelListEntry
@@ -36,21 +43,29 @@ namespace Quantum
         [SerializeReference, SubclassSelector]
 #endif
         public HNSFStateDecision[] conditions = Array.Empty<HNSFStateDecision>();
-        
+
+        public ConditionsExecuteOnType whenExecuteCondition = ConditionsExecuteOnType.Once;
         public List<StateCancelListEntry> entries = new List<StateCancelListEntry>();
+        public bool overrideCurrentStateRequest;
         
         public int AttemptCancel(Frame frame, EntityRef entity, ref HNSFStateContext stateContext)
         {
             var savedWorkingState = stateContext.workingState;
-            
-            foreach (var d in conditions)
+
+            if (whenExecuteCondition == ConditionsExecuteOnType.Once)
             {
-                if (d.Decide(frame, entity, ref stateContext) == false)
-                    return -1;
+                foreach (var d in conditions)
+                {
+                    if (d.Decide(frame, entity, ref stateContext) == false)
+                        return -1;
+                }
             }
-            
+
             for (int i = 0; i < entries.Count; i++)
             {
+                if (stateContext.agentData->toStateRequested && !overrideCurrentStateRequest)
+                    break;
+                
                 HNSFState stateAsset = null;
 
                 switch (entries[i].entryType)
@@ -72,9 +87,17 @@ namespace Quantum
                 if(stateAsset == null)
                     continue;
                 
-                stateContext.workingState = entries[i].stateAssetRef;
+                stateContext.workingState = stateAsset;
                 
-                if (stateContext.agentData->toStateRequested) continue;
+                if (whenExecuteCondition == ConditionsExecuteOnType.PerState)
+                {
+                    foreach (var d in conditions)
+                    {
+                        if (d.Decide(frame, entity, ref stateContext) == false)
+                            return -1;
+                    }
+                }
+                
                 if (stateAsset.CheckConditions(frame, entity, ref stateContext) == false) continue;
                         
                 if (stateAsset.defaultInputConditions.Length > 0 
@@ -92,14 +115,14 @@ namespace Quantum
                 }
                         
                 stateContext.agentData->toStateRequested = true;
-                stateContext.agentData->toState = entries[i].stateAssetRef;
+                stateContext.agentData->toState = stateAsset;
                 stateContext.agentData->toFrame = entries[i].transitionToSameFrame ? stateContext.agentData->frame : 0;
                 
-                // Success, cleanup.
                 stateContext.workingState = savedWorkingState;
-
                 return i;
             }
+            
+            stateContext.workingState = savedWorkingState;
             return -1;
         }
     }
