@@ -1,3 +1,10 @@
+## [3.7.2](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v3.7.1...v3.7.2) (2026-11-12)
+
+
+### Bug Fixes
+
+* State cancel list to state, condition execution placing ([2c9924a](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/2c9924ac7089f3c534ceb3d76f1ff914be4c53f8))
+
 ## [3.7.1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v3.7.0...v3.7.1) (2026-11-12)
 
 
