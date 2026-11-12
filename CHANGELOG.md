@@ -1,3 +1,10 @@
+## [3.7.1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v3.7.0...v3.7.1) (2026-11-12)
+
+
+### Bug Fixes
+
+* Cancel Listing conditions, fix successful return ([038db2b](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/038db2b50f7e4607cdbdb72caa1ddc634150b523))
+
 # [3.7.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v3.6.2...v3.7.0) (2026-11-12)
 
 
