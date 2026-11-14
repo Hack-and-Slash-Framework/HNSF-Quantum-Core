@@ -183,6 +183,8 @@ public class StateTimelineEditorView : VisualElement
                     Array.Resize(ref stateAsset.data, stateAsset.data.Length+1);
                     stateAsset.data[^1] = copy;
 
+                    stateAsset.RebuildGroups();
+                    
                     EditorUtility.SetDirty(stateAsset);
                     
                     ForceRefresh();
@@ -204,6 +206,8 @@ public class StateTimelineEditorView : VisualElement
         
                     Array.Resize(ref stateAsset.data, stateAsset.data.Length+1);
                     stateAsset.data[^1] = copy;
+                    
+                    stateAsset.RebuildGroups();
                     
                     EditorUtility.SetDirty(stateAsset);
                     
@@ -292,6 +296,8 @@ public class StateTimelineEditorView : VisualElement
             Array.Resize(ref parentAction.children, parentAction.children.Length+1);
             parentAction.children[^1] = ass;
         }
+        
+        stateAsset.RebuildGroups();
         
         EditorUtility.SetDirty(stateAsset);
         

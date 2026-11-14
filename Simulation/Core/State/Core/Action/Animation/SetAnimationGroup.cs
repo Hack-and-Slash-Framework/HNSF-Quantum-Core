@@ -10,6 +10,8 @@ namespace HnSF.core.state.actions
     {
         public AssetRef<AnimationGroupDefinitions> animationGroupRef;
         
+        public override StateActionGroupTyping GroupType => StateActionGroupTyping.Animation;
+        
         public override bool ExecuteAction(Frame frame, EntityRef entity, FP rangePercent,
             ref HNSFStateContext stateContext)
         {

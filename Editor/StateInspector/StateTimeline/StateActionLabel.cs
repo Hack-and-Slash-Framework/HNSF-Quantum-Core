@@ -430,6 +430,8 @@ public class StateActionLabel : VisualElement
             currentAction.parent.children = currentAction.parent.children.Where((a, b) => (a != currentAction) ).ToArray();
         }
         
+        stateAsset.RebuildGroups();
+        
         EditorUtility.SetDirty(stateAsset);
     }
 
@@ -444,6 +446,8 @@ public class StateActionLabel : VisualElement
         Undo.RecordObject(stateAsset, $"Added Action {type.Name} to {stateAsset.name}");
         Array.Resize(ref parentAction.children, parentAction.children.Length+1);
         parentAction.children[^1] = ass;
+        
+        stateAsset.RebuildGroups();
         
         EditorUtility.SetDirty(stateAsset);
         whenActionChanged?.Invoke();

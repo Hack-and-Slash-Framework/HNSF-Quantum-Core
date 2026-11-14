@@ -11,6 +11,8 @@ namespace HnSF.core.state.actions
         public int layer;
         public HNSFParamFPVector2 param = new HNSFParamFPVector2();
         
+        public override StateActionGroupTyping GroupType => StateActionGroupTyping.Animation;
+        
         public override bool ExecuteAction(Frame frame, EntityRef entity, FP rangePercent,
             ref HNSFStateContext stateContext)
         {

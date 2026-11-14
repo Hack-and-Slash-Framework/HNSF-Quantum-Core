@@ -25,7 +25,9 @@ namespace HnSF.core.state.actions
 
         public CancelListingEntry[] cancelListings = Array.Empty<CancelListingEntry>();
         public bool immediateTransition;
-        
+
+        public override StateActionGroupTyping GroupType => StateActionGroupTyping.StateTransition;
+
         public override bool ExecuteAction(Frame frame, EntityRef entity, FP rangePercent, ref HNSFStateContext stateContext)
         {
             HNSFStateContext targetStateContext = stateContext;

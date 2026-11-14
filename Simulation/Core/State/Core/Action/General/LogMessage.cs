@@ -9,7 +9,9 @@ namespace HnSF.core.state.actions
     public unsafe partial class LogMessage : HNSFStateAction
     {
         public string msg = "";
-        
+
+        public override StateActionGroupTyping GroupType => StateActionGroupTyping.Debug;
+
         public override bool ExecuteAction(Frame frame, EntityRef entity, FP rangePercent,
             ref HNSFStateContext stateContext)
         {

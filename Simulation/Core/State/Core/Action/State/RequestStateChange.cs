@@ -31,7 +31,9 @@ namespace HnSF.core.state.actions
         public StateChangeEntry[] stateChangeList;
         public bool immediateTransition;
         public int throweeId;
-    
+
+        public override StateActionGroupTyping GroupType => StateActionGroupTyping.StateTransition;
+
         public override bool ExecuteAction(Frame frame, EntityRef entity, FP rangePercent,
             ref HNSFStateContext stateContext)
         {

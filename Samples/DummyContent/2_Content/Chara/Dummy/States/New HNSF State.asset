@@ -46,6 +46,7 @@ MonoBehaviour:
   initialGroundedState: 0
   data:
   - rid: 8275551733476753493
+  actionGroupings: []
   countsAsStateForDecay:
     Id:
       Value: 0

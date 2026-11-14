@@ -15,6 +15,8 @@ namespace HnSF.core.state.actions
 
         public FP smoothing = FP._0;
 
+        public override StateActionGroupTyping GroupType => StateActionGroupTyping.Animation;
+        
         public override bool ExecuteAction(Frame frame, EntityRef entity, FP rangePercent,
             ref HNSFStateContext stateContext)
         {

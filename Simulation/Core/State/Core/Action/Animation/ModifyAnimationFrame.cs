@@ -18,6 +18,8 @@ namespace HnSF.core.state.actions
         public ModifyType modify;
         public int value;
         
+        public override StateActionGroupTyping GroupType => StateActionGroupTyping.Animation;
+        
         public override bool ExecuteAction(Frame frame, EntityRef entity, FP rangePercent,
             ref HNSFStateContext stateContext)
         {

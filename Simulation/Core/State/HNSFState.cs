@@ -8,6 +8,9 @@ using Quantum;
 using Quantum.Addons.GameTags;
 #if QUANTUM_UNITY
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 #endif
 
 namespace HnSF.core.state
@@ -40,7 +43,12 @@ namespace HnSF.core.state
         [SerializeReference, SubclassSelector]
 #endif
         public HNSFStateAction[] data = Array.Empty<HNSFStateAction>();
-
+#if QUANTUM_UNITY
+        [SerializeField]
+#endif
+        public Dictionary<StateActionGroupTyping, StateActionGrouping> actionGroupings = new Dictionary<StateActionGroupTyping, StateActionGrouping>();
+        
+        
         [Header("Combo Decay")] 
         public AssetRef<HNSFState> countsAsStateForDecay;
         public bool incrementStateCounter = true;
@@ -60,7 +68,50 @@ namespace HnSF.core.state
         [NonSerialized] public HashSet<AssetRef<Tag>> allTags = new HashSet<AssetRef<Tag>>();
         [NonSerialized] public GameTagCollection allGameTags = new GameTagCollection();
         [NonSerialized] public AssetRef<Tag> realSharedStateTag;
-        
+
+        public void RebuildGroups()
+        {
+            actionGroupings.Clear();
+
+            if (data == null)
+                return;
+            
+            for (int i = 0; i < data.Length; i++)
+            {
+                if(data[i] == null)
+                    continue;
+
+                FillGroupFromActionRecursive(data[i]);
+            }
+            
+            #if UNITY_EDITOR
+            EditorUtility.SetDirty(this);
+            #endif
+        }
+
+        private void FillGroupFromActionRecursive(HNSFStateAction hnsfStateAction)
+        {
+            foreach (StateActionGroupTyping flag in Enum.GetValues(typeof(StateActionGroupTyping)))
+            {
+                if (flag == StateActionGroupTyping.None || (hnsfStateAction.GroupType & flag) != flag)
+                    continue;
+
+                if (!actionGroupings.TryGetValue(flag, out var grouping))
+                {
+                    grouping = new StateActionGrouping();
+                    actionGroupings.Add(flag, grouping);
+                }
+
+                grouping.data.Add(hnsfStateAction);
+            }
+            
+            if (hnsfStateAction.children == null)
+                return;
+            
+            foreach (var child in hnsfStateAction.children)
+                FillGroupFromActionRecursive(child);
+        }
+
         public override void Loaded(IResourceManager resourceManager, Native.Allocator allocator)
         {
             base.Loaded(resourceManager, allocator);
