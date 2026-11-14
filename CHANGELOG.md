@@ -1,3 +1,10 @@
+# [3.9.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v3.8.0...v3.9.0) (2026-11-14)
+
+
+### Features
+
+* State Action Grouping ([d3f7cd0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/d3f7cd079f445d40b64cdd9b86f13e8f97fbc7c6))
+
 # [3.8.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v3.7.2...v3.8.0) (2026-11-12)
 
 
