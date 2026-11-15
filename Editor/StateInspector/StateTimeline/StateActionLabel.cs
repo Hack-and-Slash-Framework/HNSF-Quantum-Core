@@ -74,6 +74,14 @@ public class StateActionLabel : VisualElement
     {
         var v = this.Children().First();
         
+        v.RegisterCallback<ClickEvent>(evt =>
+        {
+            if (evt.button != (int)MouseButton.LeftMouse)
+                return;
+                
+            var w = PopUpPropertyInspector.Create(stateAsset, stateActionAsset, stateSo, stateActionSP);
+        });
+        
         v.AddManipulator(new ContextualMenuManipulator((ContextualMenuPopulateEvent evt) =>
         {
             evt.menu.AppendAction("Edit", (x) =>
