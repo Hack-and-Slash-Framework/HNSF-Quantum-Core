@@ -1,3 +1,10 @@
+# [3.11.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v3.10.0...v3.11.0) (2026-11-15)
+
+
+### Features
+
+* Click state action label to open editor ([30812b9](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/30812b9c927b0cd2d04e8ed10fd120b5804227c7))
+
 # [3.10.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v3.9.1...v3.10.0) (2026-11-15)
 
 
