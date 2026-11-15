@@ -1,3 +1,3 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
-    <ui:VisualElement name="main-framebar-bg" class="frame-bar" style="flex-direction: row; background-color: rgba(128, 128, 128, 0); height: 25px; transform-origin: top; width: 700px; min-height: 25px; max-height: 25px; min-width: 0; border-bottom-width: 1px; border-bottom-color: rgba(255, 255, 255, 255);" />
+    <ui:VisualElement name="main-framebar-bg" class="frame-bar" style="flex-direction: row; background-color: rgba(128, 128, 128, 0); height: 24px; transform-origin: top; width: 700px; border-bottom-width: 1px; border-bottom-color: rgba(255, 255, 255, 0.169); margin-top: 1px; margin-bottom: 1px; border-left-color: rgba(255, 255, 255, 0.169); border-right-color: rgba(255, 255, 255, 0.169); border-top-color: rgba(255, 255, 255, 0.169); border-top-width: 0; padding-bottom: 0; padding-top: 0;"/>
 </ui:UXML>

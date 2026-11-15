@@ -1,6 +1,9 @@
 using System;
 using Photon.Deterministic;
 using Quantum;
+#if QUANTUM_UNITY
+using UnityEngine;
+#endif
 
 namespace HnSF.core.state.actions
 {
@@ -19,6 +22,9 @@ namespace HnSF.core.state.actions
         public int value;
         
         public override StateActionGroupTyping GroupType => StateActionGroupTyping.Animation;
+#if QUANTUM_UNITY
+        public override Color ActionColor => Color.darkGreen;
+#endif
         
         public override bool ExecuteAction(Frame frame, EntityRef entity, FP rangePercent,
             ref HNSFStateContext stateContext)

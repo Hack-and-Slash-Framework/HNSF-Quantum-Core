@@ -43,16 +43,36 @@ public class StateTimelineEditorView : VisualElement
         
         ScrollView labelPanel = this.Q<ScrollView>(name: "data-labels");
         ScrollView dataPanel = this.Q<ScrollView>(name: "data-frames");
-        VisualElement ve = this.Q<VisualElement>(name: "frame-padding");
+        labelPanel.touchScrollBehavior = ScrollView.TouchScrollBehavior.Clamped;
+        dataPanel.touchScrollBehavior = ScrollView.TouchScrollBehavior.Clamped;
         
         // SCROLLING
-        labelPanel.verticalScroller.valueChanged += (v) => { dataPanel.verticalScroller.value = v; };
-
-        labelPanel.contentContainer.RegisterCallback<WheelEvent>(@event =>
+        labelPanel.verticalScroller.valueChanged += (v) =>
         {
-            labelPanel.verticalScroller.value += @event.delta.y * labelPanel.verticalPageSize;
-            @event.StopPropagation();
-        });
+            dataPanel.scrollOffset = new Vector2(dataPanel.scrollOffset.x, Mathf.Max(0f, v));
+        };
+
+        float GetLabelScrollRange()
+        {
+            return Mathf.Max(0f, labelPanel.contentContainer.layout.height - labelPanel.contentViewport.layout.height);
+        }
+
+        void ClampLabelScroll(GeometryChangedEvent evt)
+        {
+            labelPanel.scrollOffset = new Vector2(0f,
+                Mathf.Clamp(labelPanel.scrollOffset.y, 0f, GetLabelScrollRange()));
+        }
+
+        labelPanel.contentContainer.RegisterCallback<GeometryChangedEvent>(ClampLabelScroll);
+        labelPanel.contentViewport.RegisterCallback<GeometryChangedEvent>(ClampLabelScroll);
+        
+        labelPanel.RegisterCallback<WheelEvent>(@event =>
+        {
+            labelPanel.scrollOffset = new Vector2(0f, Mathf.Clamp(
+                labelPanel.scrollOffset.y + @event.delta.y * labelPanel.verticalPageSize,
+                0f, GetLabelScrollRange()));
+            @event.StopImmediatePropagation();
+        }, TrickleDown.TrickleDown);
 
         dataPanel.contentContainer.RegisterCallback<WheelEvent>(@event =>
         {

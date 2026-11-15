@@ -37,8 +37,34 @@ public class StateActionLabel : VisualElement
         li.name = $"stateActionLabel_{stateAsset.Guid.ToString()}_{stateActionAsset.id.ToString()}";
         li.emptyText = stateActionAsset.GetType().Name;
         li.SetLabel(stateActionAsset.Label);
-        li.style.height = new StyleLength(25);
-        li.Text.BindProperty(this.stateActionSP.FindPropertyRelative("Label"));
+        li.Label.tooltip = li.Label.text;
+        li.style.height = new StyleLength(24);
+        li.style.overflow = Overflow.Hidden;
+        li.Root.style.flexGrow = 1;
+        li.Root.style.minWidth = 0;
+        li.Root.style.minHeight = 0;
+        li.Label.style.flexGrow = 1;
+        li.Label.style.minWidth = 0;
+        li.Label.style.minHeight = 0;
+        li.Label.style.whiteSpace = WhiteSpace.NoWrap;
+        li.Label.style.overflow = Overflow.Hidden;
+        li.Label.style.unityTextAlign = TextAnchor.MiddleCenter;
+        li.Label.style.textOverflow = TextOverflow.Clip;
+        li.style.marginLeft = 2;
+        li.style.marginRight = 2;
+        li.style.marginTop = 1;
+        li.style.marginBottom = 1;
+        li.style.borderBottomLeftRadius = 1;
+        li.style.borderBottomRightRadius = 1;
+        li.style.borderTopLeftRadius = 1;
+        li.style.borderTopRightRadius = 1;
+        var labelProperty = this.stateActionSP.FindPropertyRelative("Label");
+        li.Text.BindProperty(labelProperty);
+        li.Label.TrackPropertyValue(labelProperty, property =>
+        {
+            li.SetLabel(property.stringValue);
+            li.Label.tooltip = li.Label.text;
+        });
         this.Add(li);
         
         UpdateUi();
@@ -269,7 +295,7 @@ public class StateActionLabel : VisualElement
     public void UpdateUi()
     {
         var lli = this.Q<LabelListItem>();
-
+        
         lli.Label.style.color = StateEditorHelpers.IsIgnored(workingState, stateAsset, stateActionAsset) ? Color.gray : Color.white;
         lli.Text.style.color = StateEditorHelpers.IsIgnored(workingState, stateAsset, stateActionAsset) ? Color.gray : Color.white;
     }

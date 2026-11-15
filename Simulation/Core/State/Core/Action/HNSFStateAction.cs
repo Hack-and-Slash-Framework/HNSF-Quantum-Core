@@ -32,6 +32,9 @@ namespace HnSF.core.state.actions
         public StateActionTargetContext actionTargetContext;
 
         public virtual StateActionGroupTyping GroupType => StateActionGroupTyping.None;
+        #if QUANTUM_UNITY
+        public virtual Color ActionColor => Color.cadetBlue;
+        #endif
         
         public virtual void OnValidate()
         {

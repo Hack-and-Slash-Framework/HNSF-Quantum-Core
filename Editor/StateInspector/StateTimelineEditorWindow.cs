@@ -26,7 +26,7 @@ namespace HnSF
         {
             StateTimelineEditorWindow wnd = CreateWindow<StateTimelineEditorWindow>();
             wnd.titleContent = new GUIContent(String.IsNullOrEmpty(state.Label) ? "State Editor" : state.Label);
-            wnd.minSize = new Vector2(900, 500);
+            //wnd.minSize = new Vector2(900, 500);
             wnd.SetSelection(state);
             return wnd;
         }

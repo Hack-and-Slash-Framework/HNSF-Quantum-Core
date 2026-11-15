@@ -27,7 +27,7 @@ public class StateTimelineFramebar : VisualElement
         vte.CloneTree(this);
 
         var mainBarBG = this.Children().First();
-
+        
         mainBarBG.style.width = new StyleLength((topState.totalFrames + 2) * 20.0f);
         
         framebarLabelTemplate = Resources.Load<VisualTreeAsset>("UXML/main-framebar-label");
@@ -56,6 +56,7 @@ public class StateTimelineFramebar : VisualElement
             if (framebarWidth <= 0) currFramebar.style.display = new StyleEnum<DisplayStyle>(DisplayStyle.None);
             currFramebar.style.left = 20.0f * framebarStart;
             currFramebar.style.width = new StyleLength(20.0f * (framebarWidth));
+            currFramebar.style.backgroundColor = new StyleColor(stateActionAsset.ActionColor);
             currFramebar.Q<Label>().text = (frStart + 1 - frStart).ToString();
         }
     }

@@ -1,6 +1,9 @@
 using Photon.Deterministic;
 using System;
 using Quantum;
+#if QUANTUM_UNITY
+using UnityEngine;
+#endif
 
 namespace HnSF.core.state.actions
 {
@@ -15,6 +18,10 @@ namespace HnSF.core.state.actions
         public bool autoPlay;
         public int throweeId;
         public int startFrame = 0;
+        
+#if QUANTUM_UNITY
+        public override Color ActionColor => Color.darkGreen;
+#endif
         
         public override StateActionGroupTyping GroupType => StateActionGroupTyping.Animation;
         
