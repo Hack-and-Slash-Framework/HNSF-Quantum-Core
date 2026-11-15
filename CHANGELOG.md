@@ -1,3 +1,10 @@
+## [3.9.1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v3.9.0...v3.9.1) (2026-11-15)
+
+
+### Bug Fixes
+
+* Fix state editor scrolling, layout improvements ([2bd19dd](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/2bd19dd720e06911ed2322f84ca080b795e37715))
+
 # [3.9.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v3.8.0...v3.9.0) (2026-11-14)
 
 
