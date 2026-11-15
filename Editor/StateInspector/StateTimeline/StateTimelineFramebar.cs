@@ -4,6 +4,7 @@ using HnSF;
 using HnSF.core.state;
 using HnSF.core.state.actions;
 using Quantum;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -14,14 +15,18 @@ public class StateTimelineFramebar : VisualElement
     private HNSFState topState;
     private HNSFState stateAsset;
     private HNSFStateAction stateActionAsset;
+    [SerializeField] private SerializedObject stateSo;
+    [SerializeField] private SerializedProperty stateActionSP;
 
     private ActionRange[] frameCounts;
     
-    public StateTimelineFramebar(HNSFState topState, HNSFState state, HNSFStateAction stateAction)
+    public StateTimelineFramebar(HNSFState topState, HNSFState state, HNSFStateAction stateAction,  SerializedObject stateSo, SerializedProperty stateActionSP)
     {
         this.topState = topState;
         stateAsset = state;
         stateActionAsset = stateAction;
+        this.stateSo = stateSo;
+        this.stateActionSP = stateActionSP;
         
         var vte = Resources.Load<VisualTreeAsset>("UXML/main-framebar-bg");
         vte.CloneTree(this);
@@ -58,6 +63,15 @@ public class StateTimelineFramebar : VisualElement
             currFramebar.style.width = new StyleLength(20.0f * (framebarWidth));
             currFramebar.style.backgroundColor = new StyleColor(stateActionAsset.ActionColor);
             currFramebar.Q<Label>().text = (frStart + 1 - frStart).ToString();
+            
+            int rangeIndex = i;
+            currFramebar.RegisterCallback<ClickEvent>(evt =>
+            {
+                if (evt.button != (int)MouseButton.LeftMouse)
+                    return;
+                
+                var w = PopUpPropertyInspector.Create(stateAsset, stateActionAsset, stateSo, stateActionSP);
+            });
         }
     }
 }

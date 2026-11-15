@@ -264,7 +264,7 @@ public class StateTimelineEditorView : VisualElement
         thisSideBar.style.marginLeft = 10 * depth;
         thisSideBar.style.backgroundColor = this.stateAsset != stateTimeline ? parentColor : depthColors[(1+depth) % Mathf.Abs(depthColors.Length)];
         
-        CreateFramebar(stateTimeline, stateAction, stateActionSp);
+        CreateFramebar(stateTimeline, stateAction, stateSo, stateActionSp);
         
         if (stateAction.children == null) return;
         for (int i = 0; i < stateAction.children.Length; i++)
@@ -284,11 +284,11 @@ public class StateTimelineEditorView : VisualElement
         }
     }
 
-    public virtual StateTimelineFramebar CreateFramebar(HNSFState stateTimeline, HNSFStateAction stateAction, SerializedProperty stateActionSp)
+    public virtual StateTimelineFramebar CreateFramebar(HNSFState stateTimeline, HNSFStateAction stateAction, SerializedObject stateSo, SerializedProperty stateActionSp)
     {
         ScrollView dataPanel = this.Q<ScrollView>(name: "data-frames");
         
-        var framebar = new StateTimelineFramebar(stateAsset, stateTimeline, stateAction);
+        var framebar = new StateTimelineFramebar(stateAsset, stateTimeline, stateAction, stateSo, stateActionSp);
         dataPanel.Add(framebar);
         framebar.TrackPropertyValue(
             stateActionSp.FindPropertyRelative("frameRanges"),
