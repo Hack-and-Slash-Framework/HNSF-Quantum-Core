@@ -1,3 +1,10 @@
+# [3.10.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v3.9.1...v3.10.0) (2026-11-15)
+
+
+### Features
+
+* Click framebar to open state action ([6e16cee](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/6e16ceec9a264fa686e90f9323a53bbc73965adf))
+
 ## [3.9.1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v3.9.0...v3.9.1) (2026-11-15)
 
 
