@@ -17,7 +17,7 @@ namespace Quantum
 #if QUANTUM_UNITY
         [SerializeReference, SubclassSelector]
 #endif
-        public HNSFStateFunction FunctionRef;
+        public HNSFStateFunction<EntityRef> FunctionRef;
 
         protected override EntityRef GetBlackboardValue(BlackboardValue value)
         {
@@ -47,7 +47,7 @@ namespace Quantum
                 Source = Source,
                 Key = Key,
                 DefaultValue = DefaultValue,
-                FunctionRef = FunctionRef?.Copy()
+                FunctionRef = FunctionRef?.Copy() as HNSFStateFunction<EntityRef>
             };
         }
     }
