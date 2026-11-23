@@ -68,6 +68,7 @@ namespace HnSF.core.state
         [NonSerialized] public HashSet<AssetRef<Tag>> allTags = new HashSet<AssetRef<Tag>>();
         [NonSerialized] public GameTagCollection allGameTags = new GameTagCollection();
         [NonSerialized] public AssetRef<Tag> realSharedStateTag;
+        [NonSerialized] public Dictionary<StateActionGroupTyping, StateActionGrouping> allActionGroupings = new Dictionary<StateActionGroupTyping, StateActionGrouping>();
 
         public void RebuildGroups()
         {
@@ -81,7 +82,7 @@ namespace HnSF.core.state
                 if(data[i] == null)
                     continue;
 
-                FillGroupFromActionRecursive(data[i]);
+                FillGroupFromActionRecursive(data[i], actionGroupings);
             }
             
             #if UNITY_EDITOR
@@ -89,17 +90,17 @@ namespace HnSF.core.state
             #endif
         }
 
-        private void FillGroupFromActionRecursive(HNSFStateAction hnsfStateAction)
+        private void FillGroupFromActionRecursive(HNSFStateAction hnsfStateAction, Dictionary<StateActionGroupTyping, StateActionGrouping> groupingDict)
         {
             foreach (StateActionGroupTyping flag in Enum.GetValues(typeof(StateActionGroupTyping)))
             {
                 if (flag == StateActionGroupTyping.None || (hnsfStateAction.GroupType & flag) != flag)
                     continue;
 
-                if (!actionGroupings.TryGetValue(flag, out var grouping))
+                if (!groupingDict.TryGetValue(flag, out var grouping))
                 {
                     grouping = new StateActionGrouping();
-                    actionGroupings.Add(flag, grouping);
+                    groupingDict.Add(flag, grouping);
                 }
 
                 grouping.data.Add(hnsfStateAction);
@@ -109,12 +110,12 @@ namespace HnSF.core.state
                 return;
             
             foreach (var child in hnsfStateAction.children)
-                FillGroupFromActionRecursive(child);
+                FillGroupFromActionRecursive(child, groupingDict);
         }
 
-        public override void Loaded(IResourceManager resourceManager, Native.Allocator allocator)
+        public override void Loaded(IResourceManager resourceManager)
         {
-            base.Loaded(resourceManager, allocator);
+            base.Loaded(resourceManager);
             ignoredActionsDictionary.Clear();
             BuildIgnoreDictionary(resourceManager, ignoredActionsDictionary);
             allTags.Clear();
@@ -122,6 +123,29 @@ namespace HnSF.core.state
             CollectAllTags(resourceManager, allTags);
             CollectAllGameTags(resourceManager, allGameTags);
             GetRealSharedStateTagRecursive(resourceManager, out realSharedStateTag);
+            CollectAllActionGroupsRecursive(resourceManager, this, allActionGroupings);
+        }
+
+        private void CollectAllActionGroupsRecursive(IResourceManager resourceManager, HNSFState state, Dictionary<StateActionGroupTyping, StateActionGrouping> allGroupings)
+        {
+            foreach (var t in state.actionGroupings)
+            {
+                if (!allGroupings.TryGetValue(t.Key, out var sag))
+                {
+                    sag = new StateActionGrouping();
+                    allGroupings.Add(t.Key, sag);
+                }
+
+                foreach (var v in t.Value.data)
+                {
+                    sag.data.Add(v);
+                }
+            }
+
+            if (state.useBaseState && resourceManager.TryGetAsset(state.baseState, out var baseStateAsset))
+            {
+                CollectAllActionGroupsRecursive(resourceManager, baseStateAsset, allGroupings);
+            }
         }
 
         private void GetRealSharedStateTagRecursive(IResourceManager resourceManager, out AssetRef<Tag> gotRealSharedStateTag)

@@ -1,31 +1,34 @@
 using Photon.Deterministic;
 using System;
 using Quantum;
+using UnityEngine.Scripting.APIUpdating;
+using UnityEngine.Serialization;
 
 namespace HnSF.core.state.actions
 {
     [Serializable]
-    public unsafe partial class DestroyWarningbox : HNSFStateAction
+    [MovedFrom(autoUpdateAPI: false, sourceClassName: "DestroyWarningbox")]
+    public unsafe partial class DestroyTelegraphbox : HNSFStateAction
     {
-        public int warningboxIdentifier;
+        [FormerlySerializedAs("warningboxIdentifier")] public int boxIdentifier;
         
         public override bool ExecuteAction(Frame frame, EntityRef entity, FP rangePercent,
             ref HNSFStateContext stateContext)
         {
             if (!frame.Unsafe.TryGetPointer<BoxCombatant>(entity, out var boxCombatant)) return false;
-            boxCombatant->DeleteWarningboxByID(frame, warningboxIdentifier);
+            boxCombatant->DeleteTelegraphboxByID(frame, boxIdentifier);
             return false;
         }
 
         public override HNSFStateAction Copy()
         {
-            return CopyTo(new DestroyWarningbox());
+            return CopyTo(new DestroyTelegraphbox());
         }
 
         public override HNSFStateAction CopyTo(HNSFStateAction target)
         {
-            var t = target as DestroyWarningbox;
-            t.warningboxIdentifier = warningboxIdentifier;
+            var t = target as DestroyTelegraphbox;
+            t.boxIdentifier = boxIdentifier;
             return base.CopyTo(target);
         }
     }

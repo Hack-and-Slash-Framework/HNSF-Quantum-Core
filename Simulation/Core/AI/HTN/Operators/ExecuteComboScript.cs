@@ -23,24 +23,26 @@ namespace HnSF.core.AI.HTN.Operators
         
         public override HTNTaskStatus OnEnter(ref HTNAgentContext context)
         {
+            return HTNTaskStatus.Failure;
+            /*
             if (!context.frame.Unsafe.TryGetPointer(context.agentEntityRef, out BattleActorAI* battleActorAI)
                 || !context.frame.Unsafe.TryGetPointer<BattleActorLink>(battleActorAI->aiActorRef, out var battleActorLink)
                 || !context.frame.TryFindAsset(battleActorLink->battleActorDefinition, out var bad)
                 || !context.frame.TryFindAsset(bad.comboListings[0], out var comboScriptListing))
                 return HTNTaskStatus.Failure;
-            
+
             context.frame.AddOrGet(context.agentEntityRef, out AIComboMemory* comboMemory);
-            
+
             if(context.frame.Number < comboMemory->nextAttackDecisionFrame)
                 return HTNTaskStatus.Failure;
-            
+
             context.frame.AddOrGet(context.agentEntityRef, out TaggedEntityMapping* agentTagMapping);
             var agentTagMap = context.frame.ResolveDictionary(agentTagMapping->tagToEntityMap);
             agentTagMap[context.frame.SimulationConfig.tag_self] = battleActorAI->aiActorRef;
-            
+
             var ctx = new BattleScriptContext();
             ctx.SetScriptEntityAndBlackboard(context.frame, battleActorAI->aiActorRef, null);
-            
+
             var nextComboIndex = AIComboSelector.SelectCombo(context.frame, context.agentEntityRef, ref ctx,
                 comboScriptListing.comboScripts, AIComboSelector.SelectWeighted);
 
@@ -71,21 +73,21 @@ namespace HnSF.core.AI.HTN.Operators
             {
                 comboHistory.Add((byte)nextComboIndex);
             }
-            
+
             var genericControlManager = context.frame.GetOrAddSingleton<GenericGroupControlManager>();
 
             var infoEntityRef = context.frame.Create();
-            
+
             context.frame.AddOrGet(infoEntityRef, out TaggedEntityMapping* tagMapping);
             var tagMap = context.frame.ResolveDictionary(tagMapping->tagToEntityMap);
             tagMap[context.frame.SimulationConfig.tag_self] = battleActorAI->aiActorRef;
-            
+
             context.frame.AddOrGet(infoEntityRef, out GenericGroupControl* ggc);
             ggc->autoDestroy = true;
-            
+
             var basc = new BattleScriptContext();
             basc.SetScriptEntityAndBlackboard(context.frame, infoEntityRef, null);
-            
+
             ggc->data.SetData(nextCombo);
             ggc->data.Initialize(context.frame, infoEntityRef, ref basc);
 
@@ -93,7 +95,7 @@ namespace HnSF.core.AI.HTN.Operators
 
             context.frame.AddOrGet(context.agentEntityRef, out ExecutingBattleScriptEntityReference* bser);
             bser->entityRef = infoEntityRef;
-            return base.OnEnter(ref context);
+            return base.OnEnter(ref context);*/
         }
         
         public override HTNTaskStatus Tick(ref HTNAgentContext context)

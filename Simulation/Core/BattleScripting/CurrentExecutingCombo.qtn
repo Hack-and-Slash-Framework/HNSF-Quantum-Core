@@ -1,0 +1,14 @@
+enum ExecutingComboStatus{
+    None,
+    Ready,
+    RequirePositioning,
+    Executing,
+}
+
+component CurrentExecutingCombo{
+    ExecutingComboStatus status;
+    asset_ref<HnSF.core.GroupControl.Combo.ComboBattleScript> comboAssetRef;
+    int comboIndex;
+    entity_ref scriptEntityRef;
+    int expirationFrame;
+}

@@ -96,10 +96,12 @@ namespace HnSF.core.state.actions
             for (int i = 0; i < t.cancelListings.Length; i++)
             {
                 t.cancelListings[i].name =  cancelListings[i].name;
+                if (cancelListings[i].conditions == null) cancelListings[i].conditions = Array.Empty<HNSFStateDecision>();
+                
                 t.cancelListings[i].conditions = new HNSFStateDecision[cancelListings[i].conditions.Length];
                 for (int w = 0; w < cancelListings[i].conditions.Length; w++)
                 {
-                    t.cancelListings[i].conditions[w] = cancelListings[i].conditions[w].Copy();
+                    t.cancelListings[i].conditions[w] = cancelListings[i].conditions[w]?.Copy();
                 }
                 t.cancelListings[i].stateListing = cancelListings[i].stateListing;
             }

@@ -1,4 +1,4 @@
-component Warningbox
+component Telegraphbox
 {
     int id;
     bool active;

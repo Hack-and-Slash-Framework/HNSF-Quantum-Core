@@ -14,7 +14,6 @@ namespace HnSF.core.GroupControl.Combo
         [Header("Combo Info")]
 #endif
         public FP baseWeight = 1;
-        public FP idealRange;
         public int cooldownFrames;
         public int minimumRepeatGap;
         public FP repeatChanceMultiplier = FP._0_50;
@@ -26,6 +25,73 @@ namespace HnSF.core.GroupControl.Combo
         [SerializeReference, SubclassSelector]
 #endif
         public AIComboConsideration[] considerations = Array.Empty<AIComboConsideration>();
+        
+#if QUANTUM_UNITY
+        [Header("Distance Requirements")]
+#endif
+        public FP minConsiderationDistance;
+        public FP maxConsiderationDistance;
+        public FP minExecuteRange;
+        public FP maxExecuteRange;
+        public FP idealValidRange;
+        public int maxFramesToGetIntoProperRange;
+
+        public virtual bool CanSelectAsPotentialCombo(Frame frame, EntityRef aiEntityRef, ref BattleScriptContext context, ref ComboDecisionContext comboContext)
+        {
+            if (!IsOffCooldown(frame, aiEntityRef, ref context, ref comboContext))
+                return false;
+
+            if (!RepeatGapSatisfied(frame, aiEntityRef, ref context, ref comboContext))
+                return false;
+
+            if (!frame.Unsafe.TryGetPointer<TaggedEntityMapping>(aiEntityRef, out var taggedEntityMapping))
+                return false;
+            
+            var tagMap = frame.ResolveDictionary(taggedEntityMapping->tagToEntityMap);
+            if (!tagMap.TryGetValue(frame.SimulationConfig.tag_self, out var actorEntityRef))
+                return false;
+
+            if (!frame.Unsafe.TryGetPointer<EntityTargeting>(actorEntityRef, out var targeting)
+                || !frame.Exists(targeting->target))
+                return false;
+            
+            var selfTransform = frame.Unsafe.GetPointer<Transform3D>(actorEntityRef);
+            var targetTransform = frame.Unsafe.GetPointer<Transform3D>(targeting->target);
+
+            var distSqr = FPVector3.DistanceSquared(selfTransform->Position, targetTransform->Position);
+
+            if (distSqr < (minConsiderationDistance * minConsiderationDistance))
+                return false;
+            if (distSqr > (maxConsiderationDistance * maxConsiderationDistance))
+                return false;
+            return true;
+        }
+
+        public virtual bool CanExecuteNow(Frame frame, EntityRef aiEntityRef, ref BattleScriptContext context, ref ComboDecisionContext comboContext)
+        {
+            if (!frame.Unsafe.TryGetPointer<TaggedEntityMapping>(aiEntityRef, out var taggedEntityMapping))
+                return false;
+
+            var tagMap = frame.ResolveDictionary(taggedEntityMapping->tagToEntityMap);
+            if (!tagMap.TryGetValue(frame.SimulationConfig.tag_self, out var actorEntityRef))
+                return false;
+            
+            if (!frame.Unsafe.TryGetPointer<EntityTargeting>(actorEntityRef, out var targeting)
+                || !frame.Exists(targeting->target))
+                return false;
+
+            var selfTransform = frame.Unsafe.GetPointer<Transform3D>(actorEntityRef);
+            var targetTransform = frame.Unsafe.GetPointer<Transform3D>(targeting->target);
+
+            var distSqr = FPVector3.DistanceSquared(selfTransform->Position, targetTransform->Position);
+
+            if (distSqr < (minExecuteRange * minExecuteRange))
+                return false;
+            if (distSqr > (maxExecuteRange * maxExecuteRange))
+                return false;
+            
+            return true;
+        }
         
         public virtual bool CanSelect(Frame frame, EntityRef aiEntity, ref BattleScriptContext context, ref ComboDecisionContext comboContext)
         {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using HnSF;
 using HnSF.core.GroupControl;
 using HnSF.core.state;
+using UnityEngine.Serialization;
 #if QUANTUM_UNITY
 using UnityEngine;
 #endif
@@ -13,7 +14,8 @@ namespace Quantum
     public partial class BattleActorDefinition : AssetObject
     {
         public AssetRef<EntityPrototype> CharacterPrototype;
-        public AssetRef<AIConfig> parameters;
+        [FormerlySerializedAs("parameters")] public AssetRef<AIConfig> config;
+        public AssetRef<BattleActorParameters> actorParameters;
         public AssetRef<EntityView> overridedView;
         
         public AssetRef<Tag> defaultMoveset;

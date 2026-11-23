@@ -14,7 +14,7 @@
     [AllocateOnComponentAdded, FreeOnComponentRemoved]
     list<entity_ref> throwboxList;
     [AllocateOnComponentAdded, FreeOnComponentRemoved]
-    list<entity_ref> warningboxList;
+    list<entity_ref> telegraphboxList;
     
     [AllocateOnComponentAdded, FreeOnComponentRemoved]
     list<EntityHitDefinition> entitiesHit;

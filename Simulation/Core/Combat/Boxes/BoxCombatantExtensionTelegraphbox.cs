@@ -2,13 +2,13 @@ namespace Quantum
 {
     public unsafe partial struct BoxCombatant
     {
-        public bool WarningboxExistWithId(Frame frame, int boxID)
+        public bool TelegraphboxExistWithId(Frame frame, int boxID)
         {
-            var list = frame.ResolveList(warningboxList);
+            var list = frame.ResolveList(telegraphboxList);
 
             for (int i = 0; i < list.Count; i++)
             {
-                if (!frame.Unsafe.TryGetPointer<Warningbox>(list[i], out var h)) continue;
+                if (!frame.Unsafe.TryGetPointer<Telegraphbox>(list[i], out var h)) continue;
                 if (h->id != boxID) continue;
                 return true;
             }
@@ -16,13 +16,13 @@ namespace Quantum
             return false;
         }
 
-        public bool TryGetWarningbox(Frame frame, int boxID, out int boxIndex)
+        public bool TryGetTelegraphbox(Frame frame, int boxID, out int boxIndex)
         {
-            var list = frame.ResolveList(warningboxList);
+            var list = frame.ResolveList(telegraphboxList);
 
             for (int i = 0; i < list.Count; i++)
             {
-                if(!frame.Unsafe.TryGetPointer<Warningbox>(list[i], out var h)) continue;
+                if(!frame.Unsafe.TryGetPointer<Telegraphbox>(list[i], out var h)) continue;
                 if (h->id != boxID) continue;
                 boxIndex = i;
                 return true;
@@ -32,13 +32,13 @@ namespace Quantum
             return false;
         }
 
-        public void DeleteWarningboxByID(Frame frame, int boxID)
+        public void DeleteTelegraphboxByID(Frame frame, int boxID)
         {
-            var list = frame.ResolveList(warningboxList);
+            var list = frame.ResolveList(telegraphboxList);
 
             for (int i = 0; i < list.Count; i++)
             {
-                if(!frame.Unsafe.TryGetPointer<Warningbox>(list[i], out var h)) continue;
+                if(!frame.Unsafe.TryGetPointer<Telegraphbox>(list[i], out var h)) continue;
                 if (h->id != boxID) continue;
                 frame.Destroy(list[i]);
                 list.RemoveAt(i);
@@ -46,9 +46,9 @@ namespace Quantum
             }
         }
 
-        public void CleanupWarningboxes(Frame frame)
+        public void CleanupTelegraphboxes(Frame frame)
         {
-            var list = frame.ResolveList(warningboxList);
+            var list = frame.ResolveList(telegraphboxList);
 
             while (list.Count > 0)
             {

@@ -12,7 +12,7 @@ namespace HnSF.core.state
         Pushbox = 1 << 2,
         Throwbox = 1 << 3,
         Collisionbox = 1 << 4,
-        Warningbox = 1 << 5,
+        Telegraphbox = 1 << 5,
         StateTransition = 1 << 6,
         StatusEffects = 1 << 7,
         Animation = 1 << 8,

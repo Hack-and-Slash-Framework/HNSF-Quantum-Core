@@ -30,6 +30,11 @@ namespace HnSF
             
             var menuManipulator = new ContextualMenuManipulator((ContextualMenuPopulateEvent evt) =>
             {
+                evt.menu.AppendAction("Open State Editor", (x) =>
+                {
+                    var window = StateSetEditorWindow.GetOrOpenWindow(stateSet);
+                    window.SetSelection(state);
+                });
                 evt.menu.AppendAction("Select State Asset", (x) => { EditorGUIUtility.PingObject(state); });
                 if (allowModifications )
                 {
