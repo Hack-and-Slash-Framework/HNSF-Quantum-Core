@@ -1,3 +1,10 @@
+## [4.0.1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v4.0.0...v4.0.1) (2026-11-23)
+
+
+### Bug Fixes
+
+* Fix param function types ([ce880b5](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/ce880b583e346a8489ad09c1b1429d0b9a23a9e3))
+
 # [4.0.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v3.11.0...v4.0.0) (2026-11-23)
 
 
