@@ -28,7 +28,43 @@ namespace Quantum
         
         public AssetRef<BattleActorGroupControlScript>[] introScripts = Array.Empty<AssetRef<BattleActorGroupControlScript>>();
         public AssetRef<ComboScriptListing>[] comboListings = Array.Empty<AssetRef<ComboScriptListing>>();
-        
         public AssetRef<BattleActorAIDefinition>[] aiDefinitions = Array.Empty<AssetRef<BattleActorAIDefinition>>();
+
+        [NonSerialized] public Dictionary<AssetRef<Tag>, ComboScriptListing> ComboListingByTag = new Dictionary<AssetRef<Tag>, ComboScriptListing>();
+        [NonSerialized] public Dictionary<AssetRef<Tag>, BattleActorAIDefinition> aiDefinitionByTag = new Dictionary<AssetRef<Tag>, BattleActorAIDefinition>();
+        
+        public override void Loaded(IResourceManager resourceManager)
+        {
+            base.Loaded(resourceManager);
+
+            ComboListingByTag.Clear();
+            aiDefinitionByTag.Clear();
+            
+            if (comboListings != null)
+            {
+                foreach (var comboScriptListing in comboListings)
+                {
+                    if(!resourceManager.TryGetAsset(comboScriptListing, out var comboListing)
+                       || comboListing.tag == default)
+                        continue;
+                    ComboListingByTag.Add(comboListing.tag, comboListing);
+                }
+            }
+
+            if (aiDefinitions != null)
+            {
+                foreach (var aiDefinitionReference in aiDefinitions)
+                {
+                    if(!resourceManager.TryGetAsset(aiDefinitionReference, out var aiDefinition)
+                       || aiDefinition.mainTag == default)
+                        continue;
+                    aiDefinitionByTag.Add(aiDefinition.mainTag, aiDefinition);
+                }
+            }
+            
+            LoadedUser(resourceManager);
+        }
+
+        partial void LoadedUser(IResourceManager resourceManager);
     }
 }
