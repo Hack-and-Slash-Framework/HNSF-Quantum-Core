@@ -1,3 +1,15 @@
+# [4.0.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v3.11.0...v4.0.0) (2026-11-23)
+
+
+### Features
+
+* Improved combo selection, rename warningbox ([8c927f6](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/8c927f6828191d8ed0b58f29177f8df2a6045824))
+
+
+### BREAKING CHANGES
+
+* Renamed Warningbox to Telegraphbox
+
 # [3.11.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v3.10.0...v3.11.0) (2026-11-15)
 
 
