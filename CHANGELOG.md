@@ -1,3 +1,10 @@
+# [4.1.0](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v4.0.1...v4.1.0) (2026-11-23)
+
+
+### Features
+
+* Dictionary for combo listing & ai definitions ([bd1c8ac](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/commit/bd1c8ac6dac0cd34f26f04a4e7f4f2f22c24132f))
+
 ## [4.0.1](https://github.com/Hack-and-Slash-Framework/HNSF-Quantum-Core/compare/v4.0.0...v4.0.1) (2026-11-23)
 
 
